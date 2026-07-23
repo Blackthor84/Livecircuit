@@ -1,0 +1,149 @@
+import Link from "next/link";
+import type { Metadata } from "next";
+
+import { notFound } from "next/navigation";
+
+import { LiveEventExperience } from "@/components/live/live-event-experience";
+
+import { Button } from "@/components/ui/button";
+
+import { getLiveAccessForEvent } from "@/lib/actions/live-event";
+
+import { getEventBySlug } from "@/lib/data/queries";
+
+import { formatCents } from "@/lib/format";
+
+import type { EventStatus } from "@/types/database";
+
+
+
+type Props = { params: Promise<{ slug: string; eventSlug: string }> };
+
+
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+
+  const { slug, eventSlug } = await params;
+
+  const event = await getEventBySlug(slug, eventSlug);
+
+  return { title: event?.title ?? "Live event" };
+
+}
+
+
+
+export default async function LiveEventPage({ params }: Props) {
+
+  const { slug, eventSlug } = await params;
+
+  const event = await getEventBySlug(slug, eventSlug);
+
+  if (!event) notFound();
+
+
+
+  const price = event.tour_stops?.ticket_price_cents ?? 0;
+
+  const vipPrice = event.tour_stops?.vip_price_cents;
+
+  const venueMeta = Array.isArray(event.venues) ? event.venues[0] : event.venues;
+
+  const access = await getLiveAccessForEvent(event.id, {
+
+    status: event.status as string,
+
+    scheduled_at: event.scheduled_at,
+
+  });
+
+
+
+  return (
+
+    <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6">
+
+      <div className="mb-6 flex flex-wrap items-center justify-between gap-4">
+
+        <div>
+
+          <h1 className="text-2xl font-bold">{event.title}</h1>
+
+          <p className="text-muted-foreground">
+
+            {event.artists?.stage_name} · {event.tour_stops?.virtual_location_label}
+
+          </p>
+
+          {venueMeta ? (
+            <p className="mt-1 text-sm">
+              <Link
+                href={`/livecircuit/venues/${venueMeta.slug}/concourse?event=${event.id}`}
+                className="text-primary hover:underline"
+              >
+                Enter via {venueMeta.name} concourse
+              </Link>
+              {event.venue_room_label ? (
+                <span className="text-muted-foreground"> · Room {event.venue_room_label}</span>
+              ) : null}
+            </p>
+          ) : null}
+
+        </div>
+
+        <div className="flex flex-wrap gap-2">
+
+          <Button
+
+            variant="secondary"
+
+            href={`/checkout?type=tip&event=${event.id}&artist=${slug}`}
+
+          >
+
+            Tip artist
+
+          </Button>
+
+          <Button variant="outline" href={`/checkout?event=${event.id}&type=ticket`}>
+
+            Tickets {formatCents(price)}
+
+          </Button>
+
+          {vipPrice && vipPrice > 0 ? (
+
+            <Button variant="outline" href={`/checkout?event=${event.id}&type=ticket&tier=vip`}>
+
+              VIP {formatCents(vipPrice)}
+
+            </Button>
+
+          ) : null}
+
+          <Button href={`/artists/${slug}/merch`}>Merch</Button>
+
+        </div>
+
+      </div>
+
+      <LiveEventExperience
+
+        eventId={event.id}
+
+        title={event.title}
+
+        initialStatus={event.status as EventStatus}
+
+        initialAccess={access}
+
+        checkoutHref={`/checkout?event=${event.id}&type=ticket`}
+
+      />
+
+    </div>
+
+  );
+
+}
+

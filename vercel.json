@@ -1,0 +1,8 @@
+{
+  "crons": [
+    {
+      "path": "/api/cron/rollup-sponsor-metrics?days=2",
+      "schedule": "15 6 * * *"
+    }
+  ]
+}
