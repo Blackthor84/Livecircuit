@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound, redirect } from "next/navigation";
+import { EventCoHostsPanel } from "@/components/artist/event-cohosts-panel";
+import { TicketScanner } from "@/components/artist/ticket-scanner";
 import { LiveHostControls } from "@/components/live/live-host-controls";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -10,6 +12,8 @@ import { getArtistEventById, eventLivePath } from "@/lib/data/artist-events";
 import { ROUTES } from "@/lib/constants";
 import { formatCents } from "@/lib/format";
 import { getMilestoneEnvStatus } from "@/lib/config/env";
+import { listEventHosts } from "@/lib/services/event-hosts.service";
+import { createClient } from "@/lib/supabase/server";
 
 type Props = { params: Promise<{ eventId: string }> };
 
@@ -34,6 +38,8 @@ export default async function ArtistEventDetailPage({ params }: Props) {
   const env = getMilestoneEnvStatus();
   const livePath = eventLivePath(event.artistSlug, event.slug);
   const scheduled = new Date(event.scheduled_at).toLocaleString();
+  const supabase = await createClient();
+  const coHosts = await listEventHosts(supabase, event.id);
 
   return (
     <div className="mx-auto max-w-3xl px-4 py-10 sm:px-6">
@@ -91,6 +97,22 @@ export default async function ArtistEventDetailPage({ params }: Props) {
             Stream provider: {event.streams.provider} · status {event.streams.status}
           </p>
         ) : null}
+      </section>
+
+      <section className="mt-6 space-y-4 rounded-xl border border-white/10 bg-card/50 p-6">
+        <h2 className="text-lg font-semibold">Co-hosts</h2>
+        <p className="text-sm text-muted-foreground">
+          Invite another performer or moderator to publish alongside you in the LiveKit room.
+        </p>
+        <EventCoHostsPanel eventId={event.id} initialHosts={coHosts} />
+      </section>
+
+      <section className="mt-6 space-y-4 rounded-xl border border-white/10 bg-card/50 p-6">
+        <h2 className="text-lg font-semibold">Ticket check-in</h2>
+        <p className="text-sm text-muted-foreground">
+          Verify fan QR codes at the virtual door before or during the show.
+        </p>
+        <TicketScanner />
       </section>
 
       <section className="mt-6 text-sm text-muted-foreground">

@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { Suspense } from "react";
 import { ArtistCard } from "@/components/artists/artist-card";
+import { CheckoutSuccessBanner } from "@/components/checkout/checkout-success-banner";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { requireUserProfile } from "@/lib/auth/guards";
@@ -44,6 +46,10 @@ export default async function FanDashboardPage() {
       <h1 className="text-3xl font-bold">Your dashboard</h1>
       <p className="mt-2 text-muted-foreground">Tickets, follows, and purchase history.</p>
 
+      <Suspense fallback={null}>
+        <CheckoutSuccessBanner />
+      </Suspense>
+
       <div className="mt-8 grid gap-4 md:grid-cols-3">
         <Card className="glass-panel border-white/10 md:col-span-2">
           <CardHeader>
@@ -64,22 +70,25 @@ export default async function FanDashboardPage() {
               if (!event) return null;
               const artistMeta = Array.isArray(event.artists) ? event.artists[0] : event.artists;
               const qr = (t as { qr_code?: string | null }).qr_code;
+              const eventPath = `/artists/${artistMeta?.slug}/events/${event.slug}`;
               return (
                 <div
                   key={t.id}
                   className="flex flex-col gap-3 rounded-lg border border-white/10 px-3 py-2 sm:flex-row sm:items-center sm:justify-between"
                 >
-                  <Link
-                    href={`/artists/${artistMeta?.slug}/events/${event.slug}`}
-                    className="min-w-0 flex-1 hover:text-primary"
-                  >
+                  <Link href={eventPath} className="min-w-0 flex-1 hover:text-primary">
                     <p className="font-medium">{event.title}</p>
                     <p className="text-muted-foreground">
                       {artistMeta?.stage_name} · {new Date(event.scheduled_at).toLocaleString()} ·{" "}
                       {formatCents(t.price_cents)} · <span className="uppercase">{t.tier}</span>
                     </p>
                   </Link>
-                  {qr ? <TicketQrDisplay code={qr} label="Show at virtual door" /> : null}
+                  <div className="flex flex-wrap items-center gap-2">
+                    <Button size="sm" href={eventPath}>
+                      Enter waiting room
+                    </Button>
+                    {qr ? <TicketQrDisplay code={qr} label="Show at virtual door" /> : null}
+                  </div>
                 </div>
               );
             })}

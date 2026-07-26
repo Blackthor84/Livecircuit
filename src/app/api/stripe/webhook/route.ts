@@ -5,6 +5,10 @@ import { getSupabaseAdmin } from "@/lib/supabase/admin";
 import { getStripe } from "@/lib/stripe/server";
 import { fulfillPaidOrder } from "@/lib/services/fulfillment.service";
 import {
+  markOrderFailedByCheckoutSession,
+  markOrderFailedByPaymentIntent,
+} from "@/lib/services/orders-lifecycle.service";
+import {
   handleBackstageCheckoutSession,
   handleBackstageSubscriptionEvent,
 } from "@/lib/services/backstage-stripe.service";
@@ -43,6 +47,20 @@ export async function POST(request: Request) {
         }
       }
     }
+  }
+
+  if (event.type === "checkout.session.expired") {
+    const session = event.data.object;
+    await markOrderFailedByCheckoutSession(supabase, session.id, "checkout_expired");
+  }
+
+  if (event.type === "payment_intent.payment_failed") {
+    const paymentIntent = event.data.object;
+    await markOrderFailedByPaymentIntent(
+      supabase,
+      paymentIntent.id,
+      paymentIntent.last_payment_error?.message ?? "payment_failed"
+    );
   }
 
   if (

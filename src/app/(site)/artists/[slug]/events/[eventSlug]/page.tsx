@@ -1,8 +1,8 @@
 import Link from "next/link";
 import type { Metadata } from "next";
-
+import { Suspense } from "react";
 import { notFound } from "next/navigation";
-
+import { CheckoutSuccessBanner } from "@/components/checkout/checkout-success-banner";
 import { LiveEventExperience } from "@/components/live/live-event-experience";
 
 import { Button } from "@/components/ui/button";
@@ -126,6 +126,10 @@ export default async function LiveEventPage({ params }: Props) {
         </div>
 
       </div>
+
+      <Suspense fallback={null}>
+        <CheckoutSuccessBanner />
+      </Suspense>
 
       <LiveEventExperience
 

@@ -90,7 +90,8 @@ export async function getEventLiveAccess(
     return hostState(event.status, scheduledAt, secondsUntilStart);
   }
 
-  const [{ data: ticket }, { data: vip }, { data: backstageSub }, { data: mute }] = await Promise.all([
+  const [{ data: ticket }, { data: vip }, { data: backstageSub }, { data: mute }, coHost] =
+    await Promise.all([
     supabase
       .from("tickets")
       .select("id, tier")
@@ -118,7 +119,17 @@ export async function getEventLiveAccess(
       .eq("event_id", eventId)
       .eq("user_id", userId)
       .maybeSingle(),
+    supabase
+      .from("event_hosts")
+      .select("id")
+      .eq("event_id", eventId)
+      .eq("user_id", userId)
+      .maybeSingle(),
   ]);
+
+  if (coHost) {
+    return hostState(event.status, scheduledAt, secondsUntilStart);
+  }
 
   const backstageActive =
     Boolean(backstageSub) &&
