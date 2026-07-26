@@ -6,6 +6,7 @@ import { LiveHostControls } from "@/components/live/live-host-controls";
 import { LiveStreamStage } from "@/components/live/live-stream-stage";
 import { Button } from "@/components/ui/button";
 import { useEventRealtime } from "@/hooks/use-event-realtime";
+import type { EventLobbyContent } from "@/lib/live/lobby";
 import { recordViewerJoin } from "@/lib/actions/live-event";
 import type { LiveAccessState } from "@/lib/live/access";
 import type { EventStatus } from "@/types/database";
@@ -23,6 +24,7 @@ type Props = {
   title: string;
   initialStatus: EventStatus;
   initialAccess: LiveAccessState;
+  lobby?: EventLobbyContent | null;
   checkoutHref?: string;
   loginHref?: string;
 };
@@ -32,6 +34,7 @@ export function LiveEventExperience({
   title,
   initialStatus,
   initialAccess,
+  lobby,
   checkoutHref,
   loginHref = "/login",
 }: Props) {
@@ -39,7 +42,18 @@ export function LiveEventExperience({
   const [secondsLeft, setSecondsLeft] = useState(initialAccess.secondsUntilStart);
 
   const onStatusChange = useCallback((next: EventStatus) => {
-    setAccess((prev) => ({ ...prev, status: next }));
+    setAccess((prev) => {
+      const goingLive = next === "live" && prev.mode === "waiting" && prev.hasTicket;
+      if (goingLive) {
+        return {
+          ...prev,
+          status: next,
+          mode: "viewer",
+          canWatchStream: true,
+        };
+      }
+      return { ...prev, status: next };
+    });
   }, []);
 
   const { status } = useEventRealtime({
@@ -52,6 +66,17 @@ export function LiveEventExperience({
     setAccess(initialAccess);
     setSecondsLeft(initialAccess.secondsUntilStart);
   }, [initialAccess]);
+
+  useEffect(() => {
+    if (status === "live" && access.mode === "waiting" && access.hasTicket) {
+      setAccess((prev) => ({
+        ...prev,
+        status: "live",
+        mode: "viewer",
+        canWatchStream: true,
+      }));
+    }
+  }, [access.hasTicket, access.mode, status]);
 
   useEffect(() => {
     if (access.mode !== "waiting") return;
@@ -67,6 +92,7 @@ export function LiveEventExperience({
   }, [access.canModerate, access.canWatchStream, eventId, status]);
 
   const playerStatus = useMemo(() => {
+    if (access.mode === "replay") return "ended";
     if (status === "live") return "live";
     if (access.mode === "waiting") return "waiting";
     return status;
@@ -89,6 +115,9 @@ export function LiveEventExperience({
               : undefined
           }
           deniedMessage={access.mode === "denied" ? access.message : undefined}
+          lobby={lobby}
+          recordingUrl={access.recordingUrl}
+          recordingStatus={access.recordingStatus}
         />
         {access.canModerate ? <LiveHostControls eventId={eventId} status={status} /> : null}
         {access.mode === "denied" && access.message ? (

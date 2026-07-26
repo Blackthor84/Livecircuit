@@ -19,6 +19,8 @@ export type ArtistEventDetail = Event & {
     provider: string;
     status: string;
     external_stream_id: string | null;
+    recording_url: string | null;
+    metadata: Record<string, unknown> | null;
   } | null;
 };
 
@@ -57,7 +59,7 @@ export async function getArtistEventById(
   const { data } = await supabase
     .from("events")
     .select(
-      "*, tour_stops(virtual_location_label, ticket_price_cents, vip_price_cents), streams(id, provider, status, external_stream_id)"
+      "*, tour_stops(virtual_location_label, ticket_price_cents, vip_price_cents, banner_url), streams(id, provider, status, external_stream_id, recording_url, metadata)"
     )
     .eq("id", eventId)
     .eq("artist_id", artist.id)

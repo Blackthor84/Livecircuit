@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound, redirect } from "next/navigation";
 import { EventCoHostsPanel } from "@/components/artist/event-cohosts-panel";
+import { EventLobbySettings, EventReplayUpload } from "@/components/artist/event-lobby-replay";
 import { TicketScanner } from "@/components/artist/ticket-scanner";
 import { LiveHostControls } from "@/components/live/live-host-controls";
 import { Badge } from "@/components/ui/badge";
@@ -14,6 +15,7 @@ import { formatCents } from "@/lib/format";
 import { getMilestoneEnvStatus } from "@/lib/config/env";
 import { listEventHosts } from "@/lib/services/event-hosts.service";
 import { createClient } from "@/lib/supabase/server";
+import { parseStreamMetadata } from "@/lib/streaming/stream-metadata";
 
 type Props = { params: Promise<{ eventId: string }> };
 
@@ -40,6 +42,9 @@ export default async function ArtistEventDetailPage({ params }: Props) {
   const scheduled = new Date(event.scheduled_at).toLocaleString();
   const supabase = await createClient();
   const coHosts = await listEventHosts(supabase, event.id);
+  const streamMetadata = parseStreamMetadata(event.streams?.metadata ?? null);
+  const recordingUrl = event.streams?.recording_url ?? null;
+  const recordingStatus = streamMetadata.recording_status ?? (recordingUrl ? "ready" : "none");
 
   return (
     <div className="mx-auto max-w-3xl px-4 py-10 sm:px-6">
@@ -97,6 +102,26 @@ export default async function ArtistEventDetailPage({ params }: Props) {
             Stream provider: {event.streams.provider} · status {event.streams.status}
           </p>
         ) : null}
+      </section>
+
+      <section className="mt-6 space-y-4 rounded-xl border border-white/10 bg-card/50 p-6">
+        <h2 className="text-lg font-semibold">Pre-show lobby</h2>
+        <p className="text-sm text-muted-foreground">
+          Customize what ticket holders see while they wait — countdown, message, preview clip, or banner.
+        </p>
+        <EventLobbySettings eventId={event.id} metadata={streamMetadata} />
+      </section>
+
+      <section className="mt-6 space-y-4 rounded-xl border border-white/10 bg-card/50 p-6">
+        <h2 className="text-lg font-semibold">Replay / VOD</h2>
+        <p className="text-sm text-muted-foreground">
+          Upload a replay manually, or let LiveKit egress save an automatic recording when configured.
+        </p>
+        <EventReplayUpload
+          eventId={event.id}
+          recordingUrl={recordingUrl}
+          recordingStatus={recordingStatus}
+        />
       </section>
 
       <section className="mt-6 space-y-4 rounded-xl border border-white/10 bg-card/50 p-6">

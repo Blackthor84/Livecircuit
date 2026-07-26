@@ -8,6 +8,12 @@ import { getEventLiveAccess, isUserMutedInEvent } from "@/lib/live/access";
 import { getSupabaseAdmin } from "@/lib/supabase/admin";
 import { getStreamingProvider } from "@/lib/streaming/provider";
 import { getEventPublicPath } from "@/lib/services/events.service";
+import { markRecordingProcessing } from "@/lib/services/recordings.service";
+import {
+  startLiveKitRecording,
+  stopLiveKitRecording,
+} from "@/lib/streaming/livekit-egress";
+import { parseStreamMetadata } from "@/lib/streaming/stream-metadata";
 import {
   eventControlSchema,
   moderateChatSchema,
@@ -219,6 +225,14 @@ export async function goLiveAction(input: unknown): Promise<LiveActionResult> {
     return { ok: false, error: eventError.message };
   }
 
+  let egressId: string | null = null;
+  try {
+    egressId = await startLiveKitRecording(parsed.data.eventId);
+    await markRecordingProcessing(ctx.supabase, parsed.data.eventId, egressId);
+  } catch {
+    /* recording is optional */
+  }
+
   const liveUrl = await getEventPublicPath(ctx.supabase, parsed.data.eventId);
 
   if (eventMeta && liveUrl) {
@@ -256,11 +270,31 @@ export async function endLiveAction(input: unknown): Promise<LiveActionResult> {
 
   if (eventError) return { ok: false, error: eventError.message };
 
+  const { data: streamRow } = await ctx.supabase
+    .from("streams")
+    .select("metadata")
+    .eq("event_id", parsed.data.eventId)
+    .maybeSingle();
+  const metadata = parseStreamMetadata(streamRow?.metadata);
+  await stopLiveKitRecording(metadata.egress_id ?? null);
+
   await getStreamingProvider().endStream(parsed.data.eventId);
 
   await ctx.supabase
     .from("streams")
-    .update({ status: "ended", provider: getStreamingProvider().name })
+    .update({
+      status: "ended",
+      provider: getStreamingProvider().name,
+      metadata: {
+        ...metadata,
+        recording_status:
+          metadata.recording_status === "ready"
+            ? "ready"
+            : metadata.egress_id
+              ? "processing"
+              : metadata.recording_status ?? "none",
+      },
+    })
     .eq("event_id", parsed.data.eventId);
 
   revalidatePath("/");

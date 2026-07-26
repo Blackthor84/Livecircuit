@@ -103,6 +103,8 @@ export type Stream = {
   playback_url: string | null;
   ingest_url: string | null;
   stream_key: string | null;
+  recording_url: string | null;
+  metadata: Record<string, unknown> | null;
 };
 
 export type Product = {

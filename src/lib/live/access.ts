@@ -1,8 +1,9 @@
 import type { SupabaseClient } from "@supabase/supabase-js";
 import { isSupabaseConfigured } from "@/lib/config/env";
+import { parseStreamMetadata, type RecordingStatus } from "@/lib/streaming/stream-metadata";
 import type { EventStatus } from "@/types/database";
 
-export type LiveAccessMode = "host" | "viewer" | "waiting" | "denied";
+export type LiveAccessMode = "host" | "viewer" | "waiting" | "replay" | "denied";
 
 export type LiveAccessState = {
   mode: LiveAccessMode;
@@ -15,6 +16,8 @@ export type LiveAccessState = {
   scheduledAt: string;
   secondsUntilStart: number;
   message: string | null;
+  recordingUrl: string | null;
+  recordingStatus: RecordingStatus;
 };
 
 type EventRow = {
@@ -23,7 +26,21 @@ type EventRow = {
   status: EventStatus;
   scheduled_at: string;
   artists?: { user_id: string } | { user_id: string }[] | null;
+  streams?:
+    | { recording_url: string | null; metadata: unknown }
+    | { recording_url: string | null; metadata: unknown }[]
+    | null;
 };
+
+function streamState(event: EventRow) {
+  const raw = event.streams;
+  const stream = Array.isArray(raw) ? raw[0] : raw;
+  const metadata = parseStreamMetadata(stream?.metadata);
+  const recordingUrl = (stream?.recording_url as string | null) ?? null;
+  const recordingStatus =
+    metadata.recording_status ?? (recordingUrl ? "ready" : "none");
+  return { recordingUrl, recordingStatus };
+}
 
 export async function getEventLiveAccess(
   supabase: SupabaseClient,
@@ -49,12 +66,14 @@ export async function getEventLiveAccess(
       scheduledAt,
       secondsUntilStart,
       message: null,
+      recordingUrl: null,
+      recordingStatus: "none",
     };
   }
 
   const { data: eventRaw } = await supabase
     .from("events")
-    .select("id, artist_id, status, scheduled_at, artists(user_id)")
+    .select("id, artist_id, status, scheduled_at, artists(user_id), streams(recording_url, metadata)")
     .eq("id", eventId)
     .maybeSingle();
 
@@ -62,6 +81,8 @@ export async function getEventLiveAccess(
   if (!event) {
     return deniedState("scheduled", new Date().toISOString(), "Event not found");
   }
+
+  const recording = streamState(event);
 
   const artists = event.artists;
   const artistUserId = Array.isArray(artists) ? artists[0]?.user_id : artists?.user_id;
@@ -76,6 +97,7 @@ export async function getEventLiveAccess(
     return {
       ...deniedState(event.status, scheduledAt, "Sign in and get a ticket to join the room"),
       secondsUntilStart,
+      ...recording,
     };
   }
 
@@ -87,7 +109,7 @@ export async function getEventLiveAccess(
   const isAdmin = profile?.role === "admin";
 
   if (isAdmin || (artistUserId && artistUserId === userId)) {
-    return hostState(event.status, scheduledAt, secondsUntilStart);
+    return hostState(event.status, scheduledAt, secondsUntilStart, recording);
   }
 
   const [{ data: ticket }, { data: vip }, { data: backstageSub }, { data: mute }, coHost] =
@@ -128,7 +150,7 @@ export async function getEventLiveAccess(
   ]);
 
   if (coHost) {
-    return hostState(event.status, scheduledAt, secondsUntilStart);
+    return hostState(event.status, scheduledAt, secondsUntilStart, recording);
   }
 
   const backstageActive =
@@ -153,6 +175,7 @@ export async function getEventLiveAccess(
       secondsUntilStart,
       hasTicket: false,
       isVip: false,
+      ...recording,
     };
   }
 
@@ -171,11 +194,60 @@ export async function getEventLiveAccess(
         scheduledAt,
         secondsUntilStart,
         message: "You are muted in this room",
+        ...recording,
       };
     }
   }
 
-  if (event.status === "ended" || event.status === "cancelled") {
+  if (event.status === "cancelled") {
+    return {
+      mode: "denied",
+      canWatchStream: false,
+      canChat: false,
+      canModerate: false,
+      isVip,
+      hasTicket,
+      status: event.status,
+      scheduledAt,
+      secondsUntilStart,
+      message: "This event was cancelled",
+      ...recording,
+    };
+  }
+
+  if (event.status === "ended") {
+    if (recording.recordingUrl) {
+      return {
+        mode: "replay",
+        canWatchStream: true,
+        canChat: false,
+        canModerate: false,
+        isVip,
+        hasTicket,
+        status: event.status,
+        scheduledAt,
+        secondsUntilStart,
+        message: null,
+        ...recording,
+      };
+    }
+
+    if (recording.recordingStatus === "processing") {
+      return {
+        mode: "replay",
+        canWatchStream: false,
+        canChat: false,
+        canModerate: false,
+        isVip,
+        hasTicket,
+        status: event.status,
+        scheduledAt,
+        secondsUntilStart,
+        message: "Replay is processing — check back soon",
+        ...recording,
+      };
+    }
+
     return {
       mode: "denied",
       canWatchStream: false,
@@ -187,6 +259,7 @@ export async function getEventLiveAccess(
       scheduledAt,
       secondsUntilStart,
       message: "This event has ended",
+      ...recording,
     };
   }
 
@@ -202,6 +275,7 @@ export async function getEventLiveAccess(
       scheduledAt,
       secondsUntilStart,
       message: null,
+      ...recording,
     };
   }
 
@@ -216,13 +290,19 @@ export async function getEventLiveAccess(
     scheduledAt,
     secondsUntilStart,
     message: null,
+    ...recording,
   };
 }
 
-function hostState(status: EventStatus, scheduledAt: string, secondsUntilStart: number): LiveAccessState {
+function hostState(
+  status: EventStatus,
+  scheduledAt: string,
+  secondsUntilStart: number,
+  recording: { recordingUrl: string | null; recordingStatus: RecordingStatus }
+): LiveAccessState {
   return {
     mode: "host",
-    canWatchStream: status === "live" || status === "scheduled" || status === "draft",
+    canWatchStream: status === "live" || status === "scheduled" || status === "draft" || status === "ended",
     canChat: true,
     canModerate: true,
     isVip: true,
@@ -231,6 +311,7 @@ function hostState(status: EventStatus, scheduledAt: string, secondsUntilStart: 
     scheduledAt,
     secondsUntilStart,
     message: null,
+    ...recording,
   };
 }
 
@@ -250,6 +331,8 @@ function deniedState(
     scheduledAt,
     secondsUntilStart: 0,
     message,
+    recordingUrl: null,
+    recordingStatus: "none",
   };
 }
 
