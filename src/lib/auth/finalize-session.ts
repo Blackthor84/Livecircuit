@@ -19,7 +19,16 @@ export async function finalizeAuthSession(userId: string) {
   if (adminRow) {
     try {
       const admin = getSupabaseAdmin();
-      await admin.from("profiles").update({ role: "admin" }).eq("id", userId);
+      const { data: profile } = await admin
+        .from("profiles")
+        .select("role")
+        .eq("id", userId)
+        .maybeSingle();
+
+      // Promote admins table members without downgrading super_admin.
+      if (profile?.role === "fan" || profile?.role === "artist") {
+        await admin.from("profiles").update({ role: "admin" }).eq("id", userId);
+      }
     } catch {
       /* service role optional in local dev */
     }
