@@ -4,6 +4,7 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import { LiveChat } from "@/components/live/live-room";
 import { LiveHostControls } from "@/components/live/live-host-controls";
 import { LiveStreamStage } from "@/components/live/live-stream-stage";
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { useEventRealtime } from "@/hooks/use-event-realtime";
 import type { EventLobbyContent } from "@/lib/live/lobby";
@@ -89,7 +90,9 @@ export function LiveEventExperience({
   useEffect(() => {
     if (status !== "live" || !access.canWatchStream || access.canModerate) return;
     void recordViewerJoin(eventId);
-  }, [access.canModerate, access.canWatchStream, eventId, status]);
+  }, [access.canModerate, access.canWatchStream, access.mode, eventId, status]);
+
+  const isObserver = access.mode === "observer";
 
   const playerStatus = useMemo(() => {
     if (access.mode === "replay") return "ended";
@@ -103,6 +106,14 @@ export function LiveEventExperience({
   return (
     <div className="grid gap-6 lg:grid-cols-[1fr_340px]">
       <div className="space-y-4">
+        {isObserver ? (
+          <div className="flex items-center gap-2">
+            <Badge variant="outline" className="border-amber-500/40 text-amber-200">
+              Observer mode
+            </Badge>
+            <span className="text-xs text-muted-foreground">Internal viewing — excluded from public metrics</span>
+          </div>
+        ) : null}
         <LiveStreamStage
           eventId={eventId}
           title={title}
@@ -136,6 +147,11 @@ export function LiveEventExperience({
           canModerate={access.canModerate}
           isVipViewer={access.isVip}
         />
+      ) : isObserver ? (
+        <div className="flex min-h-[320px] flex-col items-center justify-center rounded-xl border border-amber-500/20 bg-amber-500/5 p-6 text-center text-sm text-muted-foreground">
+          <p className="font-medium text-amber-200/90">Observer access</p>
+          <p className="mt-2">Chat and reactions are disabled so engagement metrics stay accurate.</p>
+        </div>
       ) : (
         <div className="flex min-h-[320px] flex-col items-center justify-center rounded-xl border border-white/10 bg-card/80 p-6 text-center text-sm text-muted-foreground">
           {access.message ?? "Chat opens when you have room access."}

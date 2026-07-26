@@ -2,6 +2,7 @@
 
 import { revalidatePath } from "next/cache";
 import { getSessionUser, getProfile } from "@/lib/auth/session";
+import { isObserverUser } from "@/lib/auth/observer";
 import { createClient } from "@/lib/supabase/server";
 import { isSupabaseConfigured } from "@/lib/config/env";
 import { getEventLiveAccess, isUserMutedInEvent } from "@/lib/live/access";
@@ -316,6 +317,16 @@ export async function getLiveAccessForEvent(eventId: string, demo?: { status: st
 export async function recordViewerJoin(eventId: string) {
   if (!isSupabaseConfigured()) return;
   try {
+    const { getSessionUser } = await import("@/lib/auth/session");
+    const user = await getSessionUser();
+    if (!user) return;
+
+    if (await isObserverUser(user.id)) {
+      const { logObserverPresence } = await import("@/lib/auth/observer");
+      await logObserverPresence({ observerId: user.id, eventId });
+      return;
+    }
+
     const admin = getSupabaseAdmin();
     const { data: event } = await admin
       .from("events")

@@ -1,9 +1,10 @@
 import type { SupabaseClient } from "@supabase/supabase-js";
 import { isSupabaseConfigured } from "@/lib/config/env";
+import { isObserverUser } from "@/lib/auth/observer";
 import { parseStreamMetadata, type RecordingStatus } from "@/lib/streaming/stream-metadata";
 import type { EventStatus } from "@/types/database";
 
-export type LiveAccessMode = "host" | "viewer" | "waiting" | "replay" | "denied";
+export type LiveAccessMode = "host" | "viewer" | "waiting" | "replay" | "denied" | "observer";
 
 export type LiveAccessState = {
   mode: LiveAccessMode;
@@ -110,6 +111,10 @@ export async function getEventLiveAccess(
 
   if (isAdmin || (artistUserId && artistUserId === userId)) {
     return hostState(event.status, scheduledAt, secondsUntilStart, recording);
+  }
+
+  if (await isObserverUser(userId)) {
+    return observerState(event.status, scheduledAt, secondsUntilStart, recording);
   }
 
   const [{ data: ticket }, { data: vip }, { data: backstageSub }, { data: mute }, coHost] =
@@ -290,6 +295,33 @@ export async function getEventLiveAccess(
     scheduledAt,
     secondsUntilStart,
     message: null,
+    ...recording,
+  };
+}
+
+function observerState(
+  status: EventStatus,
+  scheduledAt: string,
+  secondsUntilStart: number,
+  recording: { recordingUrl: string | null; recordingStatus: RecordingStatus }
+): LiveAccessState {
+  const canWatch =
+    status === "live" ||
+    status === "scheduled" ||
+    status === "draft" ||
+    (status === "ended" && Boolean(recording.recordingUrl));
+
+  return {
+    mode: "observer",
+    canWatchStream: canWatch,
+    canChat: false,
+    canModerate: false,
+    isVip: false,
+    hasTicket: false,
+    status,
+    scheduledAt,
+    secondsUntilStart,
+    message: "Internal observer mode — not counted in public metrics",
     ...recording,
   };
 }

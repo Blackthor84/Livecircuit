@@ -1,0 +1,66 @@
+import type { Metadata } from "next";
+import Link from "next/link";
+import { AdminCommandShell } from "@/components/admin/command-center/admin-command-shell";
+import { AdminEntityTable } from "@/components/admin/command-center/admin-entity-table";
+import { Badge } from "@/components/ui/badge";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { listAdminTours } from "@/lib/data/admin-entities";
+
+export const metadata: Metadata = { title: "Tours — Admin" };
+
+export default async function AdminToursPage() {
+  const tours = await listAdminTours(100);
+
+  return (
+    <AdminCommandShell title="Tours" subtitle="Multi-date tour packages and routing.">
+      <Card className="glass-panel border-white/10">
+        <CardHeader>
+          <CardTitle>Tours ({tours.length})</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <AdminEntityTable
+            rows={tours}
+            emptyMessage="No tours found."
+            columns={[
+              {
+                key: "title",
+                header: "Tour",
+                cell: (row) => (
+                  <Link href={`/tours/${row.slug}`} className="font-medium hover:text-primary">
+                    {row.title}
+                  </Link>
+                ),
+              },
+              {
+                key: "artist",
+                header: "Artist",
+                cell: (row) => {
+                  const artist = Array.isArray(row.artists) ? row.artists[0] : row.artists;
+                  return artist?.stage_name ?? "—";
+                },
+              },
+              {
+                key: "status",
+                header: "Status",
+                cell: (row) => (
+                  <Badge variant="secondary" className="capitalize">
+                    {row.status}
+                  </Badge>
+                ),
+              },
+              {
+                key: "dates",
+                header: "Dates",
+                cell: (row) => {
+                  const start = row.starts_at ? new Date(row.starts_at).toLocaleDateString() : "—";
+                  const end = row.ends_at ? new Date(row.ends_at).toLocaleDateString() : "—";
+                  return `${start} → ${end}`;
+                },
+              },
+            ]}
+          />
+        </CardContent>
+      </Card>
+    </AdminCommandShell>
+  );
+}

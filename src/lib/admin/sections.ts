@@ -1,0 +1,46 @@
+import {
+  Activity,
+  BarChart3,
+  Building2,
+  CalendarDays,
+  Cpu,
+  DollarSign,
+  Flag,
+  Globe2,
+  Handshake,
+  Map,
+  Mic2,
+  Radio,
+  Sparkles,
+  Tags,
+  Users,
+  Eye,
+  Route,
+} from "lucide-react";
+
+export const ADMIN_SECTIONS = [
+  { href: "/admin", label: "Overview", icon: Globe2, exact: true },
+  { href: "/admin/health", label: "Platform Health", icon: Activity },
+  { href: "/admin/live", label: "Live Operations", icon: Radio },
+  { href: "/admin/users", label: "Users", icon: Users },
+  { href: "/admin/artists", label: "Artists", icon: Mic2 },
+  { href: "/admin/fans", label: "Fans", icon: Users },
+  { href: "/admin/venues", label: "Venues", icon: Building2 },
+  { href: "/admin/events", label: "Events", icon: CalendarDays },
+  { href: "/admin/tours", label: "Tours", icon: Route },
+  { href: "/admin/genres", label: "Genres", icon: Tags },
+  { href: "/admin/revenue", label: "Revenue", icon: DollarSign },
+  { href: "/admin/sponsors", label: "Sponsorships", icon: Handshake },
+  { href: "/admin/moderation", label: "Moderation", icon: Flag },
+  { href: "/admin/analytics", label: "Analytics", icon: BarChart3 },
+  { href: "/admin/ai-insights", label: "AI Insights", icon: Sparkles },
+  { href: "/admin/observers", label: "Observer Accounts", icon: Eye },
+] as const;
+
+export const ADMIN_PIPELINE_TODOS = [
+  "Session watch-time telemetry (analytics_events.session_duration)",
+  "Retention cohort rollups (daily fan return rate)",
+  "Marketing attribution for growth KPIs",
+  "LiveKit stream health metrics webhook",
+  "AI insight generation from aggregated metrics",
+];

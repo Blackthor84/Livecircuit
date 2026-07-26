@@ -1,59 +1,85 @@
 import type { Metadata } from "next";
-import {
-  AdminModerationPanel,
-  AdminRefundsPanel,
-  AdminVerificationPanel,
-} from "@/components/admin/admin-panels";
+import { AdminCommandShell } from "@/components/admin/command-center/admin-command-shell";
+import { AdminKpiGrid } from "@/components/admin/command-center/admin-kpi-grid";
+import { AdminTodoPanel } from "@/components/admin/command-center/admin-todo-panel";
+import { AdminTrendCharts } from "@/components/admin/command-center/admin-trend-charts";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { requireRoles } from "@/lib/auth/guards";
-import { getAdminDashboardData } from "@/lib/data/admin";
+import { ADMIN_PIPELINE_TODOS } from "@/lib/admin/sections";
+import { getAdminPlatformOverview } from "@/lib/data/admin-command-center";
 
-export const metadata: Metadata = { title: "Admin" };
+export const metadata: Metadata = { title: "Command Center — Admin" };
 
-export default async function AdminPage() {
-  await requireRoles(["admin"], "/");
-
-  const { verifications, reports, orders } = await getAdminDashboardData();
+export default async function AdminOverviewPage() {
+  const overview = await getAdminPlatformOverview();
 
   return (
-    <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6">
-      <h1 className="text-3xl font-bold">Admin</h1>
-      <p className="mt-2 text-muted-foreground">Users, verification, moderation, payouts, and venues.</p>
-      <div className="mt-6 flex flex-wrap gap-3">
-        <Button variant="secondary" href="/admin/venues">
-          Manage virtual venues
-        </Button>
-        <Button variant="outline" href="/admin/sponsors">
-          Sponsor organizations
-        </Button>
+    <AdminCommandShell
+      title="Command Center"
+      subtitle="Executive overview of platform health, growth, and operational queues."
+    >
+      <div className="space-y-8">
+        <AdminKpiGrid kpis={overview.kpis} />
+
+        <AdminTrendCharts
+          signupTrend={overview.signupTrend}
+          revenueTrend={overview.revenueTrend}
+          engagementTrend={overview.engagementTrend}
+        />
+
+        <div className="grid gap-6 lg:grid-cols-3">
+          <Card className="glass-panel border-white/10">
+            <CardHeader>
+              <CardTitle className="text-base">Operational queues</CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-3 text-sm">
+              <div className="flex items-center justify-between">
+                <span>Pending verifications</span>
+                <span className="font-semibold tabular-nums">{overview.queues.pendingVerifications}</span>
+              </div>
+              <div className="flex items-center justify-between">
+                <span>Open moderation reports</span>
+                <span className="font-semibold tabular-nums">{overview.queues.openReports}</span>
+              </div>
+              <div className="flex items-center justify-between">
+                <span>Paid orders (refund queue)</span>
+                <span className="font-semibold tabular-nums">{overview.queues.paidOrders}</span>
+              </div>
+              <Button href="/admin/moderation" variant="secondary" className="mt-2 w-full">
+                Open moderation hub
+              </Button>
+            </CardContent>
+          </Card>
+
+          <Card className="glass-panel border-white/10 lg:col-span-2">
+            <CardHeader>
+              <CardTitle className="text-base">Quick links</CardTitle>
+            </CardHeader>
+            <CardContent className="flex flex-wrap gap-2">
+              <Button href="/admin/live" variant="outline">
+                Live operations
+              </Button>
+              <Button href="/admin/analytics" variant="outline">
+                Analytics & segmentation
+              </Button>
+              <Button href="/admin/revenue" variant="outline">
+                Revenue
+              </Button>
+              <Button href="/admin/observers" variant="outline">
+                Observer accounts
+              </Button>
+              <Button href="/admin/venues" variant="outline">
+                Venues
+              </Button>
+              <Button href="/admin/sponsors" variant="outline">
+                Sponsorships
+              </Button>
+            </CardContent>
+          </Card>
+        </div>
+
+        <AdminTodoPanel items={[...overview.todos, ...ADMIN_PIPELINE_TODOS]} />
       </div>
-      <div className="mt-8 grid gap-6 lg:grid-cols-2">
-        <Card className="glass-panel border-white/10">
-          <CardHeader>
-            <CardTitle>Moderation queue</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <AdminModerationPanel items={reports} />
-          </CardContent>
-        </Card>
-        <Card className="glass-panel border-white/10">
-          <CardHeader>
-            <CardTitle>Verification requests</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <AdminVerificationPanel items={verifications} />
-          </CardContent>
-        </Card>
-      </div>
-      <Card className="glass-panel mt-6 border-white/10">
-        <CardHeader>
-          <CardTitle>Refunds</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <AdminRefundsPanel items={orders} />
-        </CardContent>
-      </Card>
-    </div>
+    </AdminCommandShell>
   );
 }
