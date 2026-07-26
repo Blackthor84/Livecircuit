@@ -13,7 +13,7 @@ export default async function NotificationsPage() {
     <div className="mx-auto max-w-2xl px-4 py-10 sm:px-6">
       <h1 className="text-3xl font-bold">Notifications</h1>
       <div className="mt-8">
-        <NotificationsFeed initial={notifications} />
+        <NotificationsFeed userId={user.id} initial={notifications} />
       </div>
     </div>
   );

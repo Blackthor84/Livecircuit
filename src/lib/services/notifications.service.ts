@@ -61,3 +61,34 @@ export async function notifyFollowers(input: {
     console.error("[notifyFollowers]", e);
   }
 }
+
+/** Alert followers when an artist starts broadcasting. */
+export async function notifyEventLive(input: {
+  artistId: string;
+  stageName: string;
+  eventTitle: string;
+  liveUrl: string;
+}) {
+  const copy = buildGoLiveNotification({
+    stageName: input.stageName,
+    eventTitle: input.eventTitle,
+  });
+
+  await notifyFollowers({
+    artistId: input.artistId,
+    type: "artist_live",
+    title: copy.title,
+    body: copy.body,
+    link: input.liveUrl,
+  });
+}
+
+export function buildGoLiveNotification(input: {
+  stageName: string;
+  eventTitle: string;
+}) {
+  return {
+    title: `${input.stageName} is live now`,
+    body: `Join "${input.eventTitle}" before it ends.`,
+  };
+}

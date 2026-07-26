@@ -8,10 +8,18 @@ import {
   markAllNotificationsReadAction,
   markNotificationReadAction,
 } from "@/lib/actions/notifications";
+import { useNotificationsRealtime } from "@/hooks/use-notifications-realtime";
 import type { UserNotification } from "@/types/notifications";
 import { cn } from "@/lib/utils";
 
-export function NotificationsFeed({ initial }: { initial: UserNotification[] }) {
+export function NotificationsFeed({
+  userId,
+  initial,
+}: {
+  userId: string;
+  initial: UserNotification[];
+}) {
+  const notifications = useNotificationsRealtime(userId, initial);
   async function markRead(id: string) {
     const result = await markNotificationReadAction(id);
     if (!result.ok) toast.error(result.error);
@@ -23,7 +31,7 @@ export function NotificationsFeed({ initial }: { initial: UserNotification[] }) 
     else toast.success("All marked read");
   }
 
-  if (!initial.length) {
+  if (!notifications.length) {
     return (
       <Card className="glass-panel border-white/10">
         <CardHeader>
@@ -44,7 +52,7 @@ export function NotificationsFeed({ initial }: { initial: UserNotification[] }) 
         </Button>
       </div>
       <ul className="space-y-2">
-        {initial.map((n) => (
+        {notifications.map((n) => (
           <li key={n.id}>
             <Card
               className={cn(

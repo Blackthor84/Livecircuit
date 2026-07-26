@@ -1,6 +1,5 @@
 import type { SupabaseClient } from "@supabase/supabase-js";
-import { getSupabaseAdmin } from "@/lib/supabase/admin";
-import { isSupabaseConfigured } from "@/lib/config/env";
+import { ensureEventStream } from "@/lib/services/streams.service";
 
 export function slugifyTourText(value: string) {
   return value
@@ -89,7 +88,7 @@ export async function syncEventForTourStop(
 
     if (!error && inserted) {
       slug = candidate;
-      await ensurePlaceholderStream(inserted.id);
+      await ensureEventStream(inserted.id);
       return inserted.id;
     }
 
@@ -99,25 +98,6 @@ export async function syncEventForTourStop(
   }
 
   throw new Error("Could not allocate a unique event slug");
-}
-
-async function ensurePlaceholderStream(eventId: string) {
-  if (!isSupabaseConfigured()) return;
-
-  const admin = getSupabaseAdmin();
-  const { data: existing } = await admin
-    .from("streams")
-    .select("id")
-    .eq("event_id", eventId)
-    .maybeSingle();
-  if (existing) return;
-
-  await admin.from("streams").insert({
-    event_id: eventId,
-    provider: "placeholder",
-    status: "idle",
-    playback_url: `/api/stream/placeholder/${eventId}`,
-  });
 }
 
 export async function syncAllStopEvents(

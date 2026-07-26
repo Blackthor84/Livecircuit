@@ -6,7 +6,6 @@ import { isSupabaseConfigured } from "@/lib/config/env";
 
 type Params = { params: Promise<{ eventId: string }> };
 
-/** Backward-compatible alias for /api/stream/[eventId] */
 export async function GET(request: Request, { params }: Params) {
   const { eventId } = await params;
   const { searchParams } = new URL(request.url);

@@ -54,4 +54,8 @@ export const ROUTES = {
   world: "/world",
   achievements: "/achievements",
   gamification: "/gamification",
+  artistEventsNew: "/artist/events/new",
+  artistEvent: (eventId: string) => `/artist/events/${eventId}`,
+  artistEventLive: (artistSlug: string, eventSlug: string) =>
+    `/artists/${artistSlug}/events/${eventSlug}`,
 } as const;

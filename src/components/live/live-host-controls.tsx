@@ -10,22 +10,35 @@ import type { EventStatus } from "@/types/database";
 export function LiveHostControls({
   eventId,
   status,
+  artistSlug,
+  eventSlug,
+  liveUrl,
 }: {
   eventId: string;
   status: EventStatus;
+  artistSlug?: string;
+  eventSlug?: string;
+  liveUrl?: string;
 }) {
   const router = useRouter();
   const [loading, setLoading] = useState<"live" | "end" | null>(null);
+
+  const destination =
+    liveUrl ??
+    (artistSlug && eventSlug ? `/artists/${artistSlug}/events/${eventSlug}` : undefined);
 
   async function goLive() {
     setLoading("live");
     const result = await goLiveAction({ eventId });
     setLoading(null);
-    if (!result.ok) toast.error(result.error);
-    else {
-      toast.success("You are live");
-      router.refresh();
+    if (!result.ok) {
+      toast.error(result.error);
+      return;
     }
+    toast.success("You are live");
+    const target = result.liveUrl ?? destination;
+    if (target) router.push(target);
+    else router.refresh();
   }
 
   async function endLive() {
@@ -48,15 +61,22 @@ export function LiveHostControls({
           {loading === "live" ? "Starting…" : "Go live"}
         </Button>
       ) : (
-        <Button
-          type="button"
-          size="sm"
-          variant="destructive"
-          disabled={loading === "end"}
-          onClick={() => void endLive()}
-        >
-          {loading === "end" ? "Ending…" : "End stream"}
-        </Button>
+        <>
+          {destination ? (
+            <Button type="button" size="sm" variant="secondary" href={destination}>
+              Enter live room
+            </Button>
+          ) : null}
+          <Button
+            type="button"
+            size="sm"
+            variant="destructive"
+            disabled={loading === "end"}
+            onClick={() => void endLive()}
+          >
+            {loading === "end" ? "Ending…" : "End stream"}
+          </Button>
+        </>
       )}
     </div>
   );

@@ -85,8 +85,24 @@ export type Event = {
   title: string;
   status: EventStatus;
   scheduled_at: string;
+  started_at: string | null;
+  ended_at: string | null;
   viewer_count: number;
   peak_viewers: number;
+};
+
+export type StreamProvider = "placeholder" | "agora" | "livekit" | "mux";
+export type StreamStatus = "idle" | "starting" | "live" | "ended" | "error";
+
+export type Stream = {
+  id: string;
+  event_id: string;
+  provider: StreamProvider;
+  status: StreamStatus;
+  external_stream_id: string | null;
+  playback_url: string | null;
+  ingest_url: string | null;
+  stream_key: string | null;
 };
 
 export type Product = {

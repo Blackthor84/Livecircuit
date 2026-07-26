@@ -6,8 +6,11 @@ import { getArtistForUser, getSessionUser } from "@/lib/auth/session";
 import { getArtistDashboardAnalytics } from "@/lib/data/artist-analytics";
 import { listArtistTours } from "@/lib/data/artist-tours";
 import { ArtistToursList } from "@/components/artist/artist-tours-list";
+import { ArtistUpcomingEvents } from "@/components/artist/artist-upcoming-events";
 import { ArtistMomentumSummary } from "@/components/artist/artist-momentum-dashboard";
 import { getArtistMomentumForUser } from "@/lib/data/artist-momentum";
+import { listArtistUpcomingEvents } from "@/lib/data/artist-events";
+import { ROUTES } from "@/lib/constants";
 import { redirect } from "next/navigation";
 
 export const metadata: Metadata = { title: "Artist dashboard" };
@@ -21,10 +24,11 @@ export default async function ArtistDashboardPage() {
   const artist = await getArtistForUser(user.id);
   if (!artist) redirect("/artist/settings");
 
-  const [analytics, tours, momentumPayload] = await Promise.all([
+  const [analytics, tours, momentumPayload, upcomingEvents] = await Promise.all([
     getArtistDashboardAnalytics(artist.id, artist.slug),
     listArtistTours(artist.id),
     getArtistMomentumForUser(user.id),
+    listArtistUpcomingEvents(artist.id),
   ]);
 
   return (
@@ -56,7 +60,7 @@ export default async function ArtistDashboardPage() {
           <Button variant="outline" href="/artist/tours/new">
             Create tour
           </Button>
-          <Button href="/artist/events/new">Schedule event</Button>
+          <Button href={ROUTES.artistEventsNew}>Create event</Button>
         </div>
       </div>
       {momentumPayload?.report ? (
@@ -70,6 +74,15 @@ export default async function ArtistDashboardPage() {
           <ArtistMomentumSummary report={momentumPayload.report} compact />
         </section>
       ) : null}
+      <section className="mt-10">
+        <div className="mb-4 flex items-center justify-between">
+          <h2 className="text-xl font-semibold">Upcoming events</h2>
+          <Button variant="link" href={ROUTES.artistEventsNew} className="px-0">
+            Create event →
+          </Button>
+        </div>
+        <ArtistUpcomingEvents events={upcomingEvents} artistSlug={artist.slug} />
+      </section>
       <section className="mt-10">
         <h2 className="text-xl font-semibold">Your tours</h2>
         <div className="mt-4">

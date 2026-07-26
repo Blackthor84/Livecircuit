@@ -2,6 +2,7 @@ import { createClient } from "@/lib/supabase/server";
 import type { UserRole } from "@/types/database";
 import { isSupabaseConfigured } from "@/lib/config/env";
 import { userHasSponsorAccess } from "@/lib/data/sponsors";
+import { getUnreadNotificationCount } from "@/lib/data/notifications";
 
 export async function getSessionUser() {
   if (!isSupabaseConfigured()) return null;
@@ -46,12 +47,17 @@ export async function getHeaderUser() {
   const profile = await getProfile();
   const sponsorPortal =
     isSupabaseConfigured() && user ? await userHasSponsorAccess(user.id) : false;
+  const unreadNotifications = isSupabaseConfigured()
+    ? await getUnreadNotificationCount(user.id)
+    : 0;
 
   return {
+    id: user.id,
     email: user.email ?? "",
     displayName: profile?.display_name ?? (user.user_metadata?.full_name as string) ?? null,
     avatarUrl: profile?.avatar_url ?? null,
     role: (profile?.role as UserRole) ?? "fan",
     sponsorPortal,
+    unreadNotifications,
   };
 }

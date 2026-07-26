@@ -7,6 +7,7 @@ import { isSupabaseConfigured } from "@/lib/config/env";
 import { getEventLiveAccess, isUserMutedInEvent } from "@/lib/live/access";
 import { getSupabaseAdmin } from "@/lib/supabase/admin";
 import { getStreamingProvider } from "@/lib/streaming/provider";
+import { getEventPublicPath } from "@/lib/services/events.service";
 import {
   eventControlSchema,
   moderateChatSchema,
@@ -14,7 +15,9 @@ import {
   sendChatMessageSchema,
 } from "@/lib/validations/live";
 
-export type LiveActionResult = { ok: true } | { ok: false; error: string };
+export type LiveActionResult =
+  | { ok: true; liveUrl?: string }
+  | { ok: false; error: string };
 
 async function requireAccess(eventId: string, needModerate = false) {
   const user = await getSessionUser();
@@ -169,24 +172,73 @@ export async function goLiveAction(input: unknown): Promise<LiveActionResult> {
   const ctx = await requireAccess(parsed.data.eventId, true);
   if (!ctx.ok) return { ok: false, error: ctx.error };
 
+  const { data: eventMeta } = await ctx.supabase
+    .from("events")
+    .select("title, artist_id, artists(stage_name, slug)")
+    .eq("id", parsed.data.eventId)
+    .maybeSingle();
+
+  const provider = getStreamingProvider();
+  let externalStreamId: string;
+  try {
+    ({ externalStreamId } = await provider.createStream(parsed.data.eventId));
+  } catch (error) {
+    return {
+      ok: false,
+      error: error instanceof Error ? error.message : "Failed to start stream",
+    };
+  }
+
   const now = new Date().toISOString();
+  const { error: streamError } = await ctx.supabase
+    .from("streams")
+    .update({
+      status: "live",
+      provider: provider.name,
+      external_stream_id: externalStreamId,
+      playback_url: `/api/stream/${parsed.data.eventId}`,
+    })
+    .eq("event_id", parsed.data.eventId);
+
+  if (streamError) {
+    await provider.endStream(parsed.data.eventId).catch(() => undefined);
+    return { ok: false, error: streamError.message };
+  }
+
   const { error: eventError } = await ctx.supabase
     .from("events")
     .update({ status: "live", started_at: now })
     .eq("id", parsed.data.eventId);
 
-  if (eventError) return { ok: false, error: eventError.message };
+  if (eventError) {
+    await ctx.supabase
+      .from("streams")
+      .update({ status: "idle", external_stream_id: null })
+      .eq("event_id", parsed.data.eventId);
+    await provider.endStream(parsed.data.eventId).catch(() => undefined);
+    return { ok: false, error: eventError.message };
+  }
 
-  const provider = getStreamingProvider();
-  const { externalStreamId } = await provider.createStream(parsed.data.eventId);
+  const liveUrl = await getEventPublicPath(ctx.supabase, parsed.data.eventId);
 
-  await ctx.supabase
-    .from("streams")
-    .update({ status: "live", external_stream_id: externalStreamId })
-    .eq("event_id", parsed.data.eventId);
+  if (eventMeta && liveUrl) {
+    const artists = eventMeta.artists as { stage_name: string; slug: string } | { stage_name: string; slug: string }[] | null;
+    const artist = Array.isArray(artists) ? artists[0] : artists;
+    const { notifyEventLive } = await import("@/lib/services/notifications.service");
+    await notifyEventLive({
+      artistId: eventMeta.artist_id as string,
+      stageName: artist?.stage_name ?? "Your artist",
+      eventTitle: eventMeta.title as string,
+      liveUrl,
+    });
+  }
 
   revalidatePath("/");
-  return { ok: true };
+  revalidatePath("/artist/dashboard");
+  revalidatePath("/notifications");
+  if (liveUrl) revalidatePath(liveUrl);
+
+  return { ok: true, liveUrl: liveUrl ?? undefined };
 }
 
 export async function endLiveAction(input: unknown): Promise<LiveActionResult> {
@@ -208,7 +260,7 @@ export async function endLiveAction(input: unknown): Promise<LiveActionResult> {
 
   await ctx.supabase
     .from("streams")
-    .update({ status: "ended" })
+    .update({ status: "ended", provider: getStreamingProvider().name })
     .eq("event_id", parsed.data.eventId);
 
   revalidatePath("/");

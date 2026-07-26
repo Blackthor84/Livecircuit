@@ -3,6 +3,8 @@
 import Link from "next/link";
 import { Award, Bell, BookOpen, Building2, Coins, Gamepad2, LayoutDashboard, LogOut, MessageCircle, Mic2, Settings, Users } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -12,22 +14,44 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { signOutAction } from "@/lib/actions/auth";
+import { useUnreadNotifications } from "@/hooks/use-unread-notifications";
 import { ROUTES } from "@/lib/constants";
 import type { UserRole } from "@/types/database";
 
 export type HeaderUser = {
+  id: string;
   email: string;
   displayName: string | null;
   avatarUrl: string | null;
   role: UserRole;
   sponsorPortal?: boolean;
+  unreadNotifications?: number;
 };
 
 export function SiteHeaderUserMenu({ user }: { user: HeaderUser }) {
   const initials = (user.displayName ?? user.email).slice(0, 2).toUpperCase();
+  const unreadCount = useUnreadNotifications(user.id, user.unreadNotifications ?? 0);
 
   return (
-    <DropdownMenu>
+    <>
+      <Button
+        variant="ghost"
+        size="icon-sm"
+        href={ROUTES.notifications}
+        className="relative hidden sm:inline-flex"
+        aria-label={unreadCount ? `${unreadCount} unread notifications` : "Notifications"}
+      >
+        <Bell className="size-4" />
+        {unreadCount > 0 ? (
+          <Badge
+            variant="destructive"
+            className="absolute -right-1 -top-1 flex size-4 items-center justify-center rounded-full p-0 text-[10px]"
+          >
+            {unreadCount > 9 ? "9+" : unreadCount}
+          </Badge>
+        ) : null}
+      </Button>
+      <DropdownMenu>
       <DropdownMenuTrigger
         className="flex size-8 items-center justify-center rounded-full outline-none ring-ring focus-visible:ring-2"
         aria-label="Account menu"
@@ -74,6 +98,11 @@ export function SiteHeaderUserMenu({ user }: { user: HeaderUser }) {
         <DropdownMenuItem render={<Link href={ROUTES.notifications} className="flex items-center gap-2" />}>
           <Bell className="size-4" />
           Notifications
+          {unreadCount > 0 ? (
+            <Badge variant="secondary" className="ml-auto text-xs">
+              {unreadCount > 9 ? "9+" : unreadCount}
+            </Badge>
+          ) : null}
         </DropdownMenuItem>
         <DropdownMenuItem render={<Link href={ROUTES.messages} className="flex items-center gap-2" />}>
           <MessageCircle className="size-4" />
@@ -106,5 +135,6 @@ export function SiteHeaderUserMenu({ user }: { user: HeaderUser }) {
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
+    </>
   );
 }
