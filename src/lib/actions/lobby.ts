@@ -5,6 +5,7 @@ import { z } from "zod";
 import { getSessionUser } from "@/lib/auth/session";
 import { createClient } from "@/lib/supabase/server";
 import { isSupabaseConfigured } from "@/lib/config/env";
+import { isAdminRole } from "@/lib/auth/roles";
 import { getEventPublicPath } from "@/lib/services/events.service";
 import {
   setManualRecordingUrl,
@@ -48,7 +49,7 @@ async function requireOwnedEvent(eventId: string) {
       .select("role")
       .eq("id", user.id)
       .maybeSingle();
-    if (profile?.role !== "admin") {
+    if (!isAdminRole(profile?.role)) {
       return { ok: false as const, error: "Not allowed" };
     }
   }

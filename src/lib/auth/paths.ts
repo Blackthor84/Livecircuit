@@ -25,6 +25,6 @@ export function isAuthRequiredPath(pathname: string): boolean {
 
 export function loginRedirectUrl(pathname: string, origin: string): URL {
   const url = new URL("/login", origin);
-  url.searchParams.set("redirect", pathname);
+  url.searchParams.set("next", pathname);
   return url;
 }

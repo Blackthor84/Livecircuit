@@ -3,6 +3,7 @@
 import { revalidatePath } from "next/cache";
 import { z } from "zod";
 import { requireRole } from "@/lib/auth/session";
+import { ADMIN_ROLES } from "@/lib/auth/roles";
 import { createClient } from "@/lib/supabase/server";
 import { isSupabaseConfigured } from "@/lib/config/env";
 import { awardVenueLoyaltyPoints } from "@/lib/services/venue-loyalty.service";
@@ -17,7 +18,7 @@ const adjustSchema = z.object({
 export type VenueLoyaltyAdminResult = { ok: true } | { ok: false; error: string };
 
 export async function adminAdjustVenueLoyaltyAction(input: unknown): Promise<VenueLoyaltyAdminResult> {
-  const profile = await requireRole(["admin"]);
+  const profile = await requireRole([...ADMIN_ROLES]);
   if (!profile) return { ok: false, error: "Admin access required" };
   if (!isSupabaseConfigured()) return { ok: false, error: "Unavailable" };
 

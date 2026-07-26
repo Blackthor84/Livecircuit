@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Menu, Radio } from "lucide-react";
+import { SignOutButton } from "@/components/auth/sign-out-button";
 import { Button, buttonVariants } from "@/components/ui/button";
 import {
   Sheet,
@@ -16,12 +17,13 @@ import {
   type HeaderUser,
 } from "@/components/layout/site-header-user-menu";
 import { APP_NAME, ROUTES } from "@/lib/constants";
-import { getMainNav } from "@/lib/features/navigation";
+import { getMainNav, getUserMenuItems } from "@/lib/features/navigation";
 import { cn } from "@/lib/utils";
 
 export function SiteHeader({ user }: { user: HeaderUser | null }) {
   const pathname = usePathname();
   const nav = getMainNav(user);
+  const profileMenuItems = user ? getUserMenuItems(user) : [];
 
   return (
     <header className="sticky top-0 z-50 border-b border-white/5 bg-background/80 backdrop-blur-xl">
@@ -36,7 +38,7 @@ export function SiteHeader({ user }: { user: HeaderUser | null }) {
         <nav className="hidden items-center gap-1 md:flex" aria-label="Main">
           {nav.map((item) => (
             <Link
-              key={item.href}
+              key={`${item.href}-${item.label}`}
               href={item.href}
               className={cn(
                 "rounded-full px-4 py-2 text-sm transition-colors hover:bg-white/5",
@@ -49,20 +51,18 @@ export function SiteHeader({ user }: { user: HeaderUser | null }) {
         </nav>
 
         <div className="flex items-center gap-2">
-          {!user && (
+          {!user ? (
             <>
-              <Button variant="outline" size="sm" className="hidden sm:inline-flex" href="/register?role=artist">
-                Become an Artist
+              <Button variant="outline" size="sm" className="hidden sm:inline-flex" href={ROUTES.login}>
+                Sign In
               </Button>
-              <Button size="sm" href={ROUTES.login}>
-                Sign in
-              </Button>
-              <Button variant="secondary" size="sm" className="hidden sm:inline-flex" href={ROUTES.register}>
-                Register
+              <Button size="sm" href={ROUTES.register}>
+                Create Account
               </Button>
             </>
+          ) : (
+            <SiteHeaderUserMenu user={user} />
           )}
-          {user && <SiteHeaderUserMenu user={user} />}
           <Sheet>
             <SheetTrigger
               className={cn(buttonVariants({ variant: "ghost", size: "icon-sm" }), "md:hidden")}
@@ -77,7 +77,7 @@ export function SiteHeader({ user }: { user: HeaderUser | null }) {
               <nav className="mt-8 flex flex-col gap-2" aria-label="Mobile">
                 {nav.map((item) => (
                   <Link
-                    key={item.href}
+                    key={`${item.href}-${item.label}`}
                     href={item.href}
                     className="rounded-lg px-3 py-2 text-lg hover:bg-white/5"
                   >
@@ -87,16 +87,27 @@ export function SiteHeader({ user }: { user: HeaderUser | null }) {
                 {!user ? (
                   <>
                     <Link href={ROUTES.login} className="rounded-lg px-3 py-2 text-lg hover:bg-white/5">
-                      Sign in
+                      Sign In
                     </Link>
                     <Link href={ROUTES.register} className="rounded-lg px-3 py-2 text-lg hover:bg-white/5">
-                      Register
+                      Create Account
                     </Link>
                   </>
                 ) : (
-                  <Link href={ROUTES.settings} className="rounded-lg px-3 py-2 text-lg hover:bg-white/5">
-                    Settings
-                  </Link>
+                  <>
+                    {profileMenuItems.map((item) => (
+                      <Link
+                        key={`${item.href}-${item.label}`}
+                        href={item.href}
+                        className="rounded-lg px-3 py-2 text-lg hover:bg-white/5"
+                      >
+                        {item.label}
+                      </Link>
+                    ))}
+                    <div className="px-3 pt-2">
+                      <SignOutButton className="w-full justify-start" variant="outline" />
+                    </div>
+                  </>
                 )}
               </nav>
             </SheetContent>

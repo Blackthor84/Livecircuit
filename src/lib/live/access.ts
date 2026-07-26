@@ -1,6 +1,7 @@
 import type { SupabaseClient } from "@supabase/supabase-js";
 import { isSupabaseConfigured } from "@/lib/config/env";
 import { isObserverUser } from "@/lib/auth/observer";
+import { isAdminRole } from "@/lib/auth/roles";
 import { parseStreamMetadata, type RecordingStatus } from "@/lib/streaming/stream-metadata";
 import type { EventStatus } from "@/types/database";
 
@@ -107,7 +108,7 @@ export async function getEventLiveAccess(
     .select("role")
     .eq("id", userId)
     .maybeSingle();
-  const isAdmin = profile?.role === "admin";
+  const isAdmin = isAdminRole(profile?.role);
 
   if (isAdmin || (artistUserId && artistUserId === userId)) {
     return hostState(event.status, scheduledAt, secondsUntilStart, recording);

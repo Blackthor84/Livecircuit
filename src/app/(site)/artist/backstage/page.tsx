@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { redirect } from "next/navigation";
 import { BackstagePassArtistHub } from "@/components/backstage/backstage-pass-artist-hub";
 import { requireRoles } from "@/lib/auth/guards";
+import { ADMIN_ROLES } from "@/lib/auth/roles";
 import { getSessionUser } from "@/lib/auth/session";
 import { getBackstageArtistHub } from "@/lib/data/backstage-pass";
 
@@ -11,7 +12,7 @@ export const metadata: Metadata = {
 };
 
 export default async function ArtistBackstageManagePage() {
-  await requireRoles(["artist", "admin"], "/register?role=artist");
+  await requireRoles(["artist", ...ADMIN_ROLES], "/register?role=artist");
   const user = await getSessionUser();
   if (!user) redirect("/login?redirect=/artist/backstage");
 

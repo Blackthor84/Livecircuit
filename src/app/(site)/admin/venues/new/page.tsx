@@ -1,13 +1,13 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { AdminVenueCreateForm } from "@/components/admin/venue-admin-editor";
-import { requireRoles } from "@/lib/auth/guards";
+import { requireAdmin } from "@/lib/auth/guards";
 import { getVenueTypes } from "@/lib/data/venues";
 
 export const metadata: Metadata = { title: "New venue — Admin" };
 
 export default async function AdminNewVenuePage() {
-  await requireRoles(["admin"], "/");
+  await requireAdmin("/");
 
   const venueTypes = await getVenueTypes();
 

@@ -3,7 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { AdminVenueEditor } from "@/components/admin/venue-admin-editor";
 import { Badge } from "@/components/ui/badge";
-import { requireRoles } from "@/lib/auth/guards";
+import { requireAdmin } from "@/lib/auth/guards";
 import { getVenueAdminDetail } from "@/lib/data/venues";
 
 type PageProps = { params: Promise<{ venueId: string }> };
@@ -15,7 +15,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 }
 
 export default async function AdminVenueDetailPage({ params }: PageProps) {
-  await requireRoles(["admin"], "/");
+  await requireAdmin("/");
 
   const { venueId } = await params;
   const detail = await getVenueAdminDetail(venueId);

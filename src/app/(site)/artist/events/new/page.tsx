@@ -1,11 +1,12 @@
 import type { Metadata } from "next";
 import { CreateEventForm } from "@/components/artist/create-event-form";
 import { requireRoles } from "@/lib/auth/guards";
+import { ADMIN_ROLES } from "@/lib/auth/roles";
 
 export const metadata: Metadata = { title: "Create event" };
 
 export default async function NewEventPage() {
-  await requireRoles(["artist", "admin"], "/register?role=artist");
+  await requireRoles(["artist", ...ADMIN_ROLES], "/register?role=artist");
 
   return (
     <div className="mx-auto max-w-xl px-4 py-10 sm:px-6">

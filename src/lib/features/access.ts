@@ -1,3 +1,4 @@
+import { isAdminRole } from "@/lib/auth/roles";
 import type { UserRole } from "@/types/database";
 import {
   FEATURE_GATES,
@@ -14,7 +15,7 @@ export function isSuperAdmin(role: UserRole | null | undefined): boolean {
 
 /** Command Center access (separate from feature preview). */
 export function isCommandCenterAdmin(role: UserRole | null | undefined): boolean {
-  return role === "admin" || role === "super_admin";
+  return isAdminRole(role);
 }
 
 export function canAccessFeature(featureId: FeatureId, role: UserRole | null | undefined): boolean {

@@ -2,13 +2,14 @@ import type { Metadata } from "next";
 import { redirect } from "next/navigation";
 import { ArtistMerchManager } from "@/components/artist/artist-merch-manager";
 import { requireRoles } from "@/lib/auth/guards";
+import { ADMIN_ROLES } from "@/lib/auth/roles";
 import { getArtistForUser, getSessionUser } from "@/lib/auth/session";
 import { getArtistProductsForManage } from "@/lib/data/messaging";
 
 export const metadata: Metadata = { title: "Manage merch" };
 
 export default async function ArtistMerchPage() {
-  await requireRoles(["artist", "admin"], "/register?role=artist");
+  await requireRoles(["artist", ...ADMIN_ROLES], "/register?role=artist");
 
   const user = await getSessionUser();
   if (!user) redirect("/login");

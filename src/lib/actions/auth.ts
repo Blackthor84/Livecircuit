@@ -4,7 +4,9 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { getAuthCallbackUrl } from "@/lib/config/env";
+import { readPostAuthParam } from "@/lib/auth/redirects";
 import { finalizeAuthSession } from "@/lib/auth/finalize-session";
+import type { UserRole } from "@/types/database";
 import {
   resendVerificationSchema,
   signUpSchema,
@@ -13,7 +15,15 @@ import {
 
 export type AuthActionResult = { ok: true } | { ok: false; error: string };
 
-export async function signUpAction(formData: FormData): Promise<AuthActionResult> {
+export type CompleteAuthSessionResult =
+  | { ok: true; redirectTo: string; role: UserRole }
+  | { ok: false; error: string };
+
+export type SignUpActionResult =
+  | { ok: true; needsEmailVerification: boolean }
+  | { ok: false; error: string };
+
+export async function signUpAction(formData: FormData): Promise<SignUpActionResult> {
   const parsed = signUpSchema.safeParse({
     email: formData.get("email"),
     password: formData.get("password"),
@@ -26,6 +36,7 @@ export async function signUpAction(formData: FormData): Promise<AuthActionResult
   }
 
   const { email, password, displayName, role } = parsed.data;
+  const nextPath = readPostAuthParam({ next: formData.get("next")?.toString() });
   const supabase = await createClient();
 
   const { data, error } = await supabase.auth.signUp({
@@ -33,8 +44,7 @@ export async function signUpAction(formData: FormData): Promise<AuthActionResult
     password,
     options: {
       data: { full_name: displayName, intended_role: role },
-      // No query string — must match allow-list entry exactly. Callback defaults to /discover.
-      emailRedirectTo: getAuthCallbackUrl(),
+      emailRedirectTo: getAuthCallbackUrl({ next: nextPath !== "/" ? nextPath : undefined }),
     },
   });
 
@@ -42,17 +52,45 @@ export async function signUpAction(formData: FormData): Promise<AuthActionResult
 
   if (data.user && data.session) {
     await finalizeAuthSession(data.user.id);
+    revalidatePath("/", "layout");
+    return { ok: true, needsEmailVerification: false };
   }
 
-  return { ok: true };
+  return { ok: true, needsEmailVerification: true };
 }
 
-export async function finalizeSessionAction(): Promise<void> {
+/** Refresh session, load profile, and revalidate layout so role changes apply immediately. */
+export async function completeAuthSessionAction(
+  nextPath?: string | null
+): Promise<CompleteAuthSessionResult> {
   const supabase = await createClient();
   const {
     data: { user },
   } = await supabase.auth.getUser();
-  if (user) await finalizeAuthSession(user.id);
+
+  if (!user) {
+    return { ok: false, error: "Not signed in" };
+  }
+
+  await finalizeAuthSession(user.id);
+
+  const { data: profile } = await supabase
+    .from("profiles")
+    .select("role")
+    .eq("id", user.id)
+    .maybeSingle();
+
+  revalidatePath("/", "layout");
+
+  return {
+    ok: true,
+    redirectTo: readPostAuthParam({ next: nextPath }),
+    role: (profile?.role as UserRole) ?? "fan",
+  };
+}
+
+export async function finalizeSessionAction(): Promise<void> {
+  await completeAuthSessionAction();
 }
 
 export async function signOutAction() {

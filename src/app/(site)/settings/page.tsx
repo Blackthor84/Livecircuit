@@ -5,6 +5,7 @@ import { ProfileSettingsForm } from "@/components/settings/profile-settings-form
 import { UpdatePasswordForm } from "@/components/settings/update-password-form";
 import { Button } from "@/components/ui/button";
 import { requireUserProfile } from "@/lib/auth/guards";
+import { isArtistOrAdminRole } from "@/lib/auth/roles";
 import { getCountries, getGenres } from "@/lib/data/locations";
 
 export const metadata: Metadata = { title: "Settings" };
@@ -25,7 +26,7 @@ export default async function SettingsPage({ searchParams }: Props) {
           <h1 className="text-3xl font-bold">Settings</h1>
           <p className="mt-2 text-muted-foreground">Profile, notifications, and security (2FA-ready).</p>
         </div>
-        {(profile.role === "artist" || profile.role === "admin") && (
+        {isArtistOrAdminRole(profile.role) && (
           <Button variant="outline" href="/artist/settings">
             Artist profile
           </Button>

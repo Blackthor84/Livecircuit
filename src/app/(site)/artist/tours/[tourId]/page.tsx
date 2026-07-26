@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { notFound, redirect } from "next/navigation";
 import { TourManagePanel } from "@/components/artist/tour-manage-panel";
 import { requireRoles } from "@/lib/auth/guards";
+import { ADMIN_ROLES } from "@/lib/auth/roles";
 import { getArtistForUser, getSessionUser } from "@/lib/auth/session";
 import { getTourForArtistManage } from "@/lib/data/artist-tours";
 import { getVenuePickerList } from "@/lib/data/venues";
@@ -16,7 +17,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 export default async function ArtistTourManagePage({ params }: Props) {
-  await requireRoles(["artist", "admin"], "/register?role=artist");
+  await requireRoles(["artist", ...ADMIN_ROLES], "/register?role=artist");
 
   const user = await getSessionUser();
   if (!user) redirect("/login");

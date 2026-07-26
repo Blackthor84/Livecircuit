@@ -7,7 +7,7 @@ import { listConversationsForUser } from "@/lib/data/messaging";
 export const metadata: Metadata = { title: "Messages" };
 
 export default async function MessagesPage() {
-  const user = await requireUser("/login?redirect=/messages");
+  const user = await requireUser("/messages");
   const [conversations, artist] = await Promise.all([
     listConversationsForUser(user.id),
     getArtistForUser(user.id),

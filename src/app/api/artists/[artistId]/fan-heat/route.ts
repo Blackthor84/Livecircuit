@@ -5,6 +5,7 @@ import { getSessionUser } from "@/lib/auth/session";
 import { getArtistFanHeatData } from "@/lib/data/fan-heat";
 import { createClient } from "@/lib/supabase/server";
 import { isSupabaseConfigured } from "@/lib/config/env";
+import { isAdminRole } from "@/lib/auth/roles";
 
 const querySchema = z.object({
   region: z.enum(["us", "world"]).optional(),
@@ -36,7 +37,7 @@ export async function GET(request: Request, { params }: Params) {
     if (!artist) return jsonError("Artist not found", 404);
 
     const isOwner = artist.user_id === user.id;
-    const isAdmin = profile?.role === "admin";
+    const isAdmin = isAdminRole(profile?.role);
     if (!isOwner && !isAdmin) return jsonError("Forbidden", 403);
   }
 

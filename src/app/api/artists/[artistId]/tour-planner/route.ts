@@ -3,6 +3,7 @@ import { handleRouteError, jsonError } from "@/lib/api/errors";
 import { getSessionUser } from "@/lib/auth/session";
 import { createClient } from "@/lib/supabase/server";
 import { isSupabaseConfigured } from "@/lib/config/env";
+import { isAdminRole } from "@/lib/auth/roles";
 import { buildTourPlannerReport } from "@/lib/services/tour-planner.service";
 import { getArtistTourPlannerReport } from "@/lib/data/tour-planner";
 
@@ -33,7 +34,7 @@ export async function GET(_request: Request, context: RouteContext) {
       .eq("id", user.id)
       .maybeSingle();
 
-    if (!artist || (artist.user_id !== user.id && profile?.role !== "admin")) {
+    if (!artist || (artist.user_id !== user.id && !isAdminRole(profile?.role))) {
       return jsonError("Forbidden", 403);
     }
 

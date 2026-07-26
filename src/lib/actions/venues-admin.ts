@@ -3,6 +3,7 @@
 import { revalidatePath } from "next/cache";
 import { revalidateVenuePublicCache } from "@/lib/cache/revalidate-venue-cache";
 import { requireRole } from "@/lib/auth/session";
+import { ADMIN_ROLES } from "@/lib/auth/roles";
 import { createClient } from "@/lib/supabase/server";
 import { isSupabaseConfigured } from "@/lib/config/env";
 import {
@@ -28,7 +29,7 @@ export type VenueAdminActionResult =
   | { ok: false; error: string };
 
 async function requireAdmin() {
-  const profile = await requireRole(["admin"]);
+  const profile = await requireRole([...ADMIN_ROLES]);
   if (!profile) return { ok: false as const, error: "Admin access required" };
   if (!isSupabaseConfigured()) return { ok: false as const, error: "Supabase required" };
   const supabase = await createClient();

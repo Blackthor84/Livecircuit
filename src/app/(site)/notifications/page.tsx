@@ -6,7 +6,7 @@ import { getViewerFeatureAccess } from "@/lib/features/guard";
 export const metadata: Metadata = { title: "Notifications" };
 
 export default async function NotificationsPage() {
-  const user = await requireUser("/login?redirect=/notifications");
+  const user = await requireUser("/notifications");
   const features = await getViewerFeatureAccess();
   const notifications = (await getUserNotifications(user.id)).map((n) => ({
     ...n,

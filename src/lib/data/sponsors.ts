@@ -1,5 +1,6 @@
 import { createClient } from "@/lib/supabase/server";
 import { isSupabaseConfigured } from "@/lib/config/env";
+import { isAdminRole } from "@/lib/auth/roles";
 
 export type SponsorOrgSummary = {
   id: string;
@@ -126,7 +127,7 @@ export async function getSponsorDashboard(
     .eq("id", userId)
     .maybeSingle();
 
-  if (!membership && profile?.role !== "admin") return null;
+  if (!membership && !isAdminRole(profile?.role)) return null;
 
   const { data: org } = await supabase
     .from("sponsor_organizations")

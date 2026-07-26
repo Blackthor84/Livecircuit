@@ -2,6 +2,7 @@
 
 import { revalidatePath } from "next/cache";
 import { getSessionUser, requireRole } from "@/lib/auth/session";
+import { ADMIN_ROLES } from "@/lib/auth/roles";
 import { createClient } from "@/lib/supabase/server";
 import { isSupabaseConfigured } from "@/lib/config/env";
 import { createNotification } from "@/lib/services/notifications.service";
@@ -26,7 +27,7 @@ async function requireSponsorOrgAccess(organizationId: string, allowViewer = tru
   if (!isSupabaseConfigured()) return { ok: false as const, error: "Supabase required" };
 
   const supabase = await createClient();
-  const admin = await requireRole(["admin"]);
+  const admin = await requireRole([...ADMIN_ROLES]);
   if (admin) return { ok: true as const, supabase, userId: user.id, isAdmin: true, role: "owner" };
 
   const { data: member } = await supabase
@@ -274,7 +275,7 @@ export async function addSponsorMemberAction(input: unknown): Promise<SponsorAct
     return { ok: false, error: parsed.error.issues[0]?.message ?? "Invalid input" };
   }
 
-  const admin = await requireRole(["admin"]);
+  const admin = await requireRole([...ADMIN_ROLES]);
   if (!admin) {
     const ctx = await requireSponsorOrgAccess(parsed.data.organizationId, false);
     if (!ctx.ok) return { ok: false, error: ctx.error };

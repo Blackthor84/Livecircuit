@@ -2,6 +2,7 @@
 
 import { revalidatePath } from "next/cache";
 import { requireRole } from "@/lib/auth/session";
+import { ADMIN_ROLES } from "@/lib/auth/roles";
 import { createClient } from "@/lib/supabase/server";
 import { isStripeConfigured, isSupabaseConfigured } from "@/lib/config/env";
 import { createNotification } from "@/lib/services/notifications.service";
@@ -15,7 +16,7 @@ import {
 export type AdminActionResult = { ok: true } | { ok: false; error: string };
 
 async function requireAdmin() {
-  const profile = await requireRole(["admin"]);
+  const profile = await requireRole([...ADMIN_ROLES]);
   if (!profile) return { ok: false as const, error: "Admin access required" };
   if (!isSupabaseConfigured()) return { ok: false as const, error: "Supabase required" };
   const supabase = await createClient();

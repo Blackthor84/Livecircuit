@@ -1,13 +1,14 @@
 import { NextResponse, type NextRequest } from "next/server";
 import { isAuthRequiredPath, loginRedirectUrl } from "@/lib/auth/paths";
+import { ADMIN_ROLES, isAdminRole } from "@/lib/auth/roles";
 import { getSupabaseProjectUrl } from "@/lib/config/env";
 import { canAccessPath, isFeatureGatedApiPath, isFeatureGatedPath } from "@/lib/features/access";
 import { createServerClient } from "@supabase/ssr";
 import type { UserRole } from "@/types/database";
 
 function roleRequiredForPath(pathname: string): UserRole[] | null {
-  if (pathname === "/admin" || pathname.startsWith("/admin/")) return ["admin", "super_admin"];
-  if (pathname.startsWith("/artist/")) return ["artist", "admin", "super_admin"];
+  if (pathname === "/admin" || pathname.startsWith("/admin/")) return [...ADMIN_ROLES];
+  if (pathname.startsWith("/artist/")) return ["artist", ...ADMIN_ROLES];
   return null;
 }
 
@@ -63,7 +64,7 @@ export async function updateSession(request: NextRequest) {
   const allowedRoles = roleRequiredForPath(pathname);
   if (user && allowedRoles) {
     if (!role || !allowedRoles.includes(role)) {
-      if (allowedRoles.includes("admin") || allowedRoles.includes("super_admin")) {
+      if (allowedRoles.some((r) => isAdminRole(r))) {
         return NextResponse.redirect(new URL("/", request.url));
       }
       return NextResponse.redirect(new URL("/register?role=artist", request.url));

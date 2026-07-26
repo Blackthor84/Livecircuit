@@ -1,6 +1,5 @@
 import { ROUTES } from "@/lib/constants";
 import type { UserRole } from "@/types/database";
-import { isCommandCenterAdmin, isSuperAdmin } from "@/lib/features/access";
 
 export type NavItem = { href: string; label: string };
 
@@ -8,71 +7,53 @@ type NavUser = {
   role: UserRole;
 } | null;
 
+/** Logged-out main navigation. */
 export function getPublicNav(): NavItem[] {
   return [
     { href: ROUTES.home, label: "Home" },
-    { href: ROUTES.discover, label: "Events" },
+    { href: ROUTES.discover, label: "Discover" },
     { href: ROUTES.artists, label: "Artists" },
     { href: ROUTES.venues, label: "Venues" },
-    { href: "/about", label: "About" },
+    { href: ROUTES.about, label: "About" },
   ];
 }
 
-export function getAuthenticatedNav(user: NavUser): NavItem[] {
-  if (!user) return getPublicNav();
-
-  const items: NavItem[] = [
+/** Logged-in main navigation (profile menu is separate). */
+export function getAuthenticatedNav(_user: NavUser): NavItem[] {
+  return [
     { href: ROUTES.home, label: "Home" },
     { href: ROUTES.discover, label: "Discover" },
-    { href: ROUTES.dashboard, label: "My Events" },
-    { href: "/following", label: "Following" },
-    { href: ROUTES.settings, label: "Profile" },
+    { href: ROUTES.dashboard, label: "Events" },
+    { href: ROUTES.following, label: "Following" },
+    { href: ROUTES.notifications, label: "Notifications" },
   ];
-
-  if (user.role === "artist") {
-    items.push(
-      { href: ROUTES.artistDashboard, label: "Dashboard" },
-      { href: ROUTES.artistEventsNew, label: "Create Event" },
-      { href: "/artist/momentum", label: "Analytics" }
-    );
-  }
-
-  return items;
 }
 
 export function getMainNav(user: NavUser): NavItem[] {
   return user ? getAuthenticatedNav(user) : getPublicNav();
 }
 
-export type UserMenuItem = { href: string; label: string; feature?: "hidden" };
+export type UserMenuItem = { href: string; label: string };
 
-export function getUserMenuItems(user: { role: UserRole; sponsorPortal?: boolean }): UserMenuItem[] {
+export function getUserMenuItems(user: { role: UserRole }): UserMenuItem[] {
   const items: UserMenuItem[] = [
-    { href: ROUTES.dashboard, label: "My Events" },
-    { href: ROUTES.settings, label: "Profile" },
-    { href: ROUTES.notifications, label: "Notifications" },
+    { href: ROUTES.settings, label: "My Profile" },
+    { href: ROUTES.settings, label: "Settings" },
   ];
 
-  if (user.role === "artist" || isCommandCenterAdmin(user.role)) {
-    items.splice(1, 0, { href: ROUTES.artistDashboard, label: "Artist dashboard" });
-  }
-
-  if (isCommandCenterAdmin(user.role)) {
-    items.push({ href: ROUTES.admin, label: "Admin" });
-  }
-
-  if (isSuperAdmin(user.role)) {
+  if (user.role === "artist") {
     items.push(
-      { href: ROUTES.world, label: "World (preview)" },
-      { href: ROUTES.festivals, label: "Festivals (preview)" },
-      { href: ROUTES.marketplace, label: "Marketplace (preview)" },
-      { href: ROUTES.friends, label: "Friends (preview)" },
-      { href: ROUTES.messages, label: "Messages (preview)" },
-      { href: ROUTES.coins, label: "Coins (preview)" }
+      { href: ROUTES.artistDashboard, label: "Artist Dashboard" },
+      { href: ROUTES.artistEventsNew, label: "Create Event" }
     );
-    if (user.sponsorPortal) {
-      items.push({ href: "/sponsor/dashboard", label: "Sponsor portal" });
-    }
+  }
+
+  if (user.role === "admin") {
+    items.push({ href: ROUTES.admin, label: "Admin Dashboard" });
+  }
+
+  if (user.role === "super_admin") {
+    items.push({ href: ROUTES.admin, label: "Command Center" });
   }
 
   return items;

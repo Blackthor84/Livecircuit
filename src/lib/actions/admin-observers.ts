@@ -3,6 +3,7 @@
 import { revalidatePath } from "next/cache";
 import { z } from "zod";
 import { requireRole } from "@/lib/auth/session";
+import { ADMIN_ROLES, isAdminRole } from "@/lib/auth/roles";
 import { createClient } from "@/lib/supabase/server";
 import { isSupabaseConfigured } from "@/lib/config/env";
 
@@ -19,7 +20,7 @@ const toggleSchema = z.object({
 });
 
 async function requireAdminContext() {
-  const profile = await requireRole(["admin"]);
+  const profile = await requireRole([...ADMIN_ROLES]);
   if (!profile) return { ok: false as const, error: "Admin access required" };
   if (!isSupabaseConfigured()) return { ok: false as const, error: "Supabase required" };
   const supabase = await createClient();
@@ -41,7 +42,7 @@ export async function grantObserverAccountAction(input: unknown): Promise<Observ
     .maybeSingle();
 
   if (!profile) return { ok: false, error: "User not found" };
-  if (profile.role === "admin") return { ok: false, error: "Admins already have full access" };
+  if (isAdminRole(profile.role)) return { ok: false, error: "Admins already have full access" };
 
   const { error } = await ctx.supabase.from("observer_accounts").upsert(
     {

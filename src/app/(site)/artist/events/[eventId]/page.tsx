@@ -8,6 +8,7 @@ import { LiveHostControls } from "@/components/live/live-host-controls";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { requireRoles } from "@/lib/auth/guards";
+import { ADMIN_ROLES } from "@/lib/auth/roles";
 import { getSessionUser } from "@/lib/auth/session";
 import { getArtistEventById, eventLivePath } from "@/lib/data/artist-events";
 import { ROUTES } from "@/lib/constants";
@@ -28,7 +29,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 export default async function ArtistEventDetailPage({ params }: Props) {
-  await requireRoles(["artist", "admin"], "/register?role=artist");
+  await requireRoles(["artist", ...ADMIN_ROLES], "/register?role=artist");
 
   const user = await getSessionUser();
   if (!user) redirect("/login");

@@ -9,9 +9,10 @@ import {
   segmentVipConversion,
 } from "@/lib/data/admin-segmentation";
 import { requireRole } from "@/lib/auth/session";
+import { ADMIN_ROLES, isAdminRole } from "@/lib/auth/roles";
 
 async function guardAdmin() {
-  const profile = await requireRole(["admin"]);
+  const profile = await requireRole([...ADMIN_ROLES]);
   if (!profile) throw new Error("Admin access required");
 }
 

@@ -3,6 +3,7 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 import { ArtistProfileForm } from "@/components/artist/artist-profile-form";
 import { requireUserProfile } from "@/lib/auth/guards";
+import { isArtistOrAdminRole } from "@/lib/auth/roles";
 import { getGenres } from "@/lib/data/locations";
 import { getArtistForSettings } from "@/lib/data/profiles";
 
@@ -10,7 +11,7 @@ export const metadata: Metadata = { title: "Artist settings" };
 
 export default async function ArtistSettingsPage() {
   const { user, profile } = await requireUserProfile();
-  if (profile.role !== "artist" && profile.role !== "admin") {
+  if (!isArtistOrAdminRole(profile.role)) {
     redirect("/register?role=artist");
   }
 

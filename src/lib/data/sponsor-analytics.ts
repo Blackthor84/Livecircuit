@@ -1,5 +1,6 @@
 import { createClient } from "@/lib/supabase/server";
 import { isSupabaseConfigured } from "@/lib/config/env";
+import { isAdminRole } from "@/lib/auth/roles";
 import {
   aggregateRawAdMetrics,
   mergeDailySeries,
@@ -51,7 +52,7 @@ async function assertOrgAccess(organizationId: string, userId: string) {
     .eq("id", userId)
     .maybeSingle();
 
-  if (!membership && profile?.role !== "admin") return null;
+  if (!membership && !isAdminRole(profile?.role)) return null;
   return supabase;
 }
 
