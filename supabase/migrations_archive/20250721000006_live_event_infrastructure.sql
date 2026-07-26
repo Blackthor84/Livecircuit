@@ -80,4 +80,4 @@ CREATE POLICY "Moderation logs insert staff" ON public.moderation_logs
     )
   );
 
-ALTER PUBLICATION supabase_realtime ADD TABLE public.events;
+
