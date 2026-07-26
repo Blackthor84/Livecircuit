@@ -9,6 +9,7 @@ export const RESERVED_USERNAMES = new Set([
   "dashboard",
   "explore",
   "discover",
+  "demo",
   "arenas",
   "search",
   "api",

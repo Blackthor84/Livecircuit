@@ -1,0 +1,211 @@
+export const DEFAULT_COMPANY = "Granite State Credit Union";
+export const DEFAULT_STATE = "New Hampshire";
+
+export const US_STATES = [
+  "Alabama", "Alaska", "Arizona", "Arkansas", "California", "Colorado", "Connecticut",
+  "Delaware", "Florida", "Georgia", "Hawaii", "Idaho", "Illinois", "Indiana", "Iowa",
+  "Kansas", "Kentucky", "Louisiana", "Maine", "Maryland", "Massachusetts", "Michigan",
+  "Minnesota", "Mississippi", "Missouri", "Montana", "Nebraska", "Nevada", "New Hampshire",
+  "New Jersey", "New Mexico", "New York", "North Carolina", "North Dakota", "Ohio",
+  "Oklahoma", "Oregon", "Pennsylvania", "Rhode Island", "South Carolina", "South Dakota",
+  "Tennessee", "Texas", "Utah", "Vermont", "Virginia", "Washington", "West Virginia",
+  "Wisconsin", "Wyoming",
+];
+
+/** Section 2 — arena hero stats */
+export const ARENA_HERO_STATS = [
+  { label: "Current Visitors", value: 14_287, format: "number" as const },
+  { label: "Today's Events", value: 84, format: "number" as const },
+  { label: "Followers", value: 122_000, format: "compact" as const },
+  { label: "Performers", value: 312, format: "number" as const },
+  { label: "Sponsor Since", value: 2024, format: "number" as const },
+];
+
+/** Section 3 — live arena activity */
+export const LIVE_ARENA_STATS = [
+  { label: "Current Visitors", value: 14_287, format: "number" as const },
+  { label: "Shows Happening", value: 84, format: "number" as const },
+  { label: "Stages Active", value: 17, format: "number" as const },
+  { label: "Tickets Sold Today", value: 3_482, format: "number" as const },
+  { label: "Monthly Reach", value: 1_900_000, format: "compact" as const },
+];
+
+export const INSIDE_ARENA_SECTIONS = [
+  { name: "Main Stage", icon: "🎤", capacity: "8,200" },
+  { name: "Comedy Stage", icon: "😂", capacity: "1,400" },
+  { name: "Podcast Lounge", icon: "🎙️", capacity: "860" },
+  { name: "VIP Lounge", icon: "✨", capacity: "320" },
+  { name: "Magic Theater", icon: "🎩", capacity: "980" },
+  { name: "Food Hall", icon: "🍔", capacity: "4,500" },
+];
+
+export const EVENT_LISTINGS = [
+  { title: "Comedy Night", time: "8:00 PM", viewers: 2_840, category: "Comedy" },
+  { title: "Battle of the Bands", time: "9:30 PM", viewers: 4_120, category: "Music" },
+  { title: "Country Music Live", time: "8:30 PM", viewers: 3_580, category: "Country" },
+  { title: "Food Festival", time: "5:00 PM", viewers: 5_400, category: "Food" },
+  { title: "Podcast Live", time: "6:00 PM", viewers: 2_890, category: "Podcast" },
+  { title: "Magic Showcase", time: "8:30 PM", viewers: 3_720, category: "Magic" },
+];
+
+export const BILLBOARD_MESSAGES = [
+  (company: string, arena: string) => ({ line1: "Welcome to", line2: arena, accent: true }),
+  (company: string) => ({ line1: "Tonight's Comedy Show", line2: `Presented by ${company}`, accent: false }),
+  (company: string) => ({ line1: "Thank you to our Arena Sponsor", line2: company, accent: true }),
+  (company: string, arena: string) => ({ line1: "Now Live on LiveCircuit", line2: arena, accent: false }),
+];
+
+export const ARENA_TIER_OPTIONS = [
+  {
+    id: "community",
+    name: "Community Arena",
+    tagline: "Perfect for Local Businesses",
+    monthlyVisitors: 15_000,
+    maxCapacity: 500,
+    investment: 2_500,
+    annualInvestment: 30_000,
+    status: "Available" as const,
+  },
+  {
+    id: "club",
+    name: "Club Arena",
+    tagline: "Growing Regional Brands",
+    monthlyVisitors: 76_000,
+    maxCapacity: 2_500,
+    investment: 6_250,
+    annualInvestment: 75_000,
+    status: "Available" as const,
+  },
+  {
+    id: "theater",
+    name: "Theater Arena",
+    tagline: "Mid-Market Companies",
+    monthlyVisitors: 200_000,
+    maxCapacity: 8_000,
+    investment: 16_500,
+    annualInvestment: 198_000,
+    status: "Premium" as const,
+  },
+  {
+    id: "arena",
+    name: "Arena",
+    tagline: "Major Regional Sponsors",
+    monthlyVisitors: 675_000,
+    maxCapacity: 25_000,
+    investment: 41_500,
+    annualInvestment: 498_000,
+    status: "Limited" as const,
+  },
+  {
+    id: "stadium",
+    name: "Stadium",
+    tagline: "National Brands",
+    monthlyVisitors: 1_500_000,
+    maxCapacity: 50_000,
+    investment: 100_000,
+    annualInvestment: 1_200_000,
+    status: "Limited" as const,
+  },
+];
+
+export const DASHBOARD_METRICS = [
+  { label: "Monthly Visitors", value: 182_000, format: "compact" as const },
+  { label: "Brand Impressions", value: 1_800_000, format: "compact" as const },
+  { label: "Ticket Sales", value: 24_800, format: "compact" as const },
+  { label: "Ad Clicks", value: 48_200, format: "compact" as const },
+  { label: "Average Attendance", value: 3_420, format: "number" as const },
+  { label: "Live Viewers", value: 14_287, format: "number" as const },
+];
+
+export const ANALYTICS_CHART_DATA = {
+  monthlyReach: [
+    { month: "Jan", value: 120 },
+    { month: "Feb", value: 145 },
+    { month: "Mar", value: 168 },
+    { month: "Apr", value: 182 },
+    { month: "May", value: 210 },
+    { month: "Jun", value: 235 },
+    { month: "Jul", value: 260 },
+  ],
+  liveViewers: [
+    { month: "Jan", value: 8.2 },
+    { month: "Feb", value: 9.1 },
+    { month: "Mar", value: 10.4 },
+    { month: "Apr", value: 11.8 },
+    { month: "May", value: 12.4 },
+    { month: "Jun", value: 12.9 },
+    { month: "Jul", value: 14.3 },
+  ],
+  ticketSales: [
+    { month: "Jan", value: 14 },
+    { month: "Feb", value: 17 },
+    { month: "Mar", value: 19 },
+    { month: "Apr", value: 21 },
+    { month: "May", value: 23 },
+    { month: "Jun", value: 24 },
+    { month: "Jul", value: 25 },
+  ],
+  adClicks: [
+    { month: "Jan", value: 28 },
+    { month: "Feb", value: 32 },
+    { month: "Mar", value: 36 },
+    { month: "Apr", value: 40 },
+    { month: "May", value: 44 },
+    { month: "Jun", value: 46 },
+    { month: "Jul", value: 48 },
+  ],
+  avgAttendance: [
+    { month: "Jan", value: 2.4 },
+    { month: "Feb", value: 2.7 },
+    { month: "Mar", value: 2.9 },
+    { month: "Apr", value: 3.1 },
+    { month: "May", value: 3.2 },
+    { month: "Jun", value: 3.3 },
+    { month: "Jul", value: 3.4 },
+  ],
+  brandImpressions: [
+    { month: "Jan", value: 1.2 },
+    { month: "Feb", value: 1.4 },
+    { month: "Mar", value: 1.5 },
+    { month: "Apr", value: 1.6 },
+    { month: "May", value: 1.7 },
+    { month: "Jun", value: 1.75 },
+    { month: "Jul", value: 1.8 },
+  ],
+};
+
+export const PROPOSAL_BENEFITS = [
+  "Permanent arena naming rights",
+  "Logo on every ticket & event page",
+  "Digital billboard placements",
+  "VIP lounge co-branding",
+  "Monthly analytics dashboard",
+  "Social media co-marketing",
+  "Search & discovery priority",
+  "Dedicated account manager",
+];
+
+export const WHY_LIVECIRCUIT = [
+  { title: "Brand Awareness", description: "Your name on a permanent virtual venue seen by millions of fans worldwide." },
+  { title: "Digital Exposure", description: "Billboards, banners, and pre-show placements across every live stream." },
+  { title: "Every Ticket Includes Sponsor", description: "Digital and printable tickets carry your logo and arena name." },
+  { title: "Every Event Displays Sponsor", description: "Lineup cards, replays, and event pages credit your brand." },
+  { title: "Sponsor Homepage", description: "Featured placement on the arena landing page fans bookmark." },
+  { title: "Search Visibility", description: "Fans discover your arena when searching cities, genres, and artists." },
+  { title: "Live Event Branding", description: "Lower-thirds, overlays, and stage backdrops during every show." },
+  { title: "Arena Naming Rights", description: "Official venue name — the address fans share and remember." },
+  { title: "VIP Events", description: "Exclusive sponsor lounges, meet-and-greets, and hospitality packages." },
+  { title: "Business Networking", description: "Connect with performers, venues, and enterprise partners on LiveCircuit." },
+];
+
+export const BRANDING_MOCKUP_TYPES = [
+  "Entrance Sign",
+  "Scoreboard",
+  "Digital Billboard",
+  "VIP Entrance",
+  "Parking Sign",
+  "Event Banner",
+  "Ticket",
+  "Website Header",
+  "Mobile App",
+] as const;
