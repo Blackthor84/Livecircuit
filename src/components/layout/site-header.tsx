@@ -4,6 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Menu, Radio } from "lucide-react";
 import { SignOutButton } from "@/components/auth/sign-out-button";
+import { HeaderNavLink } from "@/components/layout/header-nav-link";
 import { Button, buttonVariants } from "@/components/ui/button";
 import {
   Sheet,
@@ -17,9 +18,67 @@ import {
   type HeaderUser,
 } from "@/components/layout/site-header-user-menu";
 import { APP_NAME, ROUTES } from "@/lib/constants";
-import { getGuestAuthCTAs, getMainNav } from "@/lib/features/navigation";
+import { getBusinessNav, getGuestAuthCTAs, getMainNav } from "@/lib/features/navigation";
 import { getAccountMenuLinks } from "@/lib/features/account-menu";
 import { cn } from "@/lib/utils";
+
+function BusinessNavLinks({
+  pathname,
+  variant = "desktop",
+  onNavigate,
+}: {
+  pathname: string;
+  variant?: "desktop" | "mobile";
+  onNavigate?: () => void;
+}) {
+  const businessNav = getBusinessNav();
+
+  if (variant === "mobile") {
+    return (
+      <>
+        <p className="px-3 pt-4 text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+          Business
+        </p>
+        <div className="mx-1 space-y-2 rounded-xl border border-primary/20 bg-gradient-to-br from-primary/10 via-transparent to-amber-500/5 p-2">
+          {businessNav.map((item) => (
+            <HeaderNavLink
+              key={`${item.href}-${item.label}`}
+              href={item.href}
+              label={item.label}
+              icon={item.icon}
+              badge={item.badge}
+              description={item.description}
+              featured={item.featured}
+              pathname={pathname}
+              onNavigate={onNavigate}
+              showDescription
+              className="w-full rounded-lg px-3 py-3 text-lg"
+            />
+          ))}
+        </div>
+      </>
+    );
+  }
+
+  return (
+    <div className="flex items-center gap-1 border-l border-white/10 pl-2 ml-1">
+      <span className="hidden lg:inline px-2 text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+        Business
+      </span>
+      {businessNav.map((item) => (
+        <HeaderNavLink
+          key={`${item.href}-${item.label}`}
+          href={item.href}
+          label={item.label}
+          icon={item.icon}
+          badge={item.badge}
+          featured={item.featured}
+          pathname={pathname}
+        />
+      ))}
+    </div>
+  );
+}
 
 export function SiteHeader({ user }: { user: HeaderUser | null }) {
   const pathname = usePathname();
@@ -39,17 +98,15 @@ export function SiteHeader({ user }: { user: HeaderUser | null }) {
 
         <nav className="hidden items-center gap-1 md:flex" aria-label="Main">
           {nav.map((item) => (
-            <Link
+            <HeaderNavLink
               key={`${item.href}-${item.label}`}
               href={item.href}
-              className={cn(
-                "rounded-full px-4 py-2 text-sm transition-colors hover:bg-white/5",
-                pathname === item.href && "bg-white/10 text-foreground"
-              )}
-            >
-              {item.label}
-            </Link>
+              label={item.label}
+              icon={item.icon}
+              pathname={pathname}
+            />
           ))}
+          <BusinessNavLinks pathname={pathname} />
         </nav>
 
         <div className="flex items-center gap-2">
@@ -83,14 +140,16 @@ export function SiteHeader({ user }: { user: HeaderUser | null }) {
               </SheetHeader>
               <nav className="mt-8 flex flex-col gap-2" aria-label="Mobile">
                 {nav.map((item) => (
-                  <Link
+                  <HeaderNavLink
                     key={`${item.href}-${item.label}`}
                     href={item.href}
-                    className="rounded-lg px-3 py-2 text-lg hover:bg-white/5"
-                  >
-                    {item.label}
-                  </Link>
+                    label={item.label}
+                    icon={item.icon}
+                    pathname={pathname}
+                    className="rounded-lg px-3 py-2 text-lg"
+                  />
                 ))}
+                <BusinessNavLinks pathname={pathname} variant="mobile" />
                 {!user ? (
                   <>
                     <p className="px-3 pt-4 text-xs font-semibold uppercase tracking-wide text-muted-foreground">

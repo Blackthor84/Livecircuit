@@ -33,19 +33,59 @@ export const LIVE_ARENA_STATS = [
 export const INSIDE_ARENA_SECTIONS = [
   { name: "Main Stage", icon: "🎤", capacity: "8,200" },
   { name: "Comedy Stage", icon: "😂", capacity: "1,400" },
-  { name: "Podcast Lounge", icon: "🎙️", capacity: "860" },
+  { name: "Podcast Theater", icon: "🎙️", capacity: "860" },
+  { name: "Food Court", icon: "🍔", capacity: "4,500" },
   { name: "VIP Lounge", icon: "✨", capacity: "320" },
-  { name: "Magic Theater", icon: "🎩", capacity: "980" },
-  { name: "Food Hall", icon: "🍔", capacity: "4,500" },
+  { name: "Merch Area", icon: "🛍️", capacity: "2,100" },
+  { name: "Digital Directory", icon: "📺", capacity: "Always On" },
 ];
 
 export const EVENT_LISTINGS = [
   { title: "Comedy Night", time: "8:00 PM", viewers: 2_840, category: "Comedy" },
   { title: "Battle of the Bands", time: "9:30 PM", viewers: 4_120, category: "Music" },
-  { title: "Country Music Live", time: "8:30 PM", viewers: 3_580, category: "Country" },
+  { title: "Music Festival", time: "7:00 PM", viewers: 6_200, category: "Music" },
   { title: "Food Festival", time: "5:00 PM", viewers: 5_400, category: "Food" },
   { title: "Podcast Live", time: "6:00 PM", viewers: 2_890, category: "Podcast" },
   { title: "Magic Showcase", time: "8:30 PM", viewers: 3_720, category: "Magic" },
+];
+
+export const FAN_EXPERIENCE_TOUCHPOINTS = [
+  { name: "Mobile App", description: "Home screen, push alerts, and live notifications branded for your company." },
+  { name: "Website", description: "Arena homepage, event listings, and checkout flows carry your identity." },
+  { name: "Arena Directory", description: "Wayfinding kiosks and digital directories across every concourse." },
+  { name: "Event Search", description: "Search results and discovery rails highlight your sponsored venue." },
+  { name: "Interactive Map", description: "3D venue map with sponsor zones, lounges, and premium placements." },
+  { name: "Digital Tickets", description: "Mobile and printable tickets with logo, arena name, and sponsor lockup." },
+];
+
+export const INDUSTRIES = [
+  "Financial Services",
+  "Technology",
+  "Healthcare",
+  "Retail & Consumer",
+  "Automotive",
+  "Telecommunications",
+  "Energy & Utilities",
+  "Insurance",
+  "Real Estate",
+  "Hospitality",
+  "Media & Entertainment",
+  "Professional Services",
+  "Other",
+];
+
+export const NAMING_RIGHTS_BENEFITS = [
+  { title: "Permanent Venue Naming", description: "Your company name becomes the official venue identity fans remember and share." },
+  { title: "Homepage Placement", description: "Featured hero placement on the arena landing page and LiveCircuit discovery." },
+  { title: "Event Branding", description: "Every show, replay, and lineup card credits your brand as presenting sponsor." },
+  { title: "Digital Signage", description: "LED boards, concourse screens, and entrance displays across the venue." },
+  { title: "Tickets", description: "Digital and printable tickets include your logo and official arena naming." },
+  { title: "Streaming Exposure", description: "Lower-thirds, pre-roll, and stage backdrops on every live stream." },
+  { title: "Social Media", description: "Co-branded campaigns, highlight clips, and sponsor mentions to fan communities." },
+  { title: "VIP Hospitality", description: "Premium lounges, meet-and-greets, and executive hospitality packages." },
+  { title: "Executive Networking", description: "Curated introductions with artists, venues, and enterprise partners." },
+  { title: "Community Impact", description: "Local activations, charity nights, and regional brand goodwill programs." },
+  { title: "Brand Recognition", description: "Always-on impressions across search, discovery, and fan touchpoints." },
 ];
 
 export const BILLBOARD_MESSAGES = [
@@ -62,6 +102,7 @@ export const ARENA_TIER_OPTIONS = [
     tagline: "Perfect for Local Businesses",
     monthlyVisitors: 15_000,
     maxCapacity: 500,
+    annualEvents: 120,
     investment: 2_500,
     annualInvestment: 30_000,
     status: "Available" as const,
@@ -72,16 +113,18 @@ export const ARENA_TIER_OPTIONS = [
     tagline: "Growing Regional Brands",
     monthlyVisitors: 76_000,
     maxCapacity: 2_500,
+    annualEvents: 280,
     investment: 6_250,
     annualInvestment: 75_000,
     status: "Available" as const,
   },
   {
     id: "theater",
-    name: "Theater Arena",
+    name: "Theater",
     tagline: "Mid-Market Companies",
     monthlyVisitors: 200_000,
     maxCapacity: 8_000,
+    annualEvents: 520,
     investment: 16_500,
     annualInvestment: 198_000,
     status: "Premium" as const,
@@ -92,6 +135,7 @@ export const ARENA_TIER_OPTIONS = [
     tagline: "Major Regional Sponsors",
     monthlyVisitors: 675_000,
     maxCapacity: 25_000,
+    annualEvents: 840,
     investment: 41_500,
     annualInvestment: 498_000,
     status: "Limited" as const,
@@ -102,6 +146,7 @@ export const ARENA_TIER_OPTIONS = [
     tagline: "National Brands",
     monthlyVisitors: 1_500_000,
     maxCapacity: 50_000,
+    annualEvents: 1_200,
     investment: 100_000,
     annualInvestment: 1_200_000,
     status: "Limited" as const,

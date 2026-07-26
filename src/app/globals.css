@@ -148,6 +148,10 @@
   .glass-panel {
     @apply border border-white/10 bg-card/60 backdrop-blur-xl;
   }
+  html[data-sv-presentation="true"] header,
+  html[data-sv-presentation="true"] footer {
+    display: none !important;
+  }
   .venue-themed {
     --ring: var(--venue-primary, var(--ring));
   }

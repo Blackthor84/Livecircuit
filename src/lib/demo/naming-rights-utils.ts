@@ -1,4 +1,5 @@
 import { ARENA_TIER_OPTIONS } from "@/lib/demo/naming-rights-data";
+import { STATE_ECONOMIC_REGIONS } from "@/lib/demo/sponsor-visualizer-steps";
 
 export type BrandTheme = {
   initials: string;
@@ -31,27 +32,40 @@ function hashString(input: string): number {
   return Math.abs(hash);
 }
 
-export function getBrandTheme(companyName: string): BrandTheme {
+export function getBrandTheme(
+  companyName: string,
+  overrides?: { primary?: string; secondary?: string }
+): BrandTheme {
   const hue = hashString(companyName.toLowerCase() || "livecircuit") % 360;
+  const primary = overrides?.primary ?? `oklch(0.68 0.2 ${hue})`;
+  const secondary = overrides?.secondary ?? `oklch(0.52 0.16 ${(hue + 45) % 360})`;
   return {
     initials: getInitials(companyName),
     hue,
-    primary: `oklch(0.68 0.2 ${hue})`,
-    secondary: `oklch(0.52 0.16 ${(hue + 45) % 360})`,
+    primary,
+    secondary,
     gold: "oklch(0.78 0.14 85)",
-    gradient: `linear-gradient(135deg, oklch(0.68 0.2 ${hue}), oklch(0.52 0.16 ${(hue + 50) % 360}))`,
-    glow: `oklch(0.68 0.2 ${hue} / 0.35)`,
+    gradient: `linear-gradient(135deg, ${primary}, ${secondary})`,
+    glow: `${primary}59`,
   };
 }
 
-export function getArenaName(companyName: string): string {
+export function getArenaName(companyName: string, tierId?: string): string {
   const trimmed = companyName.trim();
-  if (!trimmed) return "Your Company Arena";
-  const lower = trimmed.toLowerCase();
-  if (lower.endsWith(" arena") || lower.endsWith(" stadium") || lower.endsWith(" theater")) {
-    return trimmed;
+  const company = trimmed || "Your Company";
+  const lower = company.toLowerCase();
+  if (lower.endsWith(" arena") || lower.endsWith(" stadium") || lower.endsWith(" theater") || lower.endsWith(" club")) {
+    return company;
   }
-  return `${trimmed} Arena`;
+  const suffix: Record<string, string> = {
+    community: "Community Arena",
+    club: "Club",
+    theater: "Theater",
+    arena: "Arena",
+    stadium: "Stadium",
+  };
+  const label = tierId ? suffix[tierId] : "Arena";
+  return label ? `${company} ${label}` : `${company} Arena`;
 }
 
 export function getDisplayCompany(companyName: string): string {
@@ -116,4 +130,79 @@ export function scaleStatsByTier<T extends { value: number; label: string }>(sta
 export function suggestTier(monthlyBudget: number) {
   const sorted = [...ARENA_TIER_OPTIONS].sort((a, b) => a.investment - b.investment);
   return sorted.find((t) => monthlyBudget <= t.investment * 1.5) ?? sorted[sorted.length - 1];
+}
+
+export type StateMarketData = {
+  state: string;
+  venues: number;
+  population: number;
+  annualVisitors: number;
+  sponsorshipOpportunities: number;
+  economicRegion: string;
+};
+
+export function getEconomicRegion(state: string): string {
+  return STATE_ECONOMIC_REGIONS[state] ?? "National";
+}
+
+export function getStateMarketData(state: string, population: number): StateMarketData {
+  const h = hashString(state);
+  const popFactor = population / 10_000_000;
+  const venues = Math.max(3, Math.round(4 + popFactor * 18 + (h % 7)));
+  const annualVisitors = Math.round(population * (0.08 + (h % 12) / 100));
+  const sponsorshipOpportunities = Math.max(2, Math.round(venues * (0.35 + (h % 5) / 10)));
+
+  return {
+    state,
+    venues,
+    population,
+    annualVisitors,
+    sponsorshipOpportunities,
+    economicRegion: getEconomicRegion(state),
+  };
+}
+
+export type RoiInputsV2 = {
+  monthlyBudget: number;
+  contractYears: number;
+  tierId: string;
+};
+
+export type RoiOutputsV2 = RoiOutputs & {
+  estimatedReach: number;
+  estimatedAnnualValue: number;
+  estimatedBrandExposure: number;
+};
+
+export function calculateRoiV2({ monthlyBudget, contractYears, tierId }: RoiInputsV2): RoiOutputsV2 {
+  const contractMonths = contractYears * 12;
+  const base = calculateRoi({ monthlyBudget, contractMonths, tierId });
+  const tier = ARENA_TIER_OPTIONS.find((t) => t.id === tierId) ?? ARENA_TIER_OPTIONS[2];
+  const estimatedReach = Math.round(tier.monthlyVisitors * (monthlyBudget / tier.investment));
+  const estimatedAnnualValue = Math.round(base.estimatedValue / contractYears);
+  const estimatedBrandExposure = Math.round(base.estimatedImpressions / contractYears);
+
+  return {
+    ...base,
+    estimatedReach,
+    estimatedAnnualValue,
+    estimatedBrandExposure,
+  };
+}
+
+export function buildExecutiveMetrics(tierId: string) {
+  const tier = ARENA_TIER_OPTIONS.find((t) => t.id === tierId) ?? ARENA_TIER_OPTIONS[2];
+  const m = tier.maxCapacity / 8_000;
+  const factor = Math.max(m, 0.15);
+
+  return [
+    { label: "Visitors", value: Math.round(tier.monthlyVisitors * factor), format: "compact" as const },
+    { label: "Attendance", value: Math.round(3_420 * factor), format: "number" as const },
+    { label: "Reach", value: Math.round(tier.monthlyVisitors * 12 * factor), format: "compact" as const },
+    { label: "Streaming Views", value: Math.round(840 * factor * 120), format: "compact" as const },
+    { label: "Social Impressions", value: Math.round(12_400 * factor), format: "compact" as const },
+    { label: "Brand Recognition", value: Math.round(78 + factor * 12), format: "number" as const },
+    { label: "Ticket Sales", value: Math.round(24_800 * factor), format: "compact" as const },
+    { label: "ROI", value: Math.round(240 + factor * 180), format: "number" as const },
+  ];
 }

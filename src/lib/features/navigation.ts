@@ -1,3 +1,5 @@
+import type { LucideIcon } from "lucide-react";
+import { Building2 } from "lucide-react";
 import { ROUTES } from "@/lib/constants";
 import type { UserRole } from "@/types/database";
 
@@ -10,7 +12,14 @@ export {
   roleBadgeClass,
 } from "@/lib/features/account-menu";
 
-export type NavItem = { href: string; label: string };
+export type NavItem = {
+  href: string;
+  label: string;
+  icon?: LucideIcon;
+  badge?: string;
+  description?: string;
+  featured?: boolean;
+};
 
 type NavUser = {
   role: UserRole;
@@ -40,6 +49,24 @@ export function getAuthenticatedNav(_user: NavUser): NavItem[] {
 
 export function getMainNav(user: NavUser): NavItem[] {
   return user ? getAuthenticatedNav(user) : getPublicNav();
+}
+
+/** Business & sponsorship links — always public. */
+export function getBusinessNav(): NavItem[] {
+  return [
+    {
+      href: ROUTES.namingRightsDemo,
+      label: "Sponsor Visualizer",
+      icon: Building2,
+      badge: "New",
+      description: "See your company sponsor a LiveCircuit venue in real time.",
+      featured: true,
+    },
+  ];
+}
+
+export function isNavItemActive(pathname: string, href: string): boolean {
+  return pathname === href || pathname.startsWith(`${href}/`);
 }
 
 export type AuthCTAItem = {

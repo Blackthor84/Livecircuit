@@ -7,10 +7,12 @@ import { cn } from "@/lib/utils";
 
 export function TicketMockup({
   arenaName,
+  companyName,
   theme,
   compact = false,
 }: {
   arenaName: string;
+  companyName?: string;
   theme: BrandTheme;
   compact?: boolean;
 }) {
@@ -30,6 +32,11 @@ export function TicketMockup({
         <div className="my-4 border-t border-dashed border-white/15" />
         <p className="text-center text-lg font-semibold tracking-wide">Admits One</p>
         <p className="mt-1 text-center text-xs text-muted-foreground">General Admission · Digital Ticket</p>
+        {companyName ? (
+          <p className="mt-2 text-center text-[10px] font-medium" style={{ color: theme.gold }}>
+            Presented by {companyName}
+          </p>
+        ) : null}
         <div className="mt-4 flex justify-center rounded-xl bg-white p-3">
           <QRCode value={`https://livecircuit.com/demo/${arenaName}`} size={80} />
         </div>

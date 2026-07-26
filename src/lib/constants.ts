@@ -40,6 +40,7 @@ export const ROUTES = {
   festivals: "/festivals",
   artistDashboard: "/artist/dashboard",
   artistProfile: (username: string) => `/${username}`,
+  namingRightsDemo: "/demo/naming-rights",
   admin: "/admin",
   adminVenues: "/admin/venues",
   venues: "/livecircuit/venues",

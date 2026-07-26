@@ -1,17 +1,20 @@
 import type { Metadata } from "next";
-import { NamingRightsDemo } from "@/components/demo/naming-rights/naming-rights-demo";
+import { APP_NAME } from "@/lib/constants";
+import { SponsorVisualizer } from "@/components/demo/naming-rights/sponsor-visualizer";
 
 export const metadata: Metadata = {
-  title: "Naming Rights Visualizer | LiveCircuit Sponsorship",
+  title: {
+    absolute: `Sponsor Visualizer | ${APP_NAME}`,
+  },
   description:
-    "Type your company name and instantly visualize your branded LiveCircuit arena — naming rights, billboards, tickets, analytics, and ROI.",
+    "Imagine your company's name on a LiveCircuit venue — enterprise sponsorship configurator with live personalization, executive flyover, and proposal generation.",
   openGraph: {
-    title: "See Your Brand Power the Future of Live Entertainment",
+    title: `Sponsor Visualizer | ${APP_NAME}`,
     description:
-      "Interactive sponsorship visualizer for enterprise partners considering LiveCircuit arena naming rights.",
+      "LiveCircuit Enterprise Edition — flagship sponsorship sales platform for Fortune 500 partners.",
   },
 };
 
-export default function NamingRightsDemoPage() {
-  return <NamingRightsDemo />;
+export default function SponsorVisualizerPage() {
+  return <SponsorVisualizer />;
 }

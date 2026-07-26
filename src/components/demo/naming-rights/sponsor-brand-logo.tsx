@@ -3,10 +3,12 @@ import type { BrandTheme } from "@/lib/demo/naming-rights-utils";
 
 export function SponsorBrandLogo({
   theme,
+  logoUrl,
   size = "md",
   className,
 }: {
   theme: BrandTheme;
+  logoUrl?: string | null;
   size?: "sm" | "md" | "lg" | "xl";
   className?: string;
 }) {
@@ -20,13 +22,18 @@ export function SponsorBrandLogo({
   return (
     <div
       className={cn(
-        "flex shrink-0 items-center justify-center border border-white/20 font-bold text-white shadow-lg backdrop-blur-sm",
+        "flex shrink-0 items-center justify-center overflow-hidden border border-white/20 font-bold text-white shadow-lg backdrop-blur-sm",
         sizes[size],
         className
       )}
-      style={{ background: theme.gradient }}
+      style={{ background: logoUrl ? undefined : theme.gradient }}
     >
-      {theme.initials}
+      {logoUrl ? (
+        // eslint-disable-next-line @next/next/no-img-element
+        <img src={logoUrl} alt="" className="size-full object-cover" />
+      ) : (
+        theme.initials
+      )}
     </div>
   );
 }

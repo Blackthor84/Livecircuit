@@ -6,8 +6,10 @@ import {
 } from "@/lib/features/account-menu";
 import {
   getAuthenticatedNav,
+  getBusinessNav,
   getGuestAuthCTAs,
   getPublicNav,
+  isNavItemActive,
 } from "@/lib/features/navigation";
 import { ADMIN_SECTIONS } from "@/lib/admin/sections";
 
@@ -38,6 +40,17 @@ describe("navigation", () => {
       "Following",
       "Notifications",
     ]);
+  });
+
+  it("shows business nav with sponsor visualizer", () => {
+    expect(getBusinessNav().map((i) => i.label)).toEqual(["Sponsor Visualizer"]);
+    expect(getBusinessNav()[0]?.href).toBe("/demo/naming-rights");
+    expect(getBusinessNav()[0]?.badge).toBe("New");
+  });
+
+  it("detects active nav items", () => {
+    expect(isNavItemActive("/demo/naming-rights", "/demo/naming-rights")).toBe(true);
+    expect(isNavItemActive("/discover", "/demo/naming-rights")).toBe(false);
   });
 });
 

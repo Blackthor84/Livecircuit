@@ -44,7 +44,7 @@ export function RoiCalculator({
         <div className="border-b border-white/10 p-6 sm:p-8 lg:border-b-0 lg:border-r">
           <h3 className="text-xl font-bold">ROI calculator</h3>
           <p className="mt-2 text-sm text-muted-foreground">
-            Estimate your exposure with demo projections — not a binding quote.
+            Estimate your exposure with visualizer projections — not a binding quote.
           </p>
           <div className="mt-6 space-y-5">
             <div className="space-y-2">
