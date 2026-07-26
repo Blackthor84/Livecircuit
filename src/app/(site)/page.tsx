@@ -7,10 +7,11 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { APP_TAGLINE, ROUTES } from "@/lib/constants";
 import { getFeaturedArtists, getPublishedTours, getUpcomingEvents } from "@/lib/data/queries";
 import { getPlatformHomepageSponsorBanner } from "@/lib/data/sponsors";
+import { getViewerFeatureAccess } from "@/lib/features/guard";
 import { formatCents } from "@/lib/format";
 import { VenueSponsorBanner } from "@/components/venues/venue-sponsor-banner";
 
-const features = [
+const marketingFeatures = [
   {
     icon: MapPin,
     title: "Fan heat maps",
@@ -34,12 +35,17 @@ const features = [
 ];
 
 export default async function HomePage() {
-  const [artists, tours, events, homepageSponsor] = await Promise.all([
+  const [artists, tours, events, homepageSponsor, featureAccess] = await Promise.all([
     getFeaturedArtists(4),
     getPublishedTours(3),
     getUpcomingEvents(4),
     getPlatformHomepageSponsorBanner(),
+    getViewerFeatureAccess(),
   ]);
+
+  const showWorld = featureAccess.canAccess("world_map");
+  const showSponsor = featureAccess.canAccess("sponsorships");
+  const showTicketing = featureAccess.canAccess("ticketing");
 
   return (
     <div className="gradient-mesh">
@@ -60,9 +66,11 @@ export default async function HomePage() {
               Find Artists
               <ArrowRight className="size-4" />
             </Button>
-            <Button size="lg" variant="secondary" href={ROUTES.world}>
-              Enter LiveCircuit World
-            </Button>
+            {showWorld ? (
+              <Button size="lg" variant="secondary" href={ROUTES.world}>
+                Enter LiveCircuit World
+              </Button>
+            ) : null}
             <Button size="lg" variant="outline" href="/register?role=artist">
               Become an Artist
             </Button>
@@ -71,7 +79,7 @@ export default async function HomePage() {
         <AnimatedGlobe />
       </section>
 
-      {homepageSponsor ? (
+      {homepageSponsor && showSponsor ? (
         <section className="mx-auto max-w-7xl px-4 pb-8 sm:px-6">
           <VenueSponsorBanner
             title={homepageSponsor.name}
@@ -87,7 +95,9 @@ export default async function HomePage() {
       <section className="mx-auto max-w-7xl px-4 py-16 sm:px-6">
         <h2 className="text-2xl font-semibold sm:text-3xl">Built for the new tour economy</h2>
         <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          {features.map((f) => (
+          {marketingFeatures
+            .filter((f) => (f.title === "Tickets & VIP" ? showTicketing : true))
+            .map((f) => (
             <Card key={f.title} className="glass-panel border-white/10">
               <CardHeader>
                 <f.icon className="size-8 text-primary" />
@@ -150,12 +160,20 @@ export default async function HomePage() {
                 </p>
               </div>
               <div className="flex items-center gap-3">
-                <span className="text-sm font-medium">
-                  {formatCents(event.tour_stops?.ticket_price_cents ?? 0)}
-                </span>
-                <Button size="sm" href={`/artists/${event.artists?.slug}/events/${event.slug}`}>
-                  Get tickets
-                </Button>
+                {showTicketing ? (
+                  <>
+                    <span className="text-sm font-medium">
+                      {formatCents(event.tour_stops?.ticket_price_cents ?? 0)}
+                    </span>
+                    <Button size="sm" href={`/artists/${event.artists?.slug}/events/${event.slug}`}>
+                      Get tickets
+                    </Button>
+                  </>
+                ) : (
+                  <Button size="sm" href={`/artists/${event.artists?.slug}/events/${event.slug}`}>
+                    View event
+                  </Button>
+                )}
               </div>
             </Card>
           ))}

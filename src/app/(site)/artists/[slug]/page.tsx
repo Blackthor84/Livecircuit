@@ -15,6 +15,7 @@ import {
 import { formatCents } from "@/lib/format";
 import { getSessionUser } from "@/lib/auth/session";
 import { isFollowingArtist } from "@/lib/data/profiles";
+import { getViewerFeatureAccess } from "@/lib/features/guard";
 
 type Props = { params: Promise<{ slug: string }> };
 
@@ -40,8 +41,11 @@ export default async function ArtistProfilePage({ params }: Props) {
   ]);
 
   const user = await getSessionUser();
-  const following =
-    user && artist.id ? await isFollowingArtist(user.id, artist.id) : false;
+  const [following, features] = await Promise.all([
+    user && artist.id ? isFollowingArtist(user.id, artist.id) : Promise.resolve(false),
+    getViewerFeatureAccess(),
+  ]);
+  const showMessages = features.canAccess("direct_messages");
 
   const banner =
     artist.banner_url ?? `https://picsum.photos/seed/${artist.slug}-banner/1600/500`;
@@ -67,7 +71,7 @@ export default async function ArtistProfilePage({ params }: Props) {
           </div>
           <div className="flex flex-wrap gap-2">
             <FollowButton artistId={artist.id} initialFollowing={following} disabled={!user} />
-            {user && artist.user_id !== user.id ? (
+            {user && artist.user_id !== user.id && showMessages ? (
               <MessageArtistButton artistId={artist.id} />
             ) : null}
             <Button variant="secondary" href={`/artists/${slug}/merch`}>

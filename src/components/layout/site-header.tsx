@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Menu, Radio, Search, Sparkles } from "lucide-react";
+import { Menu, Radio } from "lucide-react";
 import { Button, buttonVariants } from "@/components/ui/button";
 import {
   Sheet,
@@ -16,26 +16,12 @@ import {
   type HeaderUser,
 } from "@/components/layout/site-header-user-menu";
 import { APP_NAME, ROUTES } from "@/lib/constants";
+import { getMainNav } from "@/lib/features/navigation";
 import { cn } from "@/lib/utils";
-
-const nav = [
-  { href: ROUTES.world, label: "World" },
-  { href: ROUTES.discover, label: "Discover" },
-  { href: ROUTES.seasons, label: "Seasons" },
-  { href: ROUTES.festivals, label: "Festivals" },
-  { href: ROUTES.walkOfFame, label: "Walk of Fame" },
-  { href: ROUTES.awards, label: "Awards" },
-  { href: ROUTES.marketplace, label: "Marketplace" },
-  { href: ROUTES.localBusiness, label: "Local" },
-  { href: ROUTES.friends, label: "Friends" },
-  { href: ROUTES.venues, label: "Venues" },
-  { href: ROUTES.artists, label: "Artists" },
-  { href: "/tours", label: "Tours" },
-  { href: ROUTES.vip, label: "VIP" },
-];
 
 export function SiteHeader({ user }: { user: HeaderUser | null }) {
   const pathname = usePathname();
+  const nav = getMainNav(user);
 
   return (
     <header className="sticky top-0 z-50 border-b border-white/5 bg-background/80 backdrop-blur-xl">
@@ -63,23 +49,16 @@ export function SiteHeader({ user }: { user: HeaderUser | null }) {
         </nav>
 
         <div className="flex items-center gap-2">
-          <Button
-            variant="ghost"
-            size="icon-sm"
-            className="hidden sm:inline-flex"
-            href={ROUTES.search}
-            aria-label="Search"
-          >
-            <Search className="size-4" />
-          </Button>
           {!user && (
             <>
               <Button variant="outline" size="sm" className="hidden sm:inline-flex" href="/register?role=artist">
-                <Sparkles className="size-3.5" />
                 Become an Artist
               </Button>
               <Button size="sm" href={ROUTES.login}>
                 Sign in
+              </Button>
+              <Button variant="secondary" size="sm" className="hidden sm:inline-flex" href={ROUTES.register}>
+                Register
               </Button>
             </>
           )}
@@ -96,7 +75,7 @@ export function SiteHeader({ user }: { user: HeaderUser | null }) {
                 <SheetTitle>{APP_NAME}</SheetTitle>
               </SheetHeader>
               <nav className="mt-8 flex flex-col gap-2" aria-label="Mobile">
-                {[...nav, { href: ROUTES.search, label: "Search" }].map((item) => (
+                {nav.map((item) => (
                   <Link
                     key={item.href}
                     href={item.href}
@@ -105,7 +84,16 @@ export function SiteHeader({ user }: { user: HeaderUser | null }) {
                     {item.label}
                   </Link>
                 ))}
-                {user && (
+                {!user ? (
+                  <>
+                    <Link href={ROUTES.login} className="rounded-lg px-3 py-2 text-lg hover:bg-white/5">
+                      Sign in
+                    </Link>
+                    <Link href={ROUTES.register} className="rounded-lg px-3 py-2 text-lg hover:bg-white/5">
+                      Register
+                    </Link>
+                  </>
+                ) : (
                   <Link href={ROUTES.settings} className="rounded-lg px-3 py-2 text-lg hover:bg-white/5">
                     Settings
                   </Link>

@@ -2,6 +2,7 @@
 
 const AUTH_REQUIRED_PREFIXES = [
   "/dashboard",
+  "/following",
   "/settings",
   "/checkout",
   "/notifications",

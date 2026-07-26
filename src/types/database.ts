@@ -1,4 +1,4 @@
-export type UserRole = "fan" | "artist" | "admin";
+export type UserRole = "fan" | "artist" | "admin" | "super_admin";
 
 export type ArtistCategory =
   | "music"

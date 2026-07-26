@@ -17,6 +17,7 @@ import { getFriendsHubReport } from "@/lib/data/friends";
 import { getAchievementsReport } from "@/lib/data/achievements";
 import { getGamificationReport } from "@/lib/data/gamification";
 import { getCoinBalance } from "@/lib/data/coins";
+import { getViewerFeatureAccess } from "@/lib/features/guard";
 import { TicketQrDisplay } from "@/components/tickets/ticket-qr-display";
 import { formatCents } from "@/lib/format";
 import type { ArtistCategory } from "@/types/database";
@@ -25,6 +26,7 @@ export const metadata: Metadata = { title: "Dashboard" };
 
 export default async function FanDashboardPage() {
   const { user, profile } = await requireUserProfile();
+  const features = await getViewerFeatureAccess();
 
   const [following, tickets, orders, passport, venueCollection, friendsHub, coinBalance, achievements, gamification] =
     await Promise.all([
@@ -47,7 +49,7 @@ export default async function FanDashboardPage() {
       <p className="mt-2 text-muted-foreground">Tickets, follows, and purchase history.</p>
 
       <Suspense fallback={null}>
-        <CheckoutSuccessBanner />
+        {features.canAccess("ticketing") ? <CheckoutSuccessBanner /> : null}
       </Suspense>
 
       <div className="mt-8 grid gap-4 md:grid-cols-3">
@@ -111,18 +113,26 @@ export default async function FanDashboardPage() {
             <Button size="sm" variant="outline" href="/collections/venues">
               Venues
             </Button>
-            <Button size="sm" variant="outline" href="/friends">
-              Friends
-            </Button>
-            <Button size="sm" variant="outline" href="/gamification">
-              Gamification{gamification ? ` · Lv ${gamification.level}` : ""}
-            </Button>
-            <Button size="sm" variant="outline" href="/achievements">
-              Achievements{achievements ? ` (${achievements.totalEarned})` : ""}
-            </Button>
-            <Button size="sm" variant="outline" href="/coins">
-              Coins
-            </Button>
+            {features.canAccess("friend_system") ? (
+              <Button size="sm" variant="outline" href="/friends">
+                Friends
+              </Button>
+            ) : null}
+            {features.canAccess("gamification") ? (
+              <Button size="sm" variant="outline" href="/gamification">
+                Gamification{gamification ? ` · Lv ${gamification.level}` : ""}
+              </Button>
+            ) : null}
+            {features.canAccess("achievements") ? (
+              <Button size="sm" variant="outline" href="/achievements">
+                Achievements{achievements ? ` (${achievements.totalEarned})` : ""}
+              </Button>
+            ) : null}
+            {features.canAccess("coins") ? (
+              <Button size="sm" variant="outline" href="/coins">
+                Coins
+              </Button>
+            ) : null}
             {!profileComplete ? (
               <Button size="sm" variant="outline" href="/settings">
                 Complete profile
@@ -154,6 +164,7 @@ export default async function FanDashboardPage() {
         </CardContent>
       </Card>
 
+      {features.canAccess("friend_system") ? (
       <Card className="glass-panel mt-6 border-white/10">
         <CardHeader className="flex flex-row items-center justify-between space-y-0">
           <CardTitle>Friends</CardTitle>
@@ -178,7 +189,9 @@ export default async function FanDashboardPage() {
           ) : null}
         </CardContent>
       </Card>
+      ) : null}
 
+      {features.canAccess("coins") ? (
       <Card className="glass-panel mt-6 border-white/10">
         <CardHeader className="flex flex-row items-center justify-between space-y-0">
           <CardTitle>LiveCircuit Coins</CardTitle>
@@ -191,6 +204,7 @@ export default async function FanDashboardPage() {
           <p className="text-sm text-muted-foreground">Earn from shows, reviews, seasons, and daily login.</p>
         </CardContent>
       </Card>
+      ) : null}
 
       <section className="mt-10">
         <div className="flex items-center justify-between">

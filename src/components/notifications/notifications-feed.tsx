@@ -15,9 +15,11 @@ import { cn } from "@/lib/utils";
 export function NotificationsFeed({
   userId,
   initial,
+  showMessagesLink = false,
 }: {
   userId: string;
   initial: UserNotification[];
+  showMessagesLink?: boolean;
 }) {
   const notifications = useNotificationsRealtime(userId, initial);
   async function markRead(id: string) {
@@ -85,11 +87,13 @@ export function NotificationsFeed({
           </li>
         ))}
       </ul>
-      <p className="text-center text-xs text-muted-foreground">
-        <Link href="/messages" className="text-primary hover:underline">
-          View messages
-        </Link>
-      </p>
+      {showMessagesLink ? (
+        <p className="text-center text-xs text-muted-foreground">
+          <Link href="/messages" className="text-primary hover:underline">
+            View messages
+          </Link>
+        </p>
+      ) : null}
     </div>
   );
 }

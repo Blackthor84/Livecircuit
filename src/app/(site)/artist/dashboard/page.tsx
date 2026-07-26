@@ -9,6 +9,7 @@ import { ArtistToursList } from "@/components/artist/artist-tours-list";
 import { ArtistUpcomingEvents } from "@/components/artist/artist-upcoming-events";
 import { ArtistMomentumSummary } from "@/components/artist/artist-momentum-dashboard";
 import { getArtistMomentumForUser } from "@/lib/data/artist-momentum";
+import { getViewerFeatureAccess } from "@/lib/features/guard";
 import { listArtistUpcomingEvents } from "@/lib/data/artist-events";
 import { ROUTES } from "@/lib/constants";
 import { redirect } from "next/navigation";
@@ -16,7 +17,7 @@ import { redirect } from "next/navigation";
 export const metadata: Metadata = { title: "Artist dashboard" };
 
 export default async function ArtistDashboardPage() {
-  await requireRoles(["artist", "admin"], "/register?role=artist");
+  await requireRoles(["artist", "admin", "super_admin"], "/register?role=artist");
 
   const user = await getSessionUser();
   if (!user) redirect("/login");
@@ -24,11 +25,12 @@ export default async function ArtistDashboardPage() {
   const artist = await getArtistForUser(user.id);
   if (!artist) redirect("/artist/settings");
 
-  const [analytics, tours, momentumPayload, upcomingEvents] = await Promise.all([
+  const [analytics, tours, momentumPayload, upcomingEvents, features] = await Promise.all([
     getArtistDashboardAnalytics(artist.id, artist.slug),
     listArtistTours(artist.id),
     getArtistMomentumForUser(user.id),
     listArtistUpcomingEvents(artist.id),
+    getViewerFeatureAccess(),
   ]);
 
   return (
@@ -54,9 +56,11 @@ export default async function ArtistDashboardPage() {
           <Button variant="outline" href="/artist/tour-planner">
             AI Tour Planner
           </Button>
-          <Button variant="outline" href="/marketplace">
-            Hire creators
-          </Button>
+          {features.canAccess("creator_marketplace") ? (
+            <Button variant="outline" href="/marketplace">
+              Hire creators
+            </Button>
+          ) : null}
           <Button variant="outline" href="/artist/tours/new">
             Create tour
           </Button>

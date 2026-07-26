@@ -7,6 +7,7 @@ import { LiveEventExperience } from "@/components/live/live-event-experience";
 import { Button } from "@/components/ui/button";
 import { getLiveAccessForEvent } from "@/lib/actions/live-event";
 import { getEventBySlug } from "@/lib/data/queries";
+import { getViewerFeatureAccess } from "@/lib/features/guard";
 import { formatCents } from "@/lib/format";
 import { buildEventLobbyContent } from "@/lib/live/lobby";
 import { parseStreamMetadata } from "@/lib/streaming/stream-metadata";
@@ -32,6 +33,8 @@ export default async function LiveEventPage({ params }: Props) {
     status: event.status as string,
     scheduled_at: event.scheduled_at,
   });
+  const features = await getViewerFeatureAccess();
+  const showTicketing = features.canAccess("ticketing");
 
   const streams = Array.isArray(event.streams) ? event.streams[0] : event.streams;
   const lobby = buildEventLobbyContent({
@@ -66,16 +69,20 @@ export default async function LiveEventPage({ params }: Props) {
           ) : null}
         </div>
         <div className="flex flex-wrap gap-2">
-          <Button variant="secondary" href={`/checkout?type=tip&event=${event.id}&artist=${slug}`}>
-            Tip artist
-          </Button>
-          <Button variant="outline" href={`/checkout?event=${event.id}&type=ticket`}>
-            Tickets {formatCents(price)}
-          </Button>
-          {vipPrice && vipPrice > 0 ? (
-            <Button variant="outline" href={`/checkout?event=${event.id}&type=ticket&tier=vip`}>
-              VIP {formatCents(vipPrice)}
-            </Button>
+          {showTicketing ? (
+            <>
+              <Button variant="secondary" href={`/checkout?type=tip&event=${event.id}&artist=${slug}`}>
+                Tip artist
+              </Button>
+              <Button variant="outline" href={`/checkout?event=${event.id}&type=ticket`}>
+                Tickets {formatCents(price)}
+              </Button>
+              {vipPrice && vipPrice > 0 ? (
+                <Button variant="outline" href={`/checkout?event=${event.id}&type=ticket&tier=vip`}>
+                  VIP {formatCents(vipPrice)}
+                </Button>
+              ) : null}
+            </>
           ) : null}
           <Button href={`/artists/${slug}/merch`}>Merch</Button>
         </div>
@@ -91,7 +98,7 @@ export default async function LiveEventPage({ params }: Props) {
         initialStatus={event.status as EventStatus}
         initialAccess={access}
         lobby={lobby}
-        checkoutHref={`/checkout?event=${event.id}&type=ticket`}
+        checkoutHref={showTicketing ? `/checkout?event=${event.id}&type=ticket` : undefined}
       />
     </div>
   );
