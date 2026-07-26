@@ -71,43 +71,41 @@ export async function getAdminPlatformOverview(): Promise<AdminPlatformOverview>
   }
 
   const supabase = await createClient();
-  const since30d = new Date(Date.now() - 30 * 24 * 60 * 60 * 1000).toISOString();
   const months = lastMonths(6);
+
+  const sinceToday = new Date();
+  sinceToday.setHours(0, 0, 0, 0);
+  const sinceTodayIso = sinceToday.toISOString();
 
   const [
     profilesRes,
     artistsRes,
-    fansRes,
     liveEventsRes,
-    tickets30Res,
-    orders30Res,
-    reactions30Res,
-    chat30Res,
+    upcomingEventsRes,
+    venuesRes,
+    toursRes,
     followersRes,
+    messagesTodayRes,
     observersRes,
     profilesRecentRes,
     ordersRecentRes,
     ticketsRecentRes,
     chatRecentRes,
     queueData,
+    entityCounts,
   ] = await Promise.all([
     supabase.from("profiles").select("id", { count: "exact", head: true }),
     supabase.from("artists").select("id", { count: "exact", head: true }),
-    supabase.from("profiles").select("id", { count: "exact", head: true }).eq("role", "fan"),
     supabase.from("events").select("viewer_count").eq("status", "live"),
-    supabase.from("tickets").select("id", { count: "exact", head: true }).gte("created_at", since30d),
-    supabase
-      .from("orders")
-      .select("total_cents")
-      .eq("status", "paid")
-      .gte("created_at", since30d),
-    supabase.from("reactions").select("id", { count: "exact", head: true }).gte("created_at", since30d),
+    supabase.from("events").select("id", { count: "exact", head: true }).eq("status", "scheduled"),
+    supabase.from("venues").select("id", { count: "exact", head: true }),
+    supabase.from("tours").select("id", { count: "exact", head: true }),
+    supabase.from("followers").select("id", { count: "exact", head: true }),
     supabase
       .from("chat_messages")
       .select("id", { count: "exact", head: true })
       .eq("is_deleted", false)
-      .gte("created_at", since30d),
-    supabase.from("followers").select("id", { count: "exact", head: true }),
+      .gte("created_at", sinceTodayIso),
     countActiveObservers(),
     supabase.from("profiles").select("created_at").gte("created_at", months[0]!.toISOString()),
     supabase
@@ -122,13 +120,13 @@ export async function getAdminPlatformOverview(): Promise<AdminPlatformOverview>
       .eq("is_deleted", false)
       .gte("created_at", months[0]!.toISOString()),
     getAdminDashboardData(),
+    getAdminEntityCounts(),
   ]);
 
   const concurrentViewers = (liveEventsRes.data ?? []).reduce(
     (sum, row) => sum + ((row.viewer_count as number) ?? 0),
     0
   );
-  const gmv30 = (orders30Res.data ?? []).reduce((sum, row) => sum + (row.total_cents as number), 0);
 
   const bucket = (rows: { created_at: string }[], valueFn?: (row: { created_at: string }) => number) => {
     const map = new Map<string, number>();
@@ -163,30 +161,35 @@ export async function getAdminPlatformOverview(): Promise<AdminPlatformOverview>
     return { label: key, value: chat + tickets };
   });
 
+  const signupTrend = bucket(profilesRecentRes.data ?? []);
+  const latestSignup = signupTrend.at(-1)?.value ?? 0;
+  const previousSignup = signupTrend.at(-2)?.value ?? 0;
+  const growthPct =
+    previousSignup > 0
+      ? `${Math.round(((latestSignup - previousSignup) / previousSignup) * 100)}%`
+      : latestSignup > 0
+        ? "New"
+        : "0%";
+
   return {
     kpis: [
-      { label: "Total users", value: String(profilesRes.count ?? 0) },
+      { label: "Total Users", value: String(profilesRes.count ?? 0) },
+      { label: "Users Online", value: String(concurrentViewers + observersRes) },
       { label: "Artists", value: String(artistsRes.count ?? 0) },
-      { label: "Fans", value: String(fansRes.count ?? 0) },
-      { label: "Live concurrent viewers", value: String(concurrentViewers) },
-      { label: "Ticket sales (30d)", value: String(tickets30Res.count ?? 0) },
-      { label: "Platform GMV (30d)", value: `$${(gmv30 / 100).toLocaleString()}` },
-      { label: "Reactions (30d)", value: String(reactions30Res.count ?? 0) },
-      { label: "Chat messages (30d)", value: String(chat30Res.count ?? 0) },
-      { label: "Follows (all time)", value: String(followersRes.count ?? 0) },
-      { label: "Active observers", value: String(observersRes) },
+      { label: "Live Events", value: String(entityCounts.liveEvents) },
+      { label: "Upcoming Events", value: String(upcomingEventsRes.count ?? 0) },
+      { label: "Venues", value: String(venuesRes.count ?? 0) },
+      { label: "Tours", value: String(toursRes.count ?? 0) },
+      { label: "Followers", value: String(followersRes.count ?? 0) },
+      { label: "Messages Today", value: String(messagesTodayRes.count ?? 0) },
+      { label: "Reports", value: String(queueData.reports.length) },
       {
-        label: "Watch time (30d)",
+        label: "Average Watch Time",
         value: "Pipeline pending",
         status: "todo",
         hint: "Wire analytics_events session_duration",
       },
-      {
-        label: "Retention (30d)",
-        value: "Pipeline pending",
-        status: "todo",
-        hint: "Requires cohort rollup job",
-      },
+      { label: "Growth", value: growthPct, hint: "Month-over-month signups" },
     ],
     health,
     queues: {
@@ -194,11 +197,63 @@ export async function getAdminPlatformOverview(): Promise<AdminPlatformOverview>
       openReports: queueData.reports.length,
       paidOrders: queueData.orders.length,
     },
-    signupTrend: bucket(profilesRecentRes.data ?? []),
+    signupTrend,
     revenueTrend,
     engagementTrend,
     todos,
   };
+}
+
+export async function getAdminOverviewKpis(): Promise<AdminKpi[]> {
+  if (!isSupabaseConfigured()) {
+    return [
+      { label: "Total Users", value: "—", status: "todo", hint: "Connect Supabase" },
+      { label: "Users Online", value: "—", status: "todo" },
+      { label: "Artists", value: "—", status: "todo" },
+      { label: "Live Events", value: "—", status: "todo" },
+      { label: "Current Viewers", value: "—", status: "todo" },
+      { label: "Venues", value: "—", status: "todo" },
+      { label: "Tours", value: "—", status: "todo" },
+      { label: "Messages Today", value: "—", status: "todo" },
+      { label: "Reports Waiting", value: "—", status: "todo" },
+    ];
+  }
+
+  const supabase = await createClient();
+  const sinceToday = new Date();
+  sinceToday.setHours(0, 0, 0, 0);
+
+  const [profilesRes, artistsRes, liveEventsRes, venuesRes, toursRes, messagesTodayRes, queueData, observersRes] =
+    await Promise.all([
+      supabase.from("profiles").select("id", { count: "exact", head: true }),
+      supabase.from("artists").select("id", { count: "exact", head: true }),
+      supabase.from("events").select("viewer_count").eq("status", "live"),
+      supabase.from("venues").select("id", { count: "exact", head: true }),
+      supabase.from("tours").select("id", { count: "exact", head: true }),
+      supabase
+        .from("chat_messages")
+        .select("id", { count: "exact", head: true })
+        .eq("is_deleted", false)
+        .gte("created_at", sinceToday.toISOString()),
+      getAdminDashboardData(),
+      countActiveObservers(),
+    ]);
+
+  const liveEvents = liveEventsRes.data ?? [];
+  const currentViewers = liveEvents.reduce((sum, row) => sum + ((row.viewer_count as number) ?? 0), 0);
+  const usersOnline = currentViewers + observersRes;
+
+  return [
+    { label: "Total Users", value: String(profilesRes.count ?? 0) },
+    { label: "Users Online", value: String(usersOnline), hint: "Live viewers + observers" },
+    { label: "Artists", value: String(artistsRes.count ?? 0) },
+    { label: "Live Events", value: String(liveEvents.length) },
+    { label: "Current Viewers", value: String(currentViewers) },
+    { label: "Venues", value: String(venuesRes.count ?? 0) },
+    { label: "Tours", value: String(toursRes.count ?? 0) },
+    { label: "Messages Today", value: String(messagesTodayRes.count ?? 0) },
+    { label: "Reports Waiting", value: String(queueData.reports.length) },
+  ];
 }
 
 export async function getAdminEntityCounts() {

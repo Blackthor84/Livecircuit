@@ -17,13 +17,15 @@ import {
   type HeaderUser,
 } from "@/components/layout/site-header-user-menu";
 import { APP_NAME, ROUTES } from "@/lib/constants";
-import { getMainNav, getUserMenuItems } from "@/lib/features/navigation";
+import { getGuestAuthCTAs, getMainNav } from "@/lib/features/navigation";
+import { getAccountMenuLinks } from "@/lib/features/account-menu";
 import { cn } from "@/lib/utils";
 
 export function SiteHeader({ user }: { user: HeaderUser | null }) {
   const pathname = usePathname();
   const nav = getMainNav(user);
-  const profileMenuItems = user ? getUserMenuItems(user) : [];
+  const guestCtas = getGuestAuthCTAs();
+  const profileMenuItems = user ? getAccountMenuLinks(user) : [];
 
   return (
     <header className="sticky top-0 z-50 border-b border-white/5 bg-background/80 backdrop-blur-xl">
@@ -53,12 +55,17 @@ export function SiteHeader({ user }: { user: HeaderUser | null }) {
         <div className="flex items-center gap-2">
           {!user ? (
             <>
-              <Button variant="outline" size="sm" className="hidden sm:inline-flex" href={ROUTES.login}>
-                Sign In
-              </Button>
-              <Button size="sm" href={ROUTES.register}>
-                Create Account
-              </Button>
+              {guestCtas.map((item) => (
+                <Button
+                  key={item.label}
+                  size="sm"
+                  variant={item.variant ?? "default"}
+                  href={item.href}
+                  className={cn(item.label === "Create Account" && "hidden sm:inline-flex")}
+                >
+                  {item.label}
+                </Button>
+              ))}
             </>
           ) : (
             <SiteHeaderUserMenu user={user} />
@@ -86,12 +93,18 @@ export function SiteHeader({ user }: { user: HeaderUser | null }) {
                 ))}
                 {!user ? (
                   <>
-                    <Link href={ROUTES.login} className="rounded-lg px-3 py-2 text-lg hover:bg-white/5">
-                      Sign In
-                    </Link>
-                    <Link href={ROUTES.register} className="rounded-lg px-3 py-2 text-lg hover:bg-white/5">
-                      Create Account
-                    </Link>
+                    <p className="px-3 pt-4 text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+                      Get Started
+                    </p>
+                    {guestCtas.map((item) => (
+                      <Link
+                        key={item.label}
+                        href={item.href}
+                        className="rounded-lg px-3 py-2 text-lg hover:bg-white/5"
+                      >
+                        {item.label}
+                      </Link>
+                    ))}
                   </>
                 ) : (
                   <>

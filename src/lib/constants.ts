@@ -31,6 +31,7 @@ export const ROUTES = {
   register: "/register",
   forgotPassword: "/forgot-password",
   settings: "/settings",
+  profile: "/profile",
   notifications: "/notifications",
   messages: "/messages",
   dashboard: "/dashboard",

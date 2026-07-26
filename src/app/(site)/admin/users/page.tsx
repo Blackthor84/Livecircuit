@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { AdminCommandShell } from "@/components/admin/command-center/admin-command-shell";
+import { AdminPageHeader } from "@/components/admin/command-center/admin-dashboard-layout";
 import { AdminEntityTable } from "@/components/admin/command-center/admin-entity-table";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { listAdminUsers } from "@/lib/data/admin-entities";
@@ -10,7 +10,8 @@ export default async function AdminUsersPage() {
   const users = await listAdminUsers(100);
 
   return (
-    <AdminCommandShell title="Users" subtitle="All platform accounts by role and signup date.">
+    <>
+      <AdminPageHeader title="Users" subtitle="All platform accounts by role and signup date." />
       <Card className="glass-panel border-white/10">
         <CardHeader>
           <CardTitle>Recent users ({users.length})</CardTitle>
@@ -45,6 +46,6 @@ export default async function AdminUsersPage() {
           />
         </CardContent>
       </Card>
-    </AdminCommandShell>
+    </>
   );
 }

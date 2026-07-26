@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { AdminCommandShell } from "@/components/admin/command-center/admin-command-shell";
+import { AdminPageHeader } from "@/components/admin/command-center/admin-dashboard-layout";
 import { AdminTodoPanel } from "@/components/admin/command-center/admin-todo-panel";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
@@ -30,10 +30,8 @@ const PLACEHOLDER_INSIGHTS = [
 
 export default async function AdminAiInsightsPage() {
   return (
-    <AdminCommandShell
-      title="AI Insights"
-      subtitle="Executive intelligence layer — placeholders until analytics pipelines feed the model."
-    >
+    <>
+      <AdminPageHeader title="AI Insights" subtitle="Executive intelligence layer — placeholders until analytics pipelines feed the model." />
       <div className="space-y-8">
         <div className="grid gap-4 md:grid-cols-2">
           {PLACEHOLDER_INSIGHTS.map((insight) => (
@@ -59,6 +57,6 @@ export default async function AdminAiInsightsPage() {
           ]}
         />
       </div>
-    </AdminCommandShell>
+    </>
   );
 }

@@ -1,6 +1,15 @@
 import { ROUTES } from "@/lib/constants";
 import type { UserRole } from "@/types/database";
 
+export type { AccountMenuItem, AccountMenuSection } from "@/lib/features/account-menu";
+export {
+  formatRoleBadge,
+  getAccountMenuLinks,
+  getAccountMenuSections,
+  getUserMenuItems,
+  roleBadgeClass,
+} from "@/lib/features/account-menu";
+
 export type NavItem = { href: string; label: string };
 
 type NavUser = {
@@ -18,7 +27,7 @@ export function getPublicNav(): NavItem[] {
   ];
 }
 
-/** Logged-in main navigation (profile menu is separate). */
+/** Logged-in main navigation (account menu is separate). */
 export function getAuthenticatedNav(_user: NavUser): NavItem[] {
   return [
     { href: ROUTES.home, label: "Home" },
@@ -33,28 +42,17 @@ export function getMainNav(user: NavUser): NavItem[] {
   return user ? getAuthenticatedNav(user) : getPublicNav();
 }
 
-export type UserMenuItem = { href: string; label: string };
+export type AuthCTAItem = {
+  href: string;
+  label: string;
+  variant?: "default" | "outline" | "secondary";
+};
 
-export function getUserMenuItems(user: { role: UserRole }): UserMenuItem[] {
-  const items: UserMenuItem[] = [
-    { href: ROUTES.settings, label: "My Profile" },
-    { href: ROUTES.settings, label: "Settings" },
+/** Guest-only auth calls-to-action (header, footer, mobile menu). */
+export function getGuestAuthCTAs(): AuthCTAItem[] {
+  return [
+    { href: ROUTES.register, label: "Get Started", variant: "default" },
+    { href: ROUTES.register, label: "Create Account", variant: "secondary" },
+    { href: ROUTES.login, label: "Sign In", variant: "outline" },
   ];
-
-  if (user.role === "artist") {
-    items.push(
-      { href: ROUTES.artistDashboard, label: "Artist Dashboard" },
-      { href: ROUTES.artistEventsNew, label: "Create Event" }
-    );
-  }
-
-  if (user.role === "admin") {
-    items.push({ href: ROUTES.admin, label: "Admin Dashboard" });
-  }
-
-  if (user.role === "super_admin") {
-    items.push({ href: ROUTES.admin, label: "Command Center" });
-  }
-
-  return items;
 }

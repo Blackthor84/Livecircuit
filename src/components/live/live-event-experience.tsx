@@ -28,6 +28,7 @@ type Props = {
   lobby?: EventLobbyContent | null;
   checkoutHref?: string;
   loginHref?: string;
+  userSignedIn?: boolean;
 };
 
 export function LiveEventExperience({
@@ -38,6 +39,7 @@ export function LiveEventExperience({
   lobby,
   checkoutHref,
   loginHref = "/login",
+  userSignedIn = false,
 }: Props) {
   const [access, setAccess] = useState(initialAccess);
   const [secondsLeft, setSecondsLeft] = useState(initialAccess.secondsUntilStart);
@@ -134,9 +136,11 @@ export function LiveEventExperience({
         {access.mode === "denied" && access.message ? (
           <div className="flex flex-wrap gap-2">
             {checkoutHref ? <Button href={checkoutHref}>Get tickets</Button> : null}
-            <Button variant="outline" href={loginHref}>
-              Sign in
-            </Button>
+            {!userSignedIn ? (
+              <Button variant="outline" href={loginHref}>
+                Sign In
+              </Button>
+            ) : null}
           </div>
         ) : null}
       </div>

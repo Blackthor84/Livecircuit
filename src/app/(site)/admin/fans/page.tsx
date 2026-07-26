@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { AdminCommandShell } from "@/components/admin/command-center/admin-command-shell";
+import { AdminPageHeader } from "@/components/admin/command-center/admin-dashboard-layout";
 import { AdminEntityTable } from "@/components/admin/command-center/admin-entity-table";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { listAdminFans } from "@/lib/data/admin-entities";
@@ -10,7 +10,8 @@ export default async function AdminFansPage() {
   const fans = await listAdminFans(100);
 
   return (
-    <AdminCommandShell title="Fans" subtitle="Fan accounts and onboarding status. Use Analytics for segmentation.">
+    <>
+      <AdminPageHeader title="Fans" subtitle="Fan accounts and onboarding status. Use Analytics for segmentation." />
       <Card className="glass-panel border-white/10">
         <CardHeader>
           <CardTitle>Fans ({fans.length})</CardTitle>
@@ -44,6 +45,6 @@ export default async function AdminFansPage() {
           />
         </CardContent>
       </Card>
-    </AdminCommandShell>
+    </>
   );
 }

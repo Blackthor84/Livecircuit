@@ -4,7 +4,7 @@ import {
   AdminRefundsPanel,
   AdminVerificationPanel,
 } from "@/components/admin/admin-panels";
-import { AdminCommandShell } from "@/components/admin/command-center/admin-command-shell";
+import { AdminPageHeader } from "@/components/admin/command-center/admin-dashboard-layout";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { getAdminDashboardData } from "@/lib/data/admin";
 
@@ -14,10 +14,8 @@ export default async function AdminModerationPage() {
   const { verifications, reports, orders } = await getAdminDashboardData();
 
   return (
-    <AdminCommandShell
-      title="Moderation"
-      subtitle="Verification queue, user reports, and refund operations."
-    >
+    <>
+      <AdminPageHeader title="Moderation" subtitle="Verification queue, user reports, and refund operations." />
       <div className="grid gap-6 lg:grid-cols-2">
         <Card className="glass-panel border-white/10">
           <CardHeader>
@@ -44,6 +42,6 @@ export default async function AdminModerationPage() {
           <AdminRefundsPanel items={orders} />
         </CardContent>
       </Card>
-    </AdminCommandShell>
+    </>
   );
 }

@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { AdminCommandShell } from "@/components/admin/command-center/admin-command-shell";
+import { AdminPageHeader } from "@/components/admin/command-center/admin-dashboard-layout";
 import { AdminVenueListPanel } from "@/components/admin/venue-admin-list";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -11,10 +11,8 @@ export default async function AdminVenuesPage() {
   const venues = await listVenuesForAdmin();
 
   return (
-    <AdminCommandShell
-      title="Venues"
-      subtitle="Manage regional arenas, sponsorships, concourse, and seasonal themes."
-    >
+    <>
+      <AdminPageHeader title="Venues" subtitle="Manage regional arenas, sponsorships, concourse, and seasonal themes." />
       <div className="mb-6 flex justify-end">
         <Button href="/admin/venues/new">New venue</Button>
       </div>
@@ -26,6 +24,6 @@ export default async function AdminVenuesPage() {
           <AdminVenueListPanel items={venues} />
         </CardContent>
       </Card>
-    </AdminCommandShell>
+    </>
   );
 }

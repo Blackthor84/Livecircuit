@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { AdminCommandShell } from "@/components/admin/command-center/admin-command-shell";
+import { AdminPageHeader } from "@/components/admin/command-center/admin-dashboard-layout";
 import { AdminEntityTable } from "@/components/admin/command-center/admin-entity-table";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -12,7 +12,8 @@ export default async function AdminToursPage() {
   const tours = await listAdminTours(100);
 
   return (
-    <AdminCommandShell title="Tours" subtitle="Multi-date tour packages and routing.">
+    <>
+      <AdminPageHeader title="Tours" subtitle="Multi-date tour packages and routing." />
       <Card className="glass-panel border-white/10">
         <CardHeader>
           <CardTitle>Tours ({tours.length})</CardTitle>
@@ -61,6 +62,6 @@ export default async function AdminToursPage() {
           />
         </CardContent>
       </Card>
-    </AdminCommandShell>
+    </>
   );
 }

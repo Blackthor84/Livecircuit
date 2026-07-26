@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { AdminCommandShell } from "@/components/admin/command-center/admin-command-shell";
+import { AdminPageHeader } from "@/components/admin/command-center/admin-dashboard-layout";
 import { AdminEntityTable } from "@/components/admin/command-center/admin-entity-table";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { listAdminArtists } from "@/lib/data/admin-entities";
@@ -11,7 +11,8 @@ export default async function AdminArtistsPage() {
   const artists = await listAdminArtists(100);
 
   return (
-    <AdminCommandShell title="Artists" subtitle="Artist roster, verification status, and audience reach.">
+    <>
+      <AdminPageHeader title="Artists" subtitle="Artist roster, verification status, and audience reach." />
       <Card className="glass-panel border-white/10">
         <CardHeader>
           <CardTitle>Artists ({artists.length})</CardTitle>
@@ -56,6 +57,6 @@ export default async function AdminArtistsPage() {
           />
         </CardContent>
       </Card>
-    </AdminCommandShell>
+    </>
   );
 }

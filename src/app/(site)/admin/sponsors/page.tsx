@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { AdminCommandShell } from "@/components/admin/command-center/admin-command-shell";
+import { AdminPageHeader } from "@/components/admin/command-center/admin-dashboard-layout";
 import { listSponsorOrganizationsAdmin } from "@/lib/data/sponsors";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -10,10 +10,8 @@ export default async function AdminSponsorsPage() {
   const orgs = await listSponsorOrganizationsAdmin();
 
   return (
-    <AdminCommandShell
-      title="Sponsorships"
-      subtitle="Sponsor organizations and venue contracts. Add members by profile UUID for dashboard access."
-    >
+    <>
+      <AdminPageHeader title="Sponsorships" subtitle="Sponsor organizations and venue contracts. Add members by profile UUID for dashboard access." />
       <div className="mb-6">
         <Button href="/admin/venues">Manage venues & contracts</Button>
       </div>
@@ -46,6 +44,6 @@ export default async function AdminSponsorsPage() {
           )}
         </CardContent>
       </Card>
-    </AdminCommandShell>
+    </>
   );
 }

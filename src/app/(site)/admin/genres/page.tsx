@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { AdminCommandShell } from "@/components/admin/command-center/admin-command-shell";
+import { AdminPageHeader } from "@/components/admin/command-center/admin-dashboard-layout";
 import { AdminEntityTable } from "@/components/admin/command-center/admin-entity-table";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { listAdminGenres } from "@/lib/data/admin-entities";
@@ -10,7 +10,8 @@ export default async function AdminGenresPage() {
   const genres = await listAdminGenres();
 
   return (
-    <AdminCommandShell title="Genres" subtitle="Genre taxonomy used for discovery and audience segmentation.">
+    <>
+      <AdminPageHeader title="Genres" subtitle="Genre taxonomy used for discovery and audience segmentation." />
       <Card className="glass-panel border-white/10">
         <CardHeader>
           <CardTitle>Genres ({genres.length})</CardTitle>
@@ -26,6 +27,6 @@ export default async function AdminGenresPage() {
           />
         </CardContent>
       </Card>
-    </AdminCommandShell>
+    </>
   );
 }

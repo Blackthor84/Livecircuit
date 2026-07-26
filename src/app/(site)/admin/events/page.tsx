@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { AdminCommandShell } from "@/components/admin/command-center/admin-command-shell";
+import { AdminPageHeader } from "@/components/admin/command-center/admin-dashboard-layout";
 import { AdminEntityTable } from "@/components/admin/command-center/admin-entity-table";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -12,7 +12,8 @@ export default async function AdminEventsPage() {
   const events = await listAdminEvents(100);
 
   return (
-    <AdminCommandShell title="Events" subtitle="Scheduled, live, and ended events with viewer metrics.">
+    <>
+      <AdminPageHeader title="Events" subtitle="Scheduled, live, and ended events with viewer metrics." />
       <Card className="glass-panel border-white/10">
         <CardHeader>
           <CardTitle>Events ({events.length})</CardTitle>
@@ -69,6 +70,6 @@ export default async function AdminEventsPage() {
           />
         </CardContent>
       </Card>
-    </AdminCommandShell>
+    </>
   );
 }

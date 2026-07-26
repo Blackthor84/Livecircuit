@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { AdminCommandShell } from "@/components/admin/command-center/admin-command-shell";
+import { AdminPageHeader } from "@/components/admin/command-center/admin-dashboard-layout";
 import { AdminTodoPanel } from "@/components/admin/command-center/admin-todo-panel";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { getAdminRevenueSummary } from "@/lib/data/admin-entities";
@@ -11,7 +11,8 @@ export default async function AdminRevenuePage() {
   const revenue = await getAdminRevenueSummary();
 
   return (
-    <AdminCommandShell title="Revenue" subtitle="Platform GMV, ticket volume, and tips from paid orders.">
+    <>
+      <AdminPageHeader title="Revenue" subtitle="Platform GMV, ticket volume, and tips from paid orders." />
       <div className="space-y-8">
         <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
           <Card className="glass-panel border-white/10">
@@ -77,6 +78,6 @@ export default async function AdminRevenuePage() {
           ]}
         />
       </div>
-    </AdminCommandShell>
+    </>
   );
 }

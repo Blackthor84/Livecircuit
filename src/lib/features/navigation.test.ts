@@ -1,9 +1,15 @@
 import { describe, expect, it } from "vitest";
 import {
+  formatRoleBadge,
+  getAccountMenuLinks,
+  getAccountMenuSections,
+} from "@/lib/features/account-menu";
+import {
   getAuthenticatedNav,
+  getGuestAuthCTAs,
   getPublicNav,
-  getUserMenuItems,
 } from "@/lib/features/navigation";
+import { ADMIN_SECTIONS } from "@/lib/admin/sections";
 
 describe("navigation", () => {
   it("shows public nav when logged out", () => {
@@ -16,6 +22,14 @@ describe("navigation", () => {
     ]);
   });
 
+  it("shows guest auth CTAs", () => {
+    expect(getGuestAuthCTAs().map((i) => i.label)).toEqual([
+      "Get Started",
+      "Create Account",
+      "Sign In",
+    ]);
+  });
+
   it("shows authenticated main nav", () => {
     expect(getAuthenticatedNav({ role: "fan" }).map((i) => i.label)).toEqual([
       "Home",
@@ -25,23 +39,52 @@ describe("navigation", () => {
       "Notifications",
     ]);
   });
+});
 
-  it("adds role-specific profile menu items", () => {
-    expect(getUserMenuItems({ role: "fan" }).map((i) => i.label)).toEqual([
-      "My Profile",
-      "Settings",
-    ]);
+describe("account menu phase 1", () => {
+  it("includes core links for all users", () => {
+    const labels = getAccountMenuLinks({ role: "fan" }).map((i) => i.label);
+    expect(labels).toEqual(["Profile", "Settings", "Notifications"]);
+  });
 
-    expect(getUserMenuItems({ role: "artist" }).map((i) => i.label)).toEqual([
-      "My Profile",
-      "Settings",
-      "Artist Dashboard",
-      "Create Event",
-    ]);
+  it("adds artist dashboard for artists", () => {
+    expect(getAccountMenuLinks({ role: "artist" }).map((i) => i.label)).toContain(
+      "Artist Dashboard"
+    );
+  });
 
-    expect(getUserMenuItems({ role: "admin" }).map((i) => i.label)).toContain("Admin Dashboard");
-    expect(getUserMenuItems({ role: "super_admin" }).map((i) => i.label)).toContain(
+  it("adds admin dashboard for admin", () => {
+    expect(getAccountMenuLinks({ role: "admin" }).map((i) => i.label)).toContain("Admin Dashboard");
+  });
+
+  it("adds command center for super_admin", () => {
+    expect(getAccountMenuLinks({ role: "super_admin" }).map((i) => i.label)).toContain(
       "Command Center"
     );
+  });
+
+  it("formats role badges", () => {
+    expect(formatRoleBadge("super_admin")).toBe("SUPER ADMIN");
+  });
+});
+
+describe("command center sidebar", () => {
+  it("includes phase 1 sections", () => {
+    expect(ADMIN_SECTIONS.map((s) => s.label)).toEqual([
+      "Overview",
+      "Live Now",
+      "Users",
+      "Artists",
+      "Events",
+      "Venues",
+      "Tours",
+      "Genres",
+      "Analytics",
+      "Moderation",
+      "Observer Accounts",
+      "Feature Flags",
+      "Platform Settings",
+      "System Health",
+    ]);
   });
 });

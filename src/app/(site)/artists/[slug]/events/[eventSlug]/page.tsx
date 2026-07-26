@@ -6,6 +6,7 @@ import { CheckoutSuccessBanner } from "@/components/checkout/checkout-success-ba
 import { LiveEventExperience } from "@/components/live/live-event-experience";
 import { Button } from "@/components/ui/button";
 import { getLiveAccessForEvent } from "@/lib/actions/live-event";
+import { getSessionUser } from "@/lib/auth/session";
 import { getEventBySlug } from "@/lib/data/queries";
 import { getViewerFeatureAccess } from "@/lib/features/guard";
 import { formatCents } from "@/lib/format";
@@ -33,7 +34,10 @@ export default async function LiveEventPage({ params }: Props) {
     status: event.status as string,
     scheduled_at: event.scheduled_at,
   });
-  const features = await getViewerFeatureAccess();
+  const [features, sessionUser] = await Promise.all([
+    getViewerFeatureAccess(),
+    getSessionUser(),
+  ]);
   const showTicketing = features.canAccess("ticketing");
 
   const streams = Array.isArray(event.streams) ? event.streams[0] : event.streams;
@@ -99,6 +103,7 @@ export default async function LiveEventPage({ params }: Props) {
         initialAccess={access}
         lobby={lobby}
         checkoutHref={showTicketing ? `/checkout?event=${event.id}&type=ticket` : undefined}
+        userSignedIn={Boolean(sessionUser)}
       />
     </div>
   );

@@ -7,6 +7,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { APP_TAGLINE, ROUTES } from "@/lib/constants";
 import { getFeaturedArtists, getPublishedTours, getUpcomingEvents } from "@/lib/data/queries";
 import { getPlatformHomepageSponsorBanner } from "@/lib/data/sponsors";
+import { getHeaderUser } from "@/lib/auth/session";
 import { getViewerFeatureAccess } from "@/lib/features/guard";
 import { formatCents } from "@/lib/format";
 import { VenueSponsorBanner } from "@/components/venues/venue-sponsor-banner";
@@ -35,12 +36,13 @@ const marketingFeatures = [
 ];
 
 export default async function HomePage() {
-  const [artists, tours, events, homepageSponsor, featureAccess] = await Promise.all([
+  const [artists, tours, events, homepageSponsor, featureAccess, user] = await Promise.all([
     getFeaturedArtists(4),
     getPublishedTours(3),
     getUpcomingEvents(4),
     getPlatformHomepageSponsorBanner(),
     getViewerFeatureAccess(),
+    getHeaderUser(),
   ]);
 
   const showWorld = featureAccess.canAccess("world_map");
@@ -71,9 +73,27 @@ export default async function HomePage() {
                 Enter LiveCircuit World
               </Button>
             ) : null}
-            <Button size="lg" variant="outline" href="/register?role=artist">
-              Become an Artist
-            </Button>
+            {!user ? (
+              <>
+                <Button size="lg" variant="outline" href={ROUTES.register}>
+                  Get Started
+                </Button>
+              </>
+            ) : (
+              <>
+                <Button size="lg" variant="outline" href={ROUTES.profile}>
+                  My Profile
+                </Button>
+                <Button size="lg" variant="secondary" href={ROUTES.dashboard}>
+                  My Events
+                </Button>
+                {(user.role === "admin" || user.role === "super_admin") ? (
+                  <Button size="lg" variant="secondary" href={ROUTES.admin}>
+                    {user.role === "super_admin" ? "Command Center" : "Admin Dashboard"}
+                  </Button>
+                ) : null}
+              </>
+            )}
           </div>
         </div>
         <AnimatedGlobe />

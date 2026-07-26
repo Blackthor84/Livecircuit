@@ -3,39 +3,44 @@ import {
   BarChart3,
   Building2,
   CalendarDays,
-  Cpu,
-  DollarSign,
+  Eye,
   Flag,
-  Globe2,
-  Handshake,
-  Map,
+  LayoutDashboard,
   Mic2,
   Radio,
-  Sparkles,
-  Tags,
-  Users,
-  Eye,
   Route,
+  Settings,
+  Tags,
+  ToggleLeft,
+  Users,
 } from "lucide-react";
 
+/** Phase 1 Command Center sidebar navigation. */
 export const ADMIN_SECTIONS = [
-  { href: "/admin", label: "Overview", icon: Globe2, exact: true },
-  { href: "/admin/health", label: "Platform Health", icon: Activity },
-  { href: "/admin/live", label: "Live Operations", icon: Radio },
+  { href: "/admin", label: "Overview", icon: LayoutDashboard, exact: true },
+  { href: "/admin/live", label: "Live Now", icon: Radio },
   { href: "/admin/users", label: "Users", icon: Users },
   { href: "/admin/artists", label: "Artists", icon: Mic2 },
-  { href: "/admin/fans", label: "Fans", icon: Users },
-  { href: "/admin/venues", label: "Venues", icon: Building2 },
   { href: "/admin/events", label: "Events", icon: CalendarDays },
+  { href: "/admin/venues", label: "Venues", icon: Building2 },
   { href: "/admin/tours", label: "Tours", icon: Route },
   { href: "/admin/genres", label: "Genres", icon: Tags },
-  { href: "/admin/revenue", label: "Revenue", icon: DollarSign },
-  { href: "/admin/sponsors", label: "Sponsorships", icon: Handshake },
-  { href: "/admin/moderation", label: "Moderation", icon: Flag },
   { href: "/admin/analytics", label: "Analytics", icon: BarChart3 },
-  { href: "/admin/ai-insights", label: "AI Insights", icon: Sparkles },
+  { href: "/admin/moderation", label: "Moderation", icon: Flag },
   { href: "/admin/observers", label: "Observer Accounts", icon: Eye },
+  { href: "/admin/health#features", label: "Feature Flags", icon: ToggleLeft },
+  { href: "/admin/health#settings", label: "Platform Settings", icon: Settings },
+  { href: "/admin/health", label: "System Health", icon: Activity },
 ] as const;
+
+export function adminSectionLabel(pathname: string): string {
+  const match = ADMIN_SECTIONS.find((item) => {
+    const pathOnly = item.href.split("#")[0] ?? item.href;
+    if ("exact" in item && item.exact) return pathname === pathOnly;
+    return pathname === pathOnly || pathname.startsWith(`${pathOnly}/`);
+  });
+  return match?.label ?? "Command Center";
+}
 
 export const ADMIN_PIPELINE_TODOS = [
   "Session watch-time telemetry (analytics_events.session_duration)",

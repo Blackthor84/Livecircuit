@@ -9,7 +9,7 @@ export default async function SiteLayout({ children }: { children: React.ReactNo
     <>
       <SiteHeader user={user} />
       <main className="flex-1">{children}</main>
-      <SiteFooter />
+      <SiteFooter user={user} />
     </>
   );
 }

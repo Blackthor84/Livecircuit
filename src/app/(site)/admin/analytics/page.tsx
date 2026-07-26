@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { AdminCommandShell } from "@/components/admin/command-center/admin-command-shell";
+import { AdminPageHeader } from "@/components/admin/command-center/admin-dashboard-layout";
 import { AdminSegmentationPanel } from "@/components/admin/command-center/admin-segmentation-panel";
 import { AdminTodoPanel } from "@/components/admin/command-center/admin-todo-panel";
 import { AdminTrendCharts } from "@/components/admin/command-center/admin-trend-charts";
@@ -19,10 +19,8 @@ export default async function AdminAnalyticsPage() {
   const genreOptions = genres.map((g) => ({ id: g.id, name: g.name, slug: g.slug }));
 
   return (
-    <AdminCommandShell
-      title="Analytics"
-      subtitle="Historical trends, audience overlap, retention metrics, and segmentation tools."
-    >
+    <>
+      <AdminPageHeader title="Analytics" subtitle="Historical trends, audience overlap, retention metrics, and segmentation tools." />
       <div className="space-y-8">
         <AdminTrendCharts
           signupTrend={overview.signupTrend}
@@ -45,6 +43,6 @@ export default async function AdminAnalyticsPage() {
           ]}
         />
       </div>
-    </AdminCommandShell>
+    </>
   );
 }

@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { AdminCommandShell } from "@/components/admin/command-center/admin-command-shell";
+import { AdminPageHeader } from "@/components/admin/command-center/admin-dashboard-layout";
 import { AdminHealthCards } from "@/components/admin/command-center/admin-health-cards";
 import { AdminTodoPanel } from "@/components/admin/command-center/admin-todo-panel";
 import { ADMIN_PIPELINE_TODOS } from "@/lib/admin/sections";
@@ -11,13 +11,19 @@ export default async function AdminHealthPage() {
   const [overview, entityCounts] = await Promise.all([getAdminPlatformOverview(), getAdminEntityCounts()]);
 
   return (
-    <AdminCommandShell
-      title="Platform Health"
-      subtitle="Infrastructure connectivity, catalog footprint, and pipeline readiness."
-    >
+    <>
+      <AdminPageHeader
+        title="System Health"
+        subtitle="Infrastructure connectivity, feature flags, platform settings, and pipeline readiness."
+      />
       <div className="space-y-8">
-        <AdminHealthCards health={overview.health} entityCounts={entityCounts} />
-        <AdminTodoPanel
+        <section id="features">
+          <h2 className="mb-4 text-lg font-semibold">Feature Flags</h2>
+          <AdminHealthCards health={overview.health} entityCounts={entityCounts} />
+        </section>
+        <section id="settings">
+          <h2 className="mb-4 text-lg font-semibold">Platform Settings</h2>
+          <AdminTodoPanel
           title="Health telemetry TODOs"
           items={[
             "LiveKit webhook stream health (bitrate, packet loss, reconnect rate)",
@@ -26,7 +32,8 @@ export default async function AdminHealthPage() {
             ...ADMIN_PIPELINE_TODOS,
           ]}
         />
+        </section>
       </div>
-    </AdminCommandShell>
+    </>
   );
 }
