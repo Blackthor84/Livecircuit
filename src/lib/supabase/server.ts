@@ -1,12 +1,10 @@
 import { createServerClient } from "@supabase/ssr";
 import { cookies } from "next/headers";
-import { normalizeSupabaseProjectUrl } from "@/lib/config/env";
+import { getSupabaseProjectUrl } from "@/lib/config/env";
 
 export async function createClient() {
   const cookieStore = await cookies();
-  const url = normalizeSupabaseProjectUrl(
-    process.env.NEXT_PUBLIC_SUPABASE_URL ?? "https://placeholder.supabase.co"
-  );
+  const url = getSupabaseProjectUrl();
   const key = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ?? "placeholder-anon-key";
 
   return createServerClient(url, key,

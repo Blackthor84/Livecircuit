@@ -1,3 +1,5 @@
+import { getSupabaseProjectUrl } from "@/lib/config/env";
+
 export type RecordingStatus = "none" | "processing" | "ready" | "failed";
 
 export type StreamMetadata = {
@@ -15,8 +17,8 @@ export function parseStreamMetadata(raw: unknown): StreamMetadata {
 }
 
 export function publicRecordingUrl(path: string) {
-  const base = process.env.NEXT_PUBLIC_SUPABASE_URL?.replace(/\/$/, "");
-  if (!base) return path;
+  const base = getSupabaseProjectUrl();
+  if (!base || base.includes("placeholder.supabase.co")) return path;
   if (path.startsWith("http")) return path;
   const normalized = path.replace(/^\//, "");
   return `${base}/storage/v1/object/public/event-recordings/${normalized}`;

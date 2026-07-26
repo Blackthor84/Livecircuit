@@ -67,20 +67,29 @@ export function getMilestoneEnvStatus(): MilestoneEnvStatus {
   };
 }
 
-export function getAppUrl(): string {
-  const raw =
-    process.env.NEXT_PUBLIC_APP_URL ??
-    process.env.NEXT_PUBLIC_VERCEL_URL ??
-    "http://localhost:3000";
+function normalizeOrigin(url: string) {
+  let value = url.trim();
+  if (!value) return value;
 
-  let url = raw.trim();
-  if (!url) return "http://localhost:3000";
-
-  if (!/^https?:\/\//i.test(url)) {
-    url = url.includes("localhost") ? `http://${url}` : `https://${url}`;
+  if (!/^https?:\/\//i.test(value)) {
+    value = value.includes("localhost") ? `http://${value}` : `https://${value}`;
   }
 
-  return url.replace(/\/+$/, "");
+  return value.replace(/\/+$/, "");
+}
+
+export function getAppUrl(): string {
+  const configured = process.env.NEXT_PUBLIC_APP_URL?.trim();
+  if (configured) return normalizeOrigin(configured);
+
+  // Never fall back to Vercel preview URLs in production auth redirects.
+  if (process.env.NODE_ENV === "development") {
+    const local = process.env.NEXT_PUBLIC_VERCEL_URL?.trim();
+    if (local) return normalizeOrigin(local);
+    return "http://localhost:3000";
+  }
+
+  return "https://www.watchlivecircuit.com";
 }
 
 /** Supabase auth redirect target — must match Auth > URL Configuration allow list. */
@@ -94,8 +103,33 @@ export function getAuthCallbackUrl(params?: { next?: string; type?: string }) {
   return `${base}?${qs.toString()}`;
 }
 
+const SUPABASE_API_SUFFIX =
+  /\/+(?:rest|auth|storage|functions|realtime|graphql)\/v1\/?$/i;
+
+/** Project root only — supabase-js appends /auth/v1, /rest/v1, etc. */
 export function normalizeSupabaseProjectUrl(url: string) {
-  return url.trim().replace(/\/auth\/v1\/?$/i, "").replace(/\/+$/, "");
+  let normalized = url.trim();
+  while (SUPABASE_API_SUFFIX.test(normalized)) {
+    normalized = normalized.replace(SUPABASE_API_SUFFIX, "");
+  }
+  return normalized.replace(/\/+$/, "");
+}
+
+export function getSupabaseProjectUrl() {
+  return normalizeSupabaseProjectUrl(
+    process.env.NEXT_PUBLIC_SUPABASE_URL ?? "https://placeholder.supabase.co"
+  );
+}
+
+/** Resolved service endpoints derived from the project root URL. */
+export function getSupabaseServiceUrls(projectUrl = getSupabaseProjectUrl()) {
+  const base = `${projectUrl.replace(/\/+$/, "")}/`;
+  return {
+    projectUrl: projectUrl.replace(/\/+$/, ""),
+    authUrl: new URL("auth/v1", base).href.replace(/\/$/, ""),
+    restUrl: new URL("rest/v1", base).href.replace(/\/$/, ""),
+    storageUrl: new URL("storage/v1", base).href.replace(/\/$/, ""),
+  };
 }
 
 /** Client-safe streaming checks (public env only). */

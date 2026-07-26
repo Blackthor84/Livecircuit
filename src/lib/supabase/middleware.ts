@@ -1,6 +1,6 @@
 import { NextResponse, type NextRequest } from "next/server";
 import { isAuthRequiredPath, loginRedirectUrl } from "@/lib/auth/paths";
-import { normalizeSupabaseProjectUrl } from "@/lib/config/env";
+import { getSupabaseProjectUrl } from "@/lib/config/env";
 import { createServerClient } from "@supabase/ssr";
 import type { UserRole } from "@/types/database";
 
@@ -14,7 +14,7 @@ export async function updateSession(request: NextRequest) {
   let supabaseResponse = NextResponse.next({ request });
 
   const supabase = createServerClient(
-    normalizeSupabaseProjectUrl(process.env.NEXT_PUBLIC_SUPABASE_URL!),
+    getSupabaseProjectUrl(),
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
     {
       cookies: {
