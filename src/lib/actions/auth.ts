@@ -3,7 +3,7 @@
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
-import { getAppUrl } from "@/lib/config/env";
+import { getAuthCallbackUrl } from "@/lib/config/env";
 import { finalizeAuthSession } from "@/lib/auth/finalize-session";
 import {
   resendVerificationSchema,
@@ -27,14 +27,14 @@ export async function signUpAction(formData: FormData): Promise<AuthActionResult
 
   const { email, password, displayName, role } = parsed.data;
   const supabase = await createClient();
-  const appUrl = getAppUrl();
 
   const { data, error } = await supabase.auth.signUp({
     email,
     password,
     options: {
       data: { full_name: displayName, intended_role: role },
-      emailRedirectTo: `${appUrl}/auth/callback?next=/discover`,
+      // No query string — must match allow-list entry exactly. Callback defaults to /discover.
+      emailRedirectTo: getAuthCallbackUrl(),
     },
   });
 
@@ -90,7 +90,7 @@ export async function resendVerificationAction(formData: FormData): Promise<Auth
   const { error } = await supabase.auth.resend({
     type: "signup",
     email: parsed.data.email,
-    options: { emailRedirectTo: `${getAppUrl()}/auth/callback?next=/discover` },
+    options: { emailRedirectTo: getAuthCallbackUrl() },
   });
 
   if (error) return { ok: false, error: error.message };

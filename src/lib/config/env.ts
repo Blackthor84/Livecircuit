@@ -68,7 +68,34 @@ export function getMilestoneEnvStatus(): MilestoneEnvStatus {
 }
 
 export function getAppUrl(): string {
-  return process.env.NEXT_PUBLIC_APP_URL ?? "http://localhost:3000";
+  const raw =
+    process.env.NEXT_PUBLIC_APP_URL ??
+    process.env.NEXT_PUBLIC_VERCEL_URL ??
+    "http://localhost:3000";
+
+  let url = raw.trim();
+  if (!url) return "http://localhost:3000";
+
+  if (!/^https?:\/\//i.test(url)) {
+    url = url.includes("localhost") ? `http://${url}` : `https://${url}`;
+  }
+
+  return url.replace(/\/+$/, "");
+}
+
+/** Supabase auth redirect target — must match Auth > URL Configuration allow list. */
+export function getAuthCallbackUrl(params?: { next?: string; type?: string }) {
+  const base = `${getAppUrl()}/auth/callback`;
+  if (!params?.next && !params?.type) return base;
+
+  const qs = new URLSearchParams();
+  if (params.type) qs.set("type", params.type);
+  if (params.next) qs.set("next", params.next);
+  return `${base}?${qs.toString()}`;
+}
+
+export function normalizeSupabaseProjectUrl(url: string) {
+  return url.trim().replace(/\/auth\/v1\/?$/i, "").replace(/\/+$/, "");
 }
 
 /** Client-safe streaming checks (public env only). */

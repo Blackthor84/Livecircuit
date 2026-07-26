@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { createClient } from "@/lib/supabase/client";
-import { getAppUrl } from "@/lib/config/env";
+import { getAuthCallbackUrl } from "@/lib/config/env";
 
 export function ForgotPasswordForm() {
   const [loading, setLoading] = useState(false);
@@ -17,7 +17,7 @@ export function ForgotPasswordForm() {
     const email = String(new FormData(e.currentTarget).get("email"));
     const supabase = createClient();
     const { error } = await supabase.auth.resetPasswordForEmail(email, {
-      redirectTo: `${getAppUrl()}/auth/callback?type=recovery`,
+      redirectTo: getAuthCallbackUrl({ type: "recovery" }),
     });
     setLoading(false);
     if (error) toast.error(error.message);

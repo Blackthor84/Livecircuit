@@ -9,6 +9,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { resendVerificationAction, finalizeSessionAction } from "@/lib/actions/auth";
 import { createClient } from "@/lib/supabase/client";
+import { getAuthCallbackUrl } from "@/lib/config/env";
 import { ROUTES } from "@/lib/constants";
 
 export function LoginForm() {
@@ -50,7 +51,7 @@ export function LoginForm() {
     const { error } = await supabase.auth.signInWithOAuth({
       provider,
       options: {
-        redirectTo: `${window.location.origin}/auth/callback?next=${encodeURIComponent(redirect)}`,
+        redirectTo: getAuthCallbackUrl({ next: redirect }),
       },
     });
     if (error) toast.error(error.message);
