@@ -39,6 +39,7 @@ export const ROUTES = {
   seasons: "/seasons",
   festivals: "/festivals",
   artistDashboard: "/artist/dashboard",
+  artistProfile: (username: string) => `/${username}`,
   admin: "/admin",
   adminVenues: "/admin/venues",
   venues: "/livecircuit/venues",

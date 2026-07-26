@@ -11,6 +11,7 @@ import { resendVerificationAction, completeAuthSessionAction, signUpAction } fro
 import { readPostAuthParam } from "@/lib/auth/redirects";
 import { stashReferralCodeAction } from "@/lib/actions/coins";
 import { ROUTES } from "@/lib/constants";
+import { UsernameField } from "@/components/auth/username-field";
 
 export function RegisterForm() {
   const searchParams = useSearchParams();
@@ -100,6 +101,7 @@ export function RegisterForm() {
         <Label htmlFor="displayName">Display name</Label>
         <Input id="displayName" name="displayName" required />
       </div>
+      {role === "artist" ? <UsernameField required /> : null}
       <div className="space-y-2">
         <Label htmlFor="email">Email</Label>
         <Input id="email" name="email" type="email" required autoComplete="email" />

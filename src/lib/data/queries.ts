@@ -208,25 +208,82 @@ export async function searchCatalog(query: string) {
   if (!supabase) {
     const q = query.toLowerCase();
     return {
-      artists: demoArtists.filter((a) => a.stage_name.toLowerCase().includes(q)),
+      artists: demoArtists.filter(
+        (a) =>
+          a.stage_name.toLowerCase().includes(q) ||
+          a.slug.toLowerCase().includes(q) ||
+          a.category.toLowerCase().includes(q)
+      ),
       events: demoEvents.filter((e) => e.title.toLowerCase().includes(q)),
     };
   }
 
   const q = `%${query.trim()}%`;
-  const [artists, events] = await Promise.all([
-    supabase
-      .from("artists")
-      .select("id, slug, stage_name, category, verified, banner_url")
-      .ilike("stage_name", q)
-      .limit(10),
-    supabase
-      .from("events")
-      .select("id, slug, title, scheduled_at, artists(slug, stage_name)")
-      .ilike("title", q)
-      .limit(10),
-  ]);
-  return { artists: artists.data ?? [], events: events.data ?? [] };
+  const [artistsByStage, artistsByUsername, artistsByCategory, artistsByCity, events] =
+    await Promise.all([
+      supabase
+        .from("artists")
+        .select("id, slug, stage_name, category, verified, banner_url, profiles(username, display_name, cities(name))")
+        .ilike("stage_name", q)
+        .limit(10),
+      supabase
+        .from("profiles")
+        .select("username, display_name, artists(id, slug, stage_name, category, verified, banner_url)")
+        .not("username", "is", null)
+        .or(`username.ilike.${q},display_name.ilike.${q}`)
+        .limit(10),
+      supabase
+        .from("artists")
+        .select("id, slug, stage_name, category, verified, banner_url, profiles(username, display_name, cities(name))")
+        .ilike("category", q)
+        .limit(10),
+      supabase
+        .from("profiles")
+        .select("username, display_name, cities(name), artists(id, slug, stage_name, category, verified, banner_url)")
+        .not("username", "is", null)
+        .filter("cities.name", "ilike", q)
+        .limit(10),
+      supabase
+        .from("events")
+        .select("id, slug, title, scheduled_at, artists(slug, stage_name, profiles(username))")
+        .ilike("title", q)
+        .limit(10),
+    ]);
+
+  type SearchArtist = {
+    id: string;
+    slug: string;
+    stage_name: string;
+    category: string;
+    verified?: boolean;
+    banner_url?: string | null;
+    profiles?: { username?: string | null; display_name?: string | null; cities?: { name: string } | null } | null;
+  };
+
+  const merged = new Map<string, SearchArtist>();
+
+  for (const row of artistsByStage.data ?? []) {
+    merged.set(row.id as string, row as SearchArtist);
+  }
+  for (const row of artistsByCategory.data ?? []) {
+    merged.set(row.id as string, row as SearchArtist);
+  }
+  for (const row of [...(artistsByUsername.data ?? []), ...(artistsByCity.data ?? [])]) {
+    const artist = row.artists as SearchArtist | SearchArtist[] | null;
+    const list = Array.isArray(artist) ? artist : artist ? [artist] : [];
+    for (const a of list) {
+      merged.set(a.id, {
+        ...a,
+        profiles: {
+          username: row.username as string,
+          display_name: row.display_name as string,
+          cities: (row as { cities?: { name: string } }).cities ?? null,
+        },
+      });
+    }
+  }
+
+  return { artists: [...merged.values()].slice(0, 10), events: events.data ?? [] };
 }
 
 export async function getFanHeatMap(artistId: string) {

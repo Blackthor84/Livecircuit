@@ -29,13 +29,14 @@ export async function signUpAction(formData: FormData): Promise<SignUpActionResu
     password: formData.get("password"),
     displayName: formData.get("displayName"),
     role: formData.get("role") ?? "fan",
+    username: formData.get("username")?.toString() ?? "",
   });
 
   if (!parsed.success) {
     return { ok: false, error: parsed.error.issues[0]?.message ?? "Invalid input" };
   }
 
-  const { email, password, displayName, role } = parsed.data;
+  const { email, password, displayName, role, username } = parsed.data;
   const nextPath = readPostAuthParam({ next: formData.get("next")?.toString() });
   const supabase = await createClient();
 
@@ -43,7 +44,11 @@ export async function signUpAction(formData: FormData): Promise<SignUpActionResu
     email,
     password,
     options: {
-      data: { full_name: displayName, intended_role: role },
+      data: {
+        full_name: displayName,
+        intended_role: role,
+        username: username || undefined,
+      },
       emailRedirectTo: getAuthCallbackUrl({ next: nextPath !== "/" ? nextPath : undefined }),
     },
   });

@@ -44,6 +44,11 @@ export type Artist = {
   monthly_listeners: number;
   follower_count: number;
   social_links: Record<string, string>;
+  short_bio?: string | null;
+  years_performing?: number | null;
+  languages?: string[];
+  booking_email?: string | null;
+  created_at?: string;
 };
 
 export type Tour = {

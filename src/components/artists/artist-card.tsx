@@ -7,6 +7,7 @@ import { BadgeCheck, Users } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
 import type { ArtistWithProfile } from "@/lib/data/queries";
+import { artistProfileUrl } from "@/lib/username";
 import { cn } from "@/lib/utils";
 
 export function ArtistCard({
@@ -33,7 +34,7 @@ export function ArtistCard({
       transition={{ type: "spring", stiffness: 300, damping: 22 }}
       className={cn("group", className)}
     >
-      <Link href={`/artists/${artist.slug}`}>
+      <Link href={artistProfileUrl(artist.slug)}>
         <Card className="overflow-hidden border-white/10 bg-card/80 p-0 shadow-xl shadow-black/20">
           <div className="relative aspect-[4/5] overflow-hidden">
             <Image

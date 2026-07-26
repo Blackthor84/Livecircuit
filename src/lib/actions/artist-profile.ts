@@ -8,6 +8,7 @@ import {
   updateArtistProfileSchema,
   verificationRequestSchema,
 } from "@/lib/validations/profile";
+import { artistProfileUrl } from "@/lib/username";
 
 export type ArtistProfileActionResult = { ok: true } | { ok: false; error: string };
 
@@ -37,9 +38,19 @@ export async function updateArtistProfileAction(input: unknown): Promise<ArtistP
     instagram: d.socialInstagram || undefined,
     twitter: d.socialTwitter || undefined,
     youtube: d.socialYoutube || undefined,
+    tiktok: d.socialTiktok || undefined,
+    facebook: d.socialFacebook || undefined,
+    spotify: d.socialSpotify || undefined,
+    apple_music: d.socialAppleMusic || undefined,
   };
 
   const donationLinks = d.donationUrl ? { default: d.donationUrl } : {};
+
+  const { data: artistMeta } = await supabase
+    .from("artists")
+    .select("slug")
+    .eq("id", artistId)
+    .maybeSingle();
 
   const { error: artistError } = await supabase
     .from("artists")
@@ -47,6 +58,10 @@ export async function updateArtistProfileAction(input: unknown): Promise<ArtistP
       stage_name: d.stageName,
       category: d.category,
       banner_url: d.bannerUrl ?? null,
+      short_bio: d.shortBio ?? null,
+      years_performing: d.yearsPerforming ?? null,
+      languages: d.languages ?? [],
+      booking_email: d.bookingEmail || null,
       social_links: socialLinks,
       donation_links: donationLinks,
     })
@@ -75,6 +90,13 @@ export async function updateArtistProfileAction(input: unknown): Promise<ArtistP
 
   revalidatePath("/artist/settings");
   revalidatePath("/artists");
+  const { data: profile } = await supabase
+    .from("profiles")
+    .select("username")
+    .eq("id", user.id)
+    .maybeSingle();
+  const vanity = profile?.username ?? artistMeta?.slug;
+  if (vanity) revalidatePath(artistProfileUrl(vanity));
   return { ok: true };
 }
 
@@ -99,6 +121,18 @@ export async function addArtistMediaAction(input: unknown): Promise<ArtistProfil
   if (error) return { ok: false, error: error.message };
 
   revalidatePath("/artist/settings");
+  const { data: profile } = await supabase
+    .from("profiles")
+    .select("username")
+    .eq("id", user.id)
+    .maybeSingle();
+  const { data: artistMeta } = await supabase
+    .from("artists")
+    .select("slug")
+    .eq("id", artistId)
+    .maybeSingle();
+  const vanity = profile?.username ?? artistMeta?.slug;
+  if (vanity) revalidatePath(artistProfileUrl(vanity));
   return { ok: true };
 }
 

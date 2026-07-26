@@ -4,13 +4,24 @@ import { useState } from "react";
 import Link from "next/link";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { artistProfileUrl } from "@/lib/username";
 
 export function SearchForm() {
   const [query, setQuery] = useState("");
   const [results, setResults] = useState<{
-    artists: { slug: string; stage_name: string; category: string }[];
-    events: { slug: string; title: string; artists: { slug: string } | null }[];
+    artists: {
+      slug: string;
+      stage_name: string;
+      category: string;
+      profiles?: { username?: string | null; cities?: { name: string } | null } | null;
+    }[];
+    events: { slug: string; title: string; artists: { slug: string; profiles?: { username?: string } | null } | null }[];
   } | null>(null);
+
+  function artistHref(artist: { slug: string; profiles?: { username?: string | null } | null }) {
+    const username = artist.profiles?.username ?? artist.slug;
+    return artistProfileUrl(username);
+  }
 
   async function search(e: React.FormEvent) {
     e.preventDefault();
@@ -35,10 +46,14 @@ export function SearchForm() {
             <ul className="mt-2 space-y-2 text-sm">
               {results.artists.map((a) => (
                 <li key={a.slug}>
-                  <Link href={`/artists/${a.slug}`} className="text-primary hover:underline">
+                  <Link href={artistHref(a)} className="text-primary hover:underline">
                     {a.stage_name}
                   </Link>
-                  <span className="text-muted-foreground"> · {a.category}</span>
+                  <span className="text-muted-foreground">
+                    {" "}
+                    · {a.category}
+                    {a.profiles?.cities?.name ? ` · ${a.profiles.cities.name}` : ""}
+                  </span>
                 </li>
               ))}
             </ul>
@@ -49,7 +64,7 @@ export function SearchForm() {
               {results.events.map((ev) => (
                 <li key={ev.slug}>
                   <Link
-                    href={`/artists/${ev.artists?.slug}/events/${ev.slug}`}
+                    href={`/artists/${ev.artists?.profiles?.username ?? ev.artists?.slug}/events/${ev.slug}`}
                     className="text-primary hover:underline"
                   >
                     {ev.title}

@@ -6,6 +6,7 @@ import { requireUserProfile } from "@/lib/auth/guards";
 import { isArtistOrAdminRole } from "@/lib/auth/roles";
 import { getGenres } from "@/lib/data/locations";
 import { getArtistForSettings } from "@/lib/data/profiles";
+import { artistProfileUrl } from "@/lib/username";
 
 export const metadata: Metadata = { title: "Artist settings" };
 
@@ -24,6 +25,8 @@ export default async function ArtistSettingsPage() {
   const social = (bundle.artist.social_links ?? {}) as Record<string, string>;
   const donation = (bundle.artist.donation_links ?? {}) as Record<string, string>;
 
+  const publicUrl = artistProfileUrl(profile.username ?? bundle.artist.slug);
+
   return (
     <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6">
       <div className="flex items-center justify-between gap-4">
@@ -33,7 +36,7 @@ export default async function ArtistSettingsPage() {
             Banner, bio, social links, media, and verification — saved to Supabase.
           </p>
         </div>
-        <Link href={`/artists/${bundle.artist.slug}`} className="text-sm text-primary hover:underline">
+        <Link href={publicUrl} className="text-sm text-primary hover:underline">
           View public page
         </Link>
       </div>

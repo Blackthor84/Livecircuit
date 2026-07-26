@@ -125,7 +125,10 @@ export function ProfileSettingsForm({ initial }: { initial: ProfileFormData }) {
       </div>
       <div className="space-y-2">
         <Label htmlFor="username">Username</Label>
-        <Input id="username" value={username} onChange={(e) => setUsername(e.target.value)} />
+        <Input id="username" value={username} onChange={(e) => setUsername(e.target.value.toLowerCase())} />
+        <p className="text-xs text-muted-foreground">
+          Public profile URL: watchlivecircuit.com/{username || "your-username"}
+        </p>
       </div>
       <div className="space-y-2">
         <Label htmlFor="bio">Bio</Label>
