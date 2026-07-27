@@ -14,6 +14,7 @@ import {
   Users,
 } from "lucide-react";
 import { SponsorBrandLogo } from "@/components/demo/naming-rights/sponsor-brand-logo";
+import { LiveCircuitLogo } from "@/components/brand/livecircuit-logo";
 import { TicketMockup } from "@/components/demo/naming-rights/ticket-mockup";
 import type { FanJourneyStepId } from "@/lib/demo/fan-journey-data";
 import type { BrandTheme } from "@/lib/demo/naming-rights-utils";
@@ -54,6 +55,10 @@ function renderStepMockups(ctx: MockupCtx) {
             </div>
           </MockCard>
           <MockCard label="LiveCircuit Home Page" accent={theme.gradient}>
+            <div className="mb-2 flex items-center justify-between border-b border-white/10 pb-2">
+              <LiveCircuitLogo size="xs" href={null} />
+              <span className="text-[8px] text-white/60">Discover · Live</span>
+            </div>
             <SponsorBrandLogo theme={theme} logoUrl={logoUrl} size="sm" className="mx-auto" />
             <p className="mt-2 text-[10px] font-semibold text-white">{arenaName}</p>
             <p className="text-[9px] text-white/70">{presented}</p>

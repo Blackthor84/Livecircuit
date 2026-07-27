@@ -1,4 +1,5 @@
 import { MapPin, Radio } from "lucide-react";
+import { LiveCircuitLogo } from "@/components/brand/livecircuit-logo";
 import { SponsorBrandLogo } from "@/components/demo/naming-rights/sponsor-brand-logo";
 import type { BrandTheme } from "@/lib/demo/naming-rights-utils";
 
@@ -18,6 +19,7 @@ export function MobileAppPreview({
           {/* Status bar */}
           <div className="flex items-center justify-between px-5 py-2 text-[10px] text-muted-foreground">
             <span>9:41</span>
+            <LiveCircuitLogo size="xs" href={null} className="opacity-90" />
             <span>LTE ▮▮▮</span>
           </div>
 

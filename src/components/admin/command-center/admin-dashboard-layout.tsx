@@ -2,12 +2,13 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Menu, Radio, Sparkles } from "lucide-react";
+import { Menu, Sparkles } from "lucide-react";
+import { LiveCircuitLogo } from "@/components/brand/livecircuit-logo";
 import { ADMIN_SECTIONS, adminSectionLabel } from "@/lib/admin/sections";
 import { SiteHeaderUserMenu, type HeaderUser } from "@/components/layout/site-header-user-menu";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
-import { APP_NAME, ROUTES } from "@/lib/constants";
+import { ROUTES } from "@/lib/constants";
 import { cn } from "@/lib/utils";
 
 function SidebarNav({ onNavigate }: { onNavigate?: () => void }) {
@@ -73,7 +74,7 @@ function AdminTopBar({ user }: { user: HeaderUser | null }) {
       </div>
       <div className="flex shrink-0 items-center gap-2">
         <Button variant="ghost" size="sm" href={ROUTES.home} className="hidden sm:inline-flex">
-          {APP_NAME}
+          <LiveCircuitLogo size="xs" href={null} />
         </Button>
         {user ? <SiteHeaderUserMenu user={user} /> : null}
       </div>
@@ -95,18 +96,15 @@ export function AdminDashboardLayout({
         <aside className="hidden w-64 shrink-0 border-r border-white/5 lg:block">
           <div className="sticky top-[8.5rem] p-4">
             <div className="mb-4 flex items-center gap-2 px-2">
-              <span className="flex size-9 items-center justify-center rounded-xl bg-gradient-to-br from-primary to-accent text-primary-foreground shadow-lg shadow-primary/20">
-                <Sparkles className="size-4" />
-              </span>
+              <LiveCircuitLogo size="sm" href={ROUTES.home} />
               <div>
-                <p className="text-xs font-semibold uppercase tracking-wide text-primary">LiveCircuit</p>
-                <p className="text-sm font-semibold">Command Center</p>
+                <p className="text-xs font-semibold uppercase tracking-wide text-primary">Command Center</p>
               </div>
             </div>
             <SidebarNav />
             <div className="mt-6 rounded-xl border border-white/10 bg-white/5 p-3">
               <p className="flex items-center gap-2 text-xs text-muted-foreground">
-                <Radio className="size-3.5 text-primary" />
+                <Sparkles className="size-3.5 text-primary" />
                 Phase 1 · Platform ops
               </p>
             </div>

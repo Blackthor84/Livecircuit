@@ -1,4 +1,7 @@
 export const APP_NAME = "LiveCircuit";
+export const LIVECIRCUIT_LOGO = "/livecircuit-logo.png";
+export const LIVECIRCUIT_LOGO_WIDTH = 1024;
+export const LIVECIRCUIT_LOGO_HEIGHT = 682;
 export const APP_TAGLINE = "Tour the world without leaving home.";
 export const APP_DESCRIPTION =
   "Live virtual tours, concerts, comedy, podcasts, and more — with fan heat maps that help artists plan their next stop.";

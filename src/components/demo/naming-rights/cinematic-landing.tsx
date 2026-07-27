@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import { ArrowRight, Sparkles } from "lucide-react";
+import { LiveCircuitLogo } from "@/components/brand/livecircuit-logo";
 import { useSponsorVisualizer } from "@/components/demo/naming-rights/sponsor-visualizer-context";
 import { Button } from "@/components/ui/button";
 
@@ -76,6 +77,15 @@ export function CinematicLanding() {
         <LedScreen text="LIVECIRCUIT ARENA" style={{ position: "absolute", top: "18%", left: "50%", transform: "translateX(-50%)" }} />
         <LedScreen text="★ OFFICIAL SPONSOR ★" style={{ position: "absolute", top: "24%", right: "12%" }} />
       </div>
+
+      <motion.div
+        initial={{ opacity: 0, y: -12 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8 }}
+        className="absolute left-1/2 top-8 z-20 -translate-x-1/2"
+      >
+        <LiveCircuitLogo size="md" href={null} />
+      </motion.div>
 
       <motion.div
         initial={{ opacity: 0, y: 40 }}

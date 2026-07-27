@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Inter, Space_Grotesk } from "next/font/google";
 import { Providers } from "@/components/providers";
-import { APP_DESCRIPTION, APP_NAME } from "@/lib/constants";
+import { APP_DESCRIPTION, APP_NAME, LIVECIRCUIT_LOGO } from "@/lib/constants";
 import "./globals.css";
 
 const inter = Inter({
@@ -24,6 +24,11 @@ export const metadata: Metadata = {
     title: APP_NAME,
     description: APP_DESCRIPTION,
     type: "website",
+    images: [{ url: LIVECIRCUIT_LOGO, alt: APP_NAME }],
+  },
+  icons: {
+    icon: LIVECIRCUIT_LOGO,
+    apple: LIVECIRCUIT_LOGO,
   },
 };
 

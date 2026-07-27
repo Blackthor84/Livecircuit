@@ -2,7 +2,8 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Menu, Radio } from "lucide-react";
+import { Menu } from "lucide-react";
+import { LiveCircuitLogo } from "@/components/brand/livecircuit-logo";
 import { SignOutButton } from "@/components/auth/sign-out-button";
 import { HeaderNavLink } from "@/components/layout/header-nav-link";
 import { Button, buttonVariants } from "@/components/ui/button";
@@ -17,7 +18,7 @@ import {
   SiteHeaderUserMenu,
   type HeaderUser,
 } from "@/components/layout/site-header-user-menu";
-import { APP_NAME, ROUTES } from "@/lib/constants";
+import { APP_NAME } from "@/lib/constants";
 import { getArtistNav, getBusinessNav, getGuestAuthCTAs, getMainNav } from "@/lib/features/navigation";
 import { getAccountMenuLinks } from "@/lib/features/account-menu";
 import { cn } from "@/lib/utils";
@@ -147,12 +148,8 @@ export function SiteHeader({ user }: { user: HeaderUser | null }) {
   return (
     <header className="sticky top-0 z-50 border-b border-white/5 bg-background/80 backdrop-blur-xl">
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between gap-4 px-4 sm:px-6">
-        <Link href={ROUTES.home} className="flex items-center gap-2 font-semibold tracking-tight">
-          <span className="flex size-9 items-center justify-center rounded-xl bg-gradient-to-br from-primary to-accent text-primary-foreground shadow-lg shadow-primary/25">
-            <Radio className="size-4" />
-          </span>
-          <span className="hidden sm:inline">{APP_NAME}</span>
-        </Link>
+        <LiveCircuitLogo size="sm" priority className="sm:hidden" />
+        <LiveCircuitLogo size="md" priority className="hidden sm:inline-flex" />
 
         <nav className="hidden items-center gap-1 md:flex" aria-label="Main">
           {nav.map((item) => (
