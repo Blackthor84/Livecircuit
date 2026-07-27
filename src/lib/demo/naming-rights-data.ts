@@ -98,63 +98,9 @@ export const DIGITAL_PLACEMENT_MESSAGES = [
 /** @deprecated Use DIGITAL_PLACEMENT_MESSAGES */
 export const BILLBOARD_MESSAGES = DIGITAL_PLACEMENT_MESSAGES;
 
-export const ARENA_TIER_OPTIONS = [
-  {
-    id: "community",
-    name: "Community Arena",
-    tagline: "Perfect for Local Businesses",
-    monthlyVisitors: 15_000,
-    maxCapacity: 500,
-    annualEvents: 120,
-    investment: 2_500,
-    annualInvestment: 30_000,
-    status: "Available" as const,
-  },
-  {
-    id: "club",
-    name: "Club Arena",
-    tagline: "Growing Regional Brands",
-    monthlyVisitors: 76_000,
-    maxCapacity: 2_500,
-    annualEvents: 280,
-    investment: 6_250,
-    annualInvestment: 75_000,
-    status: "Available" as const,
-  },
-  {
-    id: "theater",
-    name: "Theater",
-    tagline: "Mid-Market Companies",
-    monthlyVisitors: 200_000,
-    maxCapacity: 8_000,
-    annualEvents: 520,
-    investment: 16_500,
-    annualInvestment: 198_000,
-    status: "Premium" as const,
-  },
-  {
-    id: "arena",
-    name: "Arena",
-    tagline: "Major Regional Sponsors",
-    monthlyVisitors: 675_000,
-    maxCapacity: 25_000,
-    annualEvents: 840,
-    investment: 41_500,
-    annualInvestment: 498_000,
-    status: "Limited" as const,
-  },
-  {
-    id: "stadium",
-    name: "Stadium",
-    tagline: "National Brands",
-    monthlyVisitors: 1_500_000,
-    maxCapacity: 50_000,
-    annualEvents: 1_200,
-    investment: 100_000,
-    annualInvestment: 1_200_000,
-    status: "Limited" as const,
-  },
-];
+import { buildArenaTierOptionsFromPricing } from "@/lib/pricing/founder-sponsor-utils";
+
+export const ARENA_TIER_OPTIONS = buildArenaTierOptionsFromPricing();
 
 export const DASHBOARD_METRICS = [
   { label: "Monthly Visitors", value: 182_000, format: "compact" as const },

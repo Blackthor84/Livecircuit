@@ -9,6 +9,7 @@ import {
   type AudienceInputs,
   type PerformerTypeId,
 } from "@/lib/demo/artist-success-center-data";
+import { calculateArtistEarnings } from "@/lib/pricing/artist-booking-utils";
 
 export function getVenueById(id: ArtistVenueId) {
   return ARTIST_VENUE_GUIDES.find((v) => v.id === id) ?? ARTIST_VENUE_GUIDES[0];
@@ -210,6 +211,7 @@ export function getVenueMatch(audience: AudienceInputs, performerType: Performer
 
 export type PricingAdvisorResult = {
   grossRevenue: number;
+  bookingFee: number;
   platformFee: number;
   processingFees: number;
   taxes: number;
@@ -235,13 +237,15 @@ export function calculatePricingAdvisor({
   platformFeeRate?: number;
 }): PricingAdvisorResult {
   const venue = getVenueById(venueId);
-  const grossRevenue = expectedAttendance * ticketPrice;
+  const earnings = calculateArtistEarnings({ venueId, ticketPrice, expectedAttendance });
+  const grossRevenue = earnings.grossRevenue;
+  const bookingFee = earnings.bookingFee;
   const platformFee = grossRevenue * platformFeeRate;
-  const processingFees = expectedAttendance * DEMO_PROCESSING_FEE;
-  const taxes = grossRevenue * DEMO_TAX_RATE;
-  const netEarnings = grossRevenue - platformFee - processingFees - taxes - marketingBudget;
+  const processingFees = earnings.paymentProcessing;
+  const taxes = earnings.taxes;
+  const netEarnings = earnings.estimatedNetEarnings - marketingBudget;
   const fillRatio = expectedAttendance / venue.capacity;
-  const venueFillPercent = Math.round(fillRatio * 100);
+  const venueFillPercent = earnings.venueFillPercent;
   const midPrice = (venue.ticketRangeMin + venue.ticketRangeMax) / 2;
 
   let recommendation: PricingAdvisorResult["recommendation"] = "competitive";
@@ -261,12 +265,11 @@ export function calculatePricingAdvisor({
     recommendationText = "Strong demand — you may be able to raise prices.";
   }
 
-  const fixedCosts = venue.capacity * 0.12 + marketingBudget;
-  const netPerTicket = ticketPrice * (1 - platformFeeRate) - DEMO_PROCESSING_FEE;
-  const breakEvenPoint = netPerTicket > 0 ? Math.ceil(fixedCosts / netPerTicket) : 999;
+  const breakEvenPoint = earnings.breakEvenTicketCount;
 
   return {
     grossRevenue,
+    bookingFee,
     platformFee,
     processingFees,
     taxes,

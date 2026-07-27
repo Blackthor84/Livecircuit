@@ -5,6 +5,7 @@ import { useSuccessCenter } from "@/components/artists/success-center/success-ce
 import { AnimatedCounter } from "@/components/demo/naming-rights/animated-counter";
 import { FadeUp } from "@/components/demo/naming-rights/fade-up";
 import { SectionHeader } from "@/components/artists/success-center/section-header";
+import { BookingPricingBreakdown } from "@/components/pricing/artist/booking-pricing-breakdown";
 
 export function VenueMatchStep() {
   const { venueMatch } = useSuccessCenter();
@@ -12,7 +13,7 @@ export function VenueMatchStep() {
 
   return (
     <section id="venue-match" className="scroll-mt-24 px-4 py-20 sm:px-6">
-      <div className="mx-auto max-w-4xl">
+      <div className="mx-auto max-w-4xl space-y-8">
         <SectionHeader eyebrow="Step 4" title="AI Venue Matchmaker"
           description="Your personalized venue recommendation — powered by your audience data." />
 
@@ -60,6 +61,14 @@ export function VenueMatchStep() {
               </ul>
             </div>
           </div>
+        </FadeUp>
+
+        <FadeUp>
+          <BookingPricingBreakdown
+            venueId={venueMatch.venue.id}
+            ticketPrice={venueMatch.recommendedPrice}
+            expectedAttendance={venueMatch.expectedAttendance}
+          />
         </FadeUp>
       </div>
     </section>

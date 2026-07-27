@@ -234,18 +234,26 @@ export const FEE_GUIDE_ITEMS = [
   { item: "Browsing venues", cost: "FREE", note: "Explore all tiers" },
   { item: "Searching events", cost: "FREE", note: "Discover and research" },
   { item: "Following artists", cost: "FREE", note: "Build your network" },
-  { item: "Scheduling a show", cost: "No upfront charge (demo)", note: "Plan without commitment" },
+  { item: "Booking a show", cost: "Per-event booking fee", note: "Only charged when you book — see tier rates below" },
   {
-    item: "Platform fee",
-    cost: "Demo: 10% per sale",
-    note: "Applied only when an event is successfully booked or tickets are sold",
+    item: ARTIST_BOOKING_PRICING.platformFeeLabel,
+    cost: `${ARTIST_BOOKING_PRICING.platformFeePercentage}% per sale`,
+    note: "Applied only after your event is booked and tickets begin selling",
   },
   {
-    item: "Processing fee",
-    cost: "Demo: $0.99/ticket",
-    note: "Example — not final production pricing",
+    item: ARTIST_BOOKING_PRICING.paymentProcessingLabel,
+    cost: ARTIST_BOOKING_PRICING.paymentProcessingDescription,
+    note: "Actual payment processor rates",
   },
 ] as const;
+
+export const BOOKING_FEE_BY_VENUE = (Object.entries(BOOKING_FEES) as [ArtistVenueId, number][]).map(
+  ([id, fee]) => ({
+    venueId: id,
+    label: ARTIST_VENUE_GUIDES.find((v) => v.id === id)?.name ?? id,
+    fee: formatPricingCurrency(fee),
+  })
+);
 
 export const TICKET_SALES_TIPS = [
   { title: "Start with the right venue", description: "Match venue size to realistic demand. A sellout beats a half-empty room every time.", icon: "🎯" },
@@ -313,10 +321,15 @@ export const ASC_STEPS = [
   { id: "ready-to-book", label: "Book" },
 ] as const;
 
-/** Demo values — configurable until production pricing is finalized. */
-export const DEMO_PLATFORM_FEE_RATE = 0.1;
-export const DEMO_PROCESSING_FEE = 0.99;
-export const DEMO_TAX_RATE = 0.0;
+import { ARTIST_BOOKING_PRICING, BOOKING_FEES } from "@/lib/pricing/livecircuit-pricing";
+import { formatPricingCurrency } from "@/lib/pricing/artist-booking-utils";
+
+/** @deprecated Use ARTIST_BOOKING_PRICING.platformFeePercentage / 100 */
+export const DEMO_PLATFORM_FEE_RATE = ARTIST_BOOKING_PRICING.platformFeePercentage / 100;
+/** @deprecated Use ARTIST_BOOKING_PRICING.paymentProcessingFixedCents / 100 */
+export const DEMO_PROCESSING_FEE = ARTIST_BOOKING_PRICING.paymentProcessingFixedCents / 100;
+/** @deprecated Use ARTIST_BOOKING_PRICING.defaultTaxRatePercent / 100 */
+export const DEMO_TAX_RATE = ARTIST_BOOKING_PRICING.defaultTaxRatePercent / 100;
 
 export const FIT_SCORE_LABELS = {
   excellent: { min: 80, label: "Excellent", color: "emerald" as const },

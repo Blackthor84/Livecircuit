@@ -61,8 +61,10 @@ export function TicketPricingAdvisorSection() {
                 <dl className="space-y-4">
                   {[
                     { label: "Gross Revenue", value: result.grossRevenue },
-                    { label: "Est. Platform Fees (demo 10%)", value: result.platformFee + result.processingFees, muted: true },
-                    { label: "Taxes (placeholder)", value: result.taxes, muted: true },
+                    { label: "Booking Fee", value: result.bookingFee, muted: true },
+                    { label: `Platform Fee (${Math.round(DEMO_PLATFORM_FEE_RATE * 100)}%)`, value: result.platformFee, muted: true },
+                    { label: "Payment Processing", value: result.processingFees, muted: true },
+                    { label: "Taxes", value: result.taxes, muted: true },
                     { label: "Net Earnings", value: result.netEarnings, highlight: true },
                     { label: "Venue Fill %", value: result.venueFillPercent, suffix: "%" },
                   ].map((row) => (

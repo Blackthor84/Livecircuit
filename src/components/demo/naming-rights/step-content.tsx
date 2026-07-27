@@ -19,11 +19,12 @@ import { FanJourneyBrandImpact } from "@/components/demo/naming-rights/fan-journ
 import { FanJourneyComparison } from "@/components/demo/naming-rights/fan-journey/fan-journey-comparison";
 import { FanJourneyExecutiveInsight } from "@/components/demo/naming-rights/fan-journey/fan-journey-executive-insight";
 import { FanJourneyExperience } from "@/components/demo/naming-rights/fan-journey/fan-journey-experience";
+import { FounderSponsorPricing } from "@/components/pricing/sponsor/founder-sponsor-pricing";
+import { PricingLegalNote } from "@/components/pricing/sponsor/pricing-legal-note";
 import { InteractiveAnalyticsDashboard } from "@/components/demo/naming-rights/interactive-analytics-dashboard";
 import { LiveEventBrandingV3 } from "@/components/demo/naming-rights/live-event-branding-v3";
 import { LivePersonalizationStrip } from "@/components/demo/naming-rights/live-personalization-strip";
-import { RoiCalculatorV2 } from "@/components/demo/naming-rights/roi-calculator-v2";
-import { SponsorshipPackageV3 } from "@/components/demo/naming-rights/sponsorship-package-v3";
+import { PriceMySponsorship } from "@/components/demo/naming-rights/price-my-sponsorship/price-my-sponsorship";
 import { useSponsorVisualizer } from "@/components/demo/naming-rights/sponsor-visualizer-context";
 import { UsStateSelector } from "@/components/demo/naming-rights/us-state-selector";
 import { VenueExteriorV3 } from "@/components/demo/naming-rights/venue-exterior-v3";
@@ -32,6 +33,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { ARENA_TIER_OPTIONS } from "@/lib/demo/naming-rights-data";
 import { buildExecutiveMetrics, formatCompact, formatCurrency } from "@/lib/demo/naming-rights-utils";
+import { FOUNDER_PROGRAM, getFounderSavingsPercent, type ArenaTierId } from "@/lib/pricing/livecircuit-pricing";
 import type { SponsorVisualizerStepId } from "@/lib/demo/sponsor-visualizer-steps";
 import { cn } from "@/lib/utils";
 
@@ -50,8 +52,6 @@ export function StepContent({
     arenaName,
     theme,
     resetKey,
-    roi,
-    selectedTier,
     setStep,
     enterPresentation,
     enterFlyover,
@@ -82,8 +82,16 @@ export function StepContent({
 
     return (
       <div>
-        <StepHeader title="Choose Venue" subtitle={`Select your LiveCircuit venue tier in ${form.state}.`} />
-        <ul className="mt-10 grid gap-4 lg:grid-cols-2 xl:grid-cols-3">
+        <StepHeader
+          title="Choose Venue"
+          subtitle={`Founder Sponsor Pricing — select your LiveCircuit venue tier in ${form.state}.`}
+        />
+        <FadeUp className="mb-8 flex justify-center">
+          <Badge className="border-amber-500/40 bg-amber-500/15 px-4 py-1.5 text-amber-400">
+            {FOUNDER_PROGRAM.badge}
+          </Badge>
+        </FadeUp>
+        <ul className="mt-6 grid gap-4 lg:grid-cols-2 xl:grid-cols-3">
           {ARENA_TIER_OPTIONS.map((tier, i) => (
             <FadeUp key={tier.id} delay={i * 0.05}>
               <li>
@@ -123,9 +131,18 @@ export function StepContent({
                       <dd className="font-semibold">{formatCompact(tier.monthlyVisitors * 12)}/yr</dd>
                     </div>
                     <div className="col-span-2">
-                      <dt className="text-muted-foreground">Investment range</dt>
-                      <dd className="font-semibold text-amber-400">
-                        {formatCurrency(tier.investment)}/mo – {formatCurrency(tier.annualInvestment)}/yr
+                      <dt className="text-muted-foreground">Founder Pricing</dt>
+                      <dd className="font-semibold text-emerald-400">
+                        {formatCurrency(tier.annualInvestment)}/yr · {formatCurrency(tier.investment)}/mo
+                      </dd>
+                    </div>
+                    <div className="col-span-2">
+                      <dt className="text-muted-foreground">Regular Pricing (Coming Later)</dt>
+                      <dd className="font-semibold text-muted-foreground line-through">
+                        {formatCurrency(tier.regularAnnualInvestment)}/yr
+                      </dd>
+                      <dd className="text-xs font-semibold text-amber-400">
+                        Save {getFounderSavingsPercent(tier.id)}% as a founding sponsor
                       </dd>
                     </div>
                   </dl>
@@ -134,6 +151,9 @@ export function StepContent({
             </FadeUp>
           ))}
         </ul>
+        <FadeUp className="mt-8">
+          <PricingLegalNote />
+        </FadeUp>
       </div>
     );
   }
@@ -214,37 +234,33 @@ export function StepContent({
 
       {stepId === 10 && (
         <>
-          <StepHeader title="ROI Calculator" subtitle="Adjust tier, years, and budget — outputs update instantly." large={presentation} />
-          <RoiCalculatorV2
-            monthlyBudget={form.monthlyBudget}
+          <StepHeader
+            title="Founder Sponsor Pricing"
+            subtitle="Exclusive introductory rates for LiveCircuit's founding partners."
+            large={presentation}
+          />
+          <FounderSponsorPricing
+            selectedTierId={form.tierId as ArenaTierId}
             contractYears={form.contractYears}
-            tierId={form.tierId}
-            onBudgetChange={(v) => updateForm({ monthlyBudget: v })}
-            onYearsChange={(v) => updateForm({ contractYears: v })}
-            onTierChange={(v) => updateForm({ tierId: v })}
-            theme={theme}
+            compact={presentation}
           />
         </>
       )}
 
       {stepId === 11 && (
         <>
-          <StepHeader title="Proposal Generator" subtitle="Executive naming rights package — prepared for your team." large={presentation} />
-          <SponsorshipPackageV3
-            companyName={displayCompany}
-            arenaName={arenaName}
-            state={form.state}
-            tierName={selectedTier.name}
-            industry={form.industry}
-            estimatedReach={roi.estimatedReach}
-            brandExposure={`${formatCompact(roi.estimatedBrandExposure)} annual exposure`}
-            contractYears={form.contractYears}
-            totalInvestment={roi.totalInvestment}
-            investmentRange={`${formatCurrency(selectedTier.investment)}/mo – ${formatCurrency(selectedTier.annualInvestment)}/yr`}
-            theme={theme}
-            logoUrl={form.logoUrl}
-            slogan={form.slogan}
-          />
+          {!presentation ? (
+            <PriceMySponsorship />
+          ) : (
+            <>
+              <StepHeader
+                title="Price My Sponsorship"
+                subtitle="Customize your sponsorship package and receive an instant proposal."
+                large
+              />
+              <PriceMySponsorship compact />
+            </>
+          )}
         </>
       )}
 

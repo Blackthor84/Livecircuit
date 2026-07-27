@@ -29,6 +29,10 @@ import {
   type EventTypeId,
   type SponsorVisualizerStepId,
 } from "@/lib/demo/sponsor-visualizer-steps";
+import type { ArenaTierId, ContractLengthYears, PaymentOptionId, SponsorshipAddonId } from "@/lib/pricing/livecircuit-pricing";
+import { calculateSponsorshipQuote, type SponsorshipQuote } from "@/lib/pricing/sponsorship-quote-utils";
+
+export type { ArenaTierId, ContractLengthYears, PaymentOptionId, SponsorshipAddonId };
 
 export type SponsorVisualizerForm = {
   companyName: string;
@@ -88,6 +92,15 @@ type SponsorVisualizerContextValue = {
   exitFanJourneyPresentation: () => void;
   nextFanJourneySlide: () => void;
   prevFanJourneySlide: () => void;
+  quotePaymentOption: PaymentOptionId;
+  setQuotePaymentOption: (v: PaymentOptionId) => void;
+  selectedAddonIds: SponsorshipAddonId[];
+  toggleAddon: (id: SponsorshipAddonId) => void;
+  compareTierA: ArenaTierId;
+  compareTierB: ArenaTierId;
+  setCompareTierA: (v: ArenaTierId) => void;
+  setCompareTierB: (v: ArenaTierId) => void;
+  sponsorshipQuote: SponsorshipQuote;
 };
 
 const SponsorVisualizerContext = createContext<SponsorVisualizerContextValue | null>(null);
@@ -102,7 +115,7 @@ const INITIAL_FORM: SponsorVisualizerForm = {
   secondaryColor: "",
   state: DEFAULT_STATE,
   tierId: "theater",
-  monthlyBudget: 16_500,
+  monthlyBudget: 2_083,
   contractYears: 3,
   timeOfDay: "night",
   eventType: "music",
@@ -121,6 +134,10 @@ export function SponsorVisualizerProvider({ children }: { children: ReactNode })
   const [fanJourneyPresentationMode, setFanJourneyPresentationMode] = useState(false);
   const [fanJourneySlide, setFanJourneySlide] = useState(0);
   const [fanJourneyAutoplay, setFanJourneyAutoplay] = useState(true);
+  const [quotePaymentOption, setQuotePaymentOption] = useState<PaymentOptionId>("annual");
+  const [selectedAddonIds, setSelectedAddonIds] = useState<SponsorshipAddonId[]>([]);
+  const [compareTierA, setCompareTierA] = useState<ArenaTierId>("club");
+  const [compareTierB, setCompareTierB] = useState<ArenaTierId>("theater");
 
   const displayCompany = getDisplayCompany(form.companyName);
   const arenaName = getArenaName(form.companyName, form.tierId);
@@ -222,6 +239,21 @@ export function SponsorVisualizerProvider({ children }: { children: ReactNode })
     setFanJourneySlide((i) => Math.max(0, i - 1));
   }, []);
 
+  const toggleAddon = useCallback((id: SponsorshipAddonId) => {
+    setSelectedAddonIds((prev) => (prev.includes(id) ? prev.filter((x) => x !== id) : [...prev, id]));
+  }, []);
+
+  const sponsorshipQuote = useMemo(
+    () =>
+      calculateSponsorshipQuote({
+        tierId: form.tierId as ArenaTierId,
+        contractYears: form.contractYears as ContractLengthYears,
+        paymentOption: quotePaymentOption,
+        selectedAddonIds,
+      }),
+    [form.tierId, form.contractYears, quotePaymentOption, selectedAddonIds]
+  );
+
   useEffect(() => {
     document.documentElement.dataset.svPresentation =
       presentationMode || flyoverMode || fanJourneyPresentationMode ? "true" : "false";
@@ -303,6 +335,15 @@ export function SponsorVisualizerProvider({ children }: { children: ReactNode })
       exitFanJourneyPresentation,
       nextFanJourneySlide,
       prevFanJourneySlide,
+      quotePaymentOption,
+      setQuotePaymentOption,
+      selectedAddonIds,
+      toggleAddon,
+      compareTierA,
+      compareTierB,
+      setCompareTierA,
+      setCompareTierB,
+      sponsorshipQuote,
     }),
     [
       phase,
@@ -340,6 +381,15 @@ export function SponsorVisualizerProvider({ children }: { children: ReactNode })
       exitFanJourneyPresentation,
       nextFanJourneySlide,
       prevFanJourneySlide,
+      quotePaymentOption,
+      setQuotePaymentOption,
+      selectedAddonIds,
+      toggleAddon,
+      compareTierA,
+      compareTierB,
+      setCompareTierA,
+      setCompareTierB,
+      sponsorshipQuote,
     ]
   );
 

@@ -4,6 +4,7 @@ import { ARTIST_VENUE_GUIDES } from "@/lib/demo/artist-success-center-data";
 import { VenueComparePanel } from "@/components/artists/success-center/venue-compare-panel";
 import { FadeUp } from "@/components/demo/naming-rights/fade-up";
 import { SectionHeader } from "@/components/artists/success-center/section-header";
+import { BookingPricingBreakdown } from "@/components/pricing/artist/booking-pricing-breakdown";
 import { cn } from "@/lib/utils";
 
 const RISK_COLORS: Record<string, string> = {
@@ -43,6 +44,9 @@ export function VenueComparisonSection() {
                     </div>
                   ))}
                 </dl>
+                <div className="mt-5">
+                  <BookingPricingBreakdown venueId={venue.id} compact />
+                </div>
               </article>
             </FadeUp>
           ))}
