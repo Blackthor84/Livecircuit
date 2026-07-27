@@ -18,9 +18,67 @@ import {
   type HeaderUser,
 } from "@/components/layout/site-header-user-menu";
 import { APP_NAME, ROUTES } from "@/lib/constants";
-import { getBusinessNav, getGuestAuthCTAs, getMainNav } from "@/lib/features/navigation";
+import { getArtistNav, getBusinessNav, getGuestAuthCTAs, getMainNav } from "@/lib/features/navigation";
 import { getAccountMenuLinks } from "@/lib/features/account-menu";
 import { cn } from "@/lib/utils";
+
+function ArtistNavLinks({
+  pathname,
+  variant = "desktop",
+  onNavigate,
+}: {
+  pathname: string;
+  variant?: "desktop" | "mobile";
+  onNavigate?: () => void;
+}) {
+  const artistNav = getArtistNav();
+
+  if (variant === "mobile") {
+    return (
+      <>
+        <p className="px-3 pt-4 text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+          Artist
+        </p>
+        <div className="mx-1 space-y-2 rounded-xl border border-violet-500/20 bg-gradient-to-br from-violet-500/10 via-transparent to-primary/5 p-2">
+          {artistNav.map((item) => (
+            <HeaderNavLink
+              key={`${item.href}-${item.label}`}
+              href={item.href}
+              label={item.label}
+              icon={item.icon}
+              badge={item.badge}
+              description={item.description}
+              featured={item.featured}
+              pathname={pathname}
+              onNavigate={onNavigate}
+              showDescription
+              className="w-full rounded-lg px-3 py-3 text-lg"
+            />
+          ))}
+        </div>
+      </>
+    );
+  }
+
+  return (
+    <div className="flex items-center gap-1 border-l border-white/10 pl-2 ml-1">
+      <span className="hidden lg:inline px-2 text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+        Artist
+      </span>
+      {artistNav.map((item) => (
+        <HeaderNavLink
+          key={`${item.href}-${item.label}`}
+          href={item.href}
+          label={item.label}
+          icon={item.icon}
+          badge={item.badge}
+          featured={item.featured}
+          pathname={pathname}
+        />
+      ))}
+    </div>
+  );
+}
 
 function BusinessNavLinks({
   pathname,
@@ -106,6 +164,7 @@ export function SiteHeader({ user }: { user: HeaderUser | null }) {
               pathname={pathname}
             />
           ))}
+          <ArtistNavLinks pathname={pathname} />
           <BusinessNavLinks pathname={pathname} />
         </nav>
 
@@ -149,6 +208,7 @@ export function SiteHeader({ user }: { user: HeaderUser | null }) {
                     className="rounded-lg px-3 py-2 text-lg"
                   />
                 ))}
+                <ArtistNavLinks pathname={pathname} variant="mobile" />
                 <BusinessNavLinks pathname={pathname} variant="mobile" />
                 {!user ? (
                   <>

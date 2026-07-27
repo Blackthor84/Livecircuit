@@ -152,6 +152,10 @@
   html[data-sv-presentation="true"] footer {
     display: none !important;
   }
+  html[data-asc-presentation="true"] header,
+  html[data-asc-presentation="true"] footer {
+    display: none !important;
+  }
   .venue-themed {
     --ring: var(--venue-primary, var(--ring));
   }

@@ -6,6 +6,7 @@ import {
 } from "@/lib/features/account-menu";
 import {
   getAuthenticatedNav,
+  getArtistNav,
   getBusinessNav,
   getGuestAuthCTAs,
   getPublicNav,
@@ -40,6 +41,12 @@ describe("navigation", () => {
       "Following",
       "Notifications",
     ]);
+  });
+
+  it("shows artist nav with success center", () => {
+    expect(getArtistNav().map((i) => i.label)).toEqual(["Artist Success Center"]);
+    expect(getArtistNav()[0]?.href).toBe("/artists/success-center");
+    expect(getArtistNav()[0]?.badge).toBe("NEW");
   });
 
   it("shows business nav with sponsor visualizer", () => {

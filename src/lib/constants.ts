@@ -41,6 +41,7 @@ export const ROUTES = {
   artistDashboard: "/artist/dashboard",
   artistProfile: (username: string) => `/${username}`,
   namingRightsDemo: "/demo/naming-rights",
+  artistSuccessCenter: "/artists/success-center",
   admin: "/admin",
   adminVenues: "/admin/venues",
   venues: "/livecircuit/venues",

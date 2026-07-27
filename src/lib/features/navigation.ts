@@ -1,5 +1,5 @@
 import type { LucideIcon } from "lucide-react";
-import { Building2 } from "lucide-react";
+import { Building2, Mic } from "lucide-react";
 import { ROUTES } from "@/lib/constants";
 import type { UserRole } from "@/types/database";
 
@@ -49,6 +49,21 @@ export function getAuthenticatedNav(_user: NavUser): NavItem[] {
 
 export function getMainNav(user: NavUser): NavItem[] {
   return user ? getAuthenticatedNav(user) : getPublicNav();
+}
+
+/** Artist resources — always public. */
+export function getArtistNav(): NavItem[] {
+  return [
+    {
+      href: ROUTES.artistSuccessCenter,
+      label: "Artist Success Center",
+      icon: Mic,
+      badge: "NEW",
+      description:
+        "Learn how to book smarter shows, maximize attendance, understand earnings, and grow your audience.",
+      featured: true,
+    },
+  ];
 }
 
 /** Business & sponsorship links — always public. */
