@@ -1,13 +1,18 @@
+import {
+  DIGITAL_PLACEMENT_LABELS,
+  DIGITAL_SPONSORSHIP_PLACEMENTS,
+} from "@/lib/demo/digital-sponsorship-placements";
+
 export const SPONSOR_VISUALIZER_STEPS = [
   { id: 1, title: "Choose State", short: "State" },
   { id: 2, title: "Choose Venue", short: "Venue" },
   { id: 3, title: "Company", short: "Company" },
   { id: 4, title: "Live Venue Preview", short: "Preview" },
-  { id: 5, title: "Arena Walkthrough", short: "Walk" },
+  { id: 5, title: "The LiveCircuit Fan Journey", short: "Journey" },
   { id: 6, title: "Live Event Branding", short: "Events" },
   { id: 7, title: "Business Dashboard", short: "Dashboard" },
-  { id: 8, title: "Fan Journey", short: "Journey" },
-  { id: 9, title: "Digital Presence", short: "Digital" },
+  { id: 8, title: "Brand Impact", short: "Impact" },
+  { id: 9, title: "Traditional vs LiveCircuit", short: "Compare" },
   { id: 10, title: "ROI Calculator", short: "ROI" },
   { id: 11, title: "Proposal", short: "Proposal" },
   { id: 12, title: "Presentation & Flyover", short: "Present" },
@@ -17,18 +22,20 @@ export const SPONSOR_VISUALIZER_STEPS = [
 
 export const PRESENTATION_SLIDE_IDS = [4, 5, 6, 7, 8, 9, 10, 11] as const;
 
+/** 13 journey steps + brand impact + executive summary + comparison */
+export const FAN_JOURNEY_PRESENTATION_SLIDE_COUNT = 16;
+
 export const FLYOVER_SCENE_IDS = [
-  "drone-approach",
-  "entrance-lights",
-  "sponsor-logo",
-  "fans-enter",
-  "concert",
-  "billboards",
-  "food-court",
-  "comedy",
-  "podcast",
-  "vip",
+  "search-discover",
+  "arena-homepage",
+  "event-listing",
+  "digital-tickets",
+  "virtual-lobby",
+  "livestream",
+  "stage-led",
+  "chat-vip",
   "mobile-app",
+  "post-show",
   "analytics",
   "proposal",
   "closing",
@@ -54,50 +61,39 @@ export type EventTypeId = (typeof EVENT_TYPES)[number]["id"];
 
 export const ATTENDANCE_OPTIONS = [500, 2_500, 5_000, 10_000, 25_000, 50_000] as const;
 
-export const WALKTHROUGH_SCENES = [
-  { id: "outside", name: "Outside", icon: "🏛️", description: "Aerial approach, plaza, and arrival experience." },
-  { id: "entrance", name: "Entrance", icon: "🚪", description: "Glass doors, LED marquee, and sponsor welcome." },
-  { id: "lobby", name: "Lobby", icon: "✨", description: "Digital directory and brand wall." },
-  { id: "hallway", name: "Hallway", icon: "🛤️", description: "Wayfinding, banners, and concourse signage." },
-  { id: "food", name: "Food Court", icon: "🍔", description: "Concession branding and activations." },
-  { id: "vip", name: "VIP Lounge", icon: "🥂", description: "Premium hospitality and co-branded fixtures." },
-  { id: "main-stage", name: "Main Stage", icon: "🎤", description: "Headline performances under your arch." },
-  { id: "comedy", name: "Comedy Room", icon: "😂", description: "Intimate room with sponsor intro cards." },
-  { id: "podcast", name: "Podcast Studio", icon: "🎙️", description: "Broadcast booth and live audience." },
-  { id: "parking", name: "Parking Lot", icon: "🅿️", description: "Directional signs and arrival flow." },
-  { id: "exit", name: "Exit", icon: "👋", description: "Departure screens and return prompts." },
+/** Digital fan journey walkthrough — no physical-world placements. */
+export const WALKTHROUGH_SCENES = DIGITAL_SPONSORSHIP_PLACEMENTS.filter((p) =>
+  ["search-results", "arena-homepage", "event-listing", "digital-tickets", "mobile-app", "virtual-lobby", "livestream-overlay", "stage-led", "chat-branding", "vip-lounge", "email-campaigns", "analytics-dashboard"].includes(p.id)
+).map((p) => ({
+  id: p.id,
+  name: p.label,
+  icon: p.icon,
+  description: p.description,
+}));
+
+export const DIGITAL_PRESENCE_MOCKUPS = DIGITAL_SPONSORSHIP_PLACEMENTS.map((p) => ({
+  id: p.id,
+  label: p.label,
+  channel: p.channel,
+  phase: p.phase,
+  description: p.description,
+}));
+
+export const LIVE_PERSONALIZATION_ITEMS = DIGITAL_PLACEMENT_LABELS;
+
+export const FAN_JOURNEY_STEPS = [
+  { label: "Search Results", icon: "search" as const, placementId: "search-results" },
+  { label: "Arena Homepage", icon: "click" as const, placementId: "arena-homepage" },
+  { label: "Event Listing", icon: "venue" as const, placementId: "event-listing" },
+  { label: "Digital Ticket Purchase", icon: "ticket" as const, placementId: "digital-tickets" },
+  { label: "Virtual Lobby", icon: "enter" as const, placementId: "virtual-lobby" },
+  { label: "Livestream & Overlay", icon: "sponsor" as const, placementId: "livestream-overlay" },
+  { label: "Chat & VIP Lounge", icon: "event" as const, placementId: "chat-branding" },
+  { label: "Post-Show Email & Push", icon: "social" as const, placementId: "email-campaigns" },
+  { label: "Returns with Profile Frame", icon: "return" as const, placementId: "profile-frames" },
 ] as const;
 
-export const DIGITAL_PRESENCE_MOCKUPS = [
-  { id: "homepage", label: "Homepage", channel: "LiveCircuit" },
-  { id: "listing", label: "Arena Listing", channel: "Discovery" },
-  { id: "search", label: "Search Results", channel: "Search" },
-  { id: "events", label: "Event Listings", channel: "Events" },
-  { id: "tickets", label: "Tickets", channel: "Commerce" },
-  { id: "email", label: "Emails", channel: "Email" },
-  { id: "push", label: "Push Notifications", channel: "Mobile" },
-  { id: "instagram", label: "Instagram", channel: "Social" },
-  { id: "tiktok", label: "TikTok", channel: "Social" },
-  { id: "facebook", label: "Facebook", channel: "Social" },
-  { id: "linkedin", label: "LinkedIn", channel: "Social" },
-] as const;
-
-export const LIVE_PERSONALIZATION_ITEMS = [
-  "Arena Name",
-  "Entrance Sign",
-  "Scoreboard",
-  "Website",
-  "Mobile App",
-  "Digital Tickets",
-  "VIP Passes",
-  "Billboards",
-  "Parking Signs",
-  "Street Banners",
-  "Employee Shirts",
-  "Event Posters",
-  "Proposal",
-  "Analytics",
-] as const;
+export const SPONSOR_MOCKUP_TYPES = DIGITAL_PLACEMENT_LABELS;
 
 export const STATE_ECONOMIC_REGIONS: Record<string, string> = {
   Alabama: "Southeast", Alaska: "Pacific", Arizona: "Southwest", Arkansas: "Southeast",
@@ -115,23 +111,6 @@ export const STATE_ECONOMIC_REGIONS: Record<string, string> = {
   Virginia: "Mid-Atlantic", Washington: "Pacific", "West Virginia": "Southeast",
   Wisconsin: "Midwest", Wyoming: "Mountain",
 };
-
-export const FAN_JOURNEY_STEPS = [
-  { label: "Google Search", icon: "search" as const },
-  { label: "Clicks LiveCircuit", icon: "click" as const },
-  { label: "Visits Arena", icon: "venue" as const },
-  { label: "Buys Ticket", icon: "ticket" as const },
-  { label: "Enters Venue", icon: "enter" as const },
-  { label: "Sees Sponsor", icon: "sponsor" as const },
-  { label: "Attends Event", icon: "event" as const },
-  { label: "Shares on Social", icon: "social" as const },
-  { label: "Returns Again", icon: "return" as const },
-] as const;
-
-export const SPONSOR_MOCKUP_TYPES = [
-  "Arena Entrance", "VIP Badge", "Staff Shirts", "Tickets", "Digital Screens",
-  "Website", "Mobile App", "Homepage", "Billboards", "Parking Sign", "Street Banner",
-] as const;
 
 export const STATE_MAP_POSITIONS: Record<string, { x: number; y: number; abbr: string }> = {
   Alabama: { x: 72, y: 68, abbr: "AL" }, Alaska: { x: 12, y: 82, abbr: "AK" },

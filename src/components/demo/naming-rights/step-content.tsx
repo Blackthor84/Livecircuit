@@ -15,18 +15,18 @@ import {
 import { ClosingExperience } from "@/components/demo/naming-rights/closing-experience";
 import { ConfiguratorToolbar } from "@/components/demo/naming-rights/configurator-toolbar";
 import { CustomizeVenueStep } from "@/components/demo/naming-rights/customize-venue-step";
-import { DigitalPresenceGrid } from "@/components/demo/naming-rights/digital-presence-grid";
-import { FanJourneyV3 } from "@/components/demo/naming-rights/fan-journey-v3";
+import { FanJourneyBrandImpact } from "@/components/demo/naming-rights/fan-journey/fan-journey-brand-impact";
+import { FanJourneyComparison } from "@/components/demo/naming-rights/fan-journey/fan-journey-comparison";
+import { FanJourneyExecutiveInsight } from "@/components/demo/naming-rights/fan-journey/fan-journey-executive-insight";
+import { FanJourneyExperience } from "@/components/demo/naming-rights/fan-journey/fan-journey-experience";
 import { InteractiveAnalyticsDashboard } from "@/components/demo/naming-rights/interactive-analytics-dashboard";
 import { LiveEventBrandingV3 } from "@/components/demo/naming-rights/live-event-branding-v3";
 import { LivePersonalizationStrip } from "@/components/demo/naming-rights/live-personalization-strip";
 import { RoiCalculatorV2 } from "@/components/demo/naming-rights/roi-calculator-v2";
-import { SponsorMockupsGallery } from "@/components/demo/naming-rights/sponsor-mockups-gallery";
 import { SponsorshipPackageV3 } from "@/components/demo/naming-rights/sponsorship-package-v3";
 import { useSponsorVisualizer } from "@/components/demo/naming-rights/sponsor-visualizer-context";
 import { UsStateSelector } from "@/components/demo/naming-rights/us-state-selector";
 import { VenueExteriorV3 } from "@/components/demo/naming-rights/venue-exterior-v3";
-import { VenueWalkthrough } from "@/components/demo/naming-rights/venue-walkthrough";
 import { FadeUp } from "@/components/demo/naming-rights/fade-up";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -157,19 +157,23 @@ export function StepContent({
         <>
           <StepHeader title="Live Venue Preview" subtitle={`${arenaName} · ${form.state}`} large={presentation} />
           <VenueExteriorV3 arenaName={arenaName} companyName={displayCompany} theme={theme} logoUrl={form.logoUrl} compact={presentation} />
-          {!presentation ? (
-            <div>
-              <h3 className="mb-6 text-xl font-bold">Sponsor mockups</h3>
-              <SponsorMockupsGallery />
-            </div>
-          ) : null}
         </>
       )}
 
       {stepId === 5 && (
         <>
-          <StepHeader title="Arena Walkthrough" subtitle="Scroll through every scene — sponsor branding everywhere." large={presentation} />
-          <VenueWalkthrough />
+          {!presentation ? (
+            <FanJourneyExperience />
+          ) : (
+            <>
+              <StepHeader
+                title="Follow Your Customer's Journey"
+                subtitle="Watch how your sponsorship reaches fans from discovery until long after the show ends."
+                large
+              />
+              <FanJourneyExperience compact />
+            </>
+          )}
         </>
       )}
 
@@ -189,15 +193,22 @@ export function StepContent({
 
       {stepId === 8 && (
         <>
-          <StepHeader title="Fan Journey" subtitle="The complete customer experience — branded at every step." large={presentation} />
-          <FanJourneyV3 />
+          <StepHeader title="Your Brand Impact" subtitle="Cumulative sponsor exposure across the complete fan lifecycle." large={presentation} />
+          <div className="space-y-8">
+            <FanJourneyBrandImpact compact={presentation} />
+            <FanJourneyExecutiveInsight compact={presentation} />
+          </div>
         </>
       )}
 
       {stepId === 9 && (
         <>
-          <StepHeader title="Digital Presence" subtitle="Homepage, search, social, email, push — everything personalized." large={presentation} />
-          <DigitalPresenceGrid />
+          <StepHeader
+            title="Traditional vs LiveCircuit"
+            subtitle="Why digital naming rights deliver measurable engagement at every touchpoint."
+            large={presentation}
+          />
+          <FanJourneyComparison compact={presentation} />
         </>
       )}
 

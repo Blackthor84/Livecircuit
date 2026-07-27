@@ -22,6 +22,7 @@ import {
 import { STATE_POPULATIONS } from "@/lib/demo/state-market-data";
 import {
   FLYOVER_SCENE_IDS,
+  FAN_JOURNEY_PRESENTATION_SLIDE_COUNT,
   PRESENTATION_SLIDE_IDS,
   SPONSOR_VISUALIZER_STEPS,
   type ConfiguratorPhase,
@@ -79,6 +80,14 @@ type SponsorVisualizerContextValue = {
   exitFlyover: () => void;
   nextFlyoverScene: () => void;
   prevFlyoverScene: () => void;
+  fanJourneyPresentationMode: boolean;
+  fanJourneySlide: number;
+  fanJourneyAutoplay: boolean;
+  setFanJourneyAutoplay: (v: boolean) => void;
+  enterFanJourneyPresentation: () => void;
+  exitFanJourneyPresentation: () => void;
+  nextFanJourneySlide: () => void;
+  prevFanJourneySlide: () => void;
 };
 
 const SponsorVisualizerContext = createContext<SponsorVisualizerContextValue | null>(null);
@@ -109,6 +118,9 @@ export function SponsorVisualizerProvider({ children }: { children: ReactNode })
   const [presentationAutoplay, setPresentationAutoplay] = useState(true);
   const [flyoverMode, setFlyoverMode] = useState(false);
   const [flyoverScene, setFlyoverScene] = useState(0);
+  const [fanJourneyPresentationMode, setFanJourneyPresentationMode] = useState(false);
+  const [fanJourneySlide, setFanJourneySlide] = useState(0);
+  const [fanJourneyAutoplay, setFanJourneyAutoplay] = useState(true);
 
   const displayCompany = getDisplayCompany(form.companyName);
   const arenaName = getArenaName(form.companyName, form.tierId);
@@ -193,14 +205,33 @@ export function SponsorVisualizerProvider({ children }: { children: ReactNode })
     setFlyoverScene((i) => Math.max(0, i - 1));
   }, []);
 
+  const enterFanJourneyPresentation = useCallback(() => {
+    setFanJourneySlide(0);
+    setFanJourneyPresentationMode(true);
+  }, []);
+
+  const exitFanJourneyPresentation = useCallback(() => {
+    setFanJourneyPresentationMode(false);
+  }, []);
+
+  const nextFanJourneySlide = useCallback(() => {
+    setFanJourneySlide((i) => Math.min(FAN_JOURNEY_PRESENTATION_SLIDE_COUNT - 1, i + 1));
+  }, []);
+
+  const prevFanJourneySlide = useCallback(() => {
+    setFanJourneySlide((i) => Math.max(0, i - 1));
+  }, []);
+
   useEffect(() => {
-    document.documentElement.dataset.svPresentation = presentationMode || flyoverMode ? "true" : "false";
-    document.body.style.overflow = presentationMode || flyoverMode ? "hidden" : "";
+    document.documentElement.dataset.svPresentation =
+      presentationMode || flyoverMode || fanJourneyPresentationMode ? "true" : "false";
+    document.body.style.overflow =
+      presentationMode || flyoverMode || fanJourneyPresentationMode ? "hidden" : "";
     return () => {
       delete document.documentElement.dataset.svPresentation;
       document.body.style.overflow = "";
     };
-  }, [presentationMode, flyoverMode]);
+  }, [presentationMode, flyoverMode, fanJourneyPresentationMode]);
 
   useEffect(() => {
     const tier = ARENA_TIER_OPTIONS.find((t) => t.id === form.tierId);
@@ -218,6 +249,17 @@ export function SponsorVisualizerProvider({ children }: { children: ReactNode })
     }, 8000);
     return () => window.clearInterval(timer);
   }, [presentationMode, presentationAutoplay]);
+
+  useEffect(() => {
+    if (!fanJourneyPresentationMode || !fanJourneyAutoplay) return;
+    const timer = window.setInterval(() => {
+      setFanJourneySlide((i) => {
+        if (i >= FAN_JOURNEY_PRESENTATION_SLIDE_COUNT - 1) return 0;
+        return i + 1;
+      });
+    }, 6000);
+    return () => window.clearInterval(timer);
+  }, [fanJourneyPresentationMode, fanJourneyAutoplay]);
 
   const value = useMemo(
     () => ({
@@ -253,6 +295,14 @@ export function SponsorVisualizerProvider({ children }: { children: ReactNode })
       exitFlyover,
       nextFlyoverScene,
       prevFlyoverScene,
+      fanJourneyPresentationMode,
+      fanJourneySlide,
+      fanJourneyAutoplay,
+      setFanJourneyAutoplay,
+      enterFanJourneyPresentation,
+      exitFanJourneyPresentation,
+      nextFanJourneySlide,
+      prevFanJourneySlide,
     }),
     [
       phase,
@@ -283,6 +333,13 @@ export function SponsorVisualizerProvider({ children }: { children: ReactNode })
       exitFlyover,
       nextFlyoverScene,
       prevFlyoverScene,
+      fanJourneyPresentationMode,
+      fanJourneySlide,
+      fanJourneyAutoplay,
+      enterFanJourneyPresentation,
+      exitFanJourneyPresentation,
+      nextFanJourneySlide,
+      prevFanJourneySlide,
     ]
   );
 

@@ -1,7 +1,6 @@
 "use client";
 
 import { Eye } from "lucide-react";
-import { ArenaBrandingMockups } from "@/components/demo/naming-rights/arena-branding-mockups";
 import { MobileAppPreview } from "@/components/demo/naming-rights/mobile-app-preview";
 import { TicketMockup } from "@/components/demo/naming-rights/ticket-mockup";
 import { FadeUp, FadeUpStagger, FadeUpItem } from "@/components/demo/naming-rights/fade-up";
@@ -54,8 +53,6 @@ export function LiveEventBrandingV3() {
           <MobileAppPreview companyName={displayCompany} arenaName={arenaName} theme={theme} />
         </FadeUpItem>
       </FadeUpStagger>
-
-      <ArenaBrandingMockups companyName={displayCompany} arenaName={arenaName} theme={theme} />
     </div>
   );
 }

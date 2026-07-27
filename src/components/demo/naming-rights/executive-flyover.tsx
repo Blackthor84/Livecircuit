@@ -8,19 +8,18 @@ import { Button } from "@/components/ui/button";
 import { FLYOVER_SCENE_IDS, type FlyoverSceneId } from "@/lib/demo/sponsor-visualizer-steps";
 
 const FLYOVER_LABELS: Record<FlyoverSceneId, string> = {
-  "drone-approach": "Drone approaches arena",
-  "entrance-lights": "Entrance lights turn on",
-  "sponsor-logo": "Sponsor logo appears",
-  "fans-enter": "Fans enter the venue",
-  concert: "Concert begins",
-  billboards: "Digital billboards activate",
-  "food-court": "Food court experience",
-  comedy: "Comedy club",
-  podcast: "Podcast theater",
-  vip: "VIP lounge",
-  "mobile-app": "Mobile app experience",
+  "search-discover": "Fan discovers arena in search results",
+  "arena-homepage": "Arena homepage with sponsor hero",
+  "event-listing": "Event listings show presenting sponsor",
+  "digital-tickets": "Digital tickets with brand placement",
+  "virtual-lobby": "Virtual lobby pre-show experience",
+  livestream: "Livestream overlay during the show",
+  "stage-led": "Stage LED screens & broadcast graphics",
+  "chat-vip": "Chat branding & VIP lounge",
+  "mobile-app": "Mobile app sponsor surfaces",
+  "post-show": "Post-show email, push & profile frames",
   analytics: "Executive analytics dashboard",
-  proposal: "Personalized proposal",
+  proposal: "Personalized sponsorship proposal",
   closing: "Closing opportunity",
 };
 

@@ -88,12 +88,15 @@ export const NAMING_RIGHTS_BENEFITS = [
   { title: "Brand Recognition", description: "Always-on impressions across search, discovery, and fan touchpoints." },
 ];
 
-export const BILLBOARD_MESSAGES = [
-  (company: string, arena: string) => ({ line1: "Welcome to", line2: arena, accent: true }),
+export const DIGITAL_PLACEMENT_MESSAGES = [
+  (company: string, arena: string) => ({ line1: "Now streaming on LiveCircuit", line2: arena, accent: true }),
   (company: string) => ({ line1: "Tonight's Comedy Show", line2: `Presented by ${company}`, accent: false }),
-  (company: string) => ({ line1: "Thank you to our Arena Sponsor", line2: company, accent: true }),
-  (company: string, arena: string) => ({ line1: "Now Live on LiveCircuit", line2: arena, accent: false }),
+  (company: string) => ({ line1: "Official Arena Partner", line2: company, accent: true }),
+  (company: string, arena: string) => ({ line1: "Search · Discover · Watch", line2: `${arena} · ${company}`, accent: false }),
 ];
+
+/** @deprecated Use DIGITAL_PLACEMENT_MESSAGES */
+export const BILLBOARD_MESSAGES = DIGITAL_PLACEMENT_MESSAGES;
 
 export const ARENA_TIER_OPTIONS = [
   {
@@ -221,36 +224,43 @@ export const ANALYTICS_CHART_DATA = {
 
 export const PROPOSAL_BENEFITS = [
   "Permanent arena naming rights",
-  "Logo on every ticket & event page",
-  "Digital billboard placements",
-  "VIP lounge co-branding",
+  "Logo on every digital ticket & event page",
+  "Livestream overlay & stage LED placements",
+  "Virtual VIP lounge co-branding",
   "Monthly analytics dashboard",
-  "Social media co-marketing",
+  "Push, email & profile frame campaigns",
   "Search & discovery priority",
   "Dedicated account manager",
 ];
 
 export const WHY_LIVECIRCUIT = [
   { title: "Brand Awareness", description: "Your name on a permanent virtual venue seen by millions of fans worldwide." },
-  { title: "Digital Exposure", description: "Billboards, banners, and pre-show placements across every live stream." },
+  { title: "Digital Exposure", description: "Livestream overlays, event listings, and in-app placements across every fan touchpoint." },
   { title: "Every Ticket Includes Sponsor", description: "Digital and printable tickets carry your logo and arena name." },
   { title: "Every Event Displays Sponsor", description: "Lineup cards, replays, and event pages credit your brand." },
   { title: "Sponsor Homepage", description: "Featured placement on the arena landing page fans bookmark." },
   { title: "Search Visibility", description: "Fans discover your arena when searching cities, genres, and artists." },
-  { title: "Live Event Branding", description: "Lower-thirds, overlays, and stage backdrops during every show." },
+  { title: "Live Event Branding", description: "Lower-thirds, overlays, and stage LED content during every stream." },
   { title: "Arena Naming Rights", description: "Official venue name — the address fans share and remember." },
-  { title: "VIP Events", description: "Exclusive sponsor lounges, meet-and-greets, and hospitality packages." },
+  { title: "VIP Events", description: "Exclusive virtual VIP lounges, meet-and-greets, and hospitality packages." },
   { title: "Business Networking", description: "Connect with performers, venues, and enterprise partners on LiveCircuit." },
 ];
 
 export const BRANDING_MOCKUP_TYPES = [
-  "Entrance Sign",
-  "Scoreboard",
-  "Digital Billboard",
-  "VIP Entrance",
-  "Parking Sign",
-  "Event Banner",
-  "Ticket",
-  "Website Header",
+  "Arena Entrance",
+  "Arena Homepage",
+  "Event Listing",
+  "Digital Tickets",
   "Mobile App",
+  "Livestream Overlay",
+  "Stage LED Screens",
+  "Virtual Lobby",
+  "VIP Lounge",
+  "Chat Branding",
+  "Push Notifications",
+  "Email Campaigns",
+  "Digital Merchandise",
+  "Profile Frames",
+  "Search Results",
+  "Analytics Dashboard",
 ] as const;

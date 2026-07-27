@@ -3,6 +3,7 @@
 import { AnimatePresence, motion } from "framer-motion";
 import { CinematicLanding } from "@/components/demo/naming-rights/cinematic-landing";
 import { ExecutiveFlyover } from "@/components/demo/naming-rights/executive-flyover";
+import { FanJourneyPresentation } from "@/components/demo/naming-rights/fan-journey/fan-journey-presentation";
 import { PresentationMode } from "@/components/demo/naming-rights/presentation-mode";
 import { SponsorVisualizerProvider, useSponsorVisualizer } from "@/components/demo/naming-rights/sponsor-visualizer-context";
 import { StepContent } from "@/components/demo/naming-rights/step-content";
@@ -33,6 +34,7 @@ function SponsorVisualizerInner() {
         </WizardShell>
       </div>
       <PresentationMode />
+      <FanJourneyPresentation />
       <ExecutiveFlyover />
     </>
   );

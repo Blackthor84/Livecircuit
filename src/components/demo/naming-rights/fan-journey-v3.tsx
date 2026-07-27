@@ -15,6 +15,7 @@ import { FadeUp, FadeUpItem, FadeUpStagger } from "@/components/demo/naming-righ
 import { SponsorBrandLogo } from "@/components/demo/naming-rights/sponsor-brand-logo";
 import { useSponsorVisualizer } from "@/components/demo/naming-rights/sponsor-visualizer-context";
 import { FAN_JOURNEY_STEPS } from "@/lib/demo/sponsor-visualizer-steps";
+import { DIGITAL_SPONSORSHIP_PLACEMENTS } from "@/lib/demo/digital-sponsorship-placements";
 
 const ICONS = {
   search: Search,
@@ -35,6 +36,7 @@ export function FanJourneyV3() {
     <FadeUpStagger className="mx-auto max-w-2xl space-y-4">
       {FAN_JOURNEY_STEPS.map((step, i) => {
         const Icon = ICONS[step.icon];
+        const placement = DIGITAL_SPONSORSHIP_PLACEMENTS.find((p) => p.id === step.placementId);
         return (
           <FadeUpItem key={step.label}>
             <div className="relative">
@@ -51,11 +53,10 @@ export function FanJourneyV3() {
                 <div className="min-w-0 flex-1">
                   <p className="font-semibold">{step.label}</p>
                   <p className="mt-1 text-sm text-muted-foreground">
-                    {step.label.includes("Search")
-                      ? `"${displayCompany} LiveCircuit arena ${form.state}"`
-                      : step.label.includes("Visits")
-                        ? arenaName
-                        : `Branded touchpoint · ${displayCompany}`}
+                    {placement?.description ??
+                      (step.label.includes("Search")
+                        ? `"${displayCompany} LiveCircuit arena ${form.state}"`
+                        : `Digital touchpoint · ${displayCompany}`)}
                   </p>
                 </div>
                 <SponsorBrandLogo theme={theme} logoUrl={form.logoUrl} size="sm" />

@@ -2,7 +2,6 @@
 
 import { motion } from "framer-motion";
 import { ArenaEntranceHero } from "@/components/demo/naming-rights/arena-entrance-hero";
-import { SponsorBrandLogo } from "@/components/demo/naming-rights/sponsor-brand-logo";
 import { useSponsorVisualizer } from "@/components/demo/naming-rights/sponsor-visualizer-context";
 import { EVENT_TYPES } from "@/lib/demo/sponsor-visualizer-steps";
 import type { BrandTheme } from "@/lib/demo/naming-rights-utils";
@@ -62,15 +61,6 @@ export function VenueExteriorV3({
                 transition={{ duration: 3, repeat: Infinity, delay: x / 40 }}
               />
             ))}
-            {["10%", "70%", "40%"].map((left, i) => (
-              <motion.div
-                key={left}
-                className="pointer-events-none absolute size-1 rounded-full bg-amber-300"
-                style={{ left, top: "15%" }}
-                animate={{ scale: [0, 1.5, 0], opacity: [0, 1, 0] }}
-                transition={{ duration: 2, repeat: Infinity, delay: i * 0.7 }}
-              />
-            ))}
           </>
         ) : (
           <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-sky-400/10 to-transparent" />
@@ -84,9 +74,9 @@ export function VenueExteriorV3({
 
         <div className="relative grid gap-3 border-t border-white/10 p-4 sm:grid-cols-3 sm:p-6">
           {[
-            { label: "Parking Sign", text: `${companyName} Parking →` },
-            { label: "Digital Billboard", text: event?.label ?? "Live Tonight" },
-            { label: "Street Banner", text: form.slogan || `Welcome to ${arenaName}` },
+            { label: "Arena Homepage", text: `Presented by ${companyName}` },
+            { label: "Event Listing", text: event?.label ?? "Live Tonight" },
+            { label: "Livestream Overlay", text: form.slogan || `${companyName} · Official Partner` },
           ].map((sign) => (
             <div
               key={sign.label}
@@ -106,11 +96,16 @@ export function VenueExteriorV3({
 
       {!compact ? (
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          {["Glass Entrance", "VIP Entrance", "Scoreboard", "Welcome Banner"].map((label) => (
+          {[
+            { label: "Digital Tickets", sub: "Wallet & checkout" },
+            { label: "Virtual Lobby", sub: "Pre-show experience" },
+            { label: "Stage LED Screens", sub: "Live broadcast" },
+            { label: "Push Notifications", sub: "Fan retention" },
+          ].map(({ label, sub }) => (
             <div key={label} className="glass-panel rounded-xl p-4 text-center">
-              <SponsorBrandLogo theme={theme} logoUrl={logoUrl} size="sm" className="mx-auto" />
-              <p className="mt-3 text-xs font-semibold uppercase tracking-wider text-muted-foreground">{label}</p>
+              <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">{label}</p>
               <p className="mt-1 text-sm font-medium">{arenaName}</p>
+              <p className="mt-1 text-[10px] text-primary/80">{sub}</p>
             </div>
           ))}
         </div>

@@ -41,15 +41,15 @@ export function MobileAppPreview({
             </div>
           </div>
 
-          {/* Digital billboard mini */}
+          {/* In-app sponsor banner */}
           <div
             className="mx-3 rounded-lg border px-3 py-2 text-center"
             style={{ borderColor: `${theme.gold}60`, background: "oklch(0.12 0.02 280)" }}
           >
             <p className="text-[9px] uppercase tracking-wider" style={{ color: theme.gold }}>
-              Digital Billboard
+              Event Listing
             </p>
-            <p className="mt-0.5 text-[11px] font-semibold">Welcome to {arenaName}</p>
+            <p className="mt-0.5 text-[11px] font-semibold">Presented by {companyName}</p>
           </div>
 
           {/* Event list */}
