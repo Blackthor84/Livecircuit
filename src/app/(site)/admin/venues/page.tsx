@@ -5,14 +5,14 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { listVenuesForAdmin } from "@/lib/data/venues";
 
-export const metadata: Metadata = { title: "Venues — Admin" };
+export const metadata: Metadata = { title: "Venue Management — Admin" };
 
 export default async function AdminVenuesPage() {
   const venues = await listVenuesForAdmin();
 
   return (
     <>
-      <AdminPageHeader title="Venues" subtitle="Manage regional arenas, sponsorships, concourse, and seasonal themes." />
+      <AdminPageHeader title="Venue Management" subtitle="Permanent slugs, changeable display names, and sponsorship-ready naming rights." />
       <div className="mb-6 flex justify-end">
         <Button href="/admin/venues/new">New venue</Button>
       </div>

@@ -1,6 +1,7 @@
 import { createClient } from "@/lib/supabase/server";
 import { isSupabaseConfigured } from "@/lib/config/env";
 import { isAdminRole } from "@/lib/auth/roles";
+import { getVenueDisplayName } from "@/lib/venues/display-name";
 
 export type SponsorOrgSummary = {
   id: string;
@@ -186,8 +187,9 @@ export async function listFoundingSponsorOpportunities(): Promise<FoundingOpport
 
   const { data: venues } = await supabase
     .from("venues")
-    .select("id, slug, name, region, capacity")
+    .select("id, slug, name, default_name, display_name, sponsored_name, sponsorship_status, region, capacity")
     .eq("is_active", true)
+    .in("sponsorship_status", ["available", "expired"])
     .order("popularity_score", { ascending: false });
 
   if (!venues?.length) return [];
@@ -205,7 +207,13 @@ export async function listFoundingSponsorOpportunities(): Promise<FoundingOpport
     .map((v) => ({
       venue_id: v.id as string,
       slug: v.slug as string,
-      name: v.name as string,
+      name: getVenueDisplayName({
+        default_name: (v.default_name as string) ?? (v.name as string),
+        display_name: (v.display_name as string) ?? (v.name as string),
+        sponsored_name: v.sponsored_name as string | null,
+        sponsorship_status: v.sponsorship_status as "available" | "pending" | "active" | "expired",
+        name: v.name as string,
+      }),
       region: v.region as string,
       capacity: v.capacity as number,
     }));

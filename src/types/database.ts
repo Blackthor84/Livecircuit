@@ -159,10 +159,22 @@ export type SponsorshipProduct =
   | "category_sponsorship"
   | "founding_sponsor";
 
+export type VenueSponsorshipStatus = "available" | "pending" | "active" | "expired";
+
 export type Venue = {
   id: string;
   slug: string;
   name: string;
+  default_name: string;
+  display_name: string;
+  sponsored_name: string | null;
+  sponsor_company: string | null;
+  sponsor_logo_url: string | null;
+  sponsor_start_date: string | null;
+  sponsor_end_date: string | null;
+  sponsorship_status: VenueSponsorshipStatus;
+  naming_rights_price: number | null;
+  is_placeholder_name: boolean;
   region: string;
   state_code: string | null;
   country_id: string | null;

@@ -8,6 +8,7 @@ import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
 import type { VenueListItem } from "@/lib/data/venues";
 import type { VenueThemeChip } from "@/lib/venues/theme";
+import { VenueNamingBadge, venueCardTitle } from "@/components/venues/venue-naming-badge";
 import { cn } from "@/lib/utils";
 
 export function VenueCard({
@@ -23,6 +24,8 @@ export function VenueCard({
     venue.hero_image_url ??
     venue.banner_url ??
     `https://picsum.photos/seed/venue-${venue.slug}/800/600`;
+
+  const title = venueCardTitle(venue);
 
   return (
     <motion.div
@@ -52,12 +55,16 @@ export function VenueCard({
                 <Radio className="size-3" />
                 Live now
               </Badge>
-            ) : null}
+            ) : (
+              <div className="absolute left-3 top-3">
+                <VenueNamingBadge venue={venue} size="sm" />
+              </div>
+            )}
             <div className="absolute bottom-0 left-0 right-0 p-4">
               <p className="text-xs uppercase tracking-wider text-white/60">
                 {venue.venue_types?.name ?? "Venue"}
               </p>
-              <h3 className="text-lg font-semibold leading-tight">{venue.name}</h3>
+              <h3 className="text-lg font-semibold leading-tight">{title}</h3>
               <p className="mt-1 flex items-center gap-1 text-xs text-white/70">
                 <MapPin className="size-3.5" />
                 {venue.region}

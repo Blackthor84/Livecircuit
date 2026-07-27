@@ -2,6 +2,7 @@ import { createClient } from "@/lib/supabase/server";
 import { isSupabaseConfigured } from "@/lib/config/env";
 import { unstable_cache } from "next/cache";
 import { VENUES_DIRECTORY_TAG, VENUE_TYPES_TAG, venueSlugTag } from "@/lib/cache/venue-tags";
+import { getVenueDisplayName } from "@/lib/venues/display-name";
 import type { Venue } from "@/types/database";
 import type { venueListQuerySchema } from "@/lib/validations/venues";
 import type { z } from "zod";
@@ -690,7 +691,7 @@ export async function listVenuesPublic(
   if (venueIdsLive) builder = builder.in("id", venueIdsLive);
 
   const sort = query.sort ?? "popularity";
-  if (sort === "name") builder = builder.order("name", { ascending: true });
+  if (sort === "name") builder = builder.order("display_name", { ascending: true });
   else if (sort === "visitors") builder = builder.order("current_visitors", { ascending: false });
   else builder = builder.order("popularity_score", { ascending: false });
 
@@ -706,4 +707,24 @@ export async function listVenuesPublic(
     total,
     hasMore: from + (data?.length ?? 0) < total,
   };
+}
+
+export async function getFeaturedVenuesForHome(limit = 6): Promise<VenueListItem[]> {
+  if (!isSupabaseConfigured()) return [];
+
+  const supabase = await createClient();
+  const { data, error } = await supabase
+    .from("venues")
+    .select("*, venue_types(id, slug, name, icon_key, branding)")
+    .eq("is_active", true)
+    .order("popularity_score", { ascending: false })
+    .limit(limit);
+
+  if (error) return [];
+  return (data ?? []) as VenueListItem[];
+}
+
+/** Resolve public title from any venue row shape (legacy or naming-rights). */
+export function resolveVenuePublicName(venue: VenueListItem): string {
+  return getVenueDisplayName(venue);
 }

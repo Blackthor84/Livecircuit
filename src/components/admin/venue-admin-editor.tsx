@@ -21,6 +21,7 @@ import {
   assignEventVenueAction,
 } from "@/lib/actions/venues-admin";
 import { adminAdjustVenueLoyaltyAction } from "@/lib/actions/venue-loyalty";
+import { VenueNamingManagement } from "@/components/admin/venue-naming-management";
 import type { VenueAdminDetail } from "@/lib/data/venues";
 
 const SPONSOR_PRODUCTS = [
@@ -55,7 +56,7 @@ export function AdminVenueEditor({ data }: { data: VenueAdminDetail }) {
     const result = await upsertVenueAction({
       id: venue.id,
       slug: formData.get("slug"),
-      name: formData.get("name"),
+      defaultName: formData.get("defaultName"),
       region: formData.get("region"),
       stateCode: formData.get("stateCode") || null,
       venueTypeSlug: formData.get("venueTypeSlug"),
@@ -78,6 +79,7 @@ export function AdminVenueEditor({ data }: { data: VenueAdminDetail }) {
     <Tabs defaultValue="general" className="mt-6">
       <TabsList className="flex h-auto flex-wrap gap-1">
         <TabsTrigger value="general">General</TabsTrigger>
+        <TabsTrigger value="naming">Venue Management</TabsTrigger>
         <TabsTrigger value="sponsors">Sponsors</TabsTrigger>
         <TabsTrigger value="artists">Featured artists</TabsTrigger>
         <TabsTrigger value="theme">Seasonal theme</TabsTrigger>
@@ -90,12 +92,12 @@ export function AdminVenueEditor({ data }: { data: VenueAdminDetail }) {
         <form action={(fd) => void saveGeneral(fd)} className="glass-panel space-y-4 rounded-xl border border-white/10 p-6">
           <div className="grid gap-4 sm:grid-cols-2">
             <div className="space-y-2">
-              <Label htmlFor="name">Name</Label>
-              <Input id="name" name="name" defaultValue={venue.name} required />
+              <Label htmlFor="defaultName">Placeholder name</Label>
+              <Input id="defaultName" name="defaultName" defaultValue={venue.default_name ?? venue.name} required />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="slug">Slug</Label>
-              <Input id="slug" name="slug" defaultValue={venue.slug} required />
+              <Label htmlFor="slug">Slug (permanent)</Label>
+              <Input id="slug" name="slug" defaultValue={venue.slug} required readOnly className="opacity-70" />
             </div>
             <div className="space-y-2">
               <Label htmlFor="region">Region</Label>
@@ -167,6 +169,10 @@ export function AdminVenueEditor({ data }: { data: VenueAdminDetail }) {
             ))}
           </ul>
         </div>
+      </TabsContent>
+
+      <TabsContent value="naming" className="mt-6">
+        <VenueNamingManagement venue={venue} />
       </TabsContent>
 
       <TabsContent value="sponsors" className="mt-6 space-y-8">
@@ -645,7 +651,7 @@ export function AdminVenueCreateForm({
     setSaving(true);
     const result = await upsertVenueAction({
       slug: formData.get("slug"),
-      name: formData.get("name"),
+      defaultName: formData.get("defaultName"),
       region: formData.get("region"),
       stateCode: formData.get("stateCode") || null,
       venueTypeSlug: formData.get("venueTypeSlug"),
@@ -665,8 +671,8 @@ export function AdminVenueCreateForm({
     <form action={(fd) => void create(fd)} className="glass-panel mt-6 max-w-2xl space-y-4 rounded-xl border border-white/10 p-6">
       <div className="grid gap-4 sm:grid-cols-2">
         <div className="space-y-2">
-          <Label htmlFor="name">Name</Label>
-          <Input id="name" name="name" required placeholder="New York City Arena" />
+          <Label htmlFor="defaultName">Placeholder name</Label>
+          <Input id="defaultName" name="defaultName" required placeholder="Boston Community Arena" />
         </div>
         <div className="space-y-2">
           <Label htmlFor="slug">Slug</Label>

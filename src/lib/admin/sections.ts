@@ -22,7 +22,7 @@ export const ADMIN_SECTIONS = [
   { href: "/admin/users", label: "Users", icon: Users },
   { href: "/admin/artists", label: "Artists", icon: Mic2 },
   { href: "/admin/events", label: "Events", icon: CalendarDays },
-  { href: "/admin/venues", label: "Venues", icon: Building2 },
+  { href: "/admin/venues", label: "Venue Management", icon: Building2 },
   { href: "/admin/tours", label: "Tours", icon: Route },
   { href: "/admin/genres", label: "Genres", icon: Tags },
   { href: "/admin/analytics", label: "Analytics", icon: BarChart3 },

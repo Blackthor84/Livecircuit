@@ -21,8 +21,15 @@ import {
   upsertSponsorOrganizationSchema,
   upsertVenueSchema,
   upsertVenueSponsorshipSchema,
+  renameVenuePlaceholderSchema,
+  updateVenueSponsorshipSchema,
+  clearVenueSponsorshipSchema,
   venueFeaturedArtistSchema,
 } from "@/lib/validations/venues";
+import {
+  defaultNamingRightsPrice,
+  tierForCapacity,
+} from "@/lib/venues/placeholder-names";
 
 export type VenueAdminActionResult =
   | { ok: true; venueId?: string }
@@ -58,9 +65,53 @@ export async function upsertVenueAction(input: unknown): Promise<VenueAdminActio
 
   if (!venueType) return { ok: false, error: "Unknown venue type" };
 
+  const defaultName = parsed.data.defaultName.trim();
+  const tier = tierForCapacity(parsed.data.capacity);
+  const namingRightsPrice =
+    parsed.data.namingRightsPrice ?? defaultNamingRightsPrice(tier);
+
+  if (parsed.data.id) {
+    const { data: existing } = await ctx.supabase
+      .from("venues")
+      .select("slug")
+      .eq("id", parsed.data.id)
+      .maybeSingle();
+
+    if (!existing) return { ok: false, error: "Venue not found" };
+    if (existing.slug !== parsed.data.slug) {
+      return { ok: false, error: "Venue slug is permanent and cannot be changed" };
+    }
+
+    const row = {
+      default_name: defaultName,
+      region: parsed.data.region.trim(),
+      state_code: parsed.data.stateCode?.trim() || null,
+      country_id: parsed.data.countryId ?? null,
+      state_id: parsed.data.stateId ?? null,
+      city_id: parsed.data.cityId ?? null,
+      venue_type_id: venueType.id,
+      capacity: parsed.data.capacity,
+      soft_capacity_limit: parsed.data.softCapacityLimit ?? null,
+      description: emptyToNull(parsed.data.description ?? null),
+      banner_url: emptyToNull(parsed.data.bannerUrl ?? null),
+      hero_image_url: emptyToNull(parsed.data.heroImageUrl ?? null),
+      is_active: parsed.data.isActive ?? true,
+      naming_rights_price: namingRightsPrice,
+      is_placeholder_name: parsed.data.isPlaceholderName ?? true,
+    };
+
+    const { error } = await ctx.supabase.from("venues").update(row).eq("id", parsed.data.id);
+    if (error) return { ok: false, error: error.message };
+    revalidateVenuePaths(parsed.data.id, parsed.data.slug);
+    revalidatePath("/");
+    return { ok: true, venueId: parsed.data.id };
+  }
+
   const row = {
     slug: parsed.data.slug,
-    name: parsed.data.name.trim(),
+    default_name: defaultName,
+    display_name: defaultName,
+    name: defaultName,
     region: parsed.data.region.trim(),
     state_code: parsed.data.stateCode?.trim() || null,
     country_id: parsed.data.countryId ?? null,
@@ -73,14 +124,10 @@ export async function upsertVenueAction(input: unknown): Promise<VenueAdminActio
     banner_url: emptyToNull(parsed.data.bannerUrl ?? null),
     hero_image_url: emptyToNull(parsed.data.heroImageUrl ?? null),
     is_active: parsed.data.isActive ?? true,
+    naming_rights_price: namingRightsPrice,
+    is_placeholder_name: parsed.data.isPlaceholderName ?? true,
+    sponsorship_status: "available" as const,
   };
-
-  if (parsed.data.id) {
-    const { error } = await ctx.supabase.from("venues").update(row).eq("id", parsed.data.id);
-    if (error) return { ok: false, error: error.message };
-    revalidateVenuePaths(parsed.data.id, parsed.data.slug);
-    return { ok: true, venueId: parsed.data.id };
-  }
 
   const { data: inserted, error } = await ctx.supabase
     .from("venues")
@@ -349,11 +396,25 @@ export async function upsertVenueSponsorshipAction(
   }
 
   if (isFounding && row.is_active) {
+    const { data: org } = await ctx.supabase
+      .from("sponsor_organizations")
+      .select("name, logo_url")
+      .eq("id", parsed.data.organizationId)
+      .maybeSingle();
+
     await ctx.supabase
       .from("venues")
       .update({
         founding_sponsor_org_id: parsed.data.organizationId,
         featured_sponsor_org_id: parsed.data.organizationId,
+        sponsored_name: row.display_name,
+        sponsor_company: org?.name ?? null,
+        sponsor_logo_url: org?.logo_url ?? null,
+        sponsor_start_date: new Date().toISOString().slice(0, 10),
+        sponsor_end_date: parsed.data.contractEndsAt?.slice(0, 10) ?? null,
+        naming_rights_price: parsed.data.launchPricingCents ?? null,
+        sponsorship_status: "active",
+        is_placeholder_name: false,
       })
       .eq("id", parsed.data.venueId);
   }
@@ -515,6 +576,109 @@ export async function moderateVenuePostAction(input: unknown): Promise<VenueAdmi
 
   revalidateVenuePaths(post.venue_id as string, venueSlug);
   return { ok: true, venueId: post.venue_id as string };
+}
+
+export async function renameVenuePlaceholderAction(input: unknown): Promise<VenueAdminActionResult> {
+  const ctx = await requireAdmin();
+  if (!ctx.ok) return { ok: false, error: ctx.error };
+
+  const parsed = renameVenuePlaceholderSchema.safeParse(input);
+  if (!parsed.success) {
+    return { ok: false, error: parsed.error.issues[0]?.message ?? "Invalid input" };
+  }
+
+  const { data: venue } = await ctx.supabase
+    .from("venues")
+    .select("slug")
+    .eq("id", parsed.data.venueId)
+    .maybeSingle();
+
+  if (!venue) return { ok: false, error: "Venue not found" };
+
+  const { error } = await ctx.supabase
+    .from("venues")
+    .update({ default_name: parsed.data.defaultName.trim(), is_placeholder_name: true })
+    .eq("id", parsed.data.venueId);
+
+  if (error) return { ok: false, error: error.message };
+
+  revalidateVenuePaths(parsed.data.venueId, venue.slug as string);
+  revalidatePath("/");
+  return { ok: true, venueId: parsed.data.venueId };
+}
+
+export async function updateVenueNamingRightsAction(input: unknown): Promise<VenueAdminActionResult> {
+  const ctx = await requireAdmin();
+  if (!ctx.ok) return { ok: false, error: ctx.error };
+
+  const parsed = updateVenueSponsorshipSchema.safeParse(input);
+  if (!parsed.success) {
+    return { ok: false, error: parsed.error.issues[0]?.message ?? "Invalid input" };
+  }
+
+  const { data: venue } = await ctx.supabase
+    .from("venues")
+    .select("slug")
+    .eq("id", parsed.data.venueId)
+    .maybeSingle();
+
+  if (!venue) return { ok: false, error: "Venue not found" };
+
+  const sponsoredName = emptyToNull(parsed.data.sponsoredName ?? null);
+  const row = {
+    sponsored_name: sponsoredName,
+    sponsor_company: emptyToNull(parsed.data.sponsorCompany ?? null),
+    sponsor_logo_url: emptyToNull(parsed.data.sponsorLogoUrl ?? null),
+    sponsor_start_date: emptyToNull(parsed.data.sponsorStartDate ?? null),
+    sponsor_end_date: emptyToNull(parsed.data.sponsorEndDate ?? null),
+    sponsorship_status: parsed.data.sponsorshipStatus ?? (sponsoredName ? "active" : "available"),
+    naming_rights_price: parsed.data.namingRightsPrice ?? null,
+    is_placeholder_name: !sponsoredName,
+  };
+
+  const { error } = await ctx.supabase.from("venues").update(row).eq("id", parsed.data.venueId);
+  if (error) return { ok: false, error: error.message };
+
+  revalidateVenuePaths(parsed.data.venueId, venue.slug as string);
+  revalidatePath("/");
+  return { ok: true, venueId: parsed.data.venueId };
+}
+
+export async function clearVenueSponsorshipAction(input: unknown): Promise<VenueAdminActionResult> {
+  const ctx = await requireAdmin();
+  if (!ctx.ok) return { ok: false, error: ctx.error };
+
+  const parsed = clearVenueSponsorshipSchema.safeParse(input);
+  if (!parsed.success) {
+    return { ok: false, error: parsed.error.issues[0]?.message ?? "Invalid input" };
+  }
+
+  const { data: venue } = await ctx.supabase
+    .from("venues")
+    .select("slug")
+    .eq("id", parsed.data.venueId)
+    .maybeSingle();
+
+  if (!venue) return { ok: false, error: "Venue not found" };
+
+  const { error } = await ctx.supabase
+    .from("venues")
+    .update({
+      sponsored_name: null,
+      sponsor_company: null,
+      sponsor_logo_url: null,
+      sponsor_start_date: null,
+      sponsor_end_date: null,
+      sponsorship_status: "available",
+      is_placeholder_name: true,
+    })
+    .eq("id", parsed.data.venueId);
+
+  if (error) return { ok: false, error: error.message };
+
+  revalidateVenuePaths(parsed.data.venueId, venue.slug as string);
+  revalidatePath("/");
+  return { ok: true, venueId: parsed.data.venueId };
 }
 
 function revalidateVenuePaths(venueId: string, slug?: string) {

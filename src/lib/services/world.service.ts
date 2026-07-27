@@ -8,11 +8,17 @@ import type {
   WorldVenueMarker,
 } from "@/lib/types/world";
 import { listFestivalsHub } from "@/lib/services/virtual-festivals.service";
+import { getVenueDisplayName } from "@/lib/venues/display-name";
+import type { VenueSponsorshipStatus } from "@/types/database";
 
 type VenueRow = {
   id: string;
   slug: string;
   name: string;
+  default_name?: string;
+  display_name?: string;
+  sponsored_name?: string | null;
+  sponsorship_status?: VenueSponsorshipStatus;
   region: string;
   state_code: string | null;
   current_visitors: number;
@@ -212,7 +218,13 @@ export async function buildWorldReport(supabase: SupabaseClient, admin: Supabase
     markers.push({
       id: row.id,
       slug: row.slug,
-      name: row.name,
+      name: getVenueDisplayName({
+        default_name: row.default_name ?? row.name,
+        display_name: row.display_name ?? row.name,
+        sponsored_name: row.sponsored_name ?? null,
+        sponsorship_status: row.sponsorship_status ?? "available",
+        name: row.name,
+      }),
       lat: coords.lat,
       lng: coords.lng,
       countryCode: country?.code ?? null,

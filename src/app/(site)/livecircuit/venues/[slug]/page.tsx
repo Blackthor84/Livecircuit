@@ -27,13 +27,14 @@ import { Button } from "@/components/ui/button";
 import { getSessionUser } from "@/lib/auth/session";
 import { getVenueLandingPage, isFollowingVenue, listVenueEvents } from "@/lib/data/venues";
 import { getActiveVenueTheme } from "@/lib/data/venue-themes";
+import { getVenueDisplayName, hasActiveVenueSponsorship } from "@/lib/venues/display-name";
+import { VenueNamingBadge } from "@/components/venues/venue-naming-badge";
 import type { ArtistCategory } from "@/types/database";
 
 type Props = { params: Promise<{ slug: string }> };
 
 function displayVenueTitle(data: NonNullable<Awaited<ReturnType<typeof getVenueLandingPage>>>) {
-  const naming = data.founding_sponsor?.display_name;
-  return naming?.trim() || data.name;
+  return getVenueDisplayName(data);
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
@@ -66,7 +67,9 @@ export default async function VenueLandingPage({ params }: Props) {
     `https://picsum.photos/seed/venue-hero-${data.slug}/1920/800`;
 
   const title = displayVenueTitle(data);
+  const sponsored = hasActiveVenueSponsorship(data);
   const sponsorLine =
+    data.sponsor_company ??
     data.founding_sponsor?.sponsor_organizations?.name ??
     data.featured_sponsor?.name ??
     null;
@@ -95,12 +98,16 @@ export default async function VenueLandingPage({ params }: Props) {
                   {data.active_theme.name}
                 </Badge>
               ) : null}
-              {data.founding_sponsor ? (
+              {data.founding_sponsor || sponsored ? (
                 <Badge className="mb-2 ml-2 gap-1">
                   <Award className="size-3.5" />
-                  Founding Sponsor: {data.founding_sponsor.sponsor_organizations?.name ?? "Partner"}
+                  {sponsored ? `Presented by ${sponsorLine ?? "Partner"}` : `Founding Sponsor: ${data.founding_sponsor?.sponsor_organizations?.name ?? "Partner"}`}
                 </Badge>
-              ) : null}
+              ) : (
+                <span className="mb-2 ml-2 inline-block">
+                  <VenueNamingBadge venue={data} />
+                </span>
+              )}
               <h1 className="text-3xl font-bold tracking-tight sm:text-5xl">{title}</h1>
               <p className="mt-2 flex flex-wrap items-center gap-2 text-muted-foreground">
                 <span className="inline-flex items-center gap-1 capitalize">

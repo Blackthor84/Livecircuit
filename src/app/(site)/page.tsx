@@ -10,7 +10,9 @@ import { getPlatformHomepageSponsorBanner } from "@/lib/data/sponsors";
 import { getHeaderUser } from "@/lib/auth/session";
 import { getViewerFeatureAccess } from "@/lib/features/guard";
 import { formatCents } from "@/lib/format";
+import { FeaturedVenuesSection } from "@/components/home/featured-venues-section";
 import { VenueSponsorBanner } from "@/components/venues/venue-sponsor-banner";
+import { getFeaturedVenuesForHome } from "@/lib/data/venues";
 
 const marketingFeatures = [
   {
@@ -36,13 +38,14 @@ const marketingFeatures = [
 ];
 
 export default async function HomePage() {
-  const [artists, tours, events, homepageSponsor, featureAccess, user] = await Promise.all([
+  const [artists, tours, events, homepageSponsor, featureAccess, user, featuredVenues] = await Promise.all([
     getFeaturedArtists(4),
     getPublishedTours(3),
     getUpcomingEvents(4),
     getPlatformHomepageSponsorBanner(),
     getViewerFeatureAccess(),
     getHeaderUser(),
+    getFeaturedVenuesForHome(6),
   ]);
 
   const showWorld = featureAccess.canAccess("world_map");
@@ -111,6 +114,8 @@ export default async function HomePage() {
           />
         </section>
       ) : null}
+
+      <FeaturedVenuesSection venues={featuredVenues} />
 
       <section className="mx-auto max-w-7xl px-4 py-16 sm:px-6">
         <h2 className="text-2xl font-semibold sm:text-3xl">Built for the new tour economy</h2>

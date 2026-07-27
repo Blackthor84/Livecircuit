@@ -9,7 +9,8 @@ export const venueSlugSchema = z
 export const upsertVenueSchema = z.object({
   id: z.string().uuid().optional(),
   slug: venueSlugSchema,
-  name: z.string().min(2).max(120),
+  /** Placeholder / default public name when unsponsored */
+  defaultName: z.string().min(2).max(120),
   region: z.string().min(2).max(120),
   stateCode: z.string().max(8).optional().nullable(),
   countryId: z.string().uuid().optional().nullable(),
@@ -22,6 +23,33 @@ export const upsertVenueSchema = z.object({
   bannerUrl: z.string().url().optional().nullable().or(z.literal("")),
   heroImageUrl: z.string().url().optional().nullable().or(z.literal("")),
   isActive: z.boolean().optional(),
+  namingRightsPrice: z.coerce.number().int().min(0).optional().nullable(),
+  isPlaceholderName: z.boolean().optional(),
+});
+
+/** @deprecated Use defaultName — kept for backward compat during form migration */
+export const upsertVenueSchemaLegacy = upsertVenueSchema.extend({
+  name: z.string().min(2).max(120).optional(),
+});
+
+export const renameVenuePlaceholderSchema = z.object({
+  venueId: z.string().uuid(),
+  defaultName: z.string().min(2).max(120),
+});
+
+export const updateVenueSponsorshipSchema = z.object({
+  venueId: z.string().uuid(),
+  sponsoredName: z.string().max(200).optional().nullable(),
+  sponsorCompany: z.string().max(160).optional().nullable(),
+  sponsorLogoUrl: z.string().url().optional().nullable().or(z.literal("")),
+  sponsorStartDate: z.string().optional().nullable(),
+  sponsorEndDate: z.string().optional().nullable(),
+  sponsorshipStatus: z.enum(["available", "pending", "active", "expired"]).optional(),
+  namingRightsPrice: z.coerce.number().int().min(0).optional().nullable(),
+});
+
+export const clearVenueSponsorshipSchema = z.object({
+  venueId: z.string().uuid(),
 });
 
 export const toggleVenueActiveSchema = z.object({

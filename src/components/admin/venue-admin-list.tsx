@@ -15,6 +15,9 @@ import {
 } from "@/components/ui/table";
 import { toggleVenueActiveAction } from "@/lib/actions/venues-admin";
 import type { VenueListItem } from "@/lib/data/venues";
+import { formatCents } from "@/lib/format";
+import { getVenueDisplayName } from "@/lib/venues/display-name";
+import { VenueSponsorshipStatusBadge } from "@/components/venues/venue-naming-badge";
 
 export function AdminVenueListPanel({ items }: { items: VenueListItem[] }) {
   const router = useRouter();
@@ -45,6 +48,10 @@ export function AdminVenueListPanel({ items }: { items: VenueListItem[] }) {
       <TableHeader>
         <TableRow>
           <TableHead>Venue</TableHead>
+          <TableHead>Display name</TableHead>
+          <TableHead>Sponsor</TableHead>
+          <TableHead>Status</TableHead>
+          <TableHead className="text-right">Naming price</TableHead>
           <TableHead>Type</TableHead>
           <TableHead>Region</TableHead>
           <TableHead className="text-right">Visitors</TableHead>
@@ -59,7 +66,7 @@ export function AdminVenueListPanel({ items }: { items: VenueListItem[] }) {
                 href={`/admin/venues/${venue.id}`}
                 className="font-medium hover:text-primary"
               >
-                {venue.name}
+                {venue.default_name ?? venue.name}
               </Link>
               <p className="text-xs text-muted-foreground">/{venue.slug}</p>
               {!venue.is_active ? (
@@ -67,6 +74,14 @@ export function AdminVenueListPanel({ items }: { items: VenueListItem[] }) {
                   Inactive
                 </Badge>
               ) : null}
+            </TableCell>
+            <TableCell>{getVenueDisplayName(venue)}</TableCell>
+            <TableCell className="text-sm">{venue.sponsor_company ?? "—"}</TableCell>
+            <TableCell>
+              <VenueSponsorshipStatusBadge venue={venue} />
+            </TableCell>
+            <TableCell className="text-right tabular-nums text-sm">
+              {venue.naming_rights_price != null ? formatCents(venue.naming_rights_price) : "—"}
             </TableCell>
             <TableCell className="capitalize">{venue.venue_types?.name ?? "—"}</TableCell>
             <TableCell>
