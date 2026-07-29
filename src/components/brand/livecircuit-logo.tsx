@@ -10,11 +10,11 @@ import {
 import { cn } from "@/lib/utils";
 
 const SIZES = {
-  xs: 24,
-  sm: 32,
-  md: 40,
-  lg: 56,
-  xl: 80,
+  xs: 32,
+  sm: 44,
+  md: 56,
+  lg: 72,
+  xl: 96,
 } as const;
 
 type LiveCircuitLogoProps = {
