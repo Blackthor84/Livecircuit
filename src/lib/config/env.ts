@@ -18,10 +18,23 @@ export function isStripeConfigured(): boolean {
   );
 }
 
-export function getStreamingProviderName(): StreamingProviderName {
-  const raw = (process.env.STREAMING_PROVIDER ?? "placeholder").toLowerCase();
+function normalizeExplicitStreamingProvider(value: string | undefined): StreamingProviderName | null {
+  const raw = (value ?? "").toLowerCase().trim();
   if (raw === "livekit" || raw === "agora" || raw === "mux") return raw;
+  if (raw === "placeholder") return "placeholder";
+  return null;
+}
+
+/** Resolve provider: explicit env wins; otherwise auto-detect LiveKit when credentials exist. */
+function resolveStreamingProviderName(explicitEnv: string | undefined): StreamingProviderName {
+  const explicit = normalizeExplicitStreamingProvider(explicitEnv);
+  if (explicit) return explicit;
+  if (isLiveKitConfigured()) return "livekit";
   return "placeholder";
+}
+
+export function getStreamingProviderName(): StreamingProviderName {
+  return resolveStreamingProviderName(process.env.STREAMING_PROVIDER);
 }
 
 export function isLiveKitConfigured(): boolean {
@@ -55,15 +68,14 @@ export function getMilestoneEnvStatus(): MilestoneEnvStatus {
   const supabase = isSupabaseConfigured();
   const stripe = isStripeConfigured();
   const streamingProvider = getStreamingProviderName();
-  const livekit =
-    streamingProvider === "livekit" ? isLiveKitConfigured() : isLiveKitConfigured();
+  const livekit = isLiveKitConfigured();
 
   return {
     supabase,
     stripe,
     livekit,
     streamingProvider,
-    readyForGoLive: supabase && (streamingProvider === "placeholder" || livekit),
+    readyForGoLive: supabase && (streamingProvider === "livekit" ? livekit : true),
   };
 }
 
@@ -132,18 +144,19 @@ export function getSupabaseServiceUrls(projectUrl = getSupabaseProjectUrl()) {
   };
 }
 
-/** Client-safe streaming checks (public env only). */
+/** Client-safe streaming checks (public env only). Prefer server-passed provider when available. */
 export function getClientStreamingProviderName(): StreamingProviderName {
-  const raw = (
-    process.env.NEXT_PUBLIC_STREAMING_PROVIDER ??
-    process.env.STREAMING_PROVIDER ??
-    "placeholder"
-  ).toLowerCase();
-  if (raw === "livekit" || raw === "agora" || raw === "mux") return raw;
+  const explicit =
+    normalizeExplicitStreamingProvider(process.env.NEXT_PUBLIC_STREAMING_PROVIDER) ??
+    normalizeExplicitStreamingProvider(process.env.STREAMING_PROVIDER);
+  if (explicit) return explicit;
+
+  const publicUrl = process.env.NEXT_PUBLIC_LIVEKIT_URL ?? "";
+  if (publicUrl && !publicUrl.includes("your-livekit")) return "livekit";
+
   return "placeholder";
 }
 
 export function isClientLiveKitConfigured(): boolean {
-  const url = process.env.NEXT_PUBLIC_LIVEKIT_URL ?? "";
-  return Boolean(url && !url.includes("your-livekit"));
+  return getClientStreamingProviderName() === "livekit";
 }

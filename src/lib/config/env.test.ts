@@ -2,6 +2,7 @@ import { describe, expect, it, beforeEach, afterEach } from "vitest";
 import {
   getAppUrl,
   getMilestoneEnvStatus,
+  getStreamingProviderName,
   getSupabaseProjectUrl,
   getSupabaseServiceUrls,
   normalizeSupabaseProjectUrl,
@@ -28,9 +29,26 @@ describe("getMilestoneEnvStatus", () => {
     process.env.NEXT_PUBLIC_SUPABASE_URL = "https://abc.supabase.co";
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY = "anon-key";
     process.env.STREAMING_PROVIDER = "placeholder";
+    delete process.env.LIVEKIT_URL;
+    delete process.env.LIVEKIT_API_KEY;
+    delete process.env.LIVEKIT_API_SECRET;
     const status = getMilestoneEnvStatus();
     expect(status.readyForGoLive).toBe(true);
     expect(status.streamingProvider).toBe("placeholder");
+  });
+
+  it("auto-selects livekit when credentials exist and provider is unset", () => {
+    process.env.NEXT_PUBLIC_SUPABASE_URL = "https://abc.supabase.co";
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY = "anon-key";
+    delete process.env.STREAMING_PROVIDER;
+    process.env.LIVEKIT_URL = "wss://live.example.com";
+    process.env.LIVEKIT_API_KEY = "api-key";
+    process.env.LIVEKIT_API_SECRET = "api-secret";
+    expect(getStreamingProviderName()).toBe("livekit");
+    const status = getMilestoneEnvStatus();
+    expect(status.streamingProvider).toBe("livekit");
+    expect(status.livekit).toBe(true);
+    expect(status.readyForGoLive).toBe(true);
   });
 });
 

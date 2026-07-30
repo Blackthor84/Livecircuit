@@ -16,7 +16,7 @@ import { buildEventLobbyContent } from "@/lib/live/lobby";
 import { parseStreamMetadata } from "@/lib/streaming/stream-metadata";
 import { getVenueDisplayName } from "@/lib/venues/display-name";
 import { createClient } from "@/lib/supabase/server";
-import { isSupabaseConfigured } from "@/lib/config/env";
+import { isSupabaseConfigured, getStreamingProviderName } from "@/lib/config/env";
 import { getEventSponsor } from "@/lib/sponsorship/inventory";
 import type { EventStatus } from "@/types/database";
 
@@ -163,6 +163,7 @@ export default async function LiveEventPage({ params }: Props) {
         tourCity={tourCity}
         livestreamSponsor={livestreamSponsor}
         replaySponsor={replaySponsor}
+        streamingProvider={getStreamingProviderName()}
       />
     </div>
   );

@@ -68,6 +68,10 @@ export class LiveKitStreamingProvider implements StreamingProvider {
     const config = getLiveKitConfig();
     if (!config) throw new Error("LiveKit is not configured");
 
+    if (role === "host") {
+      await ensureLiveKitRoom(eventId);
+    }
+
     const token = await createLiveKitToken({
       eventId,
       identity: userId,
@@ -93,8 +97,12 @@ export function getStreamingProvider(): StreamingProvider {
     case "livekit":
       if (isLiveKitConfigured()) return new LiveKitStreamingProvider();
       return new PlaceholderStreamingProvider();
+    case "agora":
+    case "mux":
+      return new PlaceholderStreamingProvider();
     case "placeholder":
     default:
+      if (isLiveKitConfigured()) return new LiveKitStreamingProvider();
       return new PlaceholderStreamingProvider();
   }
 }

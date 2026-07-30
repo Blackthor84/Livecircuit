@@ -1,6 +1,7 @@
 "use client";
 
-import { getClientStreamingProviderName, isClientLiveKitConfigured } from "@/lib/config/env";
+import type { StreamingProviderName } from "@/lib/config/env";
+import { getClientStreamingProviderName } from "@/lib/config/env";
 import type { EventLobbyContent } from "@/lib/live/lobby";
 import { LiveKitPlayer } from "@/components/live/livekit-player";
 import { LivePlayerPlaceholder } from "@/components/live/live-room";
@@ -19,7 +20,22 @@ type Props = {
   lobby?: EventLobbyContent | null;
   recordingUrl?: string | null;
   recordingStatus?: string;
+  streamingProvider?: StreamingProviderName;
 };
+
+function shouldUseLiveKit(input: {
+  streamingProvider: StreamingProviderName;
+  status: string;
+  role: "host" | "audience";
+  canWatchStream: boolean;
+}) {
+  if (input.streamingProvider !== "livekit" || !input.canWatchStream) return false;
+  if (input.status === "live") return true;
+  if (input.role === "host" && input.status !== "ended" && input.status !== "cancelled") {
+    return true;
+  }
+  return false;
+}
 
 export function LiveStreamStage({
   eventId,
@@ -32,7 +48,11 @@ export function LiveStreamStage({
   lobby,
   recordingUrl,
   recordingStatus,
+  streamingProvider: streamingProviderProp,
 }: Props) {
+  const streamingProvider = streamingProviderProp ?? getClientStreamingProviderName();
+  const useLiveKit = shouldUseLiveKit({ streamingProvider, status, role, canWatchStream });
+
   if (status === "ended" && (recordingUrl || recordingStatus === "processing")) {
     return (
       <VodPlayer
@@ -46,12 +66,6 @@ export function LiveStreamStage({
   if (status === "waiting" && lobby && canWatchStream === false && !deniedMessage) {
     return <PreShowLobby title={title} {...lobby} />;
   }
-
-  const useLiveKit =
-    getClientStreamingProviderName() === "livekit" &&
-    isClientLiveKitConfigured() &&
-    status === "live" &&
-    canWatchStream;
 
   if (useLiveKit) {
     return (
@@ -69,6 +83,7 @@ export function LiveStreamStage({
         status={status}
         waitingLabel={waitingLabel}
         deniedMessage={deniedMessage}
+        showProviderSetupHint={streamingProvider === "placeholder"}
       />
       {status === "live" && canWatchStream ? <LiveReactionsOverlay eventId={eventId} /> : null}
     </div>

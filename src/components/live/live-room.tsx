@@ -305,6 +305,7 @@ type PlayerProps = {
   waitingLabel?: string;
   deniedMessage?: string | null;
   streamNote?: string | null;
+  showProviderSetupHint?: boolean;
 };
 
 export function LivePlayerPlaceholder({
@@ -313,6 +314,7 @@ export function LivePlayerPlaceholder({
   waitingLabel,
   deniedMessage,
   streamNote,
+  showProviderSetupHint = false,
 }: PlayerProps) {
   return (
     <div
@@ -337,13 +339,15 @@ export function LivePlayerPlaceholder({
         {deniedMessage ? <p className="mt-2 text-sm text-muted-foreground">{deniedMessage}</p> : null}
         {streamNote ? (
           <p className="mt-2 text-sm text-muted-foreground">{streamNote}</p>
-        ) : (
+        ) : showProviderSetupHint ? (
           <p className="mt-2 max-w-md text-sm text-muted-foreground">
             {status === "live"
-              ? "Stream playback via configured provider."
+              ? "Stream playback requires a configured provider."
               : "Streaming provider integration ready — connect Agora, LiveKit, or Mux via STREAMING_PROVIDER."}
           </p>
-        )}
+        ) : status === "waiting" ? (
+          <p className="mt-2 text-sm text-muted-foreground">The show has not started yet.</p>
+        ) : null}
       </div>
     </div>
   );

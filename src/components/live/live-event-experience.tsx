@@ -12,6 +12,7 @@ import type { EventLobbyContent } from "@/lib/live/lobby";
 import { recordViewerJoin } from "@/lib/actions/live-event";
 import type { LiveAccessState } from "@/lib/live/access";
 import type { EventStatus } from "@/types/database";
+import type { StreamingProviderName } from "@/lib/config/env";
 
 function formatCountdown(totalSeconds: number) {
   const h = Math.floor(totalSeconds / 3600);
@@ -33,6 +34,7 @@ type Props = {
   tourCity?: string | null;
   livestreamSponsor?: { label: string; logoUrl?: string | null } | null;
   replaySponsor?: { label: string; logoUrl?: string | null } | null;
+  streamingProvider?: StreamingProviderName;
 };
 
 export function LiveEventExperience({
@@ -47,6 +49,7 @@ export function LiveEventExperience({
   tourCity,
   livestreamSponsor,
   replaySponsor,
+  streamingProvider,
 }: Props) {
   const [access, setAccess] = useState(initialAccess);
   const [secondsLeft, setSecondsLeft] = useState(initialAccess.secondsUntilStart);
@@ -152,6 +155,7 @@ export function LiveEventExperience({
           lobby={lobby}
           recordingUrl={access.recordingUrl}
           recordingStatus={access.recordingStatus}
+          streamingProvider={streamingProvider}
         />
         {access.canModerate ? <LiveHostControls eventId={eventId} status={status} /> : null}
         {access.mode === "denied" && access.message ? (
