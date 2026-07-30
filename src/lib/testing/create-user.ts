@@ -10,6 +10,7 @@ import {
   requireDbResult,
   TestCreationStepError,
   throwDbError,
+  throwParsedError,
   type TestCreationLog,
 } from "@/lib/testing/step-errors";
 
@@ -50,11 +51,11 @@ export async function createTestUser(input: {
   });
 
   if (authError || !authData.user) {
-    throw new TestCreationStepError(
+    throwParsedError(
+      log,
       "Step 1: Creating auth user",
-      authError?.message ?? "Failed to create auth user",
-      log.steps,
-      authError ?? undefined
+      authError ?? new Error("Failed to create auth user — no user returned"),
+      "Failed to create auth user"
     );
   }
 
@@ -75,7 +76,9 @@ export async function createTestUser(input: {
   if (input.type === "artist" && profile.role !== "artist") {
     throw new TestCreationStepError(
       "Step 2: Verifying profile from signup trigger",
-      `Expected profile role "artist" but found "${profile.role}". Signup trigger may not have applied intended_role.`,
+      {
+        message: `Expected profile role "artist" but found "${profile.role}". Signup trigger may not have applied intended_role.`,
+      },
       log.steps
     );
   }
@@ -112,7 +115,9 @@ export async function createTestUser(input: {
   if (input.type === "artist" && updatedProfile.role !== "artist") {
     throw new TestCreationStepError(
       "Step 3: Setting profile role to artist",
-      `Profile role is "${updatedProfile.role}" after update; artist-only steps cannot proceed`,
+      {
+        message: `Profile role is "${updatedProfile.role}" after update; artist-only steps cannot proceed`,
+      },
       log.steps
     );
   }

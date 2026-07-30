@@ -9,6 +9,7 @@ import { runPlatformSimulator } from "@/lib/testing/simulator";
 import { PRODUCTION_BULK_CONFIRM_THRESHOLD } from "@/lib/testing/constants";
 import { getTestingAccessForUser, requireSuperAdminTesting } from "@/lib/testing/permissions";
 import { TestCreationStepError } from "@/lib/testing/step-errors";
+import { parseSupabaseError } from "@/lib/testing/parse-error";
 import type { SimulatorAction, TestScenarioSlug, TestUserType } from "@/lib/testing/constants";
 
 export type TestingActionResult =
@@ -17,8 +18,12 @@ export type TestingActionResult =
       ok: false;
       success?: false;
       error: string;
+      message?: string;
       failedStep?: string;
       databaseError?: string;
+      code?: string;
+      details?: string;
+      hint?: string;
       stack?: string;
       steps?: string[];
     };
@@ -65,11 +70,17 @@ export async function createTestUserAction(input: unknown): Promise<TestingActio
     if (e instanceof TestCreationStepError) {
       return e.toResult();
     }
+    const parsed = parseSupabaseError(e);
     return {
       ok: false,
       success: false,
-      error: e instanceof Error ? e.message : "Create failed",
-      stack: e instanceof Error ? e.stack : undefined,
+      error: parsed.message,
+      message: parsed.message,
+      databaseError: parsed.message,
+      code: parsed.code,
+      details: parsed.details,
+      hint: parsed.hint,
+      stack: parsed.stack ?? (e instanceof Error ? e.stack : undefined),
     };
   }
 }

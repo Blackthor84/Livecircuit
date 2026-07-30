@@ -1,4 +1,5 @@
 import type { PostgrestError } from "@supabase/supabase-js";
+import { parsePostgrestError, parseSupabaseError, type ParsedDatabaseError } from "@/lib/testing/parse-error";
 
 export type TestCreationLog = {
   steps: string[];
@@ -9,13 +10,22 @@ export class TestCreationStepError extends Error {
   readonly failedStep: string;
   readonly databaseError: string;
   readonly steps: string[];
+  readonly code?: string;
+  readonly details?: string;
+  readonly hint?: string;
 
-  constructor(failedStep: string, databaseError: string, steps: string[], cause?: unknown) {
-    super(`Failed at ${failedStep}: ${databaseError}`);
+  constructor(failedStep: string, parsed: ParsedDatabaseError, steps: string[], cause?: unknown) {
+    super(`Failed at ${failedStep}: ${parsed.message}`);
     this.name = "TestCreationStepError";
     this.failedStep = failedStep;
-    this.databaseError = databaseError;
+    this.databaseError = parsed.message;
     this.steps = steps;
+    this.code = parsed.code;
+    this.details = parsed.details;
+    this.hint = parsed.hint;
+    if (parsed.stack) {
+      this.stack = parsed.stack;
+    }
     if (cause instanceof Error) {
       this.cause = cause;
     }
@@ -26,7 +36,11 @@ export class TestCreationStepError extends Error {
       ok: false as const,
       success: false as const,
       failedStep: this.failedStep,
+      message: this.databaseError,
       databaseError: this.databaseError,
+      code: this.code,
+      details: this.details,
+      hint: this.hint,
       stack: this.stack ?? "",
       steps: this.steps,
       error: `${this.failedStep}: ${this.databaseError}`,
@@ -49,12 +63,25 @@ export function throwDbError(
   error: PostgrestError | null | undefined,
   fallbackMessage = "Database operation failed"
 ): never {
-  throw new TestCreationStepError(
-    failedStep,
-    error?.message ?? fallbackMessage,
-    log.steps,
-    error ?? undefined
-  );
+  const parsed = parsePostgrestError(error);
+  if (!error?.message) {
+    parsed.message = fallbackMessage;
+  }
+  throw new TestCreationStepError(failedStep, parsed, log.steps, error ?? undefined);
+}
+
+export function throwParsedError(
+  log: TestCreationLog,
+  failedStep: string,
+  error: unknown,
+  fallbackMessage = "Operation failed"
+): never {
+  const parsed = parseSupabaseError(error);
+  if (parsed.message === "Unknown error" || parsed.message === "Unknown error (empty error object)") {
+    parsed.message = fallbackMessage;
+  }
+  console.error(`[Testing Center] ${failedStep}`, error);
+  throw new TestCreationStepError(failedStep, parsed, log.steps, error instanceof Error ? error : undefined);
 }
 
 export function requireDbResult<T>(
@@ -69,7 +96,7 @@ export function requireDbResult<T>(
   if (options?.requireRows && (result.data === null || (Array.isArray(result.data) && result.data.length === 0))) {
     throw new TestCreationStepError(
       failedStep,
-      options.emptyMessage ?? "Expected database rows but none were returned",
+      { message: options.emptyMessage ?? "Expected database rows but none were returned" },
       log.steps
     );
   }

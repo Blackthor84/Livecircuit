@@ -71,10 +71,8 @@ export function TestingCenterPanel({ accounts, totalCount, canManage, canImperso
       const result = await fn();
       if (!result.ok) {
         setLastError(result);
-        const headline = result.failedStep
-          ? `${result.failedStep}: ${result.databaseError ?? result.error}`
-          : result.error;
-        toast.error(headline);
+        const headline = result.message ?? result.databaseError ?? result.error;
+        toast.error(result.failedStep ? `${result.failedStep}: ${headline}` : headline);
       } else {
         setLastError(null);
         toast.success(result.message ?? "Done");
@@ -108,15 +106,31 @@ export function TestingCenterPanel({ accounts, totalCount, canManage, canImperso
                     <span className="font-medium text-destructive">Failed step:</span> {lastError.failedStep}
                   </p>
                 ) : null}
-                {lastError.databaseError ? (
+                {lastError.message ?? lastError.databaseError ? (
                   <p>
-                    <span className="font-medium text-destructive">Database error:</span> {lastError.databaseError}
+                    <span className="font-medium text-destructive">Message:</span>{" "}
+                    {lastError.message ?? lastError.databaseError}
                   </p>
                 ) : (
                   <p>
                     <span className="font-medium text-destructive">Error:</span> {lastError.error}
                   </p>
                 )}
+                {lastError.code ? (
+                  <p>
+                    <span className="font-medium text-destructive">Code:</span> {lastError.code}
+                  </p>
+                ) : null}
+                {lastError.details ? (
+                  <p>
+                    <span className="font-medium text-destructive">Details:</span> {lastError.details}
+                  </p>
+                ) : null}
+                {lastError.hint ? (
+                  <p>
+                    <span className="font-medium text-destructive">Hint:</span> {lastError.hint}
+                  </p>
+                ) : null}
                 {lastError.steps?.length ? (
                   <div>
                     <p className="mb-2 font-medium">Steps completed before failure:</p>
