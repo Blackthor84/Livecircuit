@@ -16,6 +16,7 @@ import {
   deleteTestUserAction,
   resetTestUserAction,
   runSimulatorAction,
+  type TestingActionResult,
 } from "@/lib/actions/testing";
 import {
   ARTIST_SCENARIOS,
@@ -42,6 +43,7 @@ export function TestingCenterPanel({ accounts, totalCount, canManage, canImperso
   const [simAction, setSimAction] = useState(SIMULATOR_ACTIONS[0]!.id);
   const [simCount, setSimCount] = useState(500);
   const [busy, setBusy] = useState<string | null>(null);
+  const [lastError, setLastError] = useState<Extract<TestingActionResult, { ok: false }> | null>(null);
 
   async function impersonate(userId: string) {
     setBusy(`imp-${userId}`);
@@ -63,12 +65,18 @@ export function TestingCenterPanel({ accounts, totalCount, canManage, canImperso
     }
   }
 
-  async function runAction(key: string, fn: () => Promise<{ ok: boolean; error?: string; message?: string }>) {
+  async function runAction(key: string, fn: () => Promise<TestingActionResult>) {
     setBusy(key);
     try {
       const result = await fn();
-      if (!result.ok) toast.error(result.error);
-      else {
+      if (!result.ok) {
+        setLastError(result);
+        const headline = result.failedStep
+          ? `${result.failedStep}: ${result.databaseError ?? result.error}`
+          : result.error;
+        toast.error(headline);
+      } else {
+        setLastError(null);
         toast.success(result.message ?? "Done");
         router.refresh();
       }
@@ -89,6 +97,48 @@ export function TestingCenterPanel({ accounts, totalCount, canManage, canImperso
 
       {canManage ? (
         <>
+          {lastError ? (
+            <Card className="glass-panel border-destructive/40 bg-destructive/5">
+              <CardHeader>
+                <CardTitle className="text-base text-destructive">Test account creation failed</CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-3 text-sm">
+                {lastError.failedStep ? (
+                  <p>
+                    <span className="font-medium text-destructive">Failed step:</span> {lastError.failedStep}
+                  </p>
+                ) : null}
+                {lastError.databaseError ? (
+                  <p>
+                    <span className="font-medium text-destructive">Database error:</span> {lastError.databaseError}
+                  </p>
+                ) : (
+                  <p>
+                    <span className="font-medium text-destructive">Error:</span> {lastError.error}
+                  </p>
+                )}
+                {lastError.steps?.length ? (
+                  <div>
+                    <p className="mb-2 font-medium">Steps completed before failure:</p>
+                    <ol className="list-decimal space-y-1 pl-5 text-muted-foreground">
+                      {lastError.steps.map((step) => (
+                        <li key={step}>{step}</li>
+                      ))}
+                    </ol>
+                  </div>
+                ) : null}
+                {lastError.stack ? (
+                  <details className="rounded-md border border-destructive/20 bg-black/20 p-3">
+                    <summary className="cursor-pointer font-medium">Stack trace</summary>
+                    <pre className="mt-2 overflow-x-auto whitespace-pre-wrap text-xs text-muted-foreground">
+                      {lastError.stack}
+                    </pre>
+                  </details>
+                ) : null}
+              </CardContent>
+            </Card>
+          ) : null}
+
           <section className="grid gap-6 lg:grid-cols-2">
             <Card className="glass-panel border-white/10">
               <CardHeader>

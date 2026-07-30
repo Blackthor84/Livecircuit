@@ -8,11 +8,20 @@ import { bulkGenerateTestUsers } from "@/lib/testing/bulk";
 import { runPlatformSimulator } from "@/lib/testing/simulator";
 import { PRODUCTION_BULK_CONFIRM_THRESHOLD } from "@/lib/testing/constants";
 import { getTestingAccessForUser, requireSuperAdminTesting } from "@/lib/testing/permissions";
+import { TestCreationStepError } from "@/lib/testing/step-errors";
 import type { SimulatorAction, TestScenarioSlug, TestUserType } from "@/lib/testing/constants";
 
 export type TestingActionResult =
-  | { ok: true; message?: string; count?: number; userId?: string }
-  | { ok: false; error: string };
+  | { ok: true; success?: true; message?: string; count?: number; userId?: string; steps?: string[] }
+  | {
+      ok: false;
+      success?: false;
+      error: string;
+      failedStep?: string;
+      databaseError?: string;
+      stack?: string;
+      steps?: string[];
+    };
 
 const createSchema = z.object({
   type: z.enum(["fan", "artist"]),
@@ -45,9 +54,23 @@ export async function createTestUserAction(input: unknown): Promise<TestingActio
       createdBy: ctx.userId,
     });
     revalidatePath("/admin/testing");
-    return { ok: true, userId: user.userId, message: `Created ${user.displayName}` };
+    return {
+      ok: true,
+      success: true,
+      userId: user.userId,
+      message: `Created ${user.displayName}`,
+      steps: user.steps,
+    };
   } catch (e) {
-    return { ok: false, error: e instanceof Error ? e.message : "Create failed" };
+    if (e instanceof TestCreationStepError) {
+      return e.toResult();
+    }
+    return {
+      ok: false,
+      success: false,
+      error: e instanceof Error ? e.message : "Create failed",
+      stack: e instanceof Error ? e.stack : undefined,
+    };
   }
 }
 
