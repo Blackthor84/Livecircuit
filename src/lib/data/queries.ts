@@ -1,58 +1,88 @@
 import { createClient } from "@/lib/supabase/server";
 import { isSupabaseConfigured } from "@/lib/config/env";
 import {
-  demoArtists,
-  demoEvents,
-  demoTourStops,
-  demoTours,
-} from "@/lib/data/demo";
+  countPublicArtists,
+  isPublicArtistBySlug,
+  isPublicArtistUser,
+  isPublicProfile,
+  PUBLIC_ARTIST_EVENT_SELECT,
+  PUBLIC_ARTIST_LIST_SELECT,
+  PUBLIC_ARTIST_PROFILE_SELECT,
+  PUBLIC_TOUR_SELECT,
+  filterRowsByPublicProfile,
+} from "@/lib/testing/public-filter";
 import type { ArtistWithProfile } from "@/types/queries";
 import type { Artist, Tour, TourStop } from "@/types/database";
 
 export type { ArtistWithProfile };
+
+export const FOUNDING_ARTIST_GOAL = 100;
 
 async function getSupabaseOrNull() {
   if (!isSupabaseConfigured()) return null;
   return createClient();
 }
 
+export async function getPublicArtistCount(): Promise<number> {
+  const supabase = await getSupabaseOrNull();
+  if (!supabase) return 0;
+  return countPublicArtists(supabase);
+}
+
 export async function getFeaturedArtists(limit = 8): Promise<ArtistWithProfile[]> {
   const supabase = await getSupabaseOrNull();
-  if (!supabase) return demoArtists.slice(0, limit);
+  if (!supabase) return [];
 
   const { data, error } = await supabase
     .from("artists")
-    .select("*, profiles(display_name, avatar_url)")
+    .select(PUBLIC_ARTIST_LIST_SELECT)
+    .eq("profiles.is_test_account", false)
+    .order("featured", { ascending: false })
+    .order("verified", { ascending: false })
     .order("follower_count", { ascending: false })
     .limit(limit);
 
-  if (error || !data?.length) return demoArtists.slice(0, limit);
-  return data as ArtistWithProfile[];
+  if (error || !data?.length) return [];
+  return filterRowsByPublicProfile(data) as ArtistWithProfile[];
+}
+
+export async function getLiveNowEvents(limit = 8) {
+  const supabase = await getSupabaseOrNull();
+  if (!supabase) return [];
+
+  const { data, error } = await supabase
+    .from("events")
+    .select(PUBLIC_ARTIST_EVENT_SELECT)
+    .eq("status", "live")
+    .eq("artists.profiles.is_test_account", false)
+    .order("viewer_count", { ascending: false })
+    .limit(limit);
+
+  if (error || !data?.length) return [];
+  return data;
 }
 
 export async function getArtistBySlug(slug: string) {
   const supabase = await getSupabaseOrNull();
-  if (!supabase) {
-    return demoArtists.find((a) => a.slug === slug) ?? null;
-  }
+  if (!supabase) return null;
 
   const { data, error } = await supabase
     .from("artists")
-    .select("*, profiles(display_name, avatar_url, bio)")
+    .select(PUBLIC_ARTIST_PROFILE_SELECT)
     .eq("slug", slug)
+    .eq("profiles.is_test_account", false)
     .maybeSingle();
 
-  if (error || !data) {
-    return demoArtists.find((a) => a.slug === slug) ?? null;
-  }
+  if (error || !data) return null;
   return data as ArtistWithProfile;
 }
 
 export async function getArtistTours(artistSlug: string, limit = 6) {
   const supabase = await getSupabaseOrNull();
-  if (!supabase) {
-    return demoTours.filter((t) => t.artists?.slug === artistSlug).slice(0, limit);
-  }
+  if (!supabase) return [];
+
+  const publicArtist = await isPublicArtistBySlug(supabase, artistSlug);
+  if (!publicArtist) return [];
 
   const { data: artist } = await supabase
     .from("artists")
@@ -74,9 +104,10 @@ export async function getArtistTours(artistSlug: string, limit = 6) {
 
 export async function getArtistEvents(artistSlug: string, limit = 10) {
   const supabase = await getSupabaseOrNull();
-  if (!supabase) {
-    return demoEvents.filter((e) => e.artists?.slug === artistSlug).slice(0, limit);
-  }
+  if (!supabase) return [];
+
+  const publicArtist = await isPublicArtistBySlug(supabase, artistSlug);
+  if (!publicArtist) return [];
 
   const { data: artist } = await supabase
     .from("artists")
@@ -87,10 +118,9 @@ export async function getArtistEvents(artistSlug: string, limit = 10) {
 
   const { data } = await supabase
     .from("events")
-    .select(
-      `*, artists(slug, stage_name, banner_url, verified), tour_stops(virtual_location_label, ticket_price_cents, banner_url)`
-    )
+    .select(PUBLIC_ARTIST_EVENT_SELECT)
     .eq("artist_id", artist.id)
+    .eq("artists.profiles.is_test_account", false)
     .in("status", ["scheduled", "live"])
     .gte("scheduled_at", new Date().toISOString())
     .order("scheduled_at", { ascending: true })
@@ -101,40 +131,34 @@ export async function getArtistEvents(artistSlug: string, limit = 10) {
 
 export async function getUpcomingEvents(limit = 12) {
   const supabase = await getSupabaseOrNull();
-  if (!supabase) return demoEvents.slice(0, limit);
+  if (!supabase) return [];
 
   const { data, error } = await supabase
     .from("events")
-    .select(
-      `*, artists(slug, stage_name, banner_url, verified), tour_stops(virtual_location_label, ticket_price_cents, banner_url)`
-    )
+    .select(PUBLIC_ARTIST_EVENT_SELECT)
+    .eq("artists.profiles.is_test_account", false)
     .in("status", ["scheduled", "live"])
     .gte("scheduled_at", new Date().toISOString())
     .order("scheduled_at", { ascending: true })
     .limit(limit);
 
-  if (error || !data?.length) return demoEvents.slice(0, limit);
+  if (error || !data?.length) return [];
   return data;
 }
 
 export async function getEventBySlug(artistSlug: string, eventSlug: string) {
   const supabase = await getSupabaseOrNull();
-  if (!supabase) {
-    return (
-      demoEvents.find((e) => e.slug === eventSlug && e.artists?.slug === artistSlug) ?? null
-    );
-  }
+  if (!supabase) return null;
+
+  const publicArtist = await isPublicArtistBySlug(supabase, artistSlug);
+  if (!publicArtist) return null;
 
   const { data: artist } = await supabase
     .from("artists")
     .select("id")
     .eq("slug", artistSlug)
     .maybeSingle();
-  if (!artist) {
-    return (
-      demoEvents.find((e) => e.slug === eventSlug && e.artists?.slug === artistSlug) ?? null
-    );
-  }
+  if (!artist) return null;
 
   const { data } = await supabase
     .from("events")
@@ -148,32 +172,26 @@ export async function getEventBySlug(artistSlug: string, eventSlug: string) {
 
 export async function getPublishedTours(limit = 6) {
   const supabase = await getSupabaseOrNull();
-  if (!supabase) return demoTours.slice(0, limit);
+  if (!supabase) return [];
 
   const { data, error } = await supabase
     .from("tours")
-    .select("*, artists(slug, stage_name, banner_url)")
+    .select(PUBLIC_TOUR_SELECT)
     .eq("status", "published")
+    .eq("artists.profiles.is_test_account", false)
     .order("starts_at", { ascending: true })
     .limit(limit);
 
-  if (error || !data?.length) return demoTours.slice(0, limit);
+  if (error || !data?.length) return [];
   return data as (Tour & { artists: Artist })[];
 }
 
 export async function getTourWithStops(artistSlug: string, tourSlug: string) {
   const supabase = await getSupabaseOrNull();
-  if (!supabase) {
-    const tour = demoTours.find((t) => t.slug === tourSlug && t.artists?.slug === artistSlug);
-    if (!tour) return null;
-    return {
-      artist: { id: "1", slug: artistSlug, stage_name: tour.artists?.stage_name ?? "" },
-      tour,
-      stops: demoTourStops.filter((s) => s.tour_id === tour.id) as (TourStop & {
-        cities: { name: string; slug: string } | null;
-      })[],
-    };
-  }
+  if (!supabase) return null;
+
+  const publicArtist = await isPublicArtistBySlug(supabase, artistSlug);
+  if (!publicArtist) return null;
 
   const { data: artist } = await supabase
     .from("artists")
@@ -206,16 +224,7 @@ export async function getTourWithStops(artistSlug: string, tourSlug: string) {
 export async function searchCatalog(query: string) {
   const supabase = await getSupabaseOrNull();
   if (!supabase) {
-    const q = query.toLowerCase();
-    return {
-      artists: demoArtists.filter(
-        (a) =>
-          a.stage_name.toLowerCase().includes(q) ||
-          a.slug.toLowerCase().includes(q) ||
-          a.category.toLowerCase().includes(q)
-      ),
-      events: demoEvents.filter((e) => e.title.toLowerCase().includes(q)),
-    };
+    return { artists: [], events: [] };
   }
 
   const q = `%${query.trim()}%`;
@@ -223,29 +232,40 @@ export async function searchCatalog(query: string) {
     await Promise.all([
       supabase
         .from("artists")
-        .select("id, slug, stage_name, category, verified, banner_url, profiles(username, display_name, cities(name))")
+        .select(
+          "id, slug, stage_name, category, verified, banner_url, profiles!inner(username, display_name, cities(name), is_test_account)"
+        )
+        .eq("profiles.is_test_account", false)
         .ilike("stage_name", q)
         .limit(10),
       supabase
         .from("profiles")
-        .select("username, display_name, artists(id, slug, stage_name, category, verified, banner_url)")
+        .select("username, display_name, is_test_account, artists(id, slug, stage_name, category, verified, banner_url)")
+        .eq("is_test_account", false)
         .not("username", "is", null)
         .or(`username.ilike.${q},display_name.ilike.${q}`)
         .limit(10),
       supabase
         .from("artists")
-        .select("id, slug, stage_name, category, verified, banner_url, profiles(username, display_name, cities(name))")
+        .select(
+          "id, slug, stage_name, category, verified, banner_url, profiles!inner(username, display_name, cities(name), is_test_account)"
+        )
+        .eq("profiles.is_test_account", false)
         .ilike("category", q)
         .limit(10),
       supabase
         .from("profiles")
-        .select("username, display_name, cities(name), artists(id, slug, stage_name, category, verified, banner_url)")
+        .select("username, display_name, cities(name), is_test_account, artists(id, slug, stage_name, category, verified, banner_url)")
+        .eq("is_test_account", false)
         .not("username", "is", null)
         .filter("cities.name", "ilike", q)
         .limit(10),
       supabase
         .from("events")
-        .select("id, slug, title, scheduled_at, artists(slug, stage_name, profiles(username))")
+        .select(
+          "id, slug, title, scheduled_at, artists!inner(slug, stage_name, profiles!inner(username, is_test_account))"
+        )
+        .eq("artists.profiles.is_test_account", false)
         .ilike("title", q)
         .limit(10),
     ]);
@@ -269,6 +289,7 @@ export async function searchCatalog(query: string) {
     merged.set(row.id as string, row as SearchArtist);
   }
   for (const row of [...(artistsByUsername.data ?? []), ...(artistsByCity.data ?? [])]) {
+    if (!isPublicProfile(row)) continue;
     const artist = row.artists as SearchArtist | SearchArtist[] | null;
     const list = Array.isArray(artist) ? artist : artist ? [artist] : [];
     for (const a of list) {
@@ -290,6 +311,9 @@ export async function getFanHeatMap(artistId: string) {
   const supabase = await getSupabaseOrNull();
   if (!supabase) return [];
 
+  const { data: artist } = await supabase.from("artists").select("user_id").eq("id", artistId).maybeSingle();
+  if (!artist || !(await isPublicArtistUser(supabase, artist.user_id as string))) return [];
+
   const { data } = await supabase
     .from("artist_fan_locations")
     .select("*")
@@ -301,6 +325,9 @@ export async function getFanHeatMap(artistId: string) {
 export async function getArtistProducts(artistSlug: string, limit = 12) {
   const supabase = await getSupabaseOrNull();
   if (!supabase) return null;
+
+  const publicArtist = await isPublicArtistBySlug(supabase, artistSlug);
+  if (!publicArtist) return [];
 
   const { data: artist } = await supabase
     .from("artists")

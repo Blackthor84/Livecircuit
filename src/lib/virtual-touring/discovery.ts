@@ -1,5 +1,6 @@
 import { createClient } from "@/lib/supabase/server";
 import { isSupabaseConfigured } from "@/lib/config/env";
+import { PUBLIC_DISCOVERY_EVENT_SELECT } from "@/lib/testing/public-filter";
 import type { TourDiscoveryFilter } from "@/lib/virtual-touring/types";
 
 export type DiscoverableTourEvent = {
@@ -25,13 +26,7 @@ export type FanLocationContext = {
   countryCode: string | null;
 };
 
-const eventSelect = `
-  id, slug, title, scheduled_at, status,
-  tour_city, tour_state_code, tour_state_name, audience_mode,
-  artists(slug, stage_name),
-  tour_stops(ticket_price_cents, tours(title)),
-  venues(name)
-`;
+const eventSelect = PUBLIC_DISCOVERY_EVENT_SELECT;
 
 export async function getFanLocationContext(userId: string): Promise<FanLocationContext | null> {
   if (!isSupabaseConfigured()) return null;
@@ -65,6 +60,7 @@ export async function discoverTourEvents(
   let query = supabase
     .from("events")
     .select(eventSelect)
+    .eq("artists.profiles.is_test_account", false)
     .in("status", ["scheduled", "live"])
     .gte("scheduled_at", new Date().toISOString())
     .order("scheduled_at", { ascending: true })

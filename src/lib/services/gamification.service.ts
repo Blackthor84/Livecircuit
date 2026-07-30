@@ -292,7 +292,8 @@ export async function buildGamificationReport(
     supabase.from("livecircuit_fan_gamification").select("*").eq("user_id", userId).maybeSingle(),
     supabase
       .from("livecircuit_fan_gamification")
-      .select("user_id, xp, level, prestige, profiles(display_name)")
+      .select("user_id, xp, level, prestige, profiles!inner(display_name, is_test_account)")
+      .eq("profiles.is_test_account", false)
       .order("xp", { ascending: false })
       .limit(10),
   ]);

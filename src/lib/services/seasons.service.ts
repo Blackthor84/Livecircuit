@@ -153,8 +153,9 @@ export async function syncSeasonBadgesForUser(
 export async function refreshSeasonLeaderboard(supabase: SupabaseClient, seasonId: string) {
   const { data: rows } = await supabase
     .from("user_season_progress")
-    .select("user_id, points, profiles(display_name)")
+    .select("user_id, points, profiles!inner(display_name, is_test_account)")
     .eq("season_id", seasonId)
+    .eq("profiles.is_test_account", false)
     .order("points", { ascending: false })
     .limit(25);
 

@@ -172,8 +172,9 @@ export async function buildWorldReport(supabase: SupabaseClient, admin: Supabase
   const { data: liveEvents } = venueIds.length
     ? await supabase
         .from("events")
-        .select("id, slug, venue_id, viewer_count, artist_id, artists(category, slug)")
+        .select("id, slug, venue_id, viewer_count, artist_id, artists!inner(category, slug, profiles!inner(is_test_account))")
         .eq("status", "live")
+        .eq("artists.profiles.is_test_account", false)
         .in("venue_id", venueIds)
     : { data: [] };
 

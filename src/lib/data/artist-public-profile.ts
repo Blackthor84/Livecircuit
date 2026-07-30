@@ -1,6 +1,6 @@
 import { createClient } from "@/lib/supabase/server";
 import { isSupabaseConfigured } from "@/lib/config/env";
-import { demoArtists, demoEvents } from "@/lib/data/demo";
+import { isPublicArtistUser, isPublicProfile } from "@/lib/testing/public-filter";
 import { getUsernameRedirectTarget } from "@/lib/actions/username";
 import { normalizeUsername } from "@/lib/username";
 import type { ArtistCategory, Product } from "@/types/database";
@@ -128,65 +128,6 @@ function mapEvent(
   };
 }
 
-function buildDemoProfile(username: string): ArtistPublicProfile | null {
-  const artist = demoArtists.find(
-    (a) => a.slug === username || normalizeUsername(a.slug) === username
-  );
-  if (!artist) return null;
-
-  const events = demoEvents.filter((e) => e.artists?.slug === artist.slug);
-  const now = new Date();
-
-  return {
-    artist: {
-      ...artist,
-      username: artist.slug,
-      short_bio: artist.profiles?.bio?.slice(0, 280) ?? null,
-      years_performing: 5,
-      languages: ["English"],
-      booking_email: null,
-      location: { city: "Los Angeles", state: "California", stateCode: "CA" },
-    },
-    genres: [{ id: "1", name: "Pop", slug: "pop" }],
-    stats: {
-      followers: artist.follower_count,
-      totalPerformances: events.length,
-      totalHoursStreamed: 42,
-      totalViews: 125000,
-      peakLiveViewers: 3200,
-      averageRating: 4.8,
-      reviewCount: 24,
-      memberSince: new Date(Date.now() - 86400000 * 365).toISOString(),
-    },
-    upcomingEvents: events
-      .filter((e) => new Date(e.scheduled_at) >= now)
-      .map((e) =>
-        mapEvent(e as unknown as Record<string, unknown>, artist.banner_url)
-      ),
-    pastEvents: events
-      .filter((e) => new Date(e.scheduled_at) < now)
-      .map((e) =>
-        mapEvent(e as unknown as Record<string, unknown>, artist.banner_url)
-      ),
-    liveEvent: (() => {
-      const live = events.find((e) => (e.status as string) === "live");
-      return live ? mapEvent(live as unknown as Record<string, unknown>, artist.banner_url) : null;
-    })(),
-    featuredVideos: [],
-    galleryMedia: [],
-    reviews: [
-      {
-        id: "r1",
-        rating: 5,
-        body: "Incredible live energy — felt like being front row.",
-        created_at: new Date().toISOString(),
-        reviewer_name: "Alex M.",
-      },
-    ],
-    products: [],
-  };
-}
-
 export async function resolveArtistUsername(username: string): Promise<string> {
   const normalized = normalizeUsername(username);
   const redirect = await getUsernameRedirectTarget(normalized);
@@ -198,17 +139,17 @@ export async function getArtistPublicProfile(username: string): Promise<ArtistPu
   const normalized = normalizeUsername(username);
   const supabase = await getSupabaseOrNull();
 
-  if (!supabase) {
-    return buildDemoProfile(normalized);
-  }
+  if (!supabase) return null;
 
   const { data: profileRow } = await supabase
     .from("profiles")
     .select(
-      "id, username, display_name, avatar_url, bio, created_at, cities(name), states(name, code)"
+      "id, username, display_name, avatar_url, bio, created_at, is_test_account, cities(name), states(name, code)"
     )
     .eq("username", normalized)
     .maybeSingle();
+
+  if (profileRow && !isPublicProfile(profileRow)) return null;
 
   let artistQuery = supabase
     .from("artists")
@@ -220,7 +161,9 @@ export async function getArtistPublicProfile(username: string): Promise<ArtistPu
   }
 
   const { data: artistRow } = await artistQuery.maybeSingle();
-  if (!artistRow) return buildDemoProfile(normalized);
+  if (!artistRow) return null;
+
+  if (!(await isPublicArtistUser(supabase, artistRow.user_id as string))) return null;
 
   const artistId = artistRow.id as string;
   const userId = artistRow.user_id as string;

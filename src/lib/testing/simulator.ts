@@ -17,8 +17,16 @@ export async function runPlatformSimulator(input: {
     .eq("role", "fan")
     .limit(500);
 
-  const { data: testArtists } = await admin.from("artists").select("id, user_id").limit(50);
-  const { data: events } = await admin.from("events").select("id").limit(20);
+  const { data: testArtists } = await admin
+    .from("artists")
+    .select("id, user_id, profiles!inner(is_test_account)")
+    .eq("profiles.is_test_account", true)
+    .limit(50);
+
+  const testArtistIds = (testArtists ?? []).map((a) => a.id as string);
+  const { data: events } = testArtistIds.length
+    ? await admin.from("events").select("id").in("artist_id", testArtistIds).limit(20)
+    : { data: [] };
   const eventIds = (events ?? []).map((e) => e.id as string);
   const fanIds = (testFans ?? []).map((f) => f.id as string);
 
@@ -54,7 +62,7 @@ export async function runPlatformSimulator(input: {
       break;
     }
     case "follows": {
-      const artistIds = (testArtists ?? []).map((a) => a.id as string);
+      const artistIds = testArtistIds;
       if (!artistIds.length || !fanIds.length) break;
       const rows = Array.from({ length: Math.min(input.count, fanIds.length * artistIds.length) }, (_, i) => ({
         fan_id: fanIds[i % fanIds.length]!,

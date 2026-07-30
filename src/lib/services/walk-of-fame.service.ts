@@ -1,4 +1,5 @@
 import type { SupabaseClient } from "@supabase/supabase-js";
+import { getPublicArtistIds } from "@/lib/testing/public-filter";
 import {
   WALK_OF_FAME_CRITERIA,
   type WalkOfFameCriterion,
@@ -231,11 +232,14 @@ export async function buildWalkOfFameHubReport(
 
   const { data: artists } = await supabase
     .from("artists")
-    .select("id, slug, stage_name, banner_url, verified, featured, follower_count, created_at")
+    .select("id, slug, stage_name, banner_url, verified, featured, follower_count, created_at, user_id")
     .in("id", artistIds);
+
+  const publicIds = await getPublicArtistIds(supabase, artistIds);
 
   const entries: WalkOfFameArtistEntry[] = [];
   for (const artist of artists ?? []) {
+    if (!publicIds.has(artist.id as string)) continue;
     const stars = await loadStarsForArtist(supabase, artist.id as string);
     const { count: fanVoteCount } = await supabase
       .from("artist_walk_of_fame_votes")
@@ -264,8 +268,9 @@ export async function buildArtistWalkOfFameReport(
 ): Promise<ArtistWalkOfFameReport | null> {
   const { data: artist } = await supabase
     .from("artists")
-    .select("id, slug, stage_name, banner_url, verified, featured, follower_count, created_at")
+    .select("id, slug, stage_name, banner_url, verified, featured, follower_count, created_at, user_id, profiles!inner(is_test_account)")
     .eq("slug", artistSlug)
+    .eq("profiles.is_test_account", false)
     .maybeSingle();
 
   if (!artist) return null;

@@ -1,16 +1,19 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { ArtistCard } from "@/components/artists/artist-card";
 import { TourDiscoverySection } from "@/components/touring/tour-discovery-section";
-import { ARTIST_CATEGORIES } from "@/lib/constants";
+import { Button } from "@/components/ui/button";
+import { ROUTES } from "@/lib/constants";
 import { getFeaturedArtists } from "@/lib/data/queries";
+import { HOMEPAGE_CATEGORY_CARDS } from "@/lib/home/marketing-content";
 import { getSessionUser } from "@/lib/auth/session";
 import { discoverTourEvents, getFanLocationContext } from "@/lib/virtual-touring/discovery";
 import type { TourDiscoveryFilter } from "@/lib/virtual-touring/types";
-import { Badge } from "@/components/ui/badge";
 
 export const metadata: Metadata = {
   title: "Discover",
-  description: "Trending artists, live shows near you, and virtual tours worldwide.",
+  description:
+    "Discover live music, comedy, podcasts, virtual concerts, and ticketed livestreams on LiveCircuit.",
 };
 
 type PageProps = {
@@ -33,7 +36,7 @@ export default async function DiscoverPage({ searchParams }: PageProps) {
       <header className="max-w-2xl">
         <h1 className="text-3xl font-bold tracking-tight sm:text-4xl">Discover live experiences</h1>
         <p className="mt-3 text-muted-foreground">
-          Follow artists on a real tour — city by city — from anywhere in the world.
+          Real artists, real events — concerts, comedy, podcasts, and creators from anywhere in the world.
         </p>
         {fanLocation?.cityName ? (
           <p className="mt-2 text-sm text-primary">
@@ -43,23 +46,49 @@ export default async function DiscoverPage({ searchParams }: PageProps) {
         ) : null}
       </header>
 
-      <div className="mt-8 flex flex-wrap gap-2">
-        {ARTIST_CATEGORIES.map((cat) => (
-          <Badge key={cat.value} variant="secondary" className="cursor-pointer capitalize hover:bg-primary/20">
-            {cat.label}
-          </Badge>
-        ))}
-      </div>
+      <section className="mt-10">
+        <h2 className="text-lg font-semibold">Browse by category</h2>
+        <div className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4">
+          {HOMEPAGE_CATEGORY_CARDS.map((cat) => (
+            <Link
+              key={cat.query}
+              href={`${ROUTES.search}?q=${encodeURIComponent(cat.label)}`}
+              className="glass-panel rounded-xl border border-white/10 p-4 transition hover:border-primary/40"
+            >
+              <span className="text-xl">{cat.emoji}</span>
+              <p className="mt-2 text-sm font-medium">{cat.label}</p>
+            </Link>
+          ))}
+        </div>
+      </section>
 
       <TourDiscoverySection events={events} activeFilter={filter} />
 
+      {events.length === 0 ? (
+        <div className="glass-panel mt-8 rounded-2xl border border-white/10 px-8 py-12 text-center">
+          <p className="text-lg font-medium">Upcoming performances will appear here.</p>
+          <p className="mx-auto mt-2 max-w-md text-sm text-muted-foreground">
+            When artists publish real shows, you&apos;ll find them here — never placeholder events.
+          </p>
+        </div>
+      ) : null}
+
       <section className="mt-16">
         <h2 className="text-xl font-semibold">Trending artists</h2>
-        <div className="mt-6 grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4">
-          {artists.map((a) => (
-            <ArtistCard key={a.id} artist={a} />
-          ))}
-        </div>
+        {artists.length > 0 ? (
+          <div className="mt-6 grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4">
+            {artists.map((a) => (
+              <ArtistCard key={a.id} artist={a} />
+            ))}
+          </div>
+        ) : (
+          <div className="glass-panel mt-6 rounded-2xl border border-white/10 px-8 py-12 text-center">
+            <p className="font-medium">Our Founding Artists will appear here soon.</p>
+            <Button className="mt-4" href={`${ROUTES.register}?role=artist`}>
+              Apply as a Founding Artist
+            </Button>
+          </div>
+        )}
       </section>
     </div>
   );

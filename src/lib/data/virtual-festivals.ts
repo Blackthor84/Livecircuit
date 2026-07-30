@@ -82,7 +82,9 @@ function demoDetail(slug: string): FestivalDetail | null {
 }
 
 export async function getFestivalsHubReport(): Promise<FestivalsHubReport> {
-  if (!isSupabaseConfigured()) return demoHub();
+  if (!isSupabaseConfigured()) {
+    return { live: [], upcoming: [], past: [], computedAt: new Date().toISOString() };
+  }
   const supabase = await createClient();
   return listFestivalsHub(supabase);
 }
@@ -91,7 +93,7 @@ export async function getFestivalDetailReport(
   slug: string,
   userId: string | null
 ): Promise<FestivalDetail | null> {
-  if (!isSupabaseConfigured()) return demoDetail(slug);
+  if (!isSupabaseConfigured()) return null;
   const supabase = await createClient();
   return buildFestivalDetail(supabase, slug, userId);
 }

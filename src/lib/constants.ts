@@ -4,7 +4,7 @@ export const LIVECIRCUIT_LOGO_WIDTH = 1024;
 export const LIVECIRCUIT_LOGO_HEIGHT = 682;
 export const APP_TAGLINE = "Tour the world without leaving home.";
 export const APP_DESCRIPTION =
-  "Live virtual tours, concerts, comedy, podcasts, and more — with fan heat maps that help artists plan their next stop.";
+  "LiveCircuit — ticketed livestreams, virtual concerts, comedy, podcasts, and interactive creator experiences. Watch live music and performances from anywhere in the world.";
 
 export const ARTIST_CATEGORIES = [
   { value: "music", label: "Music" },

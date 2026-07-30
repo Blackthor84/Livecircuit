@@ -58,14 +58,16 @@ function demoArtist(slug: string): ArtistWalkOfFameReport {
 }
 
 export async function getWalkOfFameHubReport(): Promise<WalkOfFameHubReport> {
-  if (!isSupabaseConfigured()) return demoHub();
+  if (!isSupabaseConfigured()) {
+    return { artists: [], totalStars: 0, computedAt: new Date().toISOString() };
+  }
   const supabase = await createClient();
   const admin = getSupabaseAdmin();
   return buildWalkOfFameHubReport(supabase, admin);
 }
 
 export async function getArtistWalkOfFameReport(artistSlug: string): Promise<ArtistWalkOfFameReport | null> {
-  if (!isSupabaseConfigured()) return demoArtist(artistSlug);
+  if (!isSupabaseConfigured()) return null;
   const supabase = await createClient();
   const admin = getSupabaseAdmin();
   const user = await getSessionUser();

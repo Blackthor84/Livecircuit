@@ -112,7 +112,9 @@ function demoDetail(slug: string): SeasonDetail | null {
 }
 
 export async function getSeasonsHubReport(): Promise<SeasonsHubReport> {
-  if (!isSupabaseConfigured()) return demoHub();
+  if (!isSupabaseConfigured()) {
+    return { active: [], upcoming: [], archive: [], computedAt: new Date().toISOString() };
+  }
   const supabase = await createClient();
   return listSeasonsHub(supabase);
 }
@@ -121,7 +123,7 @@ export async function getSeasonDetailReport(
   slug: string,
   userId: string | null
 ): Promise<SeasonDetail | null> {
-  if (!isSupabaseConfigured()) return demoDetail(slug);
+  if (!isSupabaseConfigured()) return null;
   const supabase = await createClient();
   return buildSeasonDetail(supabase, slug, userId);
 }

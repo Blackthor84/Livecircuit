@@ -107,7 +107,9 @@ function demoHub(): AwardsHubReport {
 }
 
 export async function getAwardsHubReport(): Promise<AwardsHubReport> {
-  if (!isSupabaseConfigured()) return demoHub();
+  if (!isSupabaseConfigured()) {
+    return { featured: null, voting: [], upcomingLive: [], archive: [], computedAt: new Date().toISOString() };
+  }
   const supabase = await createClient();
   const admin = getSupabaseAdmin();
   const user = await getSessionUser();
@@ -115,20 +117,7 @@ export async function getAwardsHubReport(): Promise<AwardsHubReport> {
 }
 
 export async function getAwardCeremonyDetail(slug: string): Promise<AwardCeremonyDetail | null> {
-  if (!isSupabaseConfigured()) {
-    const hub = demoHub();
-    if (slug === "2026") return hub.featured;
-    if (slug === "2025") {
-      return demoCeremony("2025", {
-        status: "archived",
-        archiveSummary: "Winners from the first annual LiveCircuit Awards.",
-        votingEndsAt: "2025-12-01T00:00:00Z",
-        ceremonyAt: "2025-12-15T20:00:00Z",
-        liveStreamUrl: null,
-      });
-    }
-    return null;
-  }
+  if (!isSupabaseConfigured()) return null;
   const supabase = await createClient();
   const admin = getSupabaseAdmin();
   const user = await getSessionUser();
