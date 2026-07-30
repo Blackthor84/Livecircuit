@@ -19,8 +19,8 @@ export function WizardShell({
   if (phase === "intro" || presentationMode || flyoverMode) return <>{children}</>;
 
   return (
-    <div className="relative min-h-[calc(100vh-4rem)]">
-      <div className="sticky top-16 z-40 border-b border-white/5 bg-background/85 backdrop-blur-xl">
+    <div className="relative min-h-[calc(100vh-9rem)]">
+      <div className="sticky top-36 z-40 border-b border-white/5 bg-background/85 backdrop-blur-xl">
         <div className="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-3 px-4 py-3 sm:px-6">
           <div className="min-w-0 flex-1">
             <p className="text-xs font-semibold uppercase tracking-widest text-amber-400/90">

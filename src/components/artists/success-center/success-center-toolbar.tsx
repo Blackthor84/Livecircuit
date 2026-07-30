@@ -11,7 +11,7 @@ export function SuccessCenterToolbar() {
   if (presentationMode) return null;
 
   return (
-    <div className="sticky top-16 z-40 border-b border-white/5 bg-background/80 backdrop-blur-xl">
+    <div className="sticky top-36 z-40 border-b border-white/5 bg-background/80 backdrop-blur-xl">
       <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-2 sm:px-6">
         <p className="hidden text-xs text-muted-foreground sm:block">
           Enterprise Artist Advisor · Demo data only

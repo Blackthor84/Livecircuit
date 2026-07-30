@@ -10,11 +10,12 @@ import {
 import { cn } from "@/lib/utils";
 
 const SIZES = {
-  xs: 32,
-  sm: 44,
-  md: 56,
-  lg: 72,
-  xl: 96,
+  xs: 48,
+  sm: 64,
+  md: 88,
+  lg: 112,
+  xl: 144,
+  "2xl": 192,
 } as const;
 
 type LiveCircuitLogoProps = {
@@ -40,8 +41,8 @@ export function LiveCircuitLogo({
       width={width}
       height={height}
       priority={priority}
-      className={cn("h-auto w-auto object-contain", className)}
-      style={{ height, width: "auto", maxWidth: width }}
+      className={cn("h-auto w-auto max-h-none object-contain", className)}
+      style={{ height, width: "auto", minHeight: height, maxWidth: "none" }}
     />
   );
 

@@ -10,7 +10,7 @@ export function SiteFooter({ user }: { user: HeaderUser | null }) {
       <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6">
         <div className="grid gap-10 md:grid-cols-2">
           <div>
-            <LiveCircuitLogo size="lg" href={ROUTES.home} />
+            <LiveCircuitLogo size="2xl" href={ROUTES.home} />
             <p className="mt-3 max-w-sm text-sm text-muted-foreground">{APP_TAGLINE}</p>
             <div className="mt-6 flex flex-wrap gap-4 text-sm">
               <Link href={ROUTES.discover} className="text-muted-foreground hover:text-foreground">

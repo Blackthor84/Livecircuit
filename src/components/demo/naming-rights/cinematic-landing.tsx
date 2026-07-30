@@ -84,7 +84,7 @@ export function CinematicLanding() {
         transition={{ duration: 0.8 }}
         className="absolute left-1/2 top-8 z-20 -translate-x-1/2"
       >
-        <LiveCircuitLogo size="md" href={null} />
+        <LiveCircuitLogo size="lg" href={null} />
       </motion.div>
 
       <motion.div

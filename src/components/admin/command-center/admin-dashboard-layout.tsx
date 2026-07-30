@@ -49,7 +49,7 @@ function AdminTopBar({ user }: { user: HeaderUser | null }) {
   const section = adminSectionLabel(pathname);
 
   return (
-    <header className="sticky top-16 z-40 flex h-14 shrink-0 items-center justify-between gap-4 border-b border-white/10 bg-background/80 px-4 backdrop-blur-xl sm:px-6">
+    <header className="sticky top-36 z-40 flex h-14 shrink-0 items-center justify-between gap-4 border-b border-white/10 bg-background/80 px-4 backdrop-blur-xl sm:px-6">
       <div className="flex min-w-0 items-center gap-3">
         <Sheet>
           <SheetTrigger
@@ -74,7 +74,7 @@ function AdminTopBar({ user }: { user: HeaderUser | null }) {
       </div>
       <div className="flex shrink-0 items-center gap-2">
         <Button variant="ghost" size="sm" href={ROUTES.home} className="hidden sm:inline-flex">
-          <LiveCircuitLogo size="xs" href={null} />
+          <LiveCircuitLogo size="sm" href={null} />
         </Button>
         {user ? <SiteHeaderUserMenu user={user} /> : null}
       </div>
@@ -90,13 +90,13 @@ export function AdminDashboardLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div className="flex min-h-[calc(100vh-4rem)] flex-col">
+    <div className="flex min-h-[calc(100vh-9rem)] flex-col">
       <AdminTopBar user={user} />
       <div className="mx-auto flex w-full max-w-[1600px] flex-1 gap-0 lg:gap-6">
         <aside className="hidden w-64 shrink-0 border-r border-white/5 lg:block">
-          <div className="sticky top-[8.5rem] p-4">
+          <div className="sticky top-[12.5rem] p-4">
             <div className="mb-4 flex items-center gap-2 px-2">
-              <LiveCircuitLogo size="sm" href={ROUTES.home} />
+              <LiveCircuitLogo size="md" href={ROUTES.home} />
               <div>
                 <p className="text-xs font-semibold uppercase tracking-wide text-primary">Command Center</p>
               </div>

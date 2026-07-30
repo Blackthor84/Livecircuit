@@ -147,9 +147,9 @@ export function SiteHeader({ user }: { user: HeaderUser | null }) {
 
   return (
     <header className="sticky top-0 z-50 border-b border-white/5 bg-background/80 backdrop-blur-xl">
-      <div className="mx-auto flex h-16 max-w-7xl items-center justify-between gap-4 px-4 sm:px-6">
-        <LiveCircuitLogo size="md" priority className="sm:hidden" />
-        <LiveCircuitLogo size="lg" priority className="hidden sm:inline-flex" />
+      <div className="mx-auto flex h-36 max-w-7xl items-center justify-between gap-4 px-4 sm:px-6">
+        <LiveCircuitLogo size="lg" priority className="sm:hidden" />
+        <LiveCircuitLogo size="xl" priority className="hidden sm:inline-flex" />
 
         <nav className="hidden items-center gap-1 md:flex" aria-label="Main">
           {nav.map((item) => (
