@@ -60,6 +60,20 @@ export function parseSupabaseError(error: unknown): ParsedDatabaseError {
     base.details ??= readString(record.details ?? record.detail);
     base.hint ??= readString(record.hint);
 
+    if (record.name === "AuthRetryableFetchError" || record.name === "AuthApiError") {
+      const status = stringifyCode(record.status);
+      const retryable = record.name === "AuthRetryableFetchError" ? "retryable" : "api";
+      base.details = [
+        base.details,
+        `authErrorType=${record.name}`,
+        status ? `status=${status}` : null,
+        retryable,
+        serializeRecord(record as unknown as Record<string, unknown>),
+      ]
+        .filter(Boolean)
+        .join(" | ");
+    }
+
     if (base.message === "Error" || base.message === "{}") {
       base.message = serializeRecord(record as unknown as Record<string, unknown>);
     }

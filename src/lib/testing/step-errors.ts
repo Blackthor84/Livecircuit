@@ -1,4 +1,5 @@
 import type { PostgrestError } from "@supabase/supabase-js";
+import { logAuthErrorComplete } from "@/lib/testing/log-auth-create-user";
 import { parsePostgrestError, parseSupabaseError, type ParsedDatabaseError } from "@/lib/testing/parse-error";
 
 export type TestCreationLog = {
@@ -81,6 +82,7 @@ export function throwParsedError(
     parsed.message = fallbackMessage;
   }
   console.error(`[Testing Center] ${failedStep}`, error);
+  logAuthErrorComplete(failedStep, error);
   throw new TestCreationStepError(failedStep, parsed, log.steps, error instanceof Error ? error : undefined);
 }
 

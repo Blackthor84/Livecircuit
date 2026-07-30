@@ -13,6 +13,11 @@ import {
   throwParsedError,
   type TestCreationLog,
 } from "@/lib/testing/step-errors";
+import {
+  buildAuthCreateUserLogPayload,
+  logAuthErrorComplete,
+  logServiceRoleClientVerification,
+} from "@/lib/testing/log-auth-create-user";
 
 export type CreatedTestUser = {
   userId: string;
@@ -38,26 +43,57 @@ export async function createTestUser(input: {
   const password = `Test!${seed}Lc`;
 
   logTestStep(log, "Step 1: Creating auth user...");
-  const { data: authData, error: authError } = await admin.auth.admin.createUser({
-    email: person.email,
-    password,
-    email_confirm: true,
-    user_metadata: {
-      full_name: person.displayName,
-      username: person.username,
-      intended_role: input.type,
-      is_test_account: true,
-    },
-  });
+  logServiceRoleClientVerification(admin);
 
-  if (authError || !authData.user) {
+  const authPayload = buildAuthCreateUserLogPayload({
+    email: person.email,
+    type: input.type,
+    person,
+  });
+  console.log("[Testing Center] auth.admin.createUser request payload:", authPayload);
+
+  let authData: Awaited<ReturnType<typeof admin.auth.admin.createUser>>["data"];
+  let authError: Awaited<ReturnType<typeof admin.auth.admin.createUser>>["error"];
+
+  try {
+    const result = await admin.auth.admin.createUser({
+      email: person.email,
+      password,
+      email_confirm: true,
+      user_metadata: {
+        full_name: person.displayName,
+        username: person.username,
+        intended_role: input.type,
+        is_test_account: true,
+      },
+    });
+    authData = result.data;
+    authError = result.error;
+  } catch (thrown) {
+    logAuthErrorComplete("auth.admin.createUser threw", thrown);
+    throwParsedError(log, "Step 1: Creating auth user", thrown, "auth.admin.createUser threw");
+  }
+
+  if (authError) {
+    logAuthErrorComplete("auth.admin.createUser returned error", authError);
+    throwParsedError(log, "Step 1: Creating auth user", authError, "Failed to create auth user");
+  }
+
+  if (!authData?.user) {
+    logAuthErrorComplete("auth.admin.createUser returned no user", { authData, authError });
     throwParsedError(
       log,
       "Step 1: Creating auth user",
-      authError ?? new Error("Failed to create auth user — no user returned"),
-      "Failed to create auth user"
+      new Error("Failed to create auth user — no user returned"),
+      "Failed to create auth user — no user returned"
     );
   }
+
+  console.log("[Testing Center] auth.admin.createUser succeeded:", {
+    userId: authData.user.id,
+    email: authData.user.email,
+    intendedRole: input.type,
+  });
 
   const userId = authData.user.id;
 
