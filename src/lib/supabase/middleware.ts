@@ -5,6 +5,7 @@ import { getSupabaseProjectUrl } from "@/lib/config/env";
 import { canAccessPath, isFeatureGatedApiPath, isFeatureGatedPath } from "@/lib/features/access";
 import { createServerClient } from "@supabase/ssr";
 import type { UserRole } from "@/types/database";
+import { IMPERSONATION_COOKIE } from "@/lib/testing/constants";
 
 function roleRequiredForPath(pathname: string): UserRole[] | null {
   if (pathname === "/admin" || pathname.startsWith("/admin/")) return [...ADMIN_ROLES];
@@ -39,6 +40,16 @@ export async function updateSession(request: NextRequest) {
   } = await supabase.auth.getUser();
 
   const { pathname } = request.nextUrl;
+
+  const impersonating = Boolean(request.cookies.get(IMPERSONATION_COOKIE)?.value);
+  if (impersonating) {
+    if (pathname === "/admin" || pathname.startsWith("/admin/")) {
+      return NextResponse.redirect(new URL("/discover", request.url));
+    }
+    if (pathname.startsWith("/api/admin/") && !pathname.startsWith("/api/admin/testing/stop-impersonate")) {
+      return NextResponse.json({ error: "Unavailable while impersonating" }, { status: 403 });
+    }
+  }
 
   let role: UserRole | null = null;
   if (user) {

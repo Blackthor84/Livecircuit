@@ -1,6 +1,13 @@
 import type { NotificationType } from "@/types/notifications";
 import { getSupabaseAdmin } from "@/lib/supabase/admin";
 import { isSupabaseConfigured } from "@/lib/config/env";
+import { filterOutTestUserIds } from "@/lib/testing/permissions";
+
+async function shouldNotifyUser(userId: string): Promise<boolean> {
+  const admin = getSupabaseAdmin();
+  const { data } = await admin.from("profiles").select("is_test_account").eq("id", userId).maybeSingle();
+  return !data?.is_test_account;
+}
 
 export async function createNotification(input: {
   userId: string;
@@ -11,6 +18,7 @@ export async function createNotification(input: {
   metadata?: Record<string, unknown>;
 }) {
   if (!isSupabaseConfigured()) return;
+  if (!(await shouldNotifyUser(input.userId))) return;
 
   try {
     const admin = getSupabaseAdmin();
@@ -47,8 +55,11 @@ export async function notifyFollowers(input: {
 
     if (!followers?.length) return;
 
-    const rows = followers.map((f) => ({
-      user_id: f.fan_id,
+    const fanIds = await filterOutTestUserIds(followers.map((f) => f.fan_id as string));
+    if (!fanIds.length) return;
+
+    const rows = fanIds.map((user_id) => ({
+      user_id,
       type: input.type,
       title: input.title,
       body: input.body ?? null,

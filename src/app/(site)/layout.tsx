@@ -1,12 +1,15 @@
 import { SiteFooter } from "@/components/layout/site-footer";
 import { SiteHeader } from "@/components/layout/site-header";
+import { ImpersonationBanner } from "@/components/admin/testing/impersonation-banner";
+import { getImpersonationState } from "@/lib/auth/impersonation";
 import { getHeaderUser } from "@/lib/auth/session";
 
 export default async function SiteLayout({ children }: { children: React.ReactNode }) {
-  const user = await getHeaderUser();
+  const [user, impersonation] = await Promise.all([getHeaderUser(), getImpersonationState()]);
 
   return (
     <>
+      {impersonation ? <ImpersonationBanner state={impersonation} /> : null}
       <SiteHeader user={user} />
       <main className="flex-1">{children}</main>
       <SiteFooter user={user} />

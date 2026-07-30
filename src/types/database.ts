@@ -39,6 +39,10 @@ export type Profile = {
   state_id: string | null;
   city_id: string | null;
   onboarding_completed: boolean;
+  is_test_account?: boolean;
+  test_scenario?: string | null;
+  test_created_by?: string | null;
+  test_created_at?: string | null;
 };
 
 export type Artist = {
