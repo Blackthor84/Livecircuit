@@ -1,14 +1,21 @@
 import type { SupabaseClient } from "@supabase/supabase-js";
 import { syncEventForTourStop, uniqueTourSlug } from "@/lib/services/tours.service";
 import { ensureEventStream } from "@/lib/services/streams.service";
+import { buildVirtualLocationLabel, stateNameFromCode } from "@/lib/virtual-touring/location";
+import type { EventAudienceMode } from "@/types/database";
 
 export type CreateStandaloneEventInput = {
   title: string;
   virtualLocationLabel: string;
+  tourCity: string;
+  tourStateCode?: string | null;
   scheduledAt: string;
+  doorsOpenAt?: string | null;
   ticketPriceCents: number;
   description?: string | null;
   timezone?: string;
+  audienceMode?: EventAudienceMode;
+  localPriorityMinutes?: number;
 };
 
 export type CreateStandaloneEventResult = {
@@ -28,6 +35,15 @@ export async function createStandaloneEvent(
   if (Number.isNaN(scheduledAt.getTime())) {
     throw new Error("Invalid scheduled date");
   }
+
+  const doorsOpen = input.doorsOpenAt
+    ? new Date(input.doorsOpenAt)
+    : new Date(scheduledAt.getTime() - 30 * 60_000);
+  const stateCode = input.tourStateCode?.trim().toUpperCase() || null;
+  const tourCity = input.tourCity.trim();
+  const locationLabel =
+    input.virtualLocationLabel.trim() ||
+    buildVirtualLocationLabel(tourCity, stateCode);
 
   const tourSlug = uniqueTourSlug(input.title);
   const { data: tour, error: tourError } = await supabase
@@ -52,7 +68,14 @@ export async function createStandaloneEvent(
     .from("tour_stops")
     .insert({
       tour_id: tour.id,
-      virtual_location_label: input.virtualLocationLabel.trim(),
+      virtual_location_label: locationLabel,
+      tour_city: tourCity,
+      tour_state_code: stateCode,
+      tour_state_name: stateNameFromCode(stateCode),
+      doors_open_at: doorsOpen.toISOString(),
+      show_starts_at: scheduledAt.toISOString(),
+      audience_mode: input.audienceMode ?? "worldwide",
+      local_priority_minutes: input.localPriorityMinutes ?? 30,
       stop_order: 0,
       scheduled_at: scheduledAt.toISOString(),
       timezone: input.timezone ?? "UTC",

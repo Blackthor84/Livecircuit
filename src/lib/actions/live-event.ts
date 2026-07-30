@@ -6,6 +6,7 @@ import { isObserverUser } from "@/lib/auth/observer";
 import { createClient } from "@/lib/supabase/server";
 import { isSupabaseConfigured } from "@/lib/config/env";
 import { getEventLiveAccess, isUserMutedInEvent } from "@/lib/live/access";
+import { applyVirtualTouringAccess } from "@/lib/virtual-touring/live-access-bridge";
 import { getSupabaseAdmin } from "@/lib/supabase/admin";
 import { getStreamingProvider } from "@/lib/streaming/provider";
 import { getEventPublicPath } from "@/lib/services/events.service";
@@ -26,18 +27,23 @@ export type LiveActionResult =
   | { ok: true; liveUrl?: string }
   | { ok: false; error: string };
 
-async function requireAccess(eventId: string, needModerate = false) {
+async function requireAccess(eventId: string, needModerate = false, channel: "global" | "local" = "global") {
   const user = await getSessionUser();
   if (!user) return { ok: false as const, error: "Sign in required" };
   if (!isSupabaseConfigured()) return { ok: false as const, error: "Live rooms require Supabase" };
 
   const supabase = await createClient();
-  const access = await getEventLiveAccess(supabase, user.id, eventId);
+  let access = await getEventLiveAccess(supabase, user.id, eventId);
+  access = await applyVirtualTouringAccess(supabase, user.id, eventId, access);
+
   if (needModerate && !access.canModerate) {
     return { ok: false as const, error: "Not allowed" };
   }
   if (!needModerate && !access.canChat) {
     return { ok: false as const, error: access.message ?? "Chat is not available" };
+  }
+  if (channel === "local" && !access.canAccessLocalChat && !access.canModerate) {
+    return { ok: false as const, error: "Local chat is for home crowd fans only" };
   }
   return { ok: true as const, user, supabase, access };
 }
@@ -48,7 +54,7 @@ export async function sendChatMessageAction(input: unknown): Promise<LiveActionR
     return { ok: false, error: parsed.error.issues[0]?.message ?? "Invalid message" };
   }
 
-  const ctx = await requireAccess(parsed.data.eventId);
+  const ctx = await requireAccess(parsed.data.eventId, false, parsed.data.channel);
   if (!ctx.ok) return { ok: false, error: ctx.error };
 
   if (await isUserMutedInEvent(ctx.supabase, parsed.data.eventId, ctx.user.id)) {
@@ -64,6 +70,7 @@ export async function sendChatMessageAction(input: unknown): Promise<LiveActionR
     user_id: ctx.user.id,
     body: parsed.data.body.trim(),
     is_vip_only: parsed.data.isVipOnly ?? false,
+    channel: parsed.data.channel,
   });
 
   if (error) return { ok: false, error: error.message };
@@ -311,7 +318,9 @@ export async function getLiveAccessForEvent(eventId: string, demo?: { status: st
   }
   const supabase = await createClient();
   const user = await getSessionUser();
-  return getEventLiveAccess(supabase, user?.id, eventId);
+  const access = await getEventLiveAccess(supabase, user?.id, eventId);
+  if (!user?.id) return access;
+  return applyVirtualTouringAccess(supabase, user.id, eventId, access);
 }
 
 export async function recordViewerJoin(eventId: string) {
@@ -337,6 +346,11 @@ export async function recordViewerJoin(eventId: string) {
     const viewer_count = (event.viewer_count as number) + 1;
     const peak_viewers = Math.max(event.peak_viewers as number, viewer_count);
     await admin.from("events").update({ viewer_count, peak_viewers }).eq("id", eventId);
+
+    const { recordVirtualTouringViewerJoin } = await import(
+      "@/lib/virtual-touring/record-analytics"
+    );
+    await recordVirtualTouringViewerJoin(admin, user.id, eventId);
   } catch {
     /* optional */
   }

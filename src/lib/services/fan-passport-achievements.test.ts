@@ -6,11 +6,14 @@ const baseProgress: FanPassportProgress = {
   stampCount: 5,
   distinctCountries: 2,
   distinctUsStates: 3,
+  distinctCities: 2,
+  toursCompleted: 1,
   vipStamps: 2,
   comedyStamps: 1,
   specialStamps: 0,
   countryTarget: 10,
   usStateTarget: 50,
+  cityTarget: 25,
 };
 
 describe("fan passport achievements", () => {

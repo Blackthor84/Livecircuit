@@ -9,6 +9,7 @@ import {
   syncFanPassportAchievements,
   syncFanPassportStamps,
 } from "@/lib/services/fan-passport.service";
+import { computeTourPassportStats } from "@/lib/virtual-touring/passport-stats";
 import type { FanPassportReport, FanPassportStamp } from "@/lib/types/fan-passport";
 
 function demoPassport(userId: string, displayName: string | null): FanPassportReport {
@@ -16,6 +17,8 @@ function demoPassport(userId: string, displayName: string | null): FanPassportRe
     {
       id: "demo-1",
       eventId: "e1",
+      tourId: "t1",
+      tourTitle: "Summer Tour 2026",
       venueName: "Neon Garden Arena",
       cityName: "Austin",
       stateCode: "TX",
@@ -31,6 +34,8 @@ function demoPassport(userId: string, displayName: string | null): FanPassportRe
     {
       id: "demo-2",
       eventId: "e2",
+      tourId: null,
+      tourTitle: null,
       venueName: "Harbor Stage",
       cityName: "Toronto",
       stateCode: "ON",
@@ -53,6 +58,7 @@ function demoPassport(userId: string, displayName: string | null): FanPassportRe
     displayName,
     stamps,
     progress,
+    tourStats: computeTourPassportStats(stamps),
     achievements: [
       {
         slug: "first_concert",
@@ -135,6 +141,7 @@ export async function getFanPassportReport(userId: string): Promise<FanPassportR
     stamps,
     achievements,
     progress,
+    tourStats: computeTourPassportStats(stamps),
     computedAt: new Date().toISOString(),
   };
 }

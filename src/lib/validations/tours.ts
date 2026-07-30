@@ -1,5 +1,15 @@
 import { z } from "zod";
 
+const audienceModeSchema = z.enum([
+  "worldwide",
+  "us_only",
+  "local_priority",
+  "local_only",
+  "invite_only",
+  "subscribers_only",
+  "vip_only",
+]);
+
 export const createTourSchema = z.object({
   title: z.string().min(2, "Tour name is required").max(120),
   description: z.string().max(5000).optional(),
@@ -27,6 +37,11 @@ export const tourStopSchema = z.object({
   merchEnabled: z.boolean().optional(),
   venueId: z.string().uuid().nullable().optional(),
   venueRoomLabel: z.string().max(120).nullable().optional(),
+  tourCity: z.string().min(2).max(120).optional(),
+  tourStateCode: z.string().max(8).optional().nullable(),
+  doorsOpenAt: z.string().optional().nullable(),
+  audienceMode: audienceModeSchema.optional(),
+  localPriorityMinutes: z.coerce.number().int().min(0).max(180).optional(),
 });
 
 export const assignTourStopVenueSchema = z.object({

@@ -3,16 +3,19 @@ import { AdminPageHeader } from "@/components/admin/command-center/admin-dashboa
 import { AdminSegmentationPanel } from "@/components/admin/command-center/admin-segmentation-panel";
 import { AdminTodoPanel } from "@/components/admin/command-center/admin-todo-panel";
 import { AdminTrendCharts } from "@/components/admin/command-center/admin-trend-charts";
+import { VirtualTouringAnalyticsPanel } from "@/components/admin/virtual-touring-analytics-panel";
 import { listAdminArtists, listAdminGenres } from "@/lib/data/admin-entities";
 import { getAdminPlatformOverview } from "@/lib/data/admin-command-center";
+import { getVirtualTouringAnalyticsSummary } from "@/lib/virtual-touring/analytics";
 
 export const metadata: Metadata = { title: "Analytics — Admin" };
 
 export default async function AdminAnalyticsPage() {
-  const [overview, artists, genres] = await Promise.all([
+  const [overview, artists, genres, touringAnalytics] = await Promise.all([
     getAdminPlatformOverview(),
     listAdminArtists(200),
     listAdminGenres(),
+    getVirtualTouringAnalyticsSummary(),
   ]);
 
   const artistOptions = artists.map((a) => ({ id: a.id, stage_name: a.stage_name, slug: a.slug }));
@@ -27,6 +30,8 @@ export default async function AdminAnalyticsPage() {
           revenueTrend={overview.revenueTrend}
           engagementTrend={overview.engagementTrend}
         />
+
+        <VirtualTouringAnalyticsPanel data={touringAnalytics} />
 
         <div>
           <h2 className="mb-4 text-xl font-semibold">Audience segmentation</h2>

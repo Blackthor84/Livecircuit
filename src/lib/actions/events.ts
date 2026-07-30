@@ -57,10 +57,15 @@ export async function createEventAction(input: unknown): Promise<EventActionResu
     const result = await createStandaloneEvent(ctx.supabase, ctx.artist.id, {
       title: parsed.data.title,
       virtualLocationLabel: parsed.data.virtualLocationLabel,
+      tourCity: parsed.data.tourCity,
+      tourStateCode: parsed.data.tourStateCode,
       scheduledAt: parsed.data.scheduledAt,
+      doorsOpenAt: parsed.data.doorsOpenAt,
       ticketPriceCents: Math.round(parsed.data.ticketPriceDollars * 100),
       description: parsed.data.description,
       timezone: parsed.data.timezone,
+      audienceMode: parsed.data.audienceMode,
+      localPriorityMinutes: parsed.data.localPriorityMinutes,
     });
 
     revalidateEventPaths(ctx.artist.slug);

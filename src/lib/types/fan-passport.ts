@@ -1,6 +1,8 @@
 export type FanPassportStamp = {
   id: string;
   eventId: string;
+  tourId: string | null;
+  tourTitle: string | null;
   venueName: string | null;
   cityName: string | null;
   stateCode: string | null;
@@ -33,11 +35,14 @@ export type FanPassportProgress = {
   stampCount: number;
   distinctCountries: number;
   distinctUsStates: number;
+  distinctCities: number;
+  toursCompleted: number;
   vipStamps: number;
   comedyStamps: number;
   specialStamps: number;
   countryTarget: number;
   usStateTarget: number;
+  cityTarget: number;
 };
 
 export type FanPassportReport = {
@@ -47,5 +52,12 @@ export type FanPassportReport = {
   stamps: FanPassportStamp[];
   achievements: FanPassportAchievementProgress[];
   progress: FanPassportProgress;
+  tourStats: {
+    citiesVisited: string[];
+    statesVisited: string[];
+    toursCompleted: number;
+    artistsFollowedOnTour: number;
+    completionPercent: number;
+  };
   computedAt: string;
 };

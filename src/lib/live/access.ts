@@ -20,6 +20,8 @@ export type LiveAccessState = {
   message: string | null;
   recordingUrl: string | null;
   recordingStatus: RecordingStatus;
+  isHomeCrowd?: boolean;
+  canAccessLocalChat?: boolean;
 };
 
 type EventRow = {

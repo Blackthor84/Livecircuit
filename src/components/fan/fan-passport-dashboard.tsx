@@ -1,6 +1,6 @@
 "use client";
 
-import { Award, MapPin, Sparkles, Stamp } from "lucide-react";
+import { Award, MapPin, Route, Sparkles, Stamp } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
@@ -31,6 +31,7 @@ function StampCard({
       </div>
       <div className="mt-3 flex flex-wrap gap-1">
         {stamp.isVip ? <Badge variant="secondary">VIP</Badge> : null}
+        {stamp.tourTitle ? <Badge variant="outline">{stamp.tourTitle}</Badge> : null}
         {stamp.isSpecial ? <Badge className="bg-amber-500/20 text-amber-200">Special</Badge> : null}
       </div>
     </li>
@@ -56,7 +57,7 @@ export function FanPassportDashboard({ report }: { report: FanPassportReport }) 
             </div>
           </div>
         </div>
-        <CardContent className="grid gap-4 border-t border-white/10 p-6 sm:grid-cols-3">
+        <CardContent className="grid gap-4 border-t border-white/10 p-6 sm:grid-cols-2 lg:grid-cols-4">
           <div>
             <p className="text-xs text-muted-foreground">Countries</p>
             <p className="font-medium">
@@ -78,11 +79,50 @@ export function FanPassportDashboard({ report }: { report: FanPassportReport }) 
             />
           </div>
           <div>
-            <p className="text-xs text-muted-foreground">VIP shows</p>
-            <p className="font-medium">{progress.vipStamps}</p>
+            <p className="text-xs text-muted-foreground">Cities visited</p>
+            <p className="font-medium">
+              {progress.distinctCities} / {progress.cityTarget}
+            </p>
+            <Progress
+              className="mt-2 h-2"
+              value={(progress.distinctCities / progress.cityTarget) * 100}
+            />
+          </div>
+          <div>
+            <p className="text-xs text-muted-foreground">Tours completed</p>
+            <p className="font-medium">{report.tourStats.toursCompleted}</p>
+            <p className="mt-1 text-xs text-muted-foreground">
+              {report.tourStats.completionPercent}% road warrior
+            </p>
           </div>
         </CardContent>
       </Card>
+
+      {report.tourStats.citiesVisited.length > 0 ? (
+        <Card className="glass-panel border-white/10">
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2 text-lg">
+              <Route className="h-5 w-5 text-primary" />
+              Tour passport stamps
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="flex flex-wrap gap-2">
+              {report.tourStats.citiesVisited.map((city) => (
+                <Badge key={city} variant="secondary" className="gap-1 px-3 py-1">
+                  <MapPin className="size-3" />
+                  {city}
+                </Badge>
+              ))}
+            </div>
+            {report.tourStats.statesVisited.length > 0 ? (
+              <p className="mt-4 text-sm text-muted-foreground">
+                States: {report.tourStats.statesVisited.join(", ")}
+              </p>
+            ) : null}
+          </CardContent>
+        </Card>
+      ) : null}
 
       <section>
         <div className="mb-4 flex items-center gap-2">

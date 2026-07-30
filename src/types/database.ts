@@ -17,6 +17,15 @@ export type ArtistCategory =
   | "other";
 
 export type EventStatus = "draft" | "scheduled" | "live" | "ended" | "cancelled";
+export type EventAudienceMode =
+  | "worldwide"
+  | "us_only"
+  | "local_priority"
+  | "local_only"
+  | "invite_only"
+  | "subscribers_only"
+  | "vip_only";
+export type TourSponsorshipScope = "arena" | "city_stop" | "full_tour";
 export type TourStatus = "draft" | "published" | "completed" | "cancelled";
 
 export type Profile = {
@@ -78,6 +87,14 @@ export type TourStop = {
   ticket_price_cents: number;
   vip_price_cents: number | null;
   expected_duration_minutes: number;
+  tour_city: string | null;
+  tour_state_code: string | null;
+  tour_state_name: string | null;
+  doors_open_at: string | null;
+  show_starts_at: string | null;
+  audience_mode: EventAudienceMode;
+  local_priority_minutes: number;
+  invite_code: string | null;
 };
 
 export type Event = {
@@ -94,6 +111,14 @@ export type Event = {
   ended_at: string | null;
   viewer_count: number;
   peak_viewers: number;
+  tour_city: string | null;
+  tour_state_code: string | null;
+  tour_state_name: string | null;
+  doors_open_at: string | null;
+  show_starts_at: string | null;
+  audience_mode: EventAudienceMode;
+  local_priority_minutes: number;
+  invite_code: string | null;
 };
 
 export type StreamProvider = "placeholder" | "agora" | "livekit" | "mux";

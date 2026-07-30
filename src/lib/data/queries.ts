@@ -138,7 +138,7 @@ export async function getEventBySlug(artistSlug: string, eventSlug: string) {
 
   const { data } = await supabase
     .from("events")
-    .select(`*, streams(*), artists(*), tour_stops(*), venues(slug, name)`)
+    .select(`*, streams(*), artists(*), tour_stops(*, tours(title, slug)), venues(slug, name, display_name, default_name, sponsored_name)`)
     .eq("artist_id", artist.id)
     .eq("slug", eventSlug)
     .maybeSingle();

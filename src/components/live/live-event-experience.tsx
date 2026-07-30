@@ -29,6 +29,7 @@ type Props = {
   checkoutHref?: string;
   loginHref?: string;
   userSignedIn?: boolean;
+  tourCity?: string | null;
 };
 
 export function LiveEventExperience({
@@ -40,6 +41,7 @@ export function LiveEventExperience({
   checkoutHref,
   loginHref = "/login",
   userSignedIn = false,
+  tourCity,
 }: Props) {
   const [access, setAccess] = useState(initialAccess);
   const [secondsLeft, setSecondsLeft] = useState(initialAccess.secondsUntilStart);
@@ -116,6 +118,14 @@ export function LiveEventExperience({
             <span className="text-xs text-muted-foreground">Internal viewing — excluded from public metrics</span>
           </div>
         ) : null}
+        {access.isHomeCrowd ? (
+          <div className="flex items-center gap-2">
+            <Badge className="bg-emerald-500/90">Home Crowd</Badge>
+            <span className="text-xs text-muted-foreground">
+              Early access and local chat unlocked for {tourCity ?? "this stop"}
+            </span>
+          </div>
+        ) : null}
         <LiveStreamStage
           eventId={eventId}
           title={title}
@@ -150,6 +160,8 @@ export function LiveEventExperience({
           canPost
           canModerate={access.canModerate}
           isVipViewer={access.isVip}
+          canAccessLocalChat={Boolean(access.canAccessLocalChat)}
+          tourCity={tourCity}
         />
       ) : isObserver ? (
         <div className="flex min-h-[320px] flex-col items-center justify-center rounded-xl border border-amber-500/20 bg-amber-500/5 p-6 text-center text-sm text-muted-foreground">

@@ -26,7 +26,9 @@ import {
 } from "@/lib/actions/tours";
 import { formatCents } from "@/lib/format";
 import { createClient } from "@/lib/supabase/client";
+import { AudienceSettingsFields } from "@/components/touring/audience-settings-fields";
 import type { TourManagePayload } from "@/lib/data/artist-tours";
+import type { EventAudienceMode } from "@/types/database";
 
 type Country = { id: string; name: string };
 type State = { id: string; name: string; code?: string };
@@ -103,13 +105,25 @@ export function TourManagePanel({ initial, countries, venues }: Props) {
     }
   }
 
-  async function addStop(e: React.FormEvent) {
+  async function addStop(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     setAddingStop(true);
+    const form = new FormData(e.currentTarget);
     const cents = Math.round(parseFloat(ticketDollars || "0") * 100);
+    const tourCity = String(form.get("tourCity") || locationLabel.split(",")[0]?.trim() || locationLabel);
+    const tourStateCode = String(form.get("tourStateCode") || "");
+    const audienceMode = String(form.get("audienceMode") || "worldwide") as EventAudienceMode;
+    const localPriorityMinutes = Number(form.get("localPriorityMinutes") || 30);
+    const doorsOpenAt = String(form.get("doorsOpenAt") || "") || undefined;
+
     const result = await upsertTourStopAction({
       tourId: initial.tour.id,
       virtualLocationLabel: locationLabel,
+      tourCity,
+      tourStateCode: tourStateCode || null,
+      audienceMode,
+      localPriorityMinutes,
+      doorsOpenAt,
       cityId: cityId || null,
       venueId: venueId || null,
       venueRoomLabel: venueRoomLabel.trim() || null,
@@ -214,8 +228,13 @@ export function TourManagePanel({ initial, countries, venues }: Props) {
               <div>
                 <p className="text-sm text-primary">Stop {i + 1}</p>
                 <p className="font-medium">
-                  {stop.cities?.name ?? stop.virtual_location_label}
+                  {stop.tour_city ?? stop.cities?.name ?? stop.virtual_location_label}
                 </p>
+                {(stop.tour_state_code || stop.audience_mode) && (
+                  <p className="text-xs text-muted-foreground">
+                    {[stop.tour_state_code, stop.audience_mode?.replace(/_/g, " ")].filter(Boolean).join(" · ")}
+                  </p>
+                )}
                 <p className="text-sm text-muted-foreground">
                   {new Date(stop.scheduled_at).toLocaleString()} ·{" "}
                   {formatCents(stop.ticket_price_cents)}
@@ -349,6 +368,7 @@ export function TourManagePanel({ initial, countries, venues }: Props) {
                 Many shows can run at once in the same venue — each with its own room and chat.
               </p>
             </div>
+            <AudienceSettingsFields />
             <div className="grid gap-4 sm:grid-cols-3">
               <div className="space-y-2">
                 <Label htmlFor="scheduled">Date & time</Label>

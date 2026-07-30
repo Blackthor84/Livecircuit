@@ -27,6 +27,10 @@ type EventRow = {
     | {
         virtual_location_label: string;
         has_meet_greet: boolean;
+        tour_city?: string | null;
+        tour_state_code?: string | null;
+        tour_id?: string | null;
+        tours?: { title: string } | { title: string }[] | null;
         cities:
           | {
               name: string;
@@ -43,6 +47,10 @@ type EventRow = {
     | {
         virtual_location_label: string;
         has_meet_greet: boolean;
+        tour_city?: string | null;
+        tour_state_code?: string | null;
+        tour_id?: string | null;
+        tours?: { title: string } | { title: string }[] | null;
         cities:
           | {
               name: string;
@@ -102,14 +110,22 @@ function locationFromEvent(event: EventRow) {
   const venueCity = first(venue?.cities ?? null);
   const venueCountry = first(venue?.countries ?? null);
   const venueState = first(venue?.states ?? null);
+  const tourMeta = first(stop?.tours ?? null);
 
   return {
     venueId: event.venue_id ?? null,
     venueName: venue?.name ?? null,
-    cityName: venueCity?.name ?? cityFromStop?.name ?? stop?.virtual_location_label ?? null,
-    stateCode: venue?.state_code ?? venueState?.code ?? stateFromStop?.code ?? null,
+    cityName:
+      stop?.tour_city ??
+      venueCity?.name ??
+      cityFromStop?.name ??
+      stop?.virtual_location_label ??
+      null,
+    stateCode: stop?.tour_state_code ?? venue?.state_code ?? venueState?.code ?? stateFromStop?.code ?? null,
     countryCode: venueCountry?.code ?? countryFromStop?.code ?? null,
     countryName: venueCountry?.name ?? countryFromStop?.name ?? null,
+    tourId: stop?.tour_id ?? null,
+    tourTitle: tourMeta?.title ?? null,
   };
 }
 
@@ -152,8 +168,9 @@ export async function syncFanPassportStamps(supabase: SupabaseClient, userId: st
     .from("events")
     .select(
       `id, title, scheduled_at, status, ended_at, artist_id, venue_id,
+      tour_city, tour_state_code,
       artists(stage_name, category),
-      tour_stops(virtual_location_label, has_meet_greet, cities(name, states(code), countries(code, name))),
+      tour_stops(virtual_location_label, has_meet_greet, tour_city, tour_state_code, tour_id, tours(title), cities(name, states(code), countries(code, name))),
       venues(name, state_code, cities(name), countries(code, name), states(code))`
     )
     .in("id", eventIds);
@@ -190,6 +207,8 @@ export async function syncFanPassportStamps(supabase: SupabaseClient, userId: st
       state_code: loc.stateCode,
       country_code: loc.countryCode,
       country_name: loc.countryName,
+      tour_id: loc.tourId,
+      tour_title: loc.tourTitle,
       artist_id: event.artist_id,
       artist_name: artist?.stage_name ?? null,
       artist_category: artist?.category ?? null,
@@ -217,16 +236,21 @@ export function computeProgressFromStamps(
   const states = new Set(
     stamps.filter((s) => s.countryCode === "US" && s.stateCode).map((s) => s.stateCode as string)
   );
+  const cities = new Set(stamps.map((s) => s.cityName).filter(Boolean));
+  const tours = new Set(stamps.map((s) => s.tourId).filter(Boolean));
 
   return {
     stampCount: stamps.length,
     distinctCountries: countries.size,
     distinctUsStates: states.size,
+    distinctCities: cities.size,
+    toursCompleted: tours.size,
     vipStamps: stamps.filter((s) => s.isVip).length,
     comedyStamps: stamps.filter((s) => s.artistCategory === "comedy").length,
     specialStamps: stamps.filter((s) => s.isSpecial).length,
     countryTarget: Math.max(countryTarget, 1),
     usStateTarget: Math.max(usStateTarget, 1),
+    cityTarget: 25,
   };
 }
 
@@ -324,6 +348,8 @@ export function mapStampRow(row: Record<string, unknown>): FanPassportStamp {
   return {
     id: row.id as string,
     eventId: row.event_id as string,
+    tourId: (row.tour_id as string) ?? null,
+    tourTitle: (row.tour_title as string) ?? null,
     venueName: (row.venue_name as string) ?? null,
     cityName: (row.city_name as string) ?? null,
     stateCode: (row.state_code as string) ?? null,

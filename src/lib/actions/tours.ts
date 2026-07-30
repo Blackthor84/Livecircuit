@@ -25,6 +25,7 @@ import {
   checkVenueSoftCapacity,
   syncVenueFromStopToEvent,
 } from "@/lib/services/venues.service";
+import { stateNameFromCode, buildVirtualLocationLabel } from "@/lib/virtual-touring/location";
 
 export type TourActionResult =
   | { ok: true; tourId?: string; stopId?: string }
@@ -155,9 +156,26 @@ export async function upsertTourStopAction(input: unknown): Promise<TourActionRe
     return { ok: false, error: "Invalid date" };
   }
 
+  const stateCode = parsed.data.tourStateCode?.trim().toUpperCase() || null;
+  const tourCity = parsed.data.tourCity?.trim() || null;
+  const locationLabel =
+    parsed.data.virtualLocationLabel.trim() ||
+    (tourCity ? buildVirtualLocationLabel(tourCity, stateCode) : parsed.data.virtualLocationLabel.trim());
+
+  const doorsOpen = parsed.data.doorsOpenAt
+    ? new Date(parsed.data.doorsOpenAt)
+    : new Date(scheduledAt.getTime() - 30 * 60_000);
+
   const payload = {
     tour_id: tour.id,
-    virtual_location_label: parsed.data.virtualLocationLabel.trim(),
+    virtual_location_label: locationLabel,
+    tour_city: tourCity,
+    tour_state_code: stateCode,
+    tour_state_name: stateNameFromCode(stateCode),
+    doors_open_at: Number.isNaN(doorsOpen.getTime()) ? null : doorsOpen.toISOString(),
+    show_starts_at: scheduledAt.toISOString(),
+    audience_mode: parsed.data.audienceMode ?? "worldwide",
+    local_priority_minutes: parsed.data.localPriorityMinutes ?? 30,
     city_id: parsed.data.cityId || null,
     venue_id: parsed.data.venueId ?? null,
     venue_room_label: parsed.data.venueRoomLabel?.trim() || null,

@@ -4,6 +4,7 @@ export const sendChatMessageSchema = z.object({
   eventId: z.string().uuid(),
   body: z.string().min(1).max(500),
   isVipOnly: z.boolean().optional(),
+  channel: z.enum(["global", "local"]).default("global"),
 });
 
 export const moderateChatSchema = z.object({

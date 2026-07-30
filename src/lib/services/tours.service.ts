@@ -64,6 +64,13 @@ export async function syncEventForTourStop(
         status: tour.status === "published" ? "scheduled" : "draft",
         venue_id: stop.venue_id ?? null,
         venue_room_label: stop.venue_room_label ?? null,
+        tour_city: (stop as { tour_city?: string }).tour_city ?? null,
+        tour_state_code: (stop as { tour_state_code?: string }).tour_state_code ?? null,
+        tour_state_name: (stop as { tour_state_name?: string }).tour_state_name ?? null,
+        doors_open_at: (stop as { doors_open_at?: string }).doors_open_at ?? null,
+        show_starts_at: (stop as { show_starts_at?: string }).show_starts_at ?? stop.scheduled_at,
+        audience_mode: (stop as { audience_mode?: string }).audience_mode ?? "worldwide",
+        local_priority_minutes: (stop as { local_priority_minutes?: number }).local_priority_minutes ?? 30,
       })
       .eq("id", existing.id);
     return existing.id;

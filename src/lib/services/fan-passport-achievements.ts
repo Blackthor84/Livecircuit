@@ -14,6 +14,10 @@ export function metricValue(metric: string, progress: FanPassportProgress, found
       return progress.comedyStamps;
     case "special_stamps":
       return progress.specialStamps;
+    case "distinct_cities":
+      return progress.distinctCities;
+    case "tours_completed":
+      return progress.toursCompleted;
     case "founding_fan":
       return foundingFanEarned ? 1 : 0;
     default:
@@ -24,6 +28,7 @@ export function metricValue(metric: string, progress: FanPassportProgress, found
 export function resolveTarget(def: FanPassportAchievementDef, progress: FanPassportProgress) {
   if (def.metric === "distinct_countries") return progress.countryTarget;
   if (def.metric === "distinct_us_states") return progress.usStateTarget;
+  if (def.metric === "distinct_cities") return progress.cityTarget;
   return def.targetValue;
 }
 
