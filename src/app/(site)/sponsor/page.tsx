@@ -26,14 +26,15 @@ export default async function SponsorLandingPage() {
           category packages across our virtual venue network.
         </p>
         <div className="mt-6 flex flex-wrap gap-3">
+          <Button href="/sponsor/partners">Founding Partner Program</Button>
+          <Button href="/sponsor/marketplace">Browse marketplace</Button>
+          <Button variant="secondary" href="/sponsor/map">Live sponsor map</Button>
           {user ? (
-            <Button href="/sponsor/dashboard">Sponsor dashboard</Button>
+            <Button variant="secondary" href="/sponsor/dashboard">Sponsor dashboard</Button>
           ) : (
-            <Button href="/login?redirect=/sponsor/dashboard">Sign in to manage campaigns</Button>
+            <Button variant="secondary" href="/login?redirect=/sponsor/dashboard">Sign in to manage campaigns</Button>
           )}
-          <Button variant="outline" href="/livecircuit/venues">
-            Browse venues
-          </Button>
+          <Button variant="outline" href="/livecircuit/venues">Browse venues</Button>
         </div>
       </header>
 

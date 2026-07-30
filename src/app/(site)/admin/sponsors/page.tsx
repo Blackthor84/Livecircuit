@@ -11,9 +11,10 @@ export default async function AdminSponsorsPage() {
 
   return (
     <>
-      <AdminPageHeader title="Sponsorships" subtitle="Sponsor organizations and venue contracts. Add members by profile UUID for dashboard access." />
-      <div className="mb-6">
-        <Button href="/admin/venues">Manage venues & contracts</Button>
+      <AdminPageHeader title="Sponsor organizations" subtitle="Companies registered for premium sponsorship contracts." />
+      <div className="mb-6 flex flex-wrap gap-2">
+        <Button href="/admin/sponsorships">Premium sponsorship inventory</Button>
+        <Button variant="secondary" href="/admin/venues">Manage venues</Button>
       </div>
       <Card className="glass-panel border-white/10">
         <CardHeader>

@@ -29,6 +29,8 @@ import { getVenueLandingPage, isFollowingVenue, listVenueEvents } from "@/lib/da
 import { getActiveVenueTheme } from "@/lib/data/venue-themes";
 import { getVenueDisplayName, hasActiveVenueSponsorship } from "@/lib/venues/display-name";
 import { VenueNamingBadge } from "@/components/venues/venue-naming-badge";
+import { VenuePremiumPartners } from "@/components/venues/venue-premium-partners";
+import { getVenueSponsorshipInventory, listFeaturedStages } from "@/lib/sponsorship/inventory";
 import type { ArtistCategory } from "@/types/database";
 
 type Props = { params: Promise<{ slug: string }> };
@@ -53,10 +55,15 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function VenueLandingPage({ params }: Props) {
   const { slug } = await params;
-  const [data, activeTheme] = await Promise.all([getVenueLandingPage(slug), getActiveVenueTheme(slug)]);
+  const data = await getVenueLandingPage(slug);
   if (!data) notFound();
 
-  const allRooms = await listVenueEvents(slug, { status: "all", page: 1, limit: 48 });
+  const [activeTheme, sponsorshipInventory, featuredStages, allRooms] = await Promise.all([
+    getActiveVenueTheme(slug),
+    getVenueSponsorshipInventory(data.id),
+    listFeaturedStages(),
+    listVenueEvents(slug, { status: "all", page: 1, limit: 48 }),
+  ]);
 
   const user = await getSessionUser();
   const following = user ? await isFollowingVenue(user.id, data.id) : false;
@@ -117,6 +124,8 @@ export default async function VenueLandingPage({ params }: Props) {
                 </span>
                 <span>·</span>
                 <span>{data.venue_types?.name ?? "Venue"}</span>
+                <span>·</span>
+                <span className="font-mono text-xs">{data.default_name}</span>
               </p>
               {sponsorLine ? (
                 <p className="mt-1 text-sm text-primary/90">Featured partner · {sponsorLine}</p>
@@ -195,6 +204,8 @@ export default async function VenueLandingPage({ params }: Props) {
           </div>
         </div>
 
+        <VenuePremiumPartners venue={data} inventory={sponsorshipInventory} />
+
         {allRooms && allRooms.total > 0 ? (
           <section className="mt-14" id="simultaneous-rooms">
             <h2 className="text-xl font-semibold">
@@ -267,6 +278,23 @@ export default async function VenueLandingPage({ params }: Props) {
                   />
                 ) : null
               )}
+            </div>
+          </section>
+        ) : null}
+
+        {featuredStages.length > 0 ? (
+          <section className="mt-14">
+            <h2 className="text-xl font-semibold">Featured stages</h2>
+            <p className="mt-2 text-sm text-muted-foreground">
+              Limited premium placements — artist stages remain artist-owned everywhere else.
+            </p>
+            <div className="mt-6 grid gap-3 sm:grid-cols-2">
+              {featuredStages.map((stage) => (
+                <div key={stage.id as string} className="glass-panel rounded-xl border border-white/10 p-4">
+                  <p className="font-medium">{stage.stage_name as string}</p>
+                  <p className="mt-1 text-sm text-muted-foreground">{stage.description as string}</p>
+                </div>
+              ))}
             </div>
           </section>
         ) : null}

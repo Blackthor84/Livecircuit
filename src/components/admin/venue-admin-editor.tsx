@@ -22,7 +22,10 @@ import {
 } from "@/lib/actions/venues-admin";
 import { adminAdjustVenueLoyaltyAction } from "@/lib/actions/venue-loyalty";
 import { VenueNamingManagement } from "@/components/admin/venue-naming-management";
+import { VenueSponsorshipInventory } from "@/components/admin/venue-sponsorship-inventory";
 import type { VenueAdminDetail } from "@/lib/data/venues";
+import type { VenueInventoryRow } from "@/lib/sponsorship/inventory";
+import { formatCents } from "@/lib/format";
 
 const SPONSOR_PRODUCTS = [
   { value: "venue_naming_rights", label: "Venue naming rights" },
@@ -46,7 +49,15 @@ const SHOP_KINDS = [
   "information_desk",
 ] as const;
 
-export function AdminVenueEditor({ data }: { data: VenueAdminDetail }) {
+export function AdminVenueEditor({
+  data,
+  sponsorshipInventory = [],
+  sponsorshipRevenueCents = 0,
+}: {
+  data: VenueAdminDetail;
+  sponsorshipInventory?: VenueInventoryRow[];
+  sponsorshipRevenueCents?: number;
+}) {
   const router = useRouter();
   const { venue } = data;
   const [saving, setSaving] = useState(false);
@@ -171,8 +182,26 @@ export function AdminVenueEditor({ data }: { data: VenueAdminDetail }) {
         </div>
       </TabsContent>
 
-      <TabsContent value="naming" className="mt-6">
+      <TabsContent value="naming" className="mt-6 space-y-8">
         <VenueNamingManagement venue={venue} />
+        <div className="glass-panel rounded-xl border border-white/10 p-6">
+          <div className="flex flex-wrap items-start justify-between gap-4">
+            <div>
+              <h4 className="font-semibold">Premium sponsorship inventory</h4>
+              <p className="mt-1 text-sm text-muted-foreground">
+                Exclusive slots — one sponsor each. Revenue from active contracts:{" "}
+                <strong>{formatCents(sponsorshipRevenueCents)}</strong>
+              </p>
+            </div>
+          </div>
+          <div className="mt-6">
+            <VenueSponsorshipInventory
+              venue={venue}
+              inventory={sponsorshipInventory}
+              organizations={data.sponsorOrganizations}
+            />
+          </div>
+        </div>
       </TabsContent>
 
       <TabsContent value="sponsors" className="mt-6 space-y-8">

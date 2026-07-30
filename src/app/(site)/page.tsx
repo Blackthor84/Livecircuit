@@ -12,6 +12,8 @@ import { getViewerFeatureAccess } from "@/lib/features/guard";
 import { formatCents } from "@/lib/format";
 import { FeaturedVenuesSection } from "@/components/home/featured-venues-section";
 import { VenueSponsorBanner } from "@/components/venues/venue-sponsor-banner";
+import { PlatformPartnersStrip } from "@/components/sponsorship/platform-partners-strip";
+import { listPlatformSponsors } from "@/lib/sponsorship/inventory";
 import { getFeaturedVenuesForHome } from "@/lib/data/venues";
 
 const marketingFeatures = [
@@ -38,7 +40,8 @@ const marketingFeatures = [
 ];
 
 export default async function HomePage() {
-  const [artists, tours, events, homepageSponsor, featureAccess, user, featuredVenues] = await Promise.all([
+  const [artists, tours, events, homepageSponsor, featureAccess, user, featuredVenues, platformSponsors] =
+    await Promise.all([
     getFeaturedArtists(4),
     getPublishedTours(3),
     getUpcomingEvents(4),
@@ -46,6 +49,7 @@ export default async function HomePage() {
     getViewerFeatureAccess(),
     getHeaderUser(),
     getFeaturedVenuesForHome(6),
+    listPlatformSponsors(),
   ]);
 
   const showWorld = featureAccess.canAccess("world_map");
@@ -54,6 +58,9 @@ export default async function HomePage() {
 
   return (
     <div className="gradient-mesh">
+      {showSponsor && platformSponsors.length > 0 ? (
+        <PlatformPartnersStrip sponsors={platformSponsors} />
+      ) : null}
       <section className="mx-auto grid max-w-7xl gap-12 px-4 py-16 sm:px-6 lg:grid-cols-2 lg:items-center lg:py-24">
         <div>
           <p className="text-sm font-medium uppercase tracking-widest text-primary">

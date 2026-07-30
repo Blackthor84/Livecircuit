@@ -4,6 +4,7 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import { LiveChat } from "@/components/live/live-room";
 import { LiveHostControls } from "@/components/live/live-host-controls";
 import { LiveStreamStage } from "@/components/live/live-stream-stage";
+import { PremiumSponsorPresenter } from "@/components/sponsorship/premium-sponsor-presenter";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { useEventRealtime } from "@/hooks/use-event-realtime";
@@ -30,6 +31,8 @@ type Props = {
   loginHref?: string;
   userSignedIn?: boolean;
   tourCity?: string | null;
+  livestreamSponsor?: { label: string; logoUrl?: string | null } | null;
+  replaySponsor?: { label: string; logoUrl?: string | null } | null;
 };
 
 export function LiveEventExperience({
@@ -42,6 +45,8 @@ export function LiveEventExperience({
   loginHref = "/login",
   userSignedIn = false,
   tourCity,
+  livestreamSponsor,
+  replaySponsor,
 }: Props) {
   const [access, setAccess] = useState(initialAccess);
   const [secondsLeft, setSecondsLeft] = useState(initialAccess.secondsUntilStart);
@@ -125,6 +130,12 @@ export function LiveEventExperience({
               Early access and local chat unlocked for {tourCity ?? "this stop"}
             </span>
           </div>
+        ) : null}
+        {status === "live" && livestreamSponsor ? (
+          <PremiumSponsorPresenter sponsor={livestreamSponsor} variant="livestream" />
+        ) : null}
+        {access.mode === "replay" && replaySponsor ? (
+          <PremiumSponsorPresenter sponsor={replaySponsor} variant="replay" />
         ) : null}
         <LiveStreamStage
           eventId={eventId}

@@ -17,6 +17,7 @@ import { parseStreamMetadata } from "@/lib/streaming/stream-metadata";
 import { getVenueDisplayName } from "@/lib/venues/display-name";
 import { createClient } from "@/lib/supabase/server";
 import { isSupabaseConfigured } from "@/lib/config/env";
+import { getEventSponsor } from "@/lib/sponsorship/inventory";
 import type { EventStatus } from "@/types/database";
 
 type Props = { params: Promise<{ slug: string; eventSlug: string }> };
@@ -43,9 +44,11 @@ export default async function LiveEventPage({ params }: Props) {
     status: event.status as string,
     scheduled_at: event.scheduled_at,
   });
-  const [features, sessionUser] = await Promise.all([
+  const [features, sessionUser, livestreamSponsor, replaySponsor] = await Promise.all([
     getViewerFeatureAccess(),
     getSessionUser(),
+    getEventSponsor("livestream", event.id),
+    getEventSponsor("replay", event.id),
   ]);
   const showTicketing = features.canAccess("ticketing");
 
@@ -158,6 +161,8 @@ export default async function LiveEventPage({ params }: Props) {
         checkoutHref={showTicketing ? `/checkout?event=${event.id}&type=ticket` : undefined}
         userSignedIn={Boolean(sessionUser)}
         tourCity={tourCity}
+        livestreamSponsor={livestreamSponsor}
+        replaySponsor={replaySponsor}
       />
     </div>
   );

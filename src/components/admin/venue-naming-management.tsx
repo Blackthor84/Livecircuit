@@ -86,11 +86,11 @@ export function VenueNamingManagement({ venue }: { venue: VenueListItem }) {
 
         <dl className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           <div>
-            <dt className="text-xs text-muted-foreground">Current display name</dt>
+            <dt className="text-xs text-muted-foreground">Public display name</dt>
             <dd className="font-medium">{displayName}</dd>
           </div>
           <div>
-            <dt className="text-xs text-muted-foreground">Placeholder name</dt>
+            <dt className="text-xs text-muted-foreground">Internal name (permanent)</dt>
             <dd className="font-medium">{venue.default_name}</dd>
           </div>
           <div>
@@ -119,17 +119,18 @@ export function VenueNamingManagement({ venue }: { venue: VenueListItem }) {
         className="glass-panel space-y-4 rounded-xl border border-white/10 p-6"
       >
         <div>
-          <h4 className="font-semibold">Rename placeholder</h4>
+          <h4 className="font-semibold">Internal name</h4>
           <p className="mt-1 text-sm text-muted-foreground">
-            Updates what fans see when no sponsor is active. The slug <code className="text-xs">{venue.slug}</code> never changes.
+            The permanent venue identity — never changes when sponsorship expires. Slug{" "}
+            <code className="text-xs">{venue.slug}</code> stays the same.
           </p>
         </div>
         <div className="space-y-2">
-          <Label htmlFor="defaultName">Placeholder name</Label>
+          <Label htmlFor="defaultName">Internal name</Label>
           <Input id="defaultName" name="defaultName" defaultValue={venue.default_name} required />
         </div>
         <Button type="submit" disabled={saving}>
-          Rename venue
+          Update internal name
         </Button>
       </form>
 

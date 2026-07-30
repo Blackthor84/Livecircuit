@@ -5,6 +5,8 @@ import { AdminVenueEditor } from "@/components/admin/venue-admin-editor";
 import { Badge } from "@/components/ui/badge";
 import { requireAdmin } from "@/lib/auth/guards";
 import { getVenueAdminDetail } from "@/lib/data/venues";
+import { getVenueSponsorshipInventory } from "@/lib/sponsorship/inventory";
+import type { VenueInventoryRow } from "@/lib/sponsorship/inventory";
 
 type PageProps = { params: Promise<{ venueId: string }> };
 
@@ -18,8 +20,16 @@ export default async function AdminVenueDetailPage({ params }: PageProps) {
   await requireAdmin("/");
 
   const { venueId } = await params;
-  const detail = await getVenueAdminDetail(venueId);
+  const [detail, sponsorshipInventory] = await Promise.all([
+    getVenueAdminDetail(venueId),
+    getVenueSponsorshipInventory(venueId),
+  ]);
   if (!detail) notFound();
+
+  const sponsorshipRevenueCents = sponsorshipInventory.reduce(
+    (sum, row) => sum + (row.contract?.contractValueCents ?? 0),
+    0
+  );
 
   return (
     <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6">
@@ -31,10 +41,14 @@ export default async function AdminVenueDetailPage({ params }: PageProps) {
         {!detail.venue.is_active ? <Badge variant="outline">Inactive</Badge> : null}
       </div>
       <p className="mt-2 text-muted-foreground">
-        /livecircuit/venues/{detail.venue.slug} · API{" "}
-        <code className="text-xs">/api/venues/{detail.venue.slug}</code>
+        /livecircuit/venues/{detail.venue.slug} · Internal ID{" "}
+        <code className="text-xs">{detail.venue.id}</code>
       </p>
-      <AdminVenueEditor data={detail} />
+      <AdminVenueEditor
+        data={detail}
+        sponsorshipInventory={sponsorshipInventory as VenueInventoryRow[]}
+        sponsorshipRevenueCents={sponsorshipRevenueCents}
+      />
     </div>
   );
 }
