@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
-import { endLiveAction, goLiveAction } from "@/lib/actions/live-event";
+import { endLiveAction } from "@/lib/actions/live-event";
 import type { EventStatus } from "@/types/database";
 
 export function LiveHostControls({
@@ -21,24 +21,17 @@ export function LiveHostControls({
   liveUrl?: string;
 }) {
   const router = useRouter();
-  const [loading, setLoading] = useState<"live" | "end" | null>(null);
+  const [loading, setLoading] = useState<"studio" | "end" | null>(null);
 
   const destination =
     liveUrl ??
     (artistSlug && eventSlug ? `/artists/${artistSlug}/events/${eventSlug}` : undefined);
 
-  async function goLive() {
-    setLoading("live");
-    const result = await goLiveAction({ eventId });
-    setLoading(null);
-    if (!result.ok) {
-      toast.error(result.error);
-      return;
-    }
-    toast.success("You are live");
-    const target = result.liveUrl ?? destination;
-    if (target) router.push(target);
-    else router.refresh();
+  const studioPath = `/artist/events/${eventId}/production`;
+
+  function openStudio() {
+    setLoading("studio");
+    router.push(studioPath);
   }
 
   async function endLive() {
@@ -57,8 +50,8 @@ export function LiveHostControls({
   return (
     <div className="flex flex-wrap gap-2">
       {status !== "live" ? (
-        <Button type="button" size="sm" disabled={loading === "live"} onClick={() => void goLive()}>
-          {loading === "live" ? "Starting…" : "Go live"}
+        <Button type="button" size="sm" disabled={loading === "studio"} onClick={openStudio}>
+          {loading === "studio" ? "Opening green room…" : "Go live"}
         </Button>
       ) : (
         <>
@@ -78,6 +71,11 @@ export function LiveHostControls({
           </Button>
         </>
       )}
+      {status !== "live" ? (
+        <Button type="button" size="sm" variant="outline" href={studioPath}>
+          Virtual Production Studio
+        </Button>
+      ) : null}
     </div>
   );
 }

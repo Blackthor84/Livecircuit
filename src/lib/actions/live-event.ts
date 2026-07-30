@@ -6,6 +6,7 @@ import { isObserverUser } from "@/lib/auth/observer";
 import { createClient } from "@/lib/supabase/server";
 import { isSupabaseConfigured } from "@/lib/config/env";
 import { getEventLiveAccess, isUserMutedInEvent } from "@/lib/live/access";
+import { canAccessRehearsal } from "@/lib/live/rehearsal-access";
 import { applyVirtualTouringAccess } from "@/lib/virtual-touring/live-access-bridge";
 import { getSupabaseAdmin } from "@/lib/supabase/admin";
 import { getStreamingProvider } from "@/lib/streaming/provider";
@@ -27,7 +28,12 @@ export type LiveActionResult =
   | { ok: true; liveUrl?: string }
   | { ok: false; error: string };
 
-async function requireAccess(eventId: string, needModerate = false, channel: "global" | "local" = "global") {
+async function requireAccess(
+  eventId: string,
+  needModerate = false,
+  channel: "global" | "local" = "global",
+  rehearsalToken?: string
+) {
   const user = await getSessionUser();
   if (!user) return { ok: false as const, error: "Sign in required" };
   if (!isSupabaseConfigured()) return { ok: false as const, error: "Live rooms require Supabase" };
@@ -40,7 +46,10 @@ async function requireAccess(eventId: string, needModerate = false, channel: "gl
     return { ok: false as const, error: "Not allowed" };
   }
   if (!needModerate && !access.canChat) {
-    return { ok: false as const, error: access.message ?? "Chat is not available" };
+    const rehearsal = await canAccessRehearsal(supabase, user.id, eventId, rehearsalToken);
+    if (!rehearsal.allowed) {
+      return { ok: false as const, error: access.message ?? "Chat is not available" };
+    }
   }
   if (channel === "local" && !access.canAccessLocalChat && !access.canModerate) {
     return { ok: false as const, error: "Local chat is for home crowd fans only" };
@@ -54,7 +63,7 @@ export async function sendChatMessageAction(input: unknown): Promise<LiveActionR
     return { ok: false, error: parsed.error.issues[0]?.message ?? "Invalid message" };
   }
 
-  const ctx = await requireAccess(parsed.data.eventId, false, parsed.data.channel);
+  const ctx = await requireAccess(parsed.data.eventId, false, parsed.data.channel, parsed.data.rehearsalToken);
   if (!ctx.ok) return { ok: false, error: ctx.error };
 
   if (await isUserMutedInEvent(ctx.supabase, parsed.data.eventId, ctx.user.id)) {
@@ -142,6 +151,88 @@ export async function muteChatUserAction(input: unknown): Promise<LiveActionResu
     target_user_id: message.user_id,
     message_id: parsed.data.messageId,
     action: "mute",
+    reason: parsed.data.reason ?? null,
+  });
+
+  return { ok: true };
+}
+
+export async function banChatUserAction(input: unknown): Promise<LiveActionResult> {
+  const parsed = moderateChatSchema.safeParse(input);
+  if (!parsed.success || parsed.data.action !== "ban") {
+    return { ok: false, error: "Invalid ban request" };
+  }
+
+  const ctx = await requireAccess(parsed.data.eventId, true);
+  if (!ctx.ok) return { ok: false, error: ctx.error };
+
+  let targetUserId = parsed.data.targetUserId;
+  if (!targetUserId && parsed.data.messageId) {
+    const { data: message } = await ctx.supabase
+      .from("chat_messages")
+      .select("user_id")
+      .eq("id", parsed.data.messageId)
+      .eq("event_id", parsed.data.eventId)
+      .maybeSingle();
+    targetUserId = message?.user_id ?? undefined;
+  }
+
+  if (!targetUserId) return { ok: false, error: "User not found" };
+
+  const { error } = await ctx.supabase.from("event_chat_bans").upsert(
+    {
+      event_id: parsed.data.eventId,
+      user_id: targetUserId,
+      banned_by: ctx.user.id,
+      reason: parsed.data.reason ?? null,
+    },
+    { onConflict: "event_id,user_id" }
+  );
+
+  if (error) return { ok: false, error: error.message };
+
+  await ctx.supabase.from("moderation_logs").insert({
+    admin_id: ctx.user.id,
+    target_user_id: targetUserId,
+    message_id: parsed.data.messageId ?? null,
+    action: "ban",
+    reason: parsed.data.reason ?? null,
+  });
+
+  return { ok: true };
+}
+
+export async function pinChatMessageAction(input: unknown): Promise<LiveActionResult> {
+  const parsed = moderateChatSchema.safeParse(input);
+  if (!parsed.success || !parsed.data.messageId) {
+    return { ok: false, error: "Invalid pin request" };
+  }
+
+  const ctx = await requireAccess(parsed.data.eventId, true);
+  if (!ctx.ok) return { ok: false, error: ctx.error };
+
+  const pin = parsed.data.action === "pin";
+
+  const { error: clearError } = await ctx.supabase
+    .from("chat_messages")
+    .update({ is_pinned: false })
+    .eq("event_id", parsed.data.eventId)
+    .eq("is_pinned", true);
+  if (clearError) return { ok: false, error: clearError.message };
+
+  if (pin) {
+    const { error } = await ctx.supabase
+      .from("chat_messages")
+      .update({ is_pinned: true })
+      .eq("id", parsed.data.messageId)
+      .eq("event_id", parsed.data.eventId);
+    if (error) return { ok: false, error: error.message };
+  }
+
+  await ctx.supabase.from("moderation_logs").insert({
+    admin_id: ctx.user.id,
+    message_id: parsed.data.messageId,
+    action: pin ? "pin" : "delete_message",
     reason: parsed.data.reason ?? null,
   });
 

@@ -3,6 +3,7 @@ import {
   createLiveKitToken,
   deleteLiveKitRoom,
   ensureLiveKitRoom,
+  liveKitRehearsalRoomName,
   liveKitRoomName,
 } from "@/lib/streaming/livekit";
 
@@ -21,7 +22,8 @@ export interface StreamingProvider {
   getViewerCredentials(
     eventId: string,
     userId: string,
-    role: "host" | "audience"
+    role: "host" | "audience" | "producer",
+    options?: { rehearsal?: boolean }
   ): Promise<StreamCredentials>;
   endStream(eventId: string): Promise<void>;
 }
@@ -37,11 +39,12 @@ export class PlaceholderStreamingProvider implements StreamingProvider {
   async getViewerCredentials(
     eventId: string,
     _userId: string,
-    role: "host" | "audience"
+    role: "host" | "audience" | "producer",
+    options?: { rehearsal?: boolean }
   ): Promise<StreamCredentials> {
     return {
       provider: this.name,
-      playbackUrl: `/api/stream/${eventId}?role=${role}`,
+      playbackUrl: `/api/stream/${eventId}?role=${role}${options?.rehearsal ? "&rehearsal=1" : ""}`,
       ingestUrl: role === "host" ? `rtmp://stream.livecircuit.app/live/${eventId}` : undefined,
       streamKey: role === "host" ? `lc_${eventId.slice(0, 8)}` : undefined,
     };
@@ -63,26 +66,33 @@ export class LiveKitStreamingProvider implements StreamingProvider {
   async getViewerCredentials(
     eventId: string,
     userId: string,
-    role: "host" | "audience"
+    role: "host" | "audience" | "producer",
+    options?: { rehearsal?: boolean }
   ): Promise<StreamCredentials> {
     const config = getLiveKitConfig();
     if (!config) throw new Error("LiveKit is not configured");
 
     if (role === "host") {
-      await ensureLiveKitRoom(eventId);
+      await ensureLiveKitRoom(eventId, options?.rehearsal);
     }
 
+    const tokenRole = role === "producer" ? "producer" : role === "host" ? "host" : "audience";
     const token = await createLiveKitToken({
       eventId,
       identity: userId,
-      role,
+      role: tokenRole,
+      rehearsal: options?.rehearsal,
     });
+
+    const roomName = options?.rehearsal
+      ? liveKitRehearsalRoomName(eventId)
+      : liveKitRoomName(eventId);
 
     return {
       provider: this.name,
       playbackUrl: config.url,
       token,
-      roomName: liveKitRoomName(eventId),
+      roomName,
     };
   }
 

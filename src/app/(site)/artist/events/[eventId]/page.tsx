@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound, redirect } from "next/navigation";
 import { EventCoHostsPanel } from "@/components/artist/event-cohosts-panel";
+import { EventProducersPanel } from "@/components/production/event-producers-panel";
 import { EventLobbySettings, EventReplayUpload } from "@/components/artist/event-lobby-replay";
 import { TicketScanner } from "@/components/artist/ticket-scanner";
 import { LiveHostControls } from "@/components/live/live-host-controls";
@@ -14,6 +15,7 @@ import { getArtistEventById, eventLivePath } from "@/lib/data/artist-events";
 import { ROUTES } from "@/lib/constants";
 import { formatCents } from "@/lib/format";
 import { getMilestoneEnvStatus } from "@/lib/config/env";
+import { listEventProducers } from "@/lib/data/producers";
 import { listEventHosts } from "@/lib/services/event-hosts.service";
 import { createClient } from "@/lib/supabase/server";
 import { parseStreamMetadata } from "@/lib/streaming/stream-metadata";
@@ -43,6 +45,7 @@ export default async function ArtistEventDetailPage({ params }: Props) {
   const scheduled = new Date(event.scheduled_at).toLocaleString();
   const supabase = await createClient();
   const coHosts = await listEventHosts(supabase, event.id);
+  const producers = await listEventProducers(supabase, event.id);
   const streamMetadata = parseStreamMetadata(event.streams?.metadata ?? null);
   const recordingUrl = event.streams?.recording_url ?? null;
   const recordingStatus = streamMetadata.recording_status ?? (recordingUrl ? "ready" : "none");
@@ -69,20 +72,28 @@ export default async function ArtistEventDetailPage({ params }: Props) {
           </p>
         </div>
         <div className="flex flex-wrap gap-2">
+          <Button variant="outline" href={ROUTES.artistEventProduction(event.id)}>
+            Virtual Production Studio
+          </Button>
           <Button variant="outline" href={livePath}>
             {event.status === "live" ? "Enter live room" : "Preview live page"}
           </Button>
           <Button variant="outline" href={ROUTES.checkout + `?event=${event.id}&type=ticket`}>
             Ticket checkout
           </Button>
+          {event.status === "ended" ? (
+            <Button variant="outline" href={ROUTES.artistEventReport(event.id)}>
+              Post-show report
+            </Button>
+          ) : null}
         </div>
       </div>
 
       <section className="mt-8 space-y-4 rounded-xl border border-white/10 bg-card/50 p-6">
         <h2 className="text-lg font-semibold">Go live</h2>
         <p className="text-sm text-muted-foreground">
-          When you are ready, start the broadcast. Fans with tickets can join the waiting room until
-          you go live, then watch in real time.
+          Open Virtual Production Studio to enter the Green Room — test camera, audio, lighting, and network before your public
+          broadcast. Fans with tickets wait in the lobby until you go live from the studio.
         </p>
         {!env.readyForGoLive ? (
           <p className="rounded-lg border border-amber-500/30 bg-amber-500/10 p-3 text-sm text-amber-100">
@@ -123,6 +134,15 @@ export default async function ArtistEventDetailPage({ params }: Props) {
           recordingUrl={recordingUrl}
           recordingStatus={recordingStatus}
         />
+      </section>
+
+      <section className="mt-6 space-y-4 rounded-xl border border-violet-500/20 bg-violet-500/5 p-6">
+        <h2 className="text-lg font-semibold">Producers</h2>
+        <p className="text-sm text-muted-foreground">
+          Invite trusted crew to run your show from the Production Studio — invisible to fans, with
+          professional controls for chat, monitoring, and stream health.
+        </p>
+        <EventProducersPanel eventId={event.id} initialProducers={producers} />
       </section>
 
       <section className="mt-6 space-y-4 rounded-xl border border-white/10 bg-card/50 p-6">

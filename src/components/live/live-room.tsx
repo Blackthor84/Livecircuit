@@ -1,13 +1,15 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { Flag, Trash2, VolumeX } from "lucide-react";
+import { Flag, Pin, Trash2, UserX, VolumeX } from "lucide-react";
 import { toast } from "sonner";
 import { createClient } from "@/lib/supabase/client";
 import { REACTION_EMOJIS } from "@/lib/constants";
 import {
+  banChatUserAction,
   deleteChatMessageAction,
   muteChatUserAction,
+  pinChatMessageAction,
   reportChatMessageAction,
   sendChatMessageAction,
 } from "@/lib/actions/live-event";
@@ -34,6 +36,7 @@ type LiveChatProps = {
   isVipViewer?: boolean;
   canAccessLocalChat?: boolean;
   tourCity?: string | null;
+  rehearsalToken?: string | null;
 };
 
 function ChatPanel({
@@ -43,6 +46,7 @@ function ChatPanel({
   canModerate,
   isVipViewer,
   title,
+  rehearsalToken,
 }: {
   eventId: string;
   channel: "global" | "local";
@@ -50,6 +54,7 @@ function ChatPanel({
   canModerate?: boolean;
   isVipViewer?: boolean;
   title: string;
+  rehearsalToken?: string | null;
 }) {
   const [messages, setMessages] = useState<Message[]>([]);
   const [text, setText] = useState("");
@@ -114,6 +119,7 @@ function ChatPanel({
       body: text.trim(),
       isVipOnly: vipOnly && isVipViewer,
       channel,
+      rehearsalToken: rehearsalToken ?? undefined,
     });
     if (!result.ok) toast.error(result.error);
     else setText("");
@@ -145,6 +151,18 @@ function ChatPanel({
     });
     if (!result.ok) toast.error(result.error);
     else toast.success("User muted for 30 minutes");
+  }
+
+  async function banAuthor(messageId: string) {
+    const result = await banChatUserAction({ eventId, messageId, action: "ban" });
+    if (!result.ok) toast.error(result.error);
+    else toast.success("User banned from chat");
+  }
+
+  async function pinMessage(messageId: string) {
+    const result = await pinChatMessageAction({ eventId, messageId, action: "pin" });
+    if (!result.ok) toast.error(result.error);
+    else toast.success("Message pinned");
   }
 
   async function reportMessage(messageId: string) {
@@ -188,6 +206,22 @@ function ChatPanel({
                     aria-label="Mute"
                   >
                     <VolumeX className="size-3.5" />
+                  </button>
+                  <button
+                    type="button"
+                    className="rounded p-1 text-muted-foreground hover:bg-white/10"
+                    onClick={() => void pinMessage(m.id)}
+                    aria-label="Pin"
+                  >
+                    <Pin className="size-3.5" />
+                  </button>
+                  <button
+                    type="button"
+                    className="rounded p-1 text-muted-foreground hover:bg-white/10"
+                    onClick={() => void banAuthor(m.id)}
+                    aria-label="Ban"
+                  >
+                    <UserX className="size-3.5" />
                   </button>
                 </div>
               ) : (
@@ -252,6 +286,7 @@ export function LiveChat({
   isVipViewer = false,
   canAccessLocalChat = false,
   tourCity,
+  rehearsalToken,
 }: LiveChatProps) {
   const [activeChannel, setActiveChannel] = useState<"global" | "local">("global");
   const localLabel = tourCity ? `${tourCity} Fans` : "Local Fans";
@@ -294,6 +329,7 @@ export function LiveChat({
         canModerate={canModerate}
         isVipViewer={isVipViewer}
         title={activeChannel === "local" ? localLabel : "Everyone watching"}
+        rehearsalToken={rehearsalToken}
       />
     </div>
   );

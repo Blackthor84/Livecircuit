@@ -3,15 +3,19 @@ import { isSupabaseConfigured } from "@/lib/config/env";
 import { isObserverUser } from "@/lib/auth/observer";
 import { isAdminRole } from "@/lib/auth/roles";
 import { parseStreamMetadata, type RecordingStatus } from "@/lib/streaming/stream-metadata";
+import { getEventProducerForUser } from "@/lib/data/producers";
+import { hasProducerPermission } from "@/lib/production/permissions";
+import type { ProducerPermissions } from "@/lib/production/types";
 import type { EventStatus } from "@/types/database";
 
-export type LiveAccessMode = "host" | "viewer" | "waiting" | "replay" | "denied" | "observer";
+export type LiveAccessMode = "host" | "producer" | "viewer" | "waiting" | "replay" | "denied" | "observer";
 
 export type LiveAccessState = {
   mode: LiveAccessMode;
   canWatchStream: boolean;
   canChat: boolean;
   canModerate: boolean;
+  canBackstageChat?: boolean;
   isVip: boolean;
   hasTicket: boolean;
   status: EventStatus;
@@ -22,6 +26,8 @@ export type LiveAccessState = {
   recordingStatus: RecordingStatus;
   isHomeCrowd?: boolean;
   canAccessLocalChat?: boolean;
+  producerPermissions?: Record<string, boolean>;
+  producerStaffRole?: string;
 };
 
 type EventRow = {
@@ -120,7 +126,7 @@ export async function getEventLiveAccess(
     return observerState(event.status, scheduledAt, secondsUntilStart, recording);
   }
 
-  const [{ data: ticket }, { data: vip }, { data: backstageSub }, { data: mute }, coHost] =
+  const [{ data: ticket }, { data: vip }, { data: backstageSub }, { data: mute }, coHost, banned] =
     await Promise.all([
     supabase
       .from("tickets")
@@ -155,10 +161,32 @@ export async function getEventLiveAccess(
       .eq("event_id", eventId)
       .eq("user_id", userId)
       .maybeSingle(),
+    supabase
+      .from("event_chat_bans")
+      .select("id")
+      .eq("event_id", eventId)
+      .eq("user_id", userId)
+      .maybeSingle(),
   ]);
+
+  if (banned) {
+    return deniedState(event.status, scheduledAt, "You have been removed from this event");
+  }
 
   if (coHost) {
     return hostState(event.status, scheduledAt, secondsUntilStart, recording);
+  }
+
+  const producer = await getEventProducerForUser(supabase, eventId, userId);
+  if (producer) {
+    return producerState(
+      event.status,
+      scheduledAt,
+      secondsUntilStart,
+      recording,
+      producer.permissions as ProducerPermissions,
+      producer.staff_role
+    );
   }
 
   const backstageActive =
@@ -329,6 +357,41 @@ function observerState(
   };
 }
 
+function producerState(
+  status: EventStatus,
+  scheduledAt: string,
+  secondsUntilStart: number,
+  recording: { recordingUrl: string | null; recordingStatus: RecordingStatus },
+  permissions: ProducerPermissions,
+  staffRole: string
+): LiveAccessState {
+  const canMod =
+    hasProducerPermission(permissions, "delete_chat") ||
+    hasProducerPermission(permissions, "mute_users") ||
+    hasProducerPermission(permissions, "ban_users");
+
+  return {
+    mode: "producer",
+    canWatchStream:
+      status === "live" ||
+      status === "scheduled" ||
+      status === "draft" ||
+      (status === "ended" && Boolean(recording.recordingUrl)),
+    canChat: true,
+    canModerate: canMod,
+    canBackstageChat: true,
+    isVip: true,
+    hasTicket: true,
+    status,
+    scheduledAt,
+    secondsUntilStart,
+    message: null,
+    producerPermissions: permissions as Record<string, boolean>,
+    producerStaffRole: staffRole,
+    ...recording,
+  };
+}
+
 function hostState(
   status: EventStatus,
   scheduledAt: string,
@@ -340,6 +403,7 @@ function hostState(
     canWatchStream: status === "live" || status === "scheduled" || status === "draft" || status === "ended",
     canChat: true,
     canModerate: true,
+    canBackstageChat: true,
     isVip: true,
     hasTicket: true,
     status,

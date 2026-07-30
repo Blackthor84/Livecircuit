@@ -8,7 +8,8 @@ export type StreamMetadata = {
   lobby_message?: string | null;
   lobby_video_url?: string | null;
   lobby_banner_url?: string | null;
-  recording_error?: string | null;
+  studio_opened_at?: string | null;
+  rehearsal_active?: boolean;
 };
 
 export function parseStreamMetadata(raw: unknown): StreamMetadata {

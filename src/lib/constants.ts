@@ -65,6 +65,11 @@ export const ROUTES = {
   about: "/about",
   artistEventsNew: "/artist/events/new",
   artistEvent: (eventId: string) => `/artist/events/${eventId}`,
+  artistEventStudio: (eventId: string) => `/artist/events/${eventId}/production`,
+  artistEventProduction: (eventId: string) => `/artist/events/${eventId}/production`,
+  artistEventBooth: (eventId: string) => `/artist/events/${eventId}/production?view=studio`,
+  artistEventReport: (eventId: string) => `/artist/events/${eventId}/report`,
+  artistStreamingAcademy: "/artist/streaming-academy",
   artistEventLive: (artistSlug: string, eventSlug: string) =>
     `/artists/${artistSlug}/events/${eventSlug}`,
 } as const;
