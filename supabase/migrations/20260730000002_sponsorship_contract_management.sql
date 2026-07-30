@@ -367,27 +367,7 @@ CREATE TRIGGER set_updated_at_sponsorship_auction_bids
   BEFORE UPDATE ON public.sponsorship_auction_bids
   FOR EACH ROW EXECUTE FUNCTION public.set_updated_at();
 
--- Reserved contracts also block inventory slots
-DROP INDEX IF EXISTS idx_premium_one_venue_slot;
-CREATE UNIQUE INDEX idx_premium_one_venue_slot
-  ON public.premium_sponsorship_contracts(slot_type_slug, venue_id)
-  WHERE venue_id IS NOT NULL AND status IN ('active', 'pending', 'reserved');
-
-DROP INDEX IF EXISTS idx_premium_one_event_slot;
-CREATE UNIQUE INDEX idx_premium_one_event_slot
-  ON public.premium_sponsorship_contracts(slot_type_slug, event_id)
-  WHERE event_id IS NOT NULL AND status IN ('active', 'pending', 'reserved');
-
-DROP INDEX IF EXISTS idx_premium_one_tour_slot;
-CREATE UNIQUE INDEX idx_premium_one_tour_slot
-  ON public.premium_sponsorship_contracts(slot_type_slug, tour_id)
-  WHERE tour_id IS NOT NULL AND status IN ('active', 'pending', 'reserved');
-
-DROP INDEX IF EXISTS idx_premium_one_platform_slot;
-CREATE UNIQUE INDEX idx_premium_one_platform_slot
-  ON public.premium_sponsorship_contracts(slot_type_slug)
-  WHERE venue_id IS NULL AND event_id IS NULL AND tour_id IS NULL AND featured_stage_id IS NULL
-    AND status IN ('active', 'pending', 'reserved');
+-- Index recreation with 'reserved' status is in 20260730000003 (enum value must commit first).
 
 CREATE POLICY "Sponsor org reads own contracts" ON public.premium_sponsorship_contracts FOR SELECT
   USING (

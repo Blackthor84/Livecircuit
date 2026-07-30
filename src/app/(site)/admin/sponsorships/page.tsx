@@ -7,6 +7,7 @@ import { listAllWaitingList } from "@/lib/sponsorship/waiting-list";
 import { listAllAuctions, listAuctionBids } from "@/lib/sponsorship/auctions";
 import { listPriceHistory } from "@/lib/sponsorship/price-history";
 import { listSponsorOrganizationsAdmin } from "@/lib/data/sponsors";
+import { listVenuesForAdmin } from "@/lib/data/venues";
 import { listPipelineDeals } from "@/lib/sponsorship/pipeline";
 
 export const metadata: Metadata = { title: "Sponsorship Management — Admin" };
