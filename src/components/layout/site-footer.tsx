@@ -2,7 +2,7 @@ import Link from "next/link";
 import { LiveCircuitLogo } from "@/components/brand/livecircuit-logo";
 import { AuthAccountSection } from "@/components/layout/auth-account-section";
 import type { HeaderUser } from "@/components/layout/site-header-user-menu";
-import { APP_NAME, APP_TAGLINE, ROUTES } from "@/lib/constants";
+import { APP_NAME, APP_TAGLINE, CONTACT_EMAILS, ROUTES } from "@/lib/constants";
 
 export function SiteFooter({ user }: { user: HeaderUser | null }) {
   return (
@@ -25,6 +25,31 @@ export function SiteFooter({ user }: { user: HeaderUser | null }) {
               <Link href="/about" className="text-muted-foreground hover:text-foreground">
                 About
               </Link>
+              <Link href={ROUTES.contact} className="text-muted-foreground hover:text-foreground">
+                Contact
+              </Link>
+            </div>
+            <div className="mt-6 space-y-1 text-sm text-muted-foreground">
+              <p>
+                Artists:{" "}
+                <a
+                  href={`mailto:${CONTACT_EMAILS.artists}`}
+                  aria-label={`Email artist bookings at ${CONTACT_EMAILS.artists}`}
+                  className="text-foreground/80 transition-colors hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+                >
+                  {CONTACT_EMAILS.artists}
+                </a>
+              </p>
+              <p>
+                Partnerships:{" "}
+                <a
+                  href={`mailto:${CONTACT_EMAILS.partnerships}`}
+                  aria-label={`Email partnerships at ${CONTACT_EMAILS.partnerships}`}
+                  className="text-foreground/80 transition-colors hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+                >
+                  {CONTACT_EMAILS.partnerships}
+                </a>
+              </p>
             </div>
           </div>
           <AuthAccountSection user={user} align="right" />

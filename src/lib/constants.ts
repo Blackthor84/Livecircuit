@@ -25,6 +25,11 @@ export const ARTIST_CATEGORIES = [
 
 export const REACTION_EMOJIS = ["❤️", "🔥", "👏", "😂"] as const;
 
+export const CONTACT_EMAILS = {
+  artists: "artists@watchlivecircuit.com",
+  partnerships: "partnerships@watchlivecircuit.com",
+} as const;
+
 export const ROUTES = {
   home: "/",
   discover: "/discover",
@@ -63,6 +68,7 @@ export const ROUTES = {
   gamification: "/gamification",
   following: "/following",
   about: "/about",
+  contact: "/contact",
   artistEventsNew: "/artist/events/new",
   artistEvent: (eventId: string) => `/artist/events/${eventId}`,
   artistEventStudio: (eventId: string) => `/artist/events/${eventId}/production`,
