@@ -210,14 +210,22 @@ export async function getTourWithStops(artistSlug: string, tourSlug: string) {
 
   const { data: stops } = await supabase
     .from("tour_stops")
-    .select("*, cities(name, slug)")
+    .select("*, cities(name, slug, latitude, longitude, countries(code, name))")
     .eq("tour_id", tour.id)
     .order("stop_order", { ascending: true });
 
   return {
     artist,
     tour: tour as Tour,
-    stops: (stops ?? []) as (TourStop & { cities: { name: string; slug: string } | null })[],
+    stops: (stops ?? []) as (TourStop & {
+      cities: {
+        name: string;
+        slug: string;
+        latitude: number | null;
+        longitude: number | null;
+        countries: { code: string; name: string } | null;
+      } | null;
+    })[],
   };
 }
 

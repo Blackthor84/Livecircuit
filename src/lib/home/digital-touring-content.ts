@@ -17,16 +17,14 @@ export const DIGITAL_TOURING_BRAND = {
 } as const;
 
 export const DEMO_TOUR_ROUTE = {
-  tourName: "New England Digital Tour",
+  tourName: "USA Digital Tour",
   artistName: "Featured Artist",
   stops: [
     { city: "Boston", state: "MA", status: "completed" as const },
-    { city: "Providence", state: "RI", status: "completed" as const },
-    { city: "New York", state: "NY", status: "live" as const },
-    { city: "Philadelphia", state: "PA", status: "next" as const },
-    { city: "Washington DC", state: "DC", status: "upcoming" as const },
-    { city: "Atlanta", state: "GA", status: "upcoming" as const },
-    { city: "Miami", state: "FL", status: "upcoming" as const },
+    { city: "New York", state: "NY", status: "completed" as const },
+    { city: "Chicago", state: "IL", status: "live" as const },
+    { city: "Denver", state: "CO", status: "next" as const },
+    { city: "Los Angeles", state: "CA", status: "upcoming" as const },
   ],
 } as const;
 

@@ -11,12 +11,14 @@ import {
   tourWindowFromStops,
   uniqueTourSlug,
 } from "@/lib/services/tours.service";
+import { applyTourTemplateBySlug } from "@/lib/touring/apply-tour-template";
 import {
   assignTourStopVenueSchema,
   createTourSchema,
   deleteTourSchema,
   deleteTourStopSchema,
   publishTourSchema,
+  reorderTourStopSchema,
   tourStopSchema,
   updateTourSchema,
 } from "@/lib/validations/tours";
@@ -96,11 +98,32 @@ export async function createTourAction(input: unknown): Promise<TourActionResult
       slug,
       description: parsed.data.description?.trim() || null,
       status: "draft",
+      tour_type: parsed.data.tourType ?? "regional",
+      template_slug: parsed.data.templateSlug ?? null,
     })
-    .select("id")
+    .select("id, artist_id, slug, title, status")
     .single();
 
-  if (error) return { ok: false, error: error.message };
+  if (error || !data) return { ok: false, error: error?.message ?? "Failed to create tour" };
+
+  if (parsed.data.templateSlug) {
+    try {
+      const result = await applyTourTemplateBySlug(ctx.supabase, data, parsed.data.templateSlug);
+      if (result.stopsCreated === 0) {
+        return {
+          ok: false,
+          error:
+            "Template cities are not available yet. Enable the required countries in admin or add stops manually.",
+        };
+      }
+    } catch (templateError) {
+      await ctx.supabase.from("tours").delete().eq("id", data.id);
+      return {
+        ok: false,
+        error: templateError instanceof Error ? templateError.message : "Failed to apply tour template",
+      };
+    }
+  }
 
   revalidateTourPaths(ctx.artist.slug);
   return { ok: true, tourId: data.id };
@@ -303,6 +326,57 @@ export async function deleteTourStopAction(input: unknown): Promise<TourActionRe
     .from("tours")
     .update({ starts_at: window.starts_at, ends_at: window.ends_at })
     .eq("id", tour.id);
+
+  revalidateTourPaths(ctx.artist.slug, tour.slug);
+  revalidatePath(`/artist/tours/${tour.id}`);
+  return { ok: true, tourId: tour.id };
+}
+
+export async function reorderTourStopAction(input: unknown): Promise<TourActionResult> {
+  const ctx = await requireArtistContext();
+  if (!ctx.ok) return { ok: false, error: ctx.error };
+
+  const parsed = reorderTourStopSchema.safeParse(input);
+  if (!parsed.success) {
+    return { ok: false, error: parsed.error.issues[0]?.message ?? "Invalid input" };
+  }
+
+  const tour = await loadOwnedTour(ctx.supabase, ctx.artist.id, parsed.data.tourId);
+  if (!tour) return { ok: false, error: "Tour not found" };
+  if (tour.status === "published") {
+    return { ok: false, error: "Unpublish the tour to reorder stops" };
+  }
+
+  const { data: stops } = await ctx.supabase
+    .from("tour_stops")
+    .select("id, stop_order")
+    .eq("tour_id", tour.id)
+    .order("stop_order", { ascending: true });
+
+  if (!stops?.length) return { ok: false, error: "No stops found" };
+
+  const index = stops.findIndex((s) => s.id === parsed.data.stopId);
+  if (index === -1) return { ok: false, error: "Stop not found" };
+
+  const swapIndex = parsed.data.direction === "up" ? index - 1 : index + 1;
+  if (swapIndex < 0 || swapIndex >= stops.length) {
+    return { ok: true, tourId: tour.id };
+  }
+
+  const current = stops[index];
+  const neighbor = stops[swapIndex];
+
+  const { error: e1 } = await ctx.supabase
+    .from("tour_stops")
+    .update({ stop_order: neighbor.stop_order })
+    .eq("id", current.id);
+  if (e1) return { ok: false, error: e1.message };
+
+  const { error: e2 } = await ctx.supabase
+    .from("tour_stops")
+    .update({ stop_order: current.stop_order })
+    .eq("id", neighbor.id);
+  if (e2) return { ok: false, error: e2.message };
 
   revalidateTourPaths(ctx.artist.slug, tour.slug);
   revalidatePath(`/artist/tours/${tour.id}`);

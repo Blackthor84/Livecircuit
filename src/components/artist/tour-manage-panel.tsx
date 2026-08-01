@@ -21,6 +21,7 @@ import {
   deleteTourAndRedirectAction,
   deleteTourStopAction,
   publishTourAction,
+  reorderTourStopAction,
   updateTourAction,
   upsertTourStopAction,
 } from "@/lib/actions/tours";
@@ -164,6 +165,16 @@ export function TourManagePanel({ initial, countries, venues }: Props) {
     }
   }
 
+  async function reorderStop(stopId: string, direction: "up" | "down") {
+    const result = await reorderTourStopAction({
+      tourId: initial.tour.id,
+      stopId,
+      direction,
+    });
+    if (!result.ok) toast.error(result.error);
+    else router.refresh();
+  }
+
   async function publish() {
     setPublishing(true);
     const result = await publishTourAction({ tourId: initial.tour.id });
@@ -272,9 +283,29 @@ export function TourManagePanel({ initial, countries, venues }: Props) {
                 ) : null}
               </div>
               {!isPublished ? (
-                <Button type="button" variant="outline" size="sm" onClick={() => void removeStop(stop.id)}>
-                  Remove
-                </Button>
+                <div className="flex flex-wrap gap-2">
+                  <Button
+                    type="button"
+                    variant="outline"
+                    size="sm"
+                    disabled={i === 0}
+                    onClick={() => void reorderStop(stop.id, "up")}
+                  >
+                    ↑
+                  </Button>
+                  <Button
+                    type="button"
+                    variant="outline"
+                    size="sm"
+                    disabled={i === initial.stops.length - 1}
+                    onClick={() => void reorderStop(stop.id, "down")}
+                  >
+                    ↓
+                  </Button>
+                  <Button type="button" variant="outline" size="sm" onClick={() => void removeStop(stop.id)}>
+                    Remove
+                  </Button>
+                </div>
               ) : null}
             </li>
           );

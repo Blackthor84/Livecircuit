@@ -13,6 +13,10 @@ const audienceModeSchema = z.enum([
 export const createTourSchema = z.object({
   title: z.string().min(2, "Tour name is required").max(120),
   description: z.string().max(5000).optional(),
+  templateSlug: z.string().max(64).optional(),
+  tourType: z
+    .enum(["city", "state", "regional", "national", "continental", "world"])
+    .optional(),
 });
 
 export const updateTourSchema = z.object({
@@ -62,4 +66,10 @@ export const deleteTourSchema = z.object({
 export const deleteTourStopSchema = z.object({
   stopId: z.string().uuid(),
   tourId: z.string().uuid(),
+});
+
+export const reorderTourStopSchema = z.object({
+  tourId: z.string().uuid(),
+  stopId: z.string().uuid(),
+  direction: z.enum(["up", "down"]),
 });

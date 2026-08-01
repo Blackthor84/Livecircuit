@@ -1,5 +1,11 @@
+import type { GlobeTourStop } from "@/components/home/tour-globe-map";
+import type { TourRouteStop } from "@/components/home/tour-route-map";
 import { createClient } from "@/lib/supabase/server";
 import { isSupabaseConfigured } from "@/lib/config/env";
+import {
+  buildGlobeStopsFromTourStops,
+  activeCitiesToGlobeStops,
+} from "@/lib/touring/globe-stops";
 import {
   countRemainingStops,
   formatTimeUntil,
@@ -7,7 +13,6 @@ import {
   getNextStop,
   mapStopsToRouteStatus,
 } from "@/lib/touring/tour-route-status";
-import type { TourRouteStop } from "@/components/home/tour-route-map";
 
 export type LiveTourSnapshot = {
   tourId: string;
@@ -16,6 +21,7 @@ export type LiveTourSnapshot = {
   artistSlug: string;
   artistName: string;
   routeStops: TourRouteStop[];
+  globeStops: GlobeTourStop[];
   liveCity: string | null;
   nextCity: string | null;
   remainingStops: number;
@@ -33,29 +39,6 @@ export type ActiveTourCity = {
   active: boolean;
 };
 
-/** Approximate coordinates for map pins — keyed by common tour cities. */
-const CITY_COORDS: Record<string, { lat: number; lng: number; country: string }> = {
-  boston: { lat: 42.36, lng: -71.06, country: "USA" },
-  "new york": { lat: 40.71, lng: -74.01, country: "USA" },
-  chicago: { lat: 41.88, lng: -87.63, country: "USA" },
-  "los angeles": { lat: 34.05, lng: -118.24, country: "USA" },
-  london: { lat: 51.51, lng: -0.13, country: "UK" },
-  tokyo: { lat: 35.68, lng: 139.69, country: "Japan" },
-  sydney: { lat: -33.87, lng: 151.21, country: "Australia" },
-  paris: { lat: 48.86, lng: 2.35, country: "France" },
-  atlanta: { lat: 33.75, lng: -84.39, country: "USA" },
-  miami: { lat: 25.76, lng: -80.19, country: "USA" },
-  philadelphia: { lat: 39.95, lng: -75.17, country: "USA" },
-  providence: { lat: 41.82, lng: -71.41, country: "USA" },
-};
-
-function cityCoords(city: string): ActiveTourCity | null {
-  const key = city.toLowerCase();
-  const match = CITY_COORDS[key];
-  if (!match) return null;
-  return { city, country: match.country, lat: match.lat, lng: match.lng, active: true };
-}
-
 function normalizeRoutableStop(stop: Record<string, unknown>) {
   const citiesRaw = stop.cities;
   const city = Array.isArray(citiesRaw) ? citiesRaw[0] : citiesRaw;
@@ -64,7 +47,12 @@ function normalizeRoutableStop(stop: Record<string, unknown>) {
     tour_city: (stop.tour_city as string | null) ?? null,
     tour_state_code: (stop.tour_state_code as string | null) ?? null,
     virtual_location_label: (stop.virtual_location_label as string | null) ?? null,
-    cities: city as { name: string } | null,
+    cities: city as {
+      name: string;
+      latitude: number | null;
+      longitude: number | null;
+      countries?: { code: string; name: string } | { code: string; name: string }[] | null;
+    } | null,
   };
 }
 
@@ -81,7 +69,7 @@ export async function getLiveTourSnapshots(limit = 3): Promise<LiveTourSnapshot[
       artists!inner(slug, stage_name, profiles!inner(is_test_account)),
       tour_stops!inner(
         id, tour_id, scheduled_at, tour_city, tour_state_code, virtual_location_label, stop_order,
-        cities(name),
+        cities(name, latitude, longitude, countries(code, name)),
         tours!inner(id, title, slug, status)
       )
     `
@@ -105,11 +93,15 @@ export async function getLiveTourSnapshots(limit = 3): Promise<LiveTourSnapshot[
 
     const { data: allStops } = await supabase
       .from("tour_stops")
-      .select("scheduled_at, tour_city, tour_state_code, virtual_location_label, cities(name)")
+      .select(
+        "scheduled_at, tour_city, tour_state_code, virtual_location_label, cities(name, latitude, longitude, countries(code, name))"
+      )
       .eq("tour_id", stop.tour_id)
       .order("stop_order", { ascending: true });
 
-    const routeStops = mapStopsToRouteStatus((allStops ?? []).map((s) => normalizeRoutableStop(s as Record<string, unknown>)));
+    const normalized = (allStops ?? []).map((s) => normalizeRoutableStop(s as Record<string, unknown>));
+    const routeStops = mapStopsToRouteStatus(normalized);
+    const globeStops = buildGlobeStopsFromTourStops(normalized, routeStops);
     const live = getLiveStop(routeStops);
     const next = getNextStop(routeStops);
     const nextStopRow = allStops?.find((_, i) => routeStops[i]?.status === "next");
@@ -121,6 +113,7 @@ export async function getLiveTourSnapshots(limit = 3): Promise<LiveTourSnapshot[
       artistSlug: artist.slug,
       artistName: artist.stage_name,
       routeStops,
+      globeStops,
       liveCity: live?.city ?? null,
       nextCity: next?.city ?? null,
       remainingStops: countRemainingStops(routeStops),
@@ -145,7 +138,7 @@ export async function getActiveTourMapCities(limit = 12): Promise<ActiveTourCity
     .select(
       `
       tour_city, virtual_location_label, scheduled_at,
-      cities(name),
+      cities(name, latitude, longitude, countries(code, name)),
       tours!inner(status, artists!inner(profiles!inner(is_test_account)))
     `
     )
@@ -163,22 +156,41 @@ export async function getActiveTourMapCities(limit = 12): Promise<ActiveTourCity
   for (const stop of stops) {
     const citiesRaw = stop.cities;
     const cityRow = Array.isArray(citiesRaw) ? citiesRaw[0] : citiesRaw;
-    const city =
+    const cityName =
       (cityRow as { name: string } | null)?.name ??
       stop.tour_city ??
       stop.virtual_location_label;
-    if (!city || seen.has(city.toLowerCase())) continue;
-    seen.add(city.toLowerCase());
+    if (!cityName || seen.has(cityName.toLowerCase())) continue;
 
-    const coords = cityCoords(city);
-    if (coords) {
-      coords.active = new Date(stop.scheduled_at).getTime() <= Date.now();
-      cities.push(coords);
-    }
+    const lat = (cityRow as { latitude: number | null } | null)?.latitude;
+    const lng = (cityRow as { longitude: number | null } | null)?.longitude;
+    if (lat == null || lng == null) continue;
+
+    seen.add(cityName.toLowerCase());
+    const countryRaw = (cityRow as { countries?: { code: string; name: string } | { code: string; name: string }[] | null })?.countries;
+    const country = Array.isArray(countryRaw) ? countryRaw[0] : countryRaw;
+
+    cities.push({
+      city: cityName,
+      country: country?.code ?? country?.name ?? "",
+      lat,
+      lng,
+      active: new Date(stop.scheduled_at).getTime() <= Date.now(),
+    });
     if (cities.length >= limit) break;
   }
 
   return cities;
+}
+
+/** Globe stops for homepage — prefer live tour route, else scatter active cities. */
+export async function getHomepageGlobeStops(): Promise<{ stops: GlobeTourStop[]; showRoute: boolean }> {
+  const snapshots = await getLiveTourSnapshots(1);
+  if (snapshots[0]?.globeStops.length) {
+    return { stops: snapshots[0].globeStops, showRoute: true };
+  }
+  const cities = await getActiveTourMapCities(16);
+  return { stops: activeCitiesToGlobeStops(cities), showRoute: false };
 }
 
 export async function getArtistActiveTourSnapshot(artistId: string): Promise<LiveTourSnapshot | null> {
@@ -202,13 +214,17 @@ export async function getArtistActiveTourSnapshot(artistId: string): Promise<Liv
 
   const { data: allStops } = await supabase
     .from("tour_stops")
-    .select("scheduled_at, tour_city, tour_state_code, virtual_location_label, cities(name)")
+    .select(
+      "scheduled_at, tour_city, tour_state_code, virtual_location_label, cities(name, latitude, longitude, countries(code, name))"
+    )
     .eq("tour_id", tour.id)
     .order("stop_order", { ascending: true });
 
   if (!allStops?.length) return null;
 
-  const routeStops = mapStopsToRouteStatus(allStops.map((s) => normalizeRoutableStop(s as Record<string, unknown>)));
+  const normalized = allStops.map((s) => normalizeRoutableStop(s as Record<string, unknown>));
+  const routeStops = mapStopsToRouteStatus(normalized);
+  const globeStops = buildGlobeStopsFromTourStops(normalized, routeStops);
   const hasActiveStop = routeStops.some((s) => s.status === "live" || s.status === "next");
   if (!hasActiveStop) return null;
 
@@ -230,6 +246,7 @@ export async function getArtistActiveTourSnapshot(artistId: string): Promise<Liv
     artistSlug: artist.slug,
     artistName: artist.stage_name,
     routeStops,
+    globeStops,
     liveCity: live?.city ?? null,
     nextCity: next?.city ?? null,
     remainingStops: countRemainingStops(routeStops),

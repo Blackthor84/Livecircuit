@@ -1,13 +1,17 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { TourRouteMap } from "@/components/home/tour-route-map";
+import { TourGlobeMap } from "@/components/home/tour-globe-map";
 import { TourTimeline } from "@/components/home/tour-timeline";
 import { FollowTourButton } from "@/components/touring/follow-tour-button";
 import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
 import { getSessionUser } from "@/lib/auth/session";
 import { getTourWithStops } from "@/lib/data/queries";
 import { getTourProducts, isFollowingTour } from "@/lib/data/tour-followers";
 import { formatCents } from "@/lib/format";
+import { buildGlobeStopsFromTourStops } from "@/lib/touring/globe-stops";
+import { TOUR_TYPE_LABELS } from "@/lib/touring/tour-templates";
 import { getNextStop, mapStopsToRouteStatus } from "@/lib/touring/tour-route-status";
 
 type Props = { params: Promise<{ slug: string; tourSlug: string }> };
@@ -27,6 +31,7 @@ export default async function TourPage({ params }: Props) {
 
   const { artist, tour, stops } = data;
   const routeStops = mapStopsToRouteStatus(stops);
+  const globeStops = buildGlobeStopsFromTourStops(stops, routeStops);
   const nextStop = getNextStop(routeStops);
   const nextStopRow = stops.find((_, i) => routeStops[i]?.status === "next");
 
@@ -45,7 +50,12 @@ export default async function TourPage({ params }: Props) {
       <p className="text-sm font-medium uppercase tracking-widest text-primary">Digital tour</p>
       <div className="mt-2 flex flex-wrap items-start justify-between gap-4">
         <div>
-          <h1 className="text-3xl font-bold">{tour.title}</h1>
+          <div className="flex flex-wrap items-center gap-2">
+            <h1 className="text-3xl font-bold">{tour.title}</h1>
+            {tour.tour_type ? (
+              <Badge variant="secondary">{TOUR_TYPE_LABELS[tour.tour_type]}</Badge>
+            ) : null}
+          </div>
           <p className="mt-2 text-muted-foreground">
             {artist.stage_name} · {stops.length} {stops.length === 1 ? "stop" : "stops"}
           </p>
@@ -78,6 +88,9 @@ export default async function TourPage({ params }: Props) {
 
       {routeStops.length > 0 ? (
         <div className="mt-10 space-y-6">
+          {globeStops.length > 0 ? (
+            <TourGlobeMap stops={globeStops} showRoute autoRotate={false} />
+          ) : null}
           <TourTimeline stops={routeStops} nextStopAt={nextStopRow?.scheduled_at ?? null} />
           <TourRouteMap tourName={tour.title} artistName={artist.stage_name} stops={routeStops} />
         </div>

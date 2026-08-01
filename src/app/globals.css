@@ -200,4 +200,27 @@
       background-position: 100% 50%;
     }
   }
+  @keyframes ticker {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(-50%);
+    }
+  }
+  .animate-ticker {
+    animation: ticker 45s linear infinite;
+  }
+  @keyframes pulse-slow {
+    0%,
+    100% {
+      opacity: 0.25;
+    }
+    50% {
+      opacity: 0.45;
+    }
+  }
+  .animate-pulse-slow {
+    animation: pulse-slow 6s ease-in-out infinite;
+  }
 }
