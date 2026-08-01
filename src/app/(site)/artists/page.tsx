@@ -13,7 +13,7 @@ export default async function ArtistsPage() {
   return (
     <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6">
       <h1 className="text-3xl font-bold">Artists</h1>
-      <p className="mt-2 text-muted-foreground">Follow creators and get notified when they go live.</p>
+      <p className="mt-2 text-muted-foreground">Follow touring artists and get notified when they reach the next city.</p>
       <div className="mt-8">
         <ArtistSuccessPlanBanner />
       </div>

@@ -24,6 +24,7 @@ import {
   getCategoryLabel,
   type ArtistPublicProfile,
 } from "@/lib/data/artist-public-profile";
+import type { ArtistTourListItem } from "@/lib/data/artist-tours";
 
 const SOCIAL_CONFIG = [
   { key: "instagram", label: "Instagram" },
@@ -70,12 +71,14 @@ export function ArtistPublicProfileView({
   isOwner,
   showMessages,
   username,
+  tours = [],
 }: {
   profile: ArtistPublicProfile;
   following: boolean;
   isOwner: boolean;
   showMessages: boolean;
   username: string;
+  tours?: ArtistTourListItem[];
 }) {
   const { artist, stats, genres, upcomingEvents, pastEvents, liveEvent, featuredVideos, reviews, products } =
     profile;
@@ -105,17 +108,17 @@ export function ArtistPublicProfileView({
                   <span className="absolute inline-flex size-full animate-ping rounded-full bg-red-400 opacity-75" />
                   <span className="relative inline-flex size-2.5 rounded-full bg-red-500" />
                 </span>
-                Live now
+                Live tour stop
               </p>
               <p className="mt-1 font-medium">{liveEvent.title}</p>
               <p className="text-sm text-muted-foreground">
                 {liveEvent.venue_name}
                 {liveEvent.stage ? ` · ${liveEvent.stage}` : ""} ·{" "}
-                {liveEvent.viewer_count.toLocaleString()} watching
+                {liveEvent.viewer_count.toLocaleString()} in the audience
               </p>
             </div>
             <Button href={`/artists/${username}/events/${liveEvent.slug}`} className="bg-red-600 hover:bg-red-500">
-              Join live
+              Join stop
             </Button>
           </div>
         </div>
@@ -159,7 +162,7 @@ export function ArtistPublicProfileView({
               <FollowButton artistId={artist.id} initialFollowing={following} disabled={false} />
             ) : null}
             {liveEvent ? (
-              <Button href={`/artists/${username}/events/${liveEvent.slug}`}>Watch live</Button>
+              <Button href={`/artists/${username}/events/${liveEvent.slug}`}>Join tour stop</Button>
             ) : null}
             {showMessages && !isOwner ? (
               <MessageArtistButton artistId={artist.id} />
@@ -175,10 +178,10 @@ export function ArtistPublicProfileView({
         <section className="mt-10">
           <div className="grid grid-cols-2 gap-3 sm:grid-cols-4 lg:grid-cols-7">
             <StatCard label="Followers" value={stats.followers.toLocaleString()} />
-            <StatCard label="Performances" value={stats.totalPerformances} />
-            <StatCard label="Hours streamed" value={stats.totalHoursStreamed} />
+            <StatCard label="Tour stops" value={stats.totalPerformances} />
+            <StatCard label="Hours on tour" value={stats.totalHoursStreamed} />
             <StatCard label="Total views" value={stats.totalViews.toLocaleString()} />
-            <StatCard label="Peak viewers" value={stats.peakLiveViewers.toLocaleString()} />
+            <StatCard label="Peak attendance" value={stats.peakLiveViewers.toLocaleString()} />
             <StatCard
               label="Avg rating"
               value={stats.averageRating != null ? stats.averageRating.toFixed(1) : "—"}
@@ -187,10 +190,41 @@ export function ArtistPublicProfileView({
           </div>
         </section>
 
+        {tours.length > 0 ? (
+          <section className="mt-14">
+            <SectionHeading>Digital tours</SectionHeading>
+            <ul className="mt-6 space-y-3">
+              {tours.map((tour) => (
+                <li
+                  key={tour.id}
+                  className="glass-panel flex flex-col gap-3 rounded-xl p-4 sm:flex-row sm:items-center sm:justify-between"
+                >
+                  <div>
+                    <p className="font-medium">{tour.title}</p>
+                    <p className="mt-1 text-sm text-muted-foreground">
+                      {tour.stop_count} {tour.stop_count === 1 ? "stop" : "stops"}
+                      {tour.starts_at
+                        ? ` · ${new Date(tour.starts_at).toLocaleDateString()}`
+                        : ""}
+                    </p>
+                  </div>
+                  <Button
+                    size="sm"
+                    variant="secondary"
+                    href={`/artists/${username}/tours/${tour.slug}`}
+                  >
+                    Follow tour
+                  </Button>
+                </li>
+              ))}
+            </ul>
+          </section>
+        ) : null}
+
         <section className="mt-14">
-          <SectionHeading>Upcoming shows</SectionHeading>
+          <SectionHeading>Upcoming tour stops</SectionHeading>
           {upcomingEvents.length === 0 ? (
-            <p className="mt-4 text-muted-foreground">No upcoming performances — follow for announcements.</p>
+            <p className="mt-4 text-muted-foreground">No upcoming tour stops — follow for announcements.</p>
           ) : (
             <ul className="mt-6 space-y-3">
               {upcomingEvents.map((event) => (
@@ -238,7 +272,7 @@ export function ArtistPublicProfileView({
         </section>
 
         <section className="mt-14">
-          <SectionHeading>Past performances</SectionHeading>
+          <SectionHeading>Past tour stops</SectionHeading>
           {pastEvents.length === 0 ? (
             <p className="mt-4 text-muted-foreground">Performance history will appear here.</p>
           ) : (

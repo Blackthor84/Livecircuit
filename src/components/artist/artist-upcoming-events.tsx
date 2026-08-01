@@ -26,9 +26,9 @@ export function ArtistUpcomingEvents({
   if (!events.length) {
     return (
       <p className="rounded-xl border border-dashed border-white/15 p-6 text-sm text-muted-foreground">
-        No upcoming events yet.{" "}
-        <Link href="/artist/events/new" className="text-primary hover:underline">
-          Create your first event
+        No upcoming tour stops yet.{" "}
+        <Link href="/artist/tours/new" className="text-primary hover:underline">
+          Create your first tour
         </Link>
         .
       </p>
@@ -41,32 +41,49 @@ export function ArtistUpcomingEvents({
         const publicPath = eventPublicPath(artistSlug, event.slug);
         const livePath = eventLivePath(artistSlug, event.slug);
         const scheduled = new Date(event.scheduled_at).toLocaleString();
+        const tour = event.tour_stops?.tours;
+        const stopLabel = event.tour_stops?.virtual_location_label ?? "Tour stop";
 
         return (
           <li key={event.id} className="flex flex-col gap-3 p-4 sm:flex-row sm:items-center sm:justify-between">
             <div>
-              <div className="flex items-center gap-2">
+              <div className="flex flex-wrap items-center gap-2">
                 <p className="font-medium">{event.title}</p>
                 <Badge variant={statusVariant(event.status)}>{event.status}</Badge>
               </div>
+              {tour ? (
+                <p className="mt-1 text-sm text-primary">
+                  <Link href={`/artist/tours/${tour.id}`} className="hover:underline">
+                    {tour.title}
+                  </Link>
+                  {event.tour_stops?.stop_order != null
+                    ? ` · Stop ${event.tour_stops.stop_order}`
+                    : ""}
+                </p>
+              ) : null}
               <p className="mt-1 text-sm text-muted-foreground">
-                {event.tour_stops?.virtual_location_label ?? "Virtual"} · {scheduled}
+                {stopLabel} · {scheduled}
               </p>
               <p className="text-sm text-muted-foreground">
                 Tickets {formatCents(event.tour_stops?.ticket_price_cents ?? 0)}
               </p>
             </div>
             <div className="flex flex-wrap gap-2">
+              {tour ? (
+                <Button variant="outline" size="sm" href={`/artist/tours/${tour.id}`}>
+                  Manage tour
+                </Button>
+              ) : null}
               <Button variant="outline" size="sm" href={`/artist/events/${event.id}`}>
-                Event details
+                Stop details
               </Button>
               {event.status === "live" ? (
                 <Button size="sm" href={livePath}>
-                  Enter live room
+                  Current stop
                 </Button>
               ) : (
                 <Button size="sm" variant="secondary" href={publicPath}>
-                  Preview page
+                  Preview stop
                 </Button>
               )}
             </div>

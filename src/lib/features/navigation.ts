@@ -29,8 +29,10 @@ type NavUser = {
 export function getPublicNav(): NavItem[] {
   return [
     { href: ROUTES.home, label: "Home" },
+    { href: ROUTES.tours, label: "Tours" },
     { href: ROUTES.discover, label: "Discover" },
     { href: ROUTES.artists, label: "Artists" },
+    { href: ROUTES.passport, label: "Passport" },
     { href: ROUTES.venues, label: "Venues" },
     { href: ROUTES.about, label: "About" },
     { href: ROUTES.creatorPromise, label: "Creator Promise" },

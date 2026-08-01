@@ -84,5 +84,17 @@ export async function createEventAction(input: unknown): Promise<EventActionResu
 export async function createEventAndRedirectAction(input: unknown) {
   const result = await createEventAction(input);
   if (!result.ok) return result;
+  const ctx = await requireArtistContext();
+  if (ctx.ok && result.tourId) {
+    const supabase = ctx.supabase;
+    const { data: tour } = await supabase
+      .from("tours")
+      .select("status")
+      .eq("id", result.tourId)
+      .maybeSingle();
+    if (tour?.status === "draft") {
+      redirect(`/artist/tours/${result.tourId}`);
+    }
+  }
   redirect(`/artist/events/${result.eventId}`);
 }

@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { ArtistActiveTourPanel } from "@/components/artist/artist-active-tour-panel";
 import { ArtistDashboardCharts } from "@/components/dashboard/artist-dashboard-charts";
 import { Button } from "@/components/ui/button";
 import { requireRoles } from "@/lib/auth/guards";
@@ -12,6 +13,7 @@ import { getArtistMomentumForUser } from "@/lib/data/artist-momentum";
 import { getViewerFeatureAccess } from "@/lib/features/guard";
 import { listArtistUpcomingEvents } from "@/lib/data/artist-events";
 import { ROUTES } from "@/lib/constants";
+import { getArtistActiveTourSnapshot } from "@/lib/touring/tour-context";
 import { redirect } from "next/navigation";
 
 export const metadata: Metadata = { title: "Artist dashboard" };
@@ -25,12 +27,13 @@ export default async function ArtistDashboardPage() {
   const artist = await getArtistForUser(user.id);
   if (!artist) redirect("/artist/settings");
 
-  const [analytics, tours, momentumPayload, upcomingEvents, features] = await Promise.all([
+  const [analytics, tours, momentumPayload, upcomingEvents, features, activeTour] = await Promise.all([
     getArtistDashboardAnalytics(artist.id, artist.slug),
     listArtistTours(artist.id),
     getArtistMomentumForUser(user.id),
     listArtistUpcomingEvents(artist.id),
     getViewerFeatureAccess(),
+    getArtistActiveTourSnapshot(artist.id),
   ]);
 
   return (
@@ -38,11 +41,17 @@ export default async function ArtistDashboardPage() {
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
           <h1 className="text-3xl font-bold">Artist dashboard</h1>
-          <p className="text-muted-foreground">Audience insights, revenue, and upcoming performances.</p>
+          <p className="text-muted-foreground">
+            Build digital tours, schedule stops, and track your route from city to city.
+          </p>
         </div>
-        <div className="flex gap-2">
+        <div className="flex flex-wrap gap-2">
+          <Button href="/artist/tours/new">Create tour</Button>
+          <Button variant="outline" href="/artist/tour-planner">
+            AI Tour Planner
+          </Button>
           <Button variant="outline" href="/artist/merch">
-            Merch
+            Tour merch
           </Button>
           <Button variant="outline" href="/artist/settings">
             Edit profile
@@ -53,20 +62,45 @@ export default async function ArtistDashboardPage() {
           <Button variant="outline" href="/artist/momentum">
             Momentum
           </Button>
-          <Button variant="outline" href="/artist/tour-planner">
-            AI Tour Planner
-          </Button>
           {features.canAccess("creator_marketplace") ? (
             <Button variant="outline" href="/marketplace">
               Hire creators
             </Button>
           ) : null}
-          <Button variant="outline" href="/artist/tours/new">
-            Create tour
-          </Button>
-          <Button href={ROUTES.artistEventsNew}>Create event</Button>
         </div>
       </div>
+
+      {activeTour ? (
+        <section className="mt-10">
+          <ArtistActiveTourPanel snapshot={activeTour} artistSlug={artist.slug} />
+        </section>
+      ) : null}
+
+      <section className="mt-10">
+        <div className="mb-4 flex items-center justify-between">
+          <div>
+            <h2 className="text-xl font-semibold">Your tours</h2>
+            <p className="text-sm text-muted-foreground">
+              Tours are the primary object — every stop, ticket, and performance belongs to a route.
+            </p>
+          </div>
+          <Button variant="link" href="/artist/tours/new" className="px-0">
+            Create tour →
+          </Button>
+        </div>
+        <ArtistToursList tours={tours} artistSlug={artist.slug} />
+      </section>
+
+      <section className="mt-10">
+        <div className="mb-4 flex items-center justify-between">
+          <h2 className="text-xl font-semibold">Upcoming tour stops</h2>
+          <Button variant="link" href="/artist/tours/new" className="px-0">
+            Add to a tour →
+          </Button>
+        </div>
+        <ArtistUpcomingEvents events={upcomingEvents} artistSlug={artist.slug} />
+      </section>
+
       {momentumPayload?.report ? (
         <section className="mt-10">
           <div className="mb-4 flex items-center justify-between">
@@ -78,21 +112,7 @@ export default async function ArtistDashboardPage() {
           <ArtistMomentumSummary report={momentumPayload.report} compact />
         </section>
       ) : null}
-      <section className="mt-10">
-        <div className="mb-4 flex items-center justify-between">
-          <h2 className="text-xl font-semibold">Upcoming events</h2>
-          <Button variant="link" href={ROUTES.artistEventsNew} className="px-0">
-            Create event →
-          </Button>
-        </div>
-        <ArtistUpcomingEvents events={upcomingEvents} artistSlug={artist.slug} />
-      </section>
-      <section className="mt-10">
-        <h2 className="text-xl font-semibold">Your tours</h2>
-        <div className="mt-4">
-          <ArtistToursList tours={tours} artistSlug={artist.slug} />
-        </div>
-      </section>
+
       <div className="mt-10">
         <ArtistDashboardCharts data={analytics} artistSlug={artist.slug} artistId={artist.id} />
       </div>

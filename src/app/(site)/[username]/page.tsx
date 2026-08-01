@@ -6,6 +6,7 @@ import {
   getArtistPublicProfile,
   resolveArtistUsername,
 } from "@/lib/data/artist-public-profile";
+import { listPublishedToursForArtistPublic } from "@/lib/data/artist-tours";
 import { isFollowingArtist } from "@/lib/data/profiles";
 import { getSessionUser } from "@/lib/auth/session";
 import { getViewerFeatureAccess } from "@/lib/features/guard";
@@ -49,11 +50,12 @@ export default async function VanityArtistProfilePage({ params }: Props) {
   }
 
   const user = await getSessionUser();
-  const [following, features] = await Promise.all([
+  const [following, features, tours] = await Promise.all([
     user && profile.artist.id
       ? isFollowingArtist(user.id, profile.artist.id)
       : Promise.resolve(false),
     getViewerFeatureAccess(),
+    listPublishedToursForArtistPublic(profile.artist.id),
   ]);
 
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://watchlivecircuit.com";
@@ -71,6 +73,7 @@ export default async function VanityArtistProfilePage({ params }: Props) {
         isOwner={user?.id === profile.artist.user_id}
         showMessages={features.canAccess("direct_messages")}
         username={canonical}
+        tours={tours}
       />
     </>
   );

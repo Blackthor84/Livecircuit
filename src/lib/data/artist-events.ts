@@ -3,7 +3,12 @@ import { isSupabaseConfigured } from "@/lib/config/env";
 import type { Event, EventStatus } from "@/types/database";
 
 export type ArtistEventListItem = Event & {
-  tour_stops: { virtual_location_label: string; ticket_price_cents: number } | null;
+  tour_stops: {
+    virtual_location_label: string;
+    ticket_price_cents: number;
+    stop_order?: number;
+    tours?: { id: string; title: string; slug: string } | null;
+  } | null;
 };
 
 export type ArtistEventDetail = Event & {
@@ -32,7 +37,7 @@ export async function listArtistUpcomingEvents(artistId: string): Promise<Artist
 
   const { data } = await supabase
     .from("events")
-    .select("*, tour_stops(virtual_location_label, ticket_price_cents)")
+    .select("*, tour_stops(virtual_location_label, ticket_price_cents, stop_order, tours(id, title, slug))")
     .eq("artist_id", artistId)
     .in("status", ["draft", "scheduled", "live"] satisfies EventStatus[])
     .gte("scheduled_at", new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString())

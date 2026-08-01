@@ -1,9 +1,10 @@
 import { z } from "zod";
 
 export const checkoutBodySchema = z.object({
-  type: z.enum(["ticket", "merch", "tip", "vip", "digital", "festival"]),
+  type: z.enum(["ticket", "merch", "tip", "vip", "digital", "festival", "tour_pass"]),
   eventId: z.string().uuid().optional(),
   tourStopId: z.string().uuid().optional(),
+  tourId: z.string().uuid().optional(),
   productId: z.string().max(128).optional(),
   artistId: z.string().uuid().optional(),
   artistSlug: z.string().max(64).optional(),
@@ -17,9 +18,10 @@ export const checkoutBodySchema = z.object({
 export type CheckoutBody = z.infer<typeof checkoutBodySchema>;
 
 export const checkoutPreviewQuerySchema = z.object({
-  type: z.enum(["ticket", "merch", "tip", "vip", "digital", "festival"]),
+  type: z.enum(["ticket", "merch", "tip", "vip", "digital", "festival", "tour_pass"]),
   event: z.string().uuid().optional(),
   tourStop: z.string().uuid().optional(),
+  tour: z.string().uuid().optional(),
   product: z.string().max(128).optional(),
   artist: z.string().max(64).optional(),
   artistId: z.string().uuid().optional(),
@@ -36,6 +38,7 @@ export function previewQueryToBody(
     type: query.type,
     eventId: query.event,
     tourStopId: query.tourStop,
+    tourId: query.tour,
     productId: query.product,
     artistSlug: query.artist,
     artistId: query.artistId,

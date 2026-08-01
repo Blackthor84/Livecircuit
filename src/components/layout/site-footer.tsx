@@ -13,8 +13,14 @@ export function SiteFooter({ user }: { user: HeaderUser | null }) {
             <LiveCircuitLogo size="2xl" href={ROUTES.home} />
             <p className="mt-3 max-w-sm text-sm text-muted-foreground">{APP_TAGLINE}</p>
             <div className="mt-6 flex flex-wrap gap-4 text-sm">
+              <Link href={ROUTES.tours} className="text-muted-foreground hover:text-foreground">
+                Tours
+              </Link>
               <Link href={ROUTES.discover} className="text-muted-foreground hover:text-foreground">
-                Events
+                Discover
+              </Link>
+              <Link href={ROUTES.passport} className="text-muted-foreground hover:text-foreground">
+                Passport
               </Link>
               <Link href={ROUTES.artists} className="text-muted-foreground hover:text-foreground">
                 Artists
@@ -61,7 +67,7 @@ export function SiteFooter({ user }: { user: HeaderUser | null }) {
           <AuthAccountSection user={user} align="right" />
         </div>
         <p className="mt-12 text-center text-xs text-muted-foreground">
-          © {new Date().getFullYear()} {APP_NAME}. Built Artist First — digital live entertainment for creators and fans.
+          © {new Date().getFullYear()} {APP_NAME}. The world&apos;s first Digital Touring Platform — built Artist First.
         </p>
       </div>
     </footer>

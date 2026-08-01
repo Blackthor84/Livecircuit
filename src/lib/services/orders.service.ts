@@ -12,6 +12,7 @@ export type ResolvedCheckout = {
   artistId: string | null;
   eventId: string | null;
   tourStopId: string | null;
+  tourId: string | null;
   productId: string | null;
   tier: "general" | "vip";
   festivalTierId?: string | null;
@@ -81,6 +82,7 @@ export async function resolveCheckout(
           artistId: (event.artist_id as string) ?? null,
           eventId: body.eventId,
           tourStopId,
+          tourId: null,
           productId: null,
           tier,
         };
@@ -111,6 +113,32 @@ export async function resolveCheckout(
         artistId: artistId ?? null,
         eventId,
         tourStopId,
+        tourId: (stop.tour_id as string) ?? null,
+        productId: null,
+        tier,
+      };
+    }
+  }
+
+  if (body.type === "tour_pass" && body.tourId) {
+    const { data: tour } = await supabase
+      .from("tours")
+      .select("id, title, tour_pass_price_cents, artist_id, status")
+      .eq("id", body.tourId)
+      .eq("status", "published")
+      .maybeSingle();
+
+    if (tour?.tour_pass_price_cents && tour.tour_pass_price_cents > 0) {
+      return {
+        pricing: {
+          unitAmountCents: tour.tour_pass_price_cents,
+          currency,
+          description: `Tour pass — ${tour.title}`,
+        },
+        artistId: tour.artist_id as string,
+        eventId: null,
+        tourStopId: null,
+        tourId: tour.id as string,
         productId: null,
         tier,
       };
@@ -139,6 +167,7 @@ export async function resolveCheckout(
           artistId: (product.artist_id as string) ?? null,
           eventId,
           tourStopId,
+          tourId: null,
           productId,
           tier,
         };
@@ -167,6 +196,7 @@ export async function resolveCheckout(
           artistId,
           eventId,
           tourStopId,
+          tourId: null,
           productId: null,
           tier: "vip",
         };
@@ -190,6 +220,7 @@ export async function resolveCheckout(
           artistId,
           eventId,
           tourStopId,
+          tourId: null,
           productId: null,
           tier: "vip",
         };
@@ -201,6 +232,7 @@ export async function resolveCheckout(
       artistId,
       eventId,
       tourStopId,
+      tourId: null,
       productId: null,
       tier: "vip",
     };
@@ -236,6 +268,7 @@ export async function resolveCheckout(
       artistId,
       eventId,
       tourStopId,
+      tourId: null,
       productId: null,
       tier,
     };
@@ -260,6 +293,7 @@ export async function resolveCheckout(
         artistId: null,
         eventId: null,
         tourStopId: null,
+        tourId: null,
         productId: null,
         tier: "general",
         festivalTierId: tier.id as string,
@@ -273,6 +307,7 @@ export async function resolveCheckout(
     artistId: null,
     eventId,
     tourStopId,
+    tourId: null,
     productId,
     tier,
   };
@@ -301,6 +336,30 @@ export async function assertCheckoutAllowed(
   body: CheckoutBody,
   resolved: ResolvedCheckout
 ) {
+  if (body.type === "tour_pass") {
+    if (!body.tourId) {
+      throw new CheckoutValidationError("Choose a tour for the tour pass");
+    }
+    const { data: existing } = await supabase
+      .from("tour_passes")
+      .select("id")
+      .eq("tour_id", body.tourId)
+      .eq("user_id", userId)
+      .eq("tier", resolved.tier)
+      .maybeSingle();
+    if (existing) {
+      throw new CheckoutValidationError("You already have a tour pass for this tour");
+    }
+    const { data: tour } = await supabase
+      .from("tours")
+      .select("status, tour_pass_price_cents")
+      .eq("id", body.tourId)
+      .maybeSingle();
+    if (!tour || tour.status !== "published" || !tour.tour_pass_price_cents) {
+      throw new CheckoutValidationError("Tour pass is not available for this tour");
+    }
+  }
+
   if (body.type === "ticket") {
     if (body.quantity && body.quantity > 1) {
       throw new CheckoutValidationError("One ticket per checkout for this event");
@@ -396,7 +455,11 @@ export async function createPendingOrder(
   const quantity = bodyQuantity(input.body);
   const lineTotal = input.resolved.pricing.unitAmountCents * quantity;
   const orderType =
-    input.body.type === "digital" || input.body.type === "festival" ? "digital" : input.body.type;
+    input.body.type === "digital" || input.body.type === "festival"
+      ? "digital"
+      : input.body.type === "tour_pass"
+        ? "tour_pass"
+        : input.body.type;
 
   const { data: order, error } = await supabase
     .from("orders")
@@ -412,6 +475,7 @@ export async function createPendingOrder(
       metadata: {
         event_id: input.resolved.eventId,
         tour_stop_id: input.resolved.tourStopId,
+        tour_id: input.resolved.tourId,
         product_id: input.resolved.productId,
         tier: input.resolved.tier,
         tip_message: input.body.tipMessage ?? null,
@@ -431,6 +495,7 @@ export async function createPendingOrder(
     order_id: order.id,
     product_id: input.resolved.productId,
     event_id: input.resolved.eventId,
+    tour_id: input.resolved.tourId,
     quantity,
     unit_price_cents: input.resolved.pricing.unitAmountCents,
   });

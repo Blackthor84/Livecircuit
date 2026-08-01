@@ -13,7 +13,7 @@ import type { TourDiscoveryFilter } from "@/lib/virtual-touring/types";
 export const metadata: Metadata = {
   title: "Discover",
   description:
-    "Discover live music, comedy, podcasts, virtual concerts, and ticketed livestreams on LiveCircuit.",
+    "Discover digital tours, upcoming tour stops, and top touring artists on LiveCircuit — the world's first Digital Touring Platform.",
 };
 
 type PageProps = {
@@ -34,9 +34,9 @@ export default async function DiscoverPage({ searchParams }: PageProps) {
   return (
     <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6">
       <header className="max-w-2xl">
-        <h1 className="text-3xl font-bold tracking-tight sm:text-4xl">Discover live experiences</h1>
+        <h1 className="text-3xl font-bold tracking-tight sm:text-4xl">Discover digital tours</h1>
         <p className="mt-3 text-muted-foreground">
-          Real artists, real events — concerts, comedy, podcasts, and creators from anywhere in the world.
+          Follow tours across cities, states, and countries — concerts, comedy, podcasts, and creators on the move.
         </p>
         {fanLocation?.cityName ? (
           <p className="mt-2 text-sm text-primary">

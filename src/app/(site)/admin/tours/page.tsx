@@ -4,6 +4,7 @@ import { AdminPageHeader } from "@/components/admin/command-center/admin-dashboa
 import { AdminEntityTable } from "@/components/admin/command-center/admin-entity-table";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { ROUTES } from "@/lib/constants";
 import { listAdminTours } from "@/lib/data/admin-entities";
 
 export const metadata: Metadata = { title: "Tours — Admin" };
@@ -26,11 +27,17 @@ export default async function AdminToursPage() {
               {
                 key: "title",
                 header: "Tour",
-                cell: (row) => (
-                  <Link href={`/tours/${row.slug}`} className="font-medium hover:text-primary">
-                    {row.title}
-                  </Link>
-                ),
+                cell: (row) => {
+                  const artist = Array.isArray(row.artists) ? row.artists[0] : row.artists;
+                  const href = artist?.slug
+                    ? `/artists/${artist.slug}/tours/${row.slug}`
+                    : ROUTES.tours;
+                  return (
+                    <Link href={href} className="font-medium hover:text-primary">
+                      {row.title}
+                    </Link>
+                  );
+                },
               },
               {
                 key: "artist",

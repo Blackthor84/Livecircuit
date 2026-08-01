@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { APP_NAME, ROUTES } from "@/lib/constants";
+import { APP_NAME, APP_TAGLINE, ROUTES } from "@/lib/constants";
 import { DIGITAL_ONLY_STATEMENT, TRUST_SECTION } from "@/lib/home/creator-promise-content";
 
 export const metadata: Metadata = { title: "About" };
@@ -10,14 +10,17 @@ export default function AboutPage() {
     <div className="mx-auto max-w-3xl px-4 py-16 sm:px-6">
       <p className="text-sm font-medium uppercase tracking-widest text-primary">About</p>
       <h1 className="mt-4 text-4xl font-bold tracking-tight">{APP_NAME}</h1>
-      <p className="mt-6 text-lg text-muted-foreground">
-        Digital live entertainment — built Artist First.
-      </p>
+      <p className="mt-6 text-lg text-muted-foreground">{APP_TAGLINE}</p>
       <div className="prose prose-invert mt-10 max-w-none space-y-6 text-muted-foreground">
         <p>
-          LiveCircuit connects artists and fans for digital live performances — virtual concerts, comedy
-          specials, podcast recordings, DJ sets, digital festivals, and meet-and-greets. We are digital
-          only: not a marketplace for physical concerts.
+          LiveCircuit is the world&apos;s first Digital Touring Platform. Artists create multi-city digital
+          tours — every stop is a real city, real arena, and real audience. Fans follow tours, collect passport
+          stamps, and join each stop as the artist moves from city to city.
+        </p>
+        <p>
+          Streaming is the technology that powers the tour. The tour is the product. We connect artists and
+          fans for digital performances across music, comedy, podcasts, DJ sets, digital festivals, and
+          meet-and-greets. We are digital only: not a marketplace for physical concerts.
         </p>
         <p>
           Our Artist First philosophy means we do not profit from the direct relationship between artists

@@ -9,7 +9,10 @@ export const PUBLIC_ARTIST_LIST_SELECT =
 
 export const PUBLIC_ARTIST_EVENT_SELECT = `
   *, artists!inner(slug, stage_name, banner_url, verified, profiles!inner(is_test_account)),
-  tour_stops(virtual_location_label, ticket_price_cents, banner_url)
+  tour_stops(
+    virtual_location_label, ticket_price_cents, banner_url, tour_city, tour_state_code, stop_order,
+    tours(id, title, slug)
+  )
 `;
 
 export const PUBLIC_TOUR_SELECT =

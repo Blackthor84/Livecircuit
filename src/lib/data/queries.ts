@@ -224,11 +224,11 @@ export async function getTourWithStops(artistSlug: string, tourSlug: string) {
 export async function searchCatalog(query: string) {
   const supabase = await getSupabaseOrNull();
   if (!supabase) {
-    return { artists: [], events: [] };
+    return { artists: [], events: [], tours: [], tourStops: [] };
   }
 
   const q = `%${query.trim()}%`;
-  const [artistsByStage, artistsByUsername, artistsByCategory, artistsByCity, events] =
+  const [artistsByStage, artistsByUsername, artistsByCategory, artistsByCity, events, tours, tourStops] =
     await Promise.all([
       supabase
         .from("artists")
@@ -268,6 +268,27 @@ export async function searchCatalog(query: string) {
         .eq("artists.profiles.is_test_account", false)
         .ilike("title", q)
         .limit(10),
+      supabase
+        .from("tours")
+        .select(
+          "id, slug, title, status, starts_at, artists!inner(slug, stage_name, profiles!inner(username, is_test_account))"
+        )
+        .eq("artists.profiles.is_test_account", false)
+        .eq("status", "published")
+        .ilike("title", q)
+        .limit(10),
+      supabase
+        .from("tour_stops")
+        .select(
+          `
+          id, tour_city, virtual_location_label, scheduled_at,
+          tours!inner(id, slug, title, status, artists!inner(slug, stage_name, profiles!inner(username, is_test_account)))
+        `
+        )
+        .eq("tours.status", "published")
+        .eq("tours.artists.profiles.is_test_account", false)
+        .or(`tour_city.ilike.${q},virtual_location_label.ilike.${q}`)
+        .limit(10),
     ]);
 
   type SearchArtist = {
@@ -304,7 +325,65 @@ export async function searchCatalog(query: string) {
     }
   }
 
-  return { artists: [...merged.values()].slice(0, 10), events: events.data ?? [] };
+  type SearchTour = {
+    id: string;
+    slug: string;
+    title: string;
+    status: string;
+    starts_at: string | null;
+    artists: { slug: string; stage_name: string; profiles?: { username?: string | null } | null };
+  };
+
+  type SearchTourStop = {
+    id: string;
+    tour_city: string | null;
+    virtual_location_label: string | null;
+    scheduled_at: string;
+    tours: SearchTour;
+  };
+
+  function normalizeSearchTour(row: Record<string, unknown>): SearchTour {
+    const artistsRaw = row.artists;
+    const artist = Array.isArray(artistsRaw) ? artistsRaw[0] : artistsRaw;
+    const profilesRaw = (artist as { profiles?: unknown })?.profiles;
+    const profile = Array.isArray(profilesRaw) ? profilesRaw[0] : profilesRaw;
+    return {
+      id: row.id as string,
+      slug: row.slug as string,
+      title: row.title as string,
+      status: row.status as string,
+      starts_at: (row.starts_at as string | null) ?? null,
+      artists: {
+        slug: (artist as { slug: string }).slug,
+        stage_name: (artist as { stage_name: string }).stage_name,
+        profiles: profile as { username?: string | null } | null,
+      },
+    };
+  }
+
+  function normalizeSearchTourStop(row: Record<string, unknown>): SearchTourStop {
+    const toursRaw = row.tours;
+    const tourRow = Array.isArray(toursRaw) ? toursRaw[0] : toursRaw;
+    return {
+      id: row.id as string,
+      tour_city: (row.tour_city as string | null) ?? null,
+      virtual_location_label: (row.virtual_location_label as string | null) ?? null,
+      scheduled_at: row.scheduled_at as string,
+      tours: normalizeSearchTour(tourRow as Record<string, unknown>),
+    };
+  }
+
+  const tourResults = (tours.data ?? []).map((row) => normalizeSearchTour(row as Record<string, unknown>));
+  const stopResults = (tourStops.data ?? []).map((row) =>
+    normalizeSearchTourStop(row as Record<string, unknown>)
+  );
+
+  return {
+    artists: [...merged.values()].slice(0, 10),
+    tours: tourResults,
+    tourStops: stopResults,
+    events: events.data ?? [],
+  };
 }
 
 export async function getFanHeatMap(artistId: string) {

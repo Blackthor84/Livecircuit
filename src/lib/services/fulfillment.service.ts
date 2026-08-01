@@ -70,6 +70,8 @@ export async function fulfillPaidOrder(
     await fulfillVipOrder(supabase, order);
   } else if (orderType === "digital") {
     await fulfillDigitalOrder(supabase, order);
+  } else if (orderType === "tour_pass") {
+    await fulfillTourPassOrder(supabase, order);
   }
 
   await supabase
@@ -208,6 +210,62 @@ async function fulfillVipOrder(supabase: SupabaseClient, order: OrderRow) {
     },
     { onConflict: "user_id,artist_id" }
   );
+}
+
+async function fulfillTourPassOrder(supabase: SupabaseClient, order: OrderRow) {
+  const meta = order.metadata ?? {};
+  const tourId = (meta.tour_id as string | undefined) ?? null;
+  if (!tourId) {
+    console.error("[fulfillment] Missing tour_id for tour pass order", order.id);
+    return;
+  }
+
+  const { data: existing } = await supabase
+    .from("tour_passes")
+    .select("id")
+    .eq("order_id", order.id)
+    .maybeSingle();
+  if (existing) return;
+
+  const tier = (meta.tier as string) || "general";
+  const { data: pass, error } = await supabase
+    .from("tour_passes")
+    .insert({
+      tour_id: tourId,
+      user_id: order.user_id,
+      order_id: order.id,
+      tier,
+      price_cents: order.total_cents,
+    })
+    .select("id")
+    .single();
+
+  if (error || !pass) {
+    console.error("[fulfillment] tour pass insert", error?.message);
+    return;
+  }
+
+  const qr_code = generateTicketQrPayload(pass.id as string);
+  await supabase.from("tour_passes").update({ qr_code }).eq("id", pass.id);
+
+  const { data: tour } = await supabase
+    .from("tours")
+    .select("title, slug, artists(slug)")
+    .eq("id", tourId)
+    .maybeSingle();
+  const artists = tour?.artists as { slug: string } | { slug: string }[] | null;
+  const artistSlug = Array.isArray(artists) ? artists[0]?.slug : artists?.slug;
+  if (tour && artistSlug) {
+    const { createNotification } = await import("@/lib/services/notifications.service");
+    await createNotification({
+      userId: order.user_id,
+      type: "ticket_reminder",
+      title: "Tour pass confirmed",
+      body: `Your pass for ${tour.title as string} is ready — every stop on the route is yours.`,
+      link: `/artists/${artistSlug}/tours/${tour.slug as string}`,
+      metadata: { tour_id: tourId, tour_pass_id: pass.id },
+    });
+  }
 }
 
 async function fulfillDigitalOrder(supabase: SupabaseClient, order: OrderRow) {

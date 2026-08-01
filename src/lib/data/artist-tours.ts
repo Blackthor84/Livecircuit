@@ -32,6 +32,26 @@ export async function listArtistTours(artistId: string): Promise<ArtistTourListI
   });
 }
 
+export async function listPublishedToursForArtistPublic(artistId: string): Promise<ArtistTourListItem[]> {
+  if (!isSupabaseConfigured()) return [];
+
+  const supabase = await createClient();
+  const { data: tours } = await supabase
+    .from("tours")
+    .select("*, tour_stops(id)")
+    .eq("artist_id", artistId)
+    .eq("status", "published")
+    .order("starts_at", { ascending: false });
+
+  if (!tours) return [];
+
+  return tours.map((row) => {
+    const stopRows = row.tour_stops as { id: string }[] | null;
+    const { tour_stops: _ignored, ...tour } = row as Tour & { tour_stops: unknown };
+    return { ...(tour as Tour), stop_count: stopRows?.length ?? 0 };
+  });
+}
+
 export async function getTourForArtistManage(
   userId: string,
   tourId: string

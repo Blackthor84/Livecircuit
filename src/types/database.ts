@@ -73,9 +73,14 @@ export type Tour = {
   title: string;
   description: string | null;
   banner_url: string | null;
+  poster_url: string | null;
   status: TourStatus;
   starts_at: string | null;
   ends_at: string | null;
+  follower_count?: number;
+  tickets_sold?: number;
+  revenue_cents?: number;
+  tour_pass_price_cents?: number | null;
 };
 
 export type TourStop = {
@@ -146,6 +151,7 @@ export type Stream = {
 export type Product = {
   id: string;
   artist_id: string;
+  tour_id: string | null;
   slug: string;
   name: string;
   description: string | null;
@@ -153,6 +159,16 @@ export type Product = {
   image_urls: string[];
   is_vip_exclusive: boolean;
   active: boolean;
+};
+
+export type TourPass = {
+  id: string;
+  tour_id: string;
+  user_id: string;
+  order_id: string | null;
+  tier: string;
+  price_cents: number;
+  qr_code: string | null;
 };
 
 export type FanLocationRow = {

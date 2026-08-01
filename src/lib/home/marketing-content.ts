@@ -14,20 +14,20 @@ export const HOMEPAGE_CATEGORY_CARDS = [
 ] as const;
 
 export const WHY_LIVECIRCUIT_FEATURES = [
-  { title: "HD Digital Livestreams", body: "Studio-grade video for digital concerts, comedy, podcasts, and creators—delivered worldwide." },
-  { title: "Virtual Tours", body: "Multi-city digital tour stops with countdowns, banners, and ticketed live moments." },
-  { title: "VIP Digital Experiences", body: "Backstage access, exclusive chat, and premium tiers for digital meet-and-greets." },
-  { title: "Live Chat", body: "Real-time audience interaction with moderation tools for producers." },
-  { title: "Interactive Audience", body: "Reactions, song requests, polls, and giveaways that keep fans engaged." },
-  { title: "Fan Subscriptions", body: "Turn viewers into recurring supporters—100% of tips and donations go to artists." },
-  { title: "Digital Merchandise", body: "Sell digital merch during live shows. Artists keep 100% of merchandise revenue." },
-  { title: "Transparent Ticketing", body: "Secure digital checkout with upfront fees—no hidden platform cuts on fan support." },
-  { title: "Community Building", body: "Followers, local chat, and venue communities that grow with every digital show." },
-  { title: "Creator Analytics", body: "Fan heat maps, engagement, and performance data to plan your next digital tour stop." },
-  { title: "Tour Management", body: "Schedule digital stops, manage pricing, and promote each performance from one dashboard." },
-  { title: "Producer Mode", body: "Invite your crew to run chat, stream health, and backstage coordination." },
-  { title: "Green Room", body: "Private pre-show prep with sound check, test fans, and Go Live gating." },
-  { title: "Backstage Access", body: "Producer chat and crew tools invisible to the public until you go live." },
+  { title: "Multi-City Digital Tours", body: "Plan routes across cities, states, and countries — every stop is a real place with a real audience." },
+  { title: "Tour Stops, Not Streams", body: "Each performance is a stop on the route. Fans follow the journey city by city." },
+  { title: "Digital Passport", body: "Fans collect stamps for every city they attend. Complete states, countries, and world tours." },
+  { title: "Virtual Arenas", body: "Community, Club, Theater, Arena, and Stadium tiers — scale your tour as your audience grows." },
+  { title: "Tour Progress Maps", body: "Live route maps show where the artist has been, where they are now, and what's next." },
+  { title: "Fan Subscriptions", body: "Turn followers into recurring supporters — 100% of tips and donations go to artists." },
+  { title: "Tour Merchandise", body: "Launch tour-exclusive merch at every stop. Artists keep 100% of merchandise revenue." },
+  { title: "Transparent Ticketing", body: "Secure digital checkout with upfront fees — no hidden platform cuts on fan support." },
+  { title: "Community Building", body: "Followers, local chat, and venue communities that grow with every tour stop." },
+  { title: "Tour Analytics", body: "Fan heat maps, engagement, and attendance data to plan your next digital tour stop." },
+  { title: "Tour Management", body: "Schedule stops, manage pricing, and promote each city from one dashboard." },
+  { title: "Producer Mode", body: "Invite your crew to run chat, show health, and backstage coordination." },
+  { title: "Green Room", body: "Private pre-show prep with sound check and test fans before the tour stop begins." },
+  { title: "Backstage Access", body: "Producer chat and crew tools invisible to the public until the stop goes live." },
 ] as const;
 
 export const FOUNDING_ARTIST_BENEFITS = [
@@ -41,12 +41,12 @@ export const FOUNDING_ARTIST_BENEFITS = [
 ] as const;
 
 export const HOMEPAGE_SEO_KEYWORDS = [
-  "live music",
-  "comedy streaming",
+  "digital touring platform",
+  "virtual tour",
+  "multi-city digital tour",
+  "digital concert tour",
+  "tour passport",
+  "virtual arenas",
+  "ticketed tour stops",
   "creator economy",
-  "virtual concerts",
-  "live performances",
-  "interactive entertainment",
-  "ticketed livestreams",
-  "virtual touring",
 ] as const;

@@ -14,17 +14,19 @@ import {
 import { getFeaturedVenuesForHome } from "@/lib/data/venues";
 import { getPlatformHomepageSponsorBanner } from "@/lib/data/sponsors";
 import { HOMEPAGE_SEO_KEYWORDS } from "@/lib/home/marketing-content";
+import { DIGITAL_TOURING_BRAND } from "@/lib/home/digital-touring-content";
 import { listPlatformSponsors } from "@/lib/sponsorship/inventory";
+import { getActiveTourMapCities, getLiveTourSnapshots } from "@/lib/touring/tour-context";
 
 export const metadata: Metadata = {
-  title: "The Future of Live Entertainment",
+  title: DIGITAL_TOURING_BRAND.heroHeadline,
   description:
-    "LiveCircuit — ticketed livestreams, virtual concerts, comedy, podcasts, and interactive creator experiences. Watch live music and performances from anywhere in the world.",
+    "LiveCircuit — the world's first Digital Touring Platform. Create multi-city digital tours with real cities, real arenas, and real audiences. Fans follow tours, not streams.",
   keywords: [...HOMEPAGE_SEO_KEYWORDS],
   openGraph: {
-    title: "LiveCircuit — The Future of Live Entertainment",
+    title: `LiveCircuit — ${DIGITAL_TOURING_BRAND.platformName}`,
     description:
-      "Ticketed livestreams, virtual concerts, comedy, podcasts, and the creator economy — built for authentic live performance.",
+      "Digital tours across cities, states, and countries. The tour is the product — streaming is just the technology that powers it.",
   },
 };
 
@@ -39,9 +41,11 @@ export default async function HomePage() {
     featureAccess,
     featuredVenues,
     platformSponsors,
+    liveTourSnapshots,
+    activeMapCities,
   ] = await Promise.all([
     getFeaturedArtists(4),
-    getPublishedTours(3),
+    getPublishedTours(6),
     getUpcomingEvents(4),
     getLiveNowEvents(4),
     getPublicArtistCount(),
@@ -49,6 +53,8 @@ export default async function HomePage() {
     getViewerFeatureAccess(),
     getFeaturedVenuesForHome(6),
     listPlatformSponsors(),
+    getLiveTourSnapshots(2),
+    getActiveTourMapCities(12),
   ]);
 
   const showSponsor = featureAccess.canAccess("sponsorships");
@@ -67,6 +73,8 @@ export default async function HomePage() {
         upcomingEvents={upcomingEvents}
         foundingArtistCount={foundingArtistCount}
         showTicketing={showTicketing}
+        liveTourSnapshots={liveTourSnapshots}
+        activeMapCities={activeMapCities}
       />
 
       {homepageSponsor && showSponsor ? (
