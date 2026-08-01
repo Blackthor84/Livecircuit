@@ -13,7 +13,7 @@ import { cn } from "@/lib/utils";
 
 export default function NewTourPage() {
   const [loading, setLoading] = useState(false);
-  const [selectedTemplate, setSelectedTemplate] = useState<string | null>("usa-tour");
+  const [selectedTemplate, setSelectedTemplate] = useState<string | null>("new-england-tour");
   const [tourType, setTourType] = useState<TourType>("regional");
 
   const selected = TOUR_TEMPLATES.find((t) => t.slug === selectedTemplate);

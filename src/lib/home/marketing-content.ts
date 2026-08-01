@@ -30,15 +30,7 @@ export const WHY_LIVECIRCUIT_FEATURES = [
   { title: "Backstage Access", body: "Producer chat and crew tools invisible to the public until the stop goes live." },
 ] as const;
 
-export const FOUNDING_ARTIST_BENEFITS = [
-  "Early access to new platform features",
-  "Founder badge on your profile",
-  "Featured placement as founding artists join",
-  "Priority support from the LiveCircuit team",
-  "Artist First pricing — keep 100% of merch, tips, and donations",
-  "Direct product feedback access",
-  "Exclusive founder community",
-] as const;
+export { FOUNDING_ARTIST_BENEFITS } from "@/lib/home/empty-states";
 
 export const HOMEPAGE_SEO_KEYWORDS = [
   "digital touring platform",

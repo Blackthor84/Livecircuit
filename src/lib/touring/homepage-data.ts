@@ -1,7 +1,6 @@
 import { createClient } from "@/lib/supabase/server";
 import { isSupabaseConfigured } from "@/lib/config/env";
 import type { HeatPoint } from "@/lib/maps/heat-types";
-import { DEMO_TOUR_ROUTE, GLOBAL_TOUR_CITIES } from "@/lib/home/digital-touring-content";
 import { buildGlobeStopsFromTourStops } from "@/lib/touring/globe-stops";
 import { mapStopsToRouteStatus } from "@/lib/touring/tour-route-status";
 import type { GlobeTourStop } from "@/components/home/tour-globe-map";
@@ -38,6 +37,7 @@ export type HomepageTouringPayload = {
   heatPoints: HeatPoint[];
   heroGlobeStops: GlobeTourStop[];
   showHeroRoute: boolean;
+  hasLiveActivity: boolean;
   liveTours: HomepageTourSection[];
   toursStartingSoon: HomepageTourSection[];
   trendingTours: HomepageTourSection[];
@@ -48,33 +48,32 @@ export type HomepageTouringPayload = {
   passportStamps: string[];
 };
 
-const DEMO_STATS: PlatformLiveStats = {
-  artistsTouring: 127,
-  livePerformances: 2841,
-  countriesWatching: 91,
-  activeArenas: 486,
-  fansWatching: 82541,
-  toursStartingToday: 24,
+const ZERO_STATS: PlatformLiveStats = {
+  artistsTouring: 0,
+  livePerformances: 0,
+  countriesWatching: 0,
+  activeArenas: 0,
+  fansWatching: 0,
+  toursStartingToday: 0,
 };
 
-const DEMO_ACTIVITY: TourActivityItem[] = [
-  { id: "a1", message: "Taylor Brooks just arrived in Chicago." },
-  { id: "a2", message: "Comedy Night just started in Boston." },
-  { id: "a3", message: "DJ Nova sold out New York." },
-  { id: "a4", message: "Sarah Lee announced a World Tour." },
-  { id: "a5", message: "The Midnight Tour reached London." },
-];
-
-const DEMO_PASSPORT = ["Boston", "New York", "Chicago", "London", "Tokyo"];
-
-function demoHeroStops(): GlobeTourStop[] {
-  return DEMO_TOUR_ROUTE.stops.map((s) => ({
-    city: s.city,
-    lat: GLOBAL_TOUR_CITIES.find((c) => c.city === s.city)?.lat ?? 40,
-    lng: GLOBAL_TOUR_CITIES.find((c) => c.city === s.city)?.lng ?? -74,
-    status: s.status,
-    country: "USA",
-  }));
+function emptyPayload(): HomepageTouringPayload {
+  return {
+    stats: { ...ZERO_STATS },
+    activityFeed: [],
+    heatPoints: [],
+    heroGlobeStops: [],
+    showHeroRoute: false,
+    hasLiveActivity: false,
+    liveTours: [],
+    toursStartingSoon: [],
+    trendingTours: [],
+    mostFollowedTours: [],
+    completedTours: [],
+    popularCities: [],
+    popularArenas: [],
+    passportStamps: [],
+  };
 }
 
 function normalizeTourRow(row: Record<string, unknown>): HomepageTourSection | null {
@@ -94,34 +93,7 @@ function normalizeTourRow(row: Record<string, unknown>): HomepageTourSection | n
 }
 
 export async function getHomepageTouringPayload(): Promise<HomepageTouringPayload> {
-  if (!isSupabaseConfigured()) {
-    return {
-      stats: DEMO_STATS,
-      activityFeed: DEMO_ACTIVITY,
-      heatPoints: GLOBAL_TOUR_CITIES.map((c) => ({
-        lng: c.lng,
-        lat: c.lat,
-        weight: c.active ? 800 : 200,
-        label: c.city,
-      })),
-      heroGlobeStops: demoHeroStops(),
-      showHeroRoute: true,
-      liveTours: [],
-      toursStartingSoon: [],
-      trendingTours: [],
-      mostFollowedTours: [],
-      completedTours: [],
-      popularCities: [
-        { city: "New York", stops: 128 },
-        { city: "Los Angeles", stops: 96 },
-        { city: "Chicago", stops: 84 },
-        { city: "London", stops: 72 },
-        { city: "Boston", stops: 68 },
-      ],
-      popularArenas: [],
-      passportStamps: DEMO_PASSPORT,
-    };
-  }
+  if (!isSupabaseConfigured()) return emptyPayload();
 
   const supabase = await createClient();
   const now = new Date();
@@ -134,11 +106,10 @@ export async function getHomepageTouringPayload(): Promise<HomepageTouringPayloa
     liveEventsRes,
     publishedToursRes,
     liveTourArtistsRes,
-    venuesRes,
-    countriesRes,
+    activeVenuesRes,
     cityStopsRes,
-    recentToursRes,
     completedToursRes,
+    fanCountriesRes,
   ] = await Promise.all([
     supabase
       .from("events")
@@ -163,8 +134,13 @@ export async function getHomepageTouringPayload(): Promise<HomepageTouringPayloa
       .select("artist_id, artists!inner(profiles!inner(is_test_account))")
       .eq("status", "published")
       .eq("artists.profiles.is_test_account", false),
-    supabase.from("venues").select("id, slug, name").limit(500),
-    supabase.from("countries").select("id").eq("is_enabled", true),
+    supabase
+      .from("tour_stops")
+      .select("venue_id, venues!inner(id, slug, name), tours!inner(status, artists!inner(profiles!inner(is_test_account)))")
+      .eq("tours.status", "published")
+      .eq("tours.artists.profiles.is_test_account", false)
+      .not("venue_id", "is", null)
+      .limit(200),
     supabase
       .from("tour_stops")
       .select("tour_city, cities(name), tours!inner(status, artists!inner(profiles!inner(is_test_account)))")
@@ -173,25 +149,39 @@ export async function getHomepageTouringPayload(): Promise<HomepageTouringPayloa
       .limit(500),
     supabase
       .from("tours")
-      .select("id, title, slug, created_at, artists(slug, stage_name, profiles!inner(is_test_account))")
-      .eq("status", "published")
-      .eq("artists.profiles.is_test_account", false)
-      .order("created_at", { ascending: false })
-      .limit(5),
-    supabase
-      .from("tours")
       .select("id, title, slug, ends_at, artists(slug, stage_name, profiles!inner(is_test_account))")
       .eq("status", "published")
       .eq("artists.profiles.is_test_account", false)
       .lt("ends_at", now.toISOString())
       .order("ends_at", { ascending: false })
       .limit(6),
+    supabase
+      .from("profiles")
+      .select("country_id, countries!inner(code)")
+      .eq("is_test_account", false)
+      .not("country_id", "is", null)
+      .limit(1000),
   ]);
 
   const liveEvents = liveEventsRes.data ?? [];
   const publishedTours = publishedToursRes.data ?? [];
+
+  if (liveEvents.length === 0 && publishedTours.length === 0) {
+    return emptyPayload();
+  }
+
   const fansWatching = liveEvents.reduce((s, e) => s + (e.viewer_count ?? 0), 0);
   const artistIds = new Set((liveTourArtistsRes.data ?? []).map((t) => t.artist_id));
+
+  const fanCountryIds = new Set(
+    (fanCountriesRes.data ?? [])
+      .map((p) => {
+        const c = p.countries;
+        const row = Array.isArray(c) ? c[0] : c;
+        return (row as { code?: string } | null)?.code;
+      })
+      .filter(Boolean)
+  );
 
   const toursStartingToday = publishedTours.filter((t) => {
     if (!t.starts_at) return false;
@@ -200,13 +190,12 @@ export async function getHomepageTouringPayload(): Promise<HomepageTouringPayloa
   }).length;
 
   const stats: PlatformLiveStats = {
-    artistsTouring: artistIds.size || DEMO_STATS.artistsTouring,
-    livePerformances:
-      liveEvents.length > 0 ? Math.max(liveEvents.length, 1) + 2800 : DEMO_STATS.livePerformances,
-    countriesWatching: countriesRes.data?.length || DEMO_STATS.countriesWatching,
-    activeArenas: venuesRes.data?.length || DEMO_STATS.activeArenas,
-    fansWatching: fansWatching > 0 ? fansWatching : DEMO_STATS.fansWatching,
-    toursStartingToday: toursStartingToday || DEMO_STATS.toursStartingToday,
+    artistsTouring: artistIds.size,
+    livePerformances: liveEvents.length,
+    countriesWatching: fanCountryIds.size,
+    activeArenas: new Set((activeVenuesRes.data ?? []).map((r) => r.venue_id)).size,
+    fansWatching,
+    toursStartingToday,
   };
 
   const heatPoints: HeatPoint[] = liveEvents.flatMap((event) => {
@@ -227,19 +216,8 @@ export async function getHomepageTouringPayload(): Promise<HomepageTouringPayloa
     ];
   });
 
-  if (heatPoints.length === 0) {
-    heatPoints.push(
-      ...GLOBAL_TOUR_CITIES.map((c) => ({
-        lng: c.lng,
-        lat: c.lat,
-        weight: c.active ? 600 : 150,
-        label: c.city,
-      }))
-    );
-  }
-
   const activityFeed: TourActivityItem[] = [];
-  for (const event of liveEvents.slice(0, 3)) {
+  for (const event of liveEvents.slice(0, 5)) {
     const artist = Array.isArray(event.artists) ? event.artists[0] : event.artists;
     const stopRaw = event.tour_stops;
     const stop = Array.isArray(stopRaw) ? stopRaw[0] : stopRaw;
@@ -252,20 +230,9 @@ export async function getHomepageTouringPayload(): Promise<HomepageTouringPayloa
       });
     }
   }
-  for (const tour of recentToursRes.data ?? []) {
-    const section = normalizeTourRow(tour as Record<string, unknown>);
-    if (section) {
-      activityFeed.push({
-        id: `ann-${tour.id}`,
-        message: `${section.artistName} announced ${section.title}.`,
-        href: `/artists/${section.artistSlug}/tours/${section.slug}`,
-      });
-    }
-  }
-  if (activityFeed.length === 0) activityFeed.push(...DEMO_ACTIVITY);
 
-  let heroGlobeStops = demoHeroStops();
-  let showHeroRoute = true;
+  let heroGlobeStops: GlobeTourStop[] = [];
+  let showHeroRoute = false;
 
   const featuredLive = liveEvents[0];
   if (featuredLive) {
@@ -310,13 +277,19 @@ export async function getHomepageTouringPayload(): Promise<HomepageTouringPayloa
     .slice(0, 6)
     .map(([city, stops]) => ({ city, stops }));
 
-  if (popularCities.length === 0) {
-    popularCities.push(
-      { city: "New York", stops: 128 },
-      { city: "Los Angeles", stops: 96 },
-      { city: "Chicago", stops: 84 }
-    );
+  const arenaMap = new Map<string, { name: string; slug: string }>();
+  for (const row of activeVenuesRes.data ?? []) {
+    const venueRaw = row.venues;
+    const venue = Array.isArray(venueRaw) ? venueRaw[0] : venueRaw;
+    if (venue && typeof venue === "object" && "slug" in venue) {
+      const v = venue as { id: string; slug: string; name: string };
+      arenaMap.set(v.id, { name: v.name, slug: v.slug });
+    }
   }
+  const popularArenas = [...arenaMap.values()].slice(0, 6).map((v) => ({
+    ...v,
+    events: 0,
+  }));
 
   const nowMs = now.getTime();
   const toursStartingSoon = tourSections
@@ -357,19 +330,14 @@ export async function getHomepageTouringPayload(): Promise<HomepageTouringPayloa
     heatPoints,
     heroGlobeStops,
     showHeroRoute,
+    hasLiveActivity: true,
     liveTours,
     toursStartingSoon,
     trendingTours,
     mostFollowedTours,
     completedTours,
     popularCities,
-    popularArenas: (venuesRes.data ?? []).slice(0, 6).map((v) => ({
-      name: v.name,
-      slug: v.slug,
-      events: 0,
-    })),
-    passportStamps: popularCities.slice(0, 5).map((c) => c.city).length
-      ? popularCities.slice(0, 5).map((c) => c.city)
-      : DEMO_PASSPORT,
+    popularArenas,
+    passportStamps: popularCities.slice(0, 5).map((c) => c.city),
   };
 }

@@ -25,7 +25,8 @@ import { ROUTES } from "@/lib/constants";
 import { FOUNDING_ARTIST_GOAL } from "@/lib/data/queries";
 import { formatCents } from "@/lib/format";
 import { HOW_TOURING_WORKS, WHY_DIGITAL_TOURING } from "@/lib/home/digital-touring-content";
-import { FOUNDING_ARTIST_BENEFITS, HOMEPAGE_CATEGORY_CARDS } from "@/lib/home/marketing-content";
+import { HOMEPAGE_EMPTY_STATES, FOUNDING_ARTIST_BENEFITS } from "@/lib/home/empty-states";
+import { HOMEPAGE_CATEGORY_CARDS } from "@/lib/home/marketing-content";
 import type { HomepageTouringPayload, HomepageTourSection } from "@/lib/touring/homepage-data";
 import type { ArtistWithProfile } from "@/types/queries";
 import type { LiveTourSnapshot } from "@/lib/touring/tour-context";
@@ -70,11 +71,20 @@ function EmptyPanel({
   );
 }
 
-function TourCardGrid({ tours, emptyIcon: Icon, emptyTitle, emptyBody }: {
+function TourCardGrid({
+  tours,
+  emptyIcon: Icon,
+  emptyTitle,
+  emptyBody,
+  ctaLabel,
+  ctaHref,
+}: {
   tours: HomepageTourSection[];
   emptyIcon: LucideIcon;
   emptyTitle: string;
   emptyBody: string;
+  ctaLabel?: string;
+  ctaHref?: string;
 }) {
   if (!tours.length) {
     return (
@@ -82,8 +92,8 @@ function TourCardGrid({ tours, emptyIcon: Icon, emptyTitle, emptyBody }: {
         icon={Icon}
         title={emptyTitle}
         body={emptyBody}
-        ctaLabel="Explore tours"
-        ctaHref={ROUTES.tours}
+        ctaLabel={ctaLabel ?? "Explore tours"}
+        ctaHref={ctaHref ?? ROUTES.tours}
       />
     );
   }
@@ -142,6 +152,7 @@ export function MarketingHomepage({
         heatPoints={touring.heatPoints}
         heroGlobeStops={touring.heroGlobeStops}
         showHeroRoute={touring.showHeroRoute}
+        hasLiveActivity={touring.hasLiveActivity}
       />
 
       {heroSnapshot ? <LiveTourExperience snapshot={heroSnapshot} /> : null}
@@ -173,7 +184,13 @@ export function MarketingHomepage({
               ))}
             </div>
           ) : (
-            <EmptyPanel icon={Radio} title="No tours are live right now." body="Be the first artist to launch a digital tour." ctaLabel="Start Your Tour" ctaHref={`${ROUTES.register}?role=artist`} />
+            <EmptyPanel
+              icon={Radio}
+              title={HOMEPAGE_EMPTY_STATES.liveTours.title}
+              body={HOMEPAGE_EMPTY_STATES.liveTours.body}
+              ctaLabel={HOMEPAGE_EMPTY_STATES.liveTours.ctaLabel}
+              ctaHref={HOMEPAGE_EMPTY_STATES.liveTours.ctaHref}
+            />
           )}
         </div>
       </section>
@@ -181,21 +198,42 @@ export function MarketingHomepage({
       <section className="mx-auto max-w-7xl px-4 py-16 sm:px-6">
         <SectionHeader icon={Calendar} title="Tours starting soon" subtitle="Upcoming routes about to depart." href={ROUTES.tours} />
         <div className="mt-8">
-          <TourCardGrid tours={touring.toursStartingSoon} emptyIcon={Calendar} emptyTitle="Tours starting soon will appear here." emptyBody="When artists publish routes, the next departures show up here." />
+          <TourCardGrid
+            tours={touring.toursStartingSoon}
+            emptyIcon={Calendar}
+            emptyTitle={HOMEPAGE_EMPTY_STATES.toursStartingSoon.title}
+            emptyBody={HOMEPAGE_EMPTY_STATES.toursStartingSoon.body}
+            ctaLabel={HOMEPAGE_EMPTY_STATES.toursStartingSoon.ctaLabel}
+            ctaHref={HOMEPAGE_EMPTY_STATES.toursStartingSoon.ctaHref}
+          />
         </div>
       </section>
 
       <section className="mx-auto max-w-7xl px-4 py-16 sm:px-6">
         <SectionHeader icon={TrendingUp} title="Trending tours" subtitle="Routes gaining momentum across the platform." href={ROUTES.tours} />
         <div className="mt-8">
-          <TourCardGrid tours={touring.trendingTours} emptyIcon={Flame} emptyTitle="Trending tours will appear here." emptyBody="As fans follow digital routes, trending tours surface here." />
+          <TourCardGrid
+            tours={touring.trendingTours}
+            emptyIcon={Flame}
+            emptyTitle={HOMEPAGE_EMPTY_STATES.trendingTours.title}
+            emptyBody={HOMEPAGE_EMPTY_STATES.trendingTours.body}
+            ctaLabel={HOMEPAGE_EMPTY_STATES.trendingTours.ctaLabel}
+            ctaHref={HOMEPAGE_EMPTY_STATES.trendingTours.ctaHref}
+          />
         </div>
       </section>
 
       <section className="mx-auto max-w-7xl px-4 py-16 sm:px-6">
         <SectionHeader icon={Users} title="Most followed tours" subtitle="The routes fans are tracking most closely." href={ROUTES.tours} />
         <div className="mt-8">
-          <TourCardGrid tours={touring.mostFollowedTours} emptyIcon={Users} emptyTitle="Most followed tours will appear here." emptyBody="Follow counts grow as fans track artists city by city." />
+          <TourCardGrid
+            tours={touring.mostFollowedTours}
+            emptyIcon={Users}
+            emptyTitle={HOMEPAGE_EMPTY_STATES.mostFollowed.title}
+            emptyBody={HOMEPAGE_EMPTY_STATES.mostFollowed.body}
+            ctaLabel={HOMEPAGE_EMPTY_STATES.mostFollowed.ctaLabel}
+            ctaHref={HOMEPAGE_EMPTY_STATES.mostFollowed.ctaHref}
+          />
         </div>
       </section>
 
@@ -209,7 +247,13 @@ export function MarketingHomepage({
               ))}
             </div>
           ) : (
-            <EmptyPanel icon={Star} title="Featured artists will appear here." body="Founding artists who launch digital tours first will be featured." ctaLabel="Apply as a Founding Artist" ctaHref={`${ROUTES.register}?role=artist`} />
+            <EmptyPanel
+              icon={Star}
+              title={HOMEPAGE_EMPTY_STATES.featuredArtists.title}
+              body={HOMEPAGE_EMPTY_STATES.featuredArtists.body}
+              ctaLabel={HOMEPAGE_EMPTY_STATES.featuredArtists.ctaLabel}
+              ctaHref={HOMEPAGE_EMPTY_STATES.featuredArtists.ctaHref}
+            />
           )}
         </div>
       </section>
@@ -218,17 +262,27 @@ export function MarketingHomepage({
         <div className="grid gap-8 lg:grid-cols-2">
           <div>
             <SectionHeader icon={MapPin} title="Most visited cities" subtitle="Where digital tours stop most often." />
-            <ul className="mt-6 space-y-3">
-              {touring.popularCities.map((entry, index) => (
-                <li key={entry.city} className="glass-panel flex items-center justify-between rounded-xl border border-white/10 px-4 py-3">
-                  <span className="flex items-center gap-3">
-                    <span className="text-sm font-medium text-muted-foreground">{index + 1}</span>
-                    {entry.city}
-                  </span>
-                  <span className="text-sm text-muted-foreground">{entry.stops} tour stops</span>
-                </li>
-              ))}
-            </ul>
+            {touring.popularCities.length > 0 ? (
+              <ul className="mt-6 space-y-3">
+                {touring.popularCities.map((entry, index) => (
+                  <li key={entry.city} className="glass-panel flex items-center justify-between rounded-xl border border-white/10 px-4 py-3">
+                    <span className="flex items-center gap-3">
+                      <span className="text-sm font-medium text-muted-foreground">{index + 1}</span>
+                      {entry.city}
+                    </span>
+                    <span className="text-sm text-muted-foreground">{entry.stops} tour stops</span>
+                  </li>
+                ))}
+              </ul>
+            ) : (
+              <EmptyPanel
+                icon={MapPin}
+                title={HOMEPAGE_EMPTY_STATES.popularCities.title}
+                body={HOMEPAGE_EMPTY_STATES.popularCities.body}
+                ctaLabel="Start Your Tour"
+                ctaHref={`${ROUTES.register}?role=artist`}
+              />
+            )}
           </div>
           <div>
             <SectionHeader icon={Building2} title="Popular arenas" subtitle="Virtual venues hosting tour stops." href="/livecircuit/venues" />
@@ -242,7 +296,10 @@ export function MarketingHomepage({
                   </li>
                 ))
               ) : (
-                <li className="text-sm text-muted-foreground">Arena listings will appear as tours go live.</li>
+                <li className="glass-panel rounded-xl border border-white/10 px-4 py-6 text-center text-sm text-muted-foreground">
+                  <p className="font-medium text-foreground">{HOMEPAGE_EMPTY_STATES.popularArenas.title}</p>
+                  <p className="mt-1">{HOMEPAGE_EMPTY_STATES.popularArenas.body}</p>
+                </li>
               )}
             </ul>
           </div>
@@ -252,7 +309,14 @@ export function MarketingHomepage({
       <section className="mx-auto max-w-7xl px-4 py-16 sm:px-6">
         <SectionHeader icon={Calendar} title="Recently completed tours" subtitle="Routes that finished their final stop." href={ROUTES.tours} />
         <div className="mt-8">
-          <TourCardGrid tours={touring.completedTours} emptyIcon={Calendar} emptyTitle="Completed tours will appear here." emptyBody="When artists finish a route, completed tours are archived here." />
+          <TourCardGrid
+            tours={touring.completedTours}
+            emptyIcon={Calendar}
+            emptyTitle={HOMEPAGE_EMPTY_STATES.completedTours.title}
+            emptyBody={HOMEPAGE_EMPTY_STATES.completedTours.body}
+            ctaLabel={HOMEPAGE_EMPTY_STATES.completedTours.ctaLabel}
+            ctaHref={HOMEPAGE_EMPTY_STATES.completedTours.ctaHref}
+          />
         </div>
       </section>
 
@@ -284,7 +348,13 @@ export function MarketingHomepage({
               ))}
             </div>
           ) : (
-            <EmptyPanel icon={Calendar} title="Upcoming tour stops will appear here." body="When artists publish digital tours, every city on the route shows up here." ctaLabel="Start Your Tour" ctaHref={`${ROUTES.register}?role=artist`} />
+            <EmptyPanel
+              icon={Calendar}
+              title={HOMEPAGE_EMPTY_STATES.upcomingStops.title}
+              body={HOMEPAGE_EMPTY_STATES.upcomingStops.body}
+              ctaLabel={HOMEPAGE_EMPTY_STATES.upcomingStops.ctaLabel}
+              ctaHref={HOMEPAGE_EMPTY_STATES.upcomingStops.ctaHref}
+            />
           )}
         </div>
       </section>
@@ -343,8 +413,11 @@ export function MarketingHomepage({
                 <Sparkles className="size-5 text-violet-300" />
                 <p className="text-sm uppercase tracking-wide text-violet-300">Founding Artist Program</p>
               </div>
-              <h2 className="mt-3 text-3xl font-bold">Launch the first digital tours on LiveCircuit</h2>
-              <p className="mt-4 max-w-2xl text-muted-foreground">Early access, featured placement, and a direct line to our team.</p>
+              <h2 className="mt-3 text-3xl font-bold">Be among the first artists on LiveCircuit</h2>
+              <p className="mt-4 max-w-2xl text-muted-foreground">
+                The Founding Artist program celebrates early adopters who launch the platform&apos;s first digital
+                tours. Priority placement, featured search, and recognition from day one.
+              </p>
               <ul className="mt-6 space-y-2 text-sm">
                 {FOUNDING_ARTIST_BENEFITS.map((benefit) => (
                   <li key={benefit} className="flex items-start gap-2">

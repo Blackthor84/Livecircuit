@@ -49,6 +49,22 @@ export const TOUR_TEMPLATES: TourTemplateDefinition[] = [
     defaultTicketPriceCents: 1600,
   },
   {
+    slug: "new-england-tour",
+    name: "New England Tour",
+    tourType: "regional",
+    description: "Boston to Burlington — classic New England cities across seven states.",
+    stops: [
+      { countryCode: "US", citySlug: "boston" },
+      { countryCode: "US", citySlug: "providence" },
+      { countryCode: "US", citySlug: "hartford" },
+      { countryCode: "US", citySlug: "new-haven" },
+      { countryCode: "US", citySlug: "manchester-nh" },
+      { countryCode: "US", citySlug: "portland-me" },
+      { countryCode: "US", citySlug: "burlington" },
+    ],
+    defaultTicketPriceCents: 1800,
+  },
+  {
     slug: "east-coast-tour",
     name: "East Coast Tour",
     tourType: "regional",

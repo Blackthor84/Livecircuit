@@ -16,38 +16,6 @@ export const DIGITAL_TOURING_BRAND = {
   streamingNote: "Streaming is the technology that powers the tour. The tour is the product.",
 } as const;
 
-export const DEMO_TOUR_ROUTE = {
-  tourName: "USA Digital Tour",
-  artistName: "Featured Artist",
-  stops: [
-    { city: "Boston", state: "MA", status: "completed" as const },
-    { city: "New York", state: "NY", status: "completed" as const },
-    { city: "Chicago", state: "IL", status: "live" as const },
-    { city: "Denver", state: "CO", status: "next" as const },
-    { city: "Los Angeles", state: "CA", status: "upcoming" as const },
-  ],
-} as const;
-
-export const GLOBAL_TOUR_CITIES = [
-  { city: "Boston", country: "USA", lat: 42.36, lng: -71.06, active: true },
-  { city: "London", country: "UK", lat: 51.51, lng: -0.13, active: true },
-  { city: "Tokyo", country: "Japan", lat: 35.68, lng: 139.69, active: false },
-  { city: "Sydney", country: "Australia", lat: -33.87, lng: 151.21, active: false },
-  { city: "Chicago", country: "USA", lat: 41.88, lng: -87.63, active: true },
-  { city: "Paris", country: "France", lat: 48.86, lng: 2.35, active: false },
-  { city: "São Paulo", country: "Brazil", lat: -23.55, lng: -46.63, active: false },
-  { city: "Mumbai", country: "India", lat: 19.08, lng: 72.88, active: false },
-] as const;
-
-export const POPULAR_TOUR_CITIES = [
-  { city: "New York", stops: 128 },
-  { city: "Los Angeles", stops: 96 },
-  { city: "Chicago", stops: 84 },
-  { city: "London", stops: 72 },
-  { city: "Boston", stops: 68 },
-  { city: "Atlanta", stops: 61 },
-] as const;
-
 export const WHY_DIGITAL_TOURING = [
   {
     title: "Multi-City Tours",

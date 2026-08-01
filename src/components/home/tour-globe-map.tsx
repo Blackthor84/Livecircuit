@@ -78,7 +78,7 @@ export function TourGlobeMap({
     !process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN!.includes("your-mapbox");
 
   useEffect(() => {
-    if (!hasToken || !mapContainer.current || stops.length === 0) return;
+    if (!hasToken || !mapContainer.current) return;
 
     mapboxgl.accessToken = process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN!;
     const map = new mapboxgl.Map({
@@ -99,6 +99,8 @@ export function TourGlobeMap({
         "space-color": "rgb(6, 6, 16)",
         "star-intensity": 0.45,
       });
+
+      if (stops.length === 0) return;
 
       const pointFeatures = stops.map((s) => ({
         type: "Feature" as const,
@@ -347,13 +349,13 @@ export function TourGlobeMap({
   if (stops.length === 0) {
     return (
       <div
+        ref={mapContainer}
         className={cn(
-          "flex aspect-[16/10] items-center justify-center rounded-3xl border border-white/10 bg-black/40 text-sm text-muted-foreground",
+          "w-full overflow-hidden",
+          variant === "hero" ? "h-full min-h-[420px]" : "aspect-[16/10] rounded-3xl border border-white/10",
           className
         )}
-      >
-        Tour routes will appear on the globe when stops are scheduled.
-      </div>
+      />
     );
   }
 

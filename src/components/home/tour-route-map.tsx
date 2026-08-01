@@ -1,9 +1,8 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Check, MapPin, Radio } from "lucide-react";
+import { Check, Globe2, MapPin, Radio } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { DEMO_TOUR_ROUTE } from "@/lib/home/digital-touring-content";
 
 type StopStatus = "completed" | "live" | "next" | "upcoming";
 
@@ -63,19 +62,26 @@ function statusLabel(status: StopStatus) {
   }
 }
 
-export function TourRouteMap({
-  tourName = DEMO_TOUR_ROUTE.tourName,
-  artistName = DEMO_TOUR_ROUTE.artistName,
-  stops = [...DEMO_TOUR_ROUTE.stops],
-  className,
-}: Props) {
+export function TourRouteMap({ tourName, artistName, stops = [], className }: Props) {
+  if (!stops.length) {
+    return (
+      <div className={cn("glass-panel rounded-3xl border border-white/10 p-8 text-center", className)}>
+        <Globe2 className="mx-auto size-10 text-primary/60" />
+        <p className="mt-4 font-medium">Tour route map</p>
+        <p className="mx-auto mt-2 max-w-xs text-sm text-muted-foreground">
+          Live tour progress will appear here when artists publish routes with scheduled stops.
+        </p>
+      </div>
+    );
+  }
+
   return (
     <div className={cn("glass-panel overflow-hidden rounded-3xl border border-primary/20 p-6 sm:p-8", className)}>
       <div className="flex flex-wrap items-start justify-between gap-4">
         <div>
           <p className="text-xs font-semibold uppercase tracking-widest text-primary">Live tour progress</p>
-          <h3 className="mt-1 text-xl font-bold">{tourName}</h3>
-          <p className="text-sm text-muted-foreground">{artistName}</p>
+          {tourName ? <h3 className="mt-1 text-xl font-bold">{tourName}</h3> : null}
+          {artistName ? <p className="text-sm text-muted-foreground">{artistName}</p> : null}
         </div>
         <p className="text-sm text-muted-foreground">
           {stops.filter((s) => s.status === "completed").length} stops completed ·{" "}
