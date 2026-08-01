@@ -28,6 +28,7 @@ export type HeaderUser = {
   avatarUrl: string | null;
   role: import("@/types/database").UserRole;
   sponsorPortal?: boolean;
+  agencyPortal?: boolean;
   unreadNotifications?: number;
 };
 

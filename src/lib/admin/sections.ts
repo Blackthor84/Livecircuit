@@ -1,6 +1,7 @@
 import {
   Activity,
   BarChart3,
+  Briefcase,
   Building2,
   CalendarDays,
   Crown,
@@ -25,6 +26,7 @@ export const ADMIN_SECTIONS = [
   { href: "/admin/live", label: "Live Now", icon: Radio },
   { href: "/admin/users", label: "Users", icon: Users },
   { href: "/admin/artists", label: "Artists", icon: Mic2 },
+  { href: "/admin/agencies", label: "Agencies", icon: Briefcase },
   { href: "/admin/events", label: "Events", icon: CalendarDays },
   { href: "/admin/venues", label: "Venue Management", icon: Building2 },
   { href: "/admin/sponsorships", label: "Sponsorships", icon: Sparkles },

@@ -4,7 +4,9 @@ import { revalidatePath } from "next/cache";
 import { z } from "zod";
 import { isSupabaseConfigured } from "@/lib/config/env";
 import { createTestUser, deleteAllTestUsers, deleteTestUser, resetTestUser } from "@/lib/testing/create-user";
+import { bulkGenerateTestAgencies, createTestAgency } from "@/lib/testing/create-agency";
 import { bulkGenerateTestUsers } from "@/lib/testing/bulk";
+import type { AgencyScenarioSlug } from "@/lib/testing/scenarios/agency";
 import { runPlatformSimulator } from "@/lib/testing/simulator";
 import { PRODUCTION_BULK_CONFIRM_THRESHOLD } from "@/lib/testing/constants";
 import { getTestingAccessForUser, requireSuperAdminTesting } from "@/lib/testing/permissions";
@@ -37,6 +39,17 @@ const bulkSchema = z.object({
   count: z.coerce.number().int().min(1).max(10000),
   mix: z.enum(["fans", "artists", "mixed"]),
   confirmProduction: z.boolean().optional(),
+});
+
+const agencySchema = z.object({
+  scenario: z.string().min(1),
+  seedTeamMembers: z.boolean().optional(),
+});
+
+const agencyBulkSchema = z.object({
+  count: z.coerce.number().int().min(1).max(20),
+  scenario: z.string().min(1),
+  seedTeamMembers: z.boolean().optional(),
 });
 
 const simulatorSchema = z.object({
@@ -82,6 +95,58 @@ export async function createTestUserAction(input: unknown): Promise<TestingActio
       hint: parsed.hint,
       stack: parsed.stack ?? (e instanceof Error ? e.stack : undefined),
     };
+  }
+}
+
+export async function createTestAgencyAction(input: unknown): Promise<TestingActionResult> {
+  const ctx = await requireSuperAdminTesting();
+  if (!ctx.ok) return ctx;
+  if (!isSupabaseConfigured()) return { ok: false, error: "Supabase required" };
+
+  const parsed = agencySchema.safeParse(input);
+  if (!parsed.success) return { ok: false, error: "Invalid agency input" };
+
+  try {
+    const agency = await createTestAgency({
+      scenario: parsed.data.scenario as AgencyScenarioSlug,
+      createdBy: ctx.userId,
+      seedTeamMembers: parsed.data.seedTeamMembers,
+    });
+    revalidatePath("/admin/testing");
+    revalidatePath("/admin/agencies");
+    return {
+      ok: true,
+      message: `Created test agency ${agency.orgName}`,
+      userId: agency.ownerUserId,
+      steps: agency.steps,
+    };
+  } catch (e) {
+    if (e instanceof TestCreationStepError) return e.toResult();
+    return { ok: false, error: e instanceof Error ? e.message : "Agency creation failed" };
+  }
+}
+
+export async function bulkGenerateTestAgenciesAction(input: unknown): Promise<TestingActionResult> {
+  const ctx = await requireSuperAdminTesting();
+  if (!ctx.ok) return ctx;
+  if (!isSupabaseConfigured()) return { ok: false, error: "Supabase required" };
+
+  const parsed = agencyBulkSchema.safeParse(input);
+  if (!parsed.success) return { ok: false, error: "Invalid bulk agency request" };
+
+  try {
+    const created = await bulkGenerateTestAgencies({
+      count: parsed.data.count,
+      scenario: parsed.data.scenario as AgencyScenarioSlug,
+      createdBy: ctx.userId,
+      seedTeamMembers: parsed.data.seedTeamMembers,
+    });
+    revalidatePath("/admin/testing");
+    revalidatePath("/admin/agencies");
+    return { ok: true, count: created.length, message: `Generated ${created.length} test agencies` };
+  } catch (e) {
+    if (e instanceof TestCreationStepError) return e.toResult();
+    return { ok: false, error: e instanceof Error ? e.message : "Bulk agency generate failed" };
   }
 }
 

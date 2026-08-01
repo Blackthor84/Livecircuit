@@ -12,7 +12,8 @@ export type FeatureId =
   | "sponsorships"
   | "direct_messages"
   | "friend_system"
-  | "ticketing";
+  | "ticketing"
+  | "agency_portal";
 
 type FeatureGateConfig = {
   label: string;
@@ -89,7 +90,13 @@ export const FEATURE_GATES: Record<FeatureId, FeatureGateConfig> = {
     publiclyEnabled: false,
     enabledWhen: "stripe",
     pathPrefixes: ["/checkout"],
-    apiPrefixes: ["/api/checkout", "/api/stripe/checkout"],
+    apiPrefixes: ["/api/stripe/checkout"],
+  },
+  agency_portal: {
+    label: "Agency Portal",
+    publiclyEnabled: true,
+    pathPrefixes: ["/agency", "/agencies"],
+    apiPrefixes: ["/api/agencies"],
   },
 };
 

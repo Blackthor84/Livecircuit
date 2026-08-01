@@ -3,14 +3,16 @@
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { toast } from "sonner";
-import { FlaskConical, Play, RefreshCw, Trash2, UserPlus, Users } from "lucide-react";
+import { FlaskConical, Play, RefreshCw, Trash2, UserPlus, Users, Briefcase } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import {
+  bulkGenerateTestAgenciesAction,
   bulkGenerateTestUsersAction,
+  createTestAgencyAction,
   createTestUserAction,
   deleteAllTestDataAction,
   deleteTestUserAction,
@@ -24,6 +26,7 @@ import {
   FAN_SCENARIOS,
   SIMULATOR_ACTIONS,
 } from "@/lib/testing/constants";
+import { AGENCY_SCENARIOS } from "@/lib/testing/scenarios/agency";
 import type { TestAccountRow } from "@/lib/testing/list";
 import { formatRoleBadge } from "@/lib/features/account-menu";
 
@@ -40,6 +43,9 @@ export function TestingCenterPanel({ accounts, totalCount, canManage, canImperso
   const [artistScenario, setArtistScenario] = useState<string>(ARTIST_SCENARIOS[0]!.slug);
   const [bulkCount, setBulkCount] = useState(10);
   const [bulkMix, setBulkMix] = useState<"fans" | "artists" | "mixed">("mixed");
+  const [agencyScenario, setAgencyScenario] = useState<string>(AGENCY_SCENARIOS[0]!.slug);
+  const [agencyBulkCount, setAgencyBulkCount] = useState(1);
+  const [seedTeamMembers, setSeedTeamMembers] = useState(false);
   const [simAction, setSimAction] = useState(SIMULATOR_ACTIONS[0]!.id);
   const [simCount, setSimCount] = useState(500);
   const [busy, setBusy] = useState<string | null>(null);
@@ -258,6 +264,80 @@ export function TestingCenterPanel({ accounts, totalCount, canManage, canImperso
                 </Button>
                 <p className="text-xs text-muted-foreground">
                   Production environments require explicit confirmation for 100+ users.
+                </p>
+              </CardContent>
+            </Card>
+
+            <Card className="glass-panel border-white/10">
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2 text-base">
+                  <Briefcase className="size-4" />
+                  Test agencies
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div className="space-y-2">
+                  <Label>Agency scenario</Label>
+                  <select
+                    className="flex h-9 w-full rounded-md border border-input bg-transparent px-3 text-sm"
+                    value={agencyScenario}
+                    onChange={(e) => setAgencyScenario(e.target.value)}
+                  >
+                    {AGENCY_SCENARIOS.map((s) => (
+                      <option key={s.slug} value={s.slug}>
+                        {s.label} ({s.artistCount} artists)
+                      </option>
+                    ))}
+                  </select>
+                </div>
+                <label className="flex items-center gap-2 text-sm">
+                  <input
+                    type="checkbox"
+                    checked={seedTeamMembers}
+                    onChange={(e) => setSeedTeamMembers(e.target.checked)}
+                  />
+                  Seed team members (owner, admin, booking manager, etc.)
+                </label>
+                <Button
+                  size="sm"
+                  disabled={Boolean(busy)}
+                  onClick={() =>
+                    void runAction("agency", () =>
+                      createTestAgencyAction({ scenario: agencyScenario, seedTeamMembers })
+                    )
+                  }
+                >
+                  Create test agency
+                </Button>
+                <div className="flex flex-wrap gap-2 border-t border-white/10 pt-4">
+                  {[1, 3, 5, 10].map((n) => (
+                    <Button
+                      key={n}
+                      size="sm"
+                      variant={agencyBulkCount === n ? "default" : "secondary"}
+                      onClick={() => setAgencyBulkCount(n)}
+                    >
+                      {n}
+                    </Button>
+                  ))}
+                </div>
+                <Button
+                  variant="secondary"
+                  disabled={Boolean(busy)}
+                  onClick={() =>
+                    void runAction("agency-bulk", () =>
+                      bulkGenerateTestAgenciesAction({
+                        count: agencyBulkCount,
+                        scenario: agencyScenario,
+                        seedTeamMembers,
+                      })
+                    )
+                  }
+                >
+                  Generate {agencyBulkCount} agencies
+                </Button>
+                <p className="text-xs text-muted-foreground">
+                  All agency data is marked is_test and excluded from production analytics.
                 </p>
               </CardContent>
             </Card>

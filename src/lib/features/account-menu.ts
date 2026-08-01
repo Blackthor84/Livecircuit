@@ -1,5 +1,5 @@
 import type { LucideIcon } from "lucide-react";
-import { Bell, Mic2, Rocket, Settings, Shield, User } from "lucide-react";
+import { Bell, Briefcase, Mic2, Rocket, Settings, Shield, User } from "lucide-react";
 import { ROUTES } from "@/lib/constants";
 import type { UserRole } from "@/types/database";
 
@@ -15,7 +15,11 @@ export type AccountMenuSection = {
 };
 
 /** Phase 1 account dropdown — core links + one role-specific entry. */
-export function getAccountMenuSections(user: { role: UserRole }): AccountMenuSection[] {
+export function getAccountMenuSections(user: {
+  role: UserRole;
+  sponsorPortal?: boolean;
+  agencyPortal?: boolean;
+}): AccountMenuSection[] {
   const sections: AccountMenuSection[] = [
     {
       items: [
@@ -25,6 +29,12 @@ export function getAccountMenuSections(user: { role: UserRole }): AccountMenuSec
       ],
     },
   ];
+
+  if (user.agencyPortal) {
+    sections.push({
+      items: [{ label: "Agency Portal", href: ROUTES.agencyHome, icon: Briefcase }],
+    });
+  }
 
   if (user.role === "artist") {
     sections.push({
@@ -43,7 +53,11 @@ export function getAccountMenuSections(user: { role: UserRole }): AccountMenuSec
   return sections;
 }
 
-export function getAccountMenuLinks(user: { role: UserRole }): AccountMenuItem[] {
+export function getAccountMenuLinks(user: {
+  role: UserRole;
+  sponsorPortal?: boolean;
+  agencyPortal?: boolean;
+}): AccountMenuItem[] {
   return getAccountMenuSections(user).flatMap((section) => section.items);
 }
 
@@ -74,6 +88,10 @@ export function roleBadgeClass(role: UserRole): string {
 }
 
 /** @deprecated Use getAccountMenuLinks */
-export function getUserMenuItems(user: { role: UserRole }) {
+export function getUserMenuItems(user: {
+  role: UserRole;
+  sponsorPortal?: boolean;
+  agencyPortal?: boolean;
+}) {
   return getAccountMenuLinks(user).map(({ href, label }) => ({ href, label }));
 }

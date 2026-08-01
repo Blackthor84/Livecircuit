@@ -69,6 +69,8 @@ export const ROUTES = {
   following: "/following",
   about: "/about",
   contact: "/contact",
+  agencyHome: "/agency",
+  agencies: "/agencies",
   artistEventsNew: "/artist/events/new",
   artistEvent: (eventId: string) => `/artist/events/${eventId}`,
   artistEventStudio: (eventId: string) => `/artist/events/${eventId}/production`,

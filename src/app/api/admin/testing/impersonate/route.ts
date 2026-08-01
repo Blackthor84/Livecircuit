@@ -8,6 +8,7 @@ import {
   IMPERSONATION_COOKIE,
   type ImpersonationCookiePayload,
 } from "@/lib/testing/constants";
+import { getAgencyRedirectForUser } from "@/lib/data/agencies";
 import { requireImpersonationAccess } from "@/lib/testing/permissions";
 
 export async function POST(request: Request) {
@@ -96,7 +97,10 @@ export async function POST(request: Request) {
   jar.set(IMPERSONATION_COOKIE, JSON.stringify(payload), impersonationCookieOptions());
 
   const redirect =
-    target.role === "artist" ? "/artist/dashboard" : target.role === "fan" ? "/discover" : "/";
+    target.role === "artist"
+      ? "/artist/dashboard"
+      : (await getAgencyRedirectForUser(body.userId)) ??
+        (target.role === "fan" ? "/discover" : "/");
 
   return NextResponse.json({ ok: true, redirect });
 }
