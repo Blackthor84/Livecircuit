@@ -27,6 +27,7 @@ export type EventAudienceMode =
   | "vip_only";
 export type TourSponsorshipScope = "arena" | "city_stop" | "full_tour";
 export type TourStatus = "draft" | "published" | "completed" | "cancelled";
+export type TourType = "city" | "state" | "regional" | "national" | "continental" | "world";
 
 export type Profile = {
   id: string;
@@ -75,6 +76,8 @@ export type Tour = {
   banner_url: string | null;
   poster_url: string | null;
   status: TourStatus;
+  tour_type?: TourType | null;
+  template_slug?: string | null;
   starts_at: string | null;
   ends_at: string | null;
   follower_count?: number;
