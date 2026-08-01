@@ -1,3 +1,5 @@
+import { generateTestEmail } from "@/lib/testing/test-email";
+
 const FIRST_NAMES = [
   "Sarah", "Marcus", "Elena", "Jordan", "Avery", "Devon", "Maya", "Chris", "Taylor", "Riley",
   "Quinn", "Noah", "Zara", "Leo", "Priya", "Ethan", "Nina", "Kai", "Olivia", "Jamal",
@@ -37,7 +39,7 @@ export function randomInt(min: number, max: number, seed: number) {
   return Math.floor(min + frac * (max - min + 1));
 }
 
-export function fakePerson(seed: number) {
+export function fakePerson(seed: number, role = "fan") {
   const first = pick(FIRST_NAMES, seed);
   const last = pick(LAST_NAMES, seed + 7);
   const username = `${first}${last}`.toLowerCase().replace(/[^a-z0-9]/g, "") + (seed % 1000);
@@ -46,7 +48,7 @@ export function fakePerson(seed: number) {
     lastName: last,
     displayName: `${first} ${last}`,
     username: username.slice(0, 24),
-    email: `test.${username}.${seed}@livecircuit.test`,
+    email: generateTestEmail(role, { mode: "stable", stableKey: `${role}:${seed}` }),
   };
 }
 

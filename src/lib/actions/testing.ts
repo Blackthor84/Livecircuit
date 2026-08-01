@@ -44,12 +44,19 @@ const bulkSchema = z.object({
 const agencySchema = z.object({
   scenario: z.string().min(1),
   seedTeamMembers: z.boolean().optional(),
+  generationMode: z.enum(["repair", "fresh"]).optional(),
 });
 
 const agencyBulkSchema = z.object({
   count: z.coerce.number().int().min(1).max(20),
   scenario: z.string().min(1),
   seedTeamMembers: z.boolean().optional(),
+  generationMode: z.enum(["repair", "fresh"]).optional(),
+});
+
+const deleteAgencySchema = z.object({
+  orgId: z.string().uuid(),
+  deleteAuthUsers: z.boolean().optional(),
 });
 
 const simulatorSchema = z.object({
@@ -111,6 +118,7 @@ export async function createTestAgencyAction(input: unknown): Promise<TestingAct
       scenario: parsed.data.scenario as AgencyScenarioSlug,
       createdBy: ctx.userId,
       seedTeamMembers: parsed.data.seedTeamMembers,
+      generationMode: parsed.data.generationMode ?? "repair",
     });
     revalidatePath("/admin/testing");
     revalidatePath("/admin/agencies");
@@ -140,6 +148,7 @@ export async function bulkGenerateTestAgenciesAction(input: unknown): Promise<Te
       scenario: parsed.data.scenario as AgencyScenarioSlug,
       createdBy: ctx.userId,
       seedTeamMembers: parsed.data.seedTeamMembers,
+      generationMode: parsed.data.generationMode ?? "repair",
     });
     revalidatePath("/admin/testing");
     revalidatePath("/admin/agencies");
@@ -282,5 +291,29 @@ export async function repairTestAgencyAccountAction(userId: string): Promise<Tes
     return { ok: true, message: result.message, userId };
   } catch (e) {
     return { ok: false, error: e instanceof Error ? e.message : "Repair failed" };
+  }
+}
+
+export async function deleteTestAgencyOrganizationAction(input: unknown): Promise<TestingActionResult> {
+  const ctx = await requireSuperAdminTesting();
+  if (!ctx.ok) return ctx;
+  if (!isSupabaseConfigured()) return { ok: false, error: "Supabase required" };
+
+  const parsed = deleteAgencySchema.safeParse(input);
+  if (!parsed.success) return { ok: false, error: "Invalid delete agency request" };
+
+  try {
+    const { deleteTestAgencyOrganization } = await import("@/lib/testing/server");
+    const result = await deleteTestAgencyOrganization({
+      orgId: parsed.data.orgId,
+      deletedBy: ctx.userId,
+      deleteAuthUsers: parsed.data.deleteAuthUsers ?? false,
+    });
+    if (!result.ok) return { ok: false, error: result.error };
+    revalidatePath("/admin/testing");
+    revalidatePath("/admin/agencies");
+    return { ok: true, message: result.message, count: result.deletedUsers };
+  } catch (e) {
+    return { ok: false, error: e instanceof Error ? e.message : "Delete agency failed" };
   }
 }

@@ -6,18 +6,20 @@ import { ensureAgencyMembership } from "@/lib/agency/server";
 import { AGENCY_MEMBER_ROLE_LABELS } from "@/lib/agency";
 import type { AgencyMemberRole } from "@/lib/agency";
 import type { AgencyScenarioSlug } from "@/lib/agency";
-import { fakeAvatar, fakeBio, fakePerson } from "@/lib/testing/fake-data";
+import { fakeAvatar, fakeBio } from "@/lib/testing/fake-data";
+import type { AgencyGenerationMode } from "@/lib/testing/constants";
+import {
+  resolveOrCreateTestAuthUser,
+  stableAgencyRoleSeed,
+} from "@/lib/testing/test-email.server";
+import { fakePerson } from "@/lib/testing/fake-data";
 import {
   logTestStep,
   requireDbResult,
   throwParsedError,
   type TestCreationLog,
 } from "@/lib/testing/step-errors";
-import {
-  buildAuthCreateUserLogPayload,
-  logAuthErrorComplete,
-  logServiceRoleClientVerification,
-} from "@/lib/testing/log-auth-create-user";
+import { logServiceRoleClientVerification } from "@/lib/testing/log-auth-create-user";
 
 export type CreatedAgencyTestUser = {
   userId: string;
@@ -28,6 +30,7 @@ export type CreatedAgencyTestUser = {
   memberRole: AgencyMemberRole;
   organizationId: string;
   scenario: AgencyScenarioSlug | string;
+  reused: boolean;
 };
 
 export async function createAgencyTestUser(
@@ -40,82 +43,79 @@ export async function createAgencyTestUser(
     createdBy: string;
     seed: number;
     orgName?: string;
+    generationMode?: AgencyGenerationMode;
+    roleSlot?: number;
   }
 ): Promise<CreatedAgencyTestUser> {
-  const person = fakePerson(input.seed + input.memberRole.length);
-  const password = `Test!${input.seed}Lc`;
+  const generationMode = input.generationMode ?? "repair";
+  const roleSlot = input.roleSlot ?? 0;
+  const authSeed =
+    generationMode === "repair"
+      ? stableAgencyRoleSeed(input.scenario, input.memberRole, roleSlot)
+      : input.seed;
+  const person = fakePerson(authSeed, input.memberRole);
+  const password = `Test!${authSeed}Lc`;
   const roleLabel = AGENCY_MEMBER_ROLE_LABELS[input.memberRole];
-  const displayName = input.orgName && input.memberRole === "owner"
-    ? `${input.orgName} (${roleLabel})`
-    : `${person.displayName} — ${roleLabel}`;
+  const displayName =
+    input.orgName && input.memberRole === "owner"
+      ? `${input.orgName} (${roleLabel})`
+      : `${person.displayName} — ${roleLabel}`;
 
-  logTestStep(log, `Creating agency account (${input.memberRole})...`);
   logServiceRoleClientVerification(admin);
 
-  console.log(
-    "[Testing Center] agency account createUser payload:",
-    buildAuthCreateUserLogPayload({ email: person.email, type: "agency", person })
-  );
-
-  let authData: Awaited<ReturnType<typeof admin.auth.admin.createUser>>["data"];
-  let authError: Awaited<ReturnType<typeof admin.auth.admin.createUser>>["error"];
-
-  try {
-    const result = await admin.auth.admin.createUser({
-      email: person.email,
-      password,
-      email_confirm: true,
-      user_metadata: {
-        full_name: displayName,
-        username: person.username,
-        intended_role: "agency",
-        agency_member_role: input.memberRole,
-        is_test_account: true,
-      },
-    });
-    authData = result.data;
-    authError = result.error;
-  } catch (thrown) {
-    logAuthErrorComplete("agency createUser threw", thrown);
-    throwParsedError(log, `Agency account ${input.memberRole}`, thrown, "auth.admin.createUser threw");
-  }
-
-  if (authError || !authData?.user) {
-    throwParsedError(
-      log,
-      `Agency account ${input.memberRole}`,
-      authError ?? new Error("No user"),
-      "Failed to create agency auth user"
-    );
-  }
-
-  const userId = authData.user.id;
-
-  logTestStep(log, `Verifying agency profile role (${input.memberRole})...`);
-  const profile = requireDbResult<{ id: string; role: string }>(
+  const authUser = await resolveOrCreateTestAuthUser(admin, {
+    mode: generationMode,
+    roleLabel: input.memberRole,
+    displayName,
+    password,
+    userMetadata: {
+      full_name: displayName,
+      username: person.username,
+      intended_role: "agency",
+      agency_member_role: input.memberRole,
+      is_test_account: true,
+    },
     log,
-    `Agency profile verify ${input.memberRole}`,
-    await admin.from("profiles").select("id, role").eq("id", userId).maybeSingle(),
-    { requireRows: true, emptyMessage: "Profile not created by signup trigger" }
-  );
+    stableKey:
+      generationMode === "repair"
+        ? `${input.scenario}:${input.memberRole}:${roleSlot}`
+        : undefined,
+    organizationName: input.orgName,
+    organizationSlug: input.scenario,
+  });
 
-  if (profile.role !== "agency") {
+  const userId = authUser.userId;
+
+  if (authUser.reused) {
+    logTestStep(log, `Repairing agency profile (${input.memberRole})...`);
+  } else {
+    logTestStep(log, `Verifying agency profile role (${input.memberRole})...`);
+  }
+
+  const profileResult = await admin.from("profiles").select("id, role").eq("id", userId).maybeSingle();
+  const profile = profileResult.data;
+
+  if (!profile) {
     throwParsedError(
       log,
       `Agency profile verify ${input.memberRole}`,
-      new Error(`Expected role agency, got ${profile.role}`),
-      "Signup trigger did not assign agency role"
+      new Error("Profile not found for Auth user"),
+      "Profile row missing — signup trigger may not have run"
     );
   }
 
-  logTestStep(log, `Setting agency account flags (${input.memberRole})...`);
+  if (profile.role !== "agency") {
+    logTestStep(log, `Repairing profile role to agency (${input.memberRole})...`);
+  }
+
+  logTestStep(log, `Ensuring agency account flags (${input.memberRole})...`);
   const profileUpdate = await admin
     .from("profiles")
     .update({
       display_name: displayName,
-      username: person.username,
-      avatar_url: fakeAvatar(input.seed),
-      bio: fakeBio("agency", input.seed, roleLabel),
+      username: authUser.username,
+      avatar_url: fakeAvatar(authSeed),
+      bio: fakeBio("agency", authSeed, roleLabel),
       role: "agency",
       primary_agency_id: input.organizationId,
       agency_member_role: input.memberRole,
@@ -141,17 +141,18 @@ export async function createAgencyTestUser(
     role: input.memberRole,
   });
 
-  logTestStep(log, `Verified membership in agency_organization_members (${input.memberRole})`);
+  logTestStep(log, `Membership verified (${input.memberRole}). Continuing...`);
 
   return {
     userId,
-    email: person.email,
-    username: person.username,
+    email: authUser.email,
+    username: authUser.username,
     displayName,
     accountType: "agency",
     memberRole: input.memberRole,
     organizationId: input.organizationId,
     scenario: input.scenario,
+    reused: authUser.reused,
   };
 }
 
@@ -162,6 +163,8 @@ export async function createAgencyTestUserStandalone(input: {
   createdBy: string;
   seed?: number;
   orgName?: string;
+  generationMode?: AgencyGenerationMode;
+  roleSlot?: number;
 }) {
   const admin = getSupabaseAdmin();
   const log = { steps: [] as string[] };

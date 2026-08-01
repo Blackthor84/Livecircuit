@@ -15,6 +15,7 @@ import {
   createTestAgencyAction,
   createTestUserAction,
   deleteAllTestDataAction,
+  deleteTestAgencyOrganizationAction,
   deleteTestUserAction,
   repairTestAgencyAccountAction,
   resetTestUserAction,
@@ -28,6 +29,7 @@ import {
   SIMULATOR_ACTIONS,
 } from "@/lib/testing/constants";
 import { AGENCY_SCENARIOS } from "@/lib/agency";
+import { AGENCY_GENERATION_MODES, type AgencyGenerationMode } from "@/lib/testing";
 import { formatTestAccountRoleLabel, type TestAccountRow } from "@/lib/testing";
 
 type Props = {
@@ -44,6 +46,7 @@ export function TestingCenterPanel({ accounts, totalCount, canManage, canImperso
   const [bulkCount, setBulkCount] = useState(10);
   const [bulkMix, setBulkMix] = useState<"fans" | "artists" | "mixed">("mixed");
   const [agencyScenario, setAgencyScenario] = useState<string>(AGENCY_SCENARIOS[0]!.slug);
+  const [agencyGenerationMode, setAgencyGenerationMode] = useState<AgencyGenerationMode>("repair");
   const [agencyBulkCount, setAgencyBulkCount] = useState(1);
   const [seedTeamMembers, setSeedTeamMembers] = useState(true);
   const [simAction, setSimAction] = useState(SIMULATOR_ACTIONS[0]!.id);
@@ -289,6 +292,23 @@ export function TestingCenterPanel({ accounts, totalCount, canManage, canImperso
                     ))}
                   </select>
                 </div>
+                <div className="space-y-2">
+                  <Label>Generation mode</Label>
+                  <select
+                    className="flex h-9 w-full rounded-md border border-input bg-transparent px-3 text-sm"
+                    value={agencyGenerationMode}
+                    onChange={(e) => setAgencyGenerationMode(e.target.value as AgencyGenerationMode)}
+                  >
+                    {AGENCY_GENERATION_MODES.map((mode) => (
+                      <option key={mode.value} value={mode.value}>
+                        {mode.label}
+                      </option>
+                    ))}
+                  </select>
+                  <p className="text-xs text-muted-foreground">
+                    {AGENCY_GENERATION_MODES.find((mode) => mode.value === agencyGenerationMode)?.description}
+                  </p>
+                </div>
                 <label className="flex items-center gap-2 text-sm">
                   <input
                     type="checkbox"
@@ -302,7 +322,11 @@ export function TestingCenterPanel({ accounts, totalCount, canManage, canImperso
                   disabled={Boolean(busy)}
                   onClick={() =>
                     void runAction("agency", () =>
-                      createTestAgencyAction({ scenario: agencyScenario, seedTeamMembers })
+                      createTestAgencyAction({
+                        scenario: agencyScenario,
+                        seedTeamMembers,
+                        generationMode: agencyGenerationMode,
+                      })
                     )
                   }
                 >
@@ -329,6 +353,7 @@ export function TestingCenterPanel({ accounts, totalCount, canManage, canImperso
                         count: agencyBulkCount,
                         scenario: agencyScenario,
                         seedTeamMembers,
+                        generationMode: agencyGenerationMode,
                       })
                     )
                   }
@@ -437,6 +462,33 @@ export function TestingCenterPanel({ accounts, totalCount, canManage, canImperso
                         onClick={() => void impersonate(account.id)}
                       >
                         Impersonate
+                      </Button>
+                    ) : null}
+                    {canManage && account.role === "agency" && account.agency_member_role === "owner" && account.primary_agency_id ? (
+                      <Button
+                        size="sm"
+                        variant="destructive"
+                        disabled={Boolean(busy)}
+                        onClick={() => {
+                          if (
+                            !window.confirm(
+                              "Delete this entire test organization and all seeded agency data?"
+                            )
+                          ) {
+                            return;
+                          }
+                          const deleteAuthUsers = window.confirm(
+                            "Also delete Auth users created for this test organization?"
+                          );
+                          void runAction(`delete-org-${account.primary_agency_id}`, () =>
+                            deleteTestAgencyOrganizationAction({
+                              orgId: account.primary_agency_id!,
+                              deleteAuthUsers,
+                            })
+                          );
+                        }}
+                      >
+                        Delete organization
                       </Button>
                     ) : null}
                     {canManage && account.role === "agency" ? (

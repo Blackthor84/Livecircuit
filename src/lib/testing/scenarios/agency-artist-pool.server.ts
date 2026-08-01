@@ -2,6 +2,7 @@ import "server-only";
 
 import type { SupabaseClient } from "@supabase/supabase-js";
 import type { ArtistScenarioSlug } from "@/lib/testing/constants";
+import type { AgencyGenerationMode } from "@/lib/testing/constants";
 import { createTestUser } from "@/lib/testing/create-user";
 import { logTestStep, throwDbError, throwParsedError, type TestCreationLog } from "@/lib/testing/step-errors";
 
@@ -101,7 +102,12 @@ async function loadAvailableArtists(
 async function generateArtistAccounts(
   admin: SupabaseClient,
   log: TestCreationLog,
-  input: { count: number; createdBy: string; seed: number }
+  input: {
+    count: number;
+    createdBy: string;
+    seed: number;
+    generationMode: AgencyGenerationMode;
+  }
 ): Promise<AgencyArtistPoolEntry[]> {
   const generated: AgencyArtistPoolEntry[] = [];
 
@@ -117,6 +123,8 @@ async function generateArtistAccounts(
       scenario,
       createdBy: input.createdBy,
       seed: input.seed + i + 5000,
+      generationMode: input.generationMode,
+      roleLabel: `agency_artist_${i + 1}`,
     });
 
     const { data: artist, error } = await admin
@@ -156,8 +164,10 @@ export async function ensureAgencyArtistPool(
     requiredCount: number;
     createdBy: string;
     seed: number;
+    generationMode?: AgencyGenerationMode;
   }
 ): Promise<{ artists: AgencyArtistPoolEntry[]; generatedCount: number }> {
+  const generationMode = input.generationMode ?? "repair";
   const rosterArtists = await loadRosterArtists(admin, input.orgId);
   const excludeIds = new Set(rosterArtists.map((a) => a.id));
 
@@ -188,6 +198,7 @@ export async function ensureAgencyArtistPool(
       count: toGenerate,
       createdBy: input.createdBy,
       seed: input.seed,
+      generationMode,
     });
     generatedCount = generated.length;
     available.push(...generated);

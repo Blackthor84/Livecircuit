@@ -9,6 +9,7 @@ import {
   ensureAgencyArtistPool,
   type AgencyArtistPoolEntry,
 } from "@/lib/testing/scenarios/agency-artist-pool.server";
+import type { AgencyGenerationMode } from "@/lib/testing/constants";
 
 type TeamMember = { userId: string; role: AgencyMemberRole };
 
@@ -17,6 +18,7 @@ export type SeedAgencyOptions = {
   /** When true, only seed categories that are empty or below template minimum. */
   fillMissingOnly?: boolean;
   createdBy: string;
+  generationMode?: AgencyGenerationMode;
 };
 
 const BOOKING_STATUSES = ["pending", "approved", "rejected", "matched", "draft", "cancelled"] as const;
@@ -568,6 +570,7 @@ export async function seedAgencyScenario(
     requiredCount: template.artistCount,
     createdBy: options.createdBy,
     seed,
+    generationMode: options.generationMode ?? "repair",
   });
 
   if (!artistPool.length) {

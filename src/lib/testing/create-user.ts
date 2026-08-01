@@ -1,7 +1,10 @@
 import type { SupabaseClient } from "@supabase/supabase-js";
 import { getSupabaseAdmin } from "@/lib/supabase/admin";
-import { fakeAvatar, fakeBio, fakeLocation, fakePerson, fakeSocialLinks, fakeStageName } from "@/lib/testing/fake-data";
+import { fakeAvatar, fakeBio, fakeLocation, fakeSocialLinks, fakeStageName } from "@/lib/testing/fake-data";
 import type { ArtistScenarioSlug, FanScenarioSlug, TestScenarioSlug, TestUserType } from "@/lib/testing/constants";
+import type { AgencyGenerationMode } from "@/lib/testing/constants";
+import { resolveOrCreateTestAuthUser } from "@/lib/testing/test-email.server";
+import { fakePerson } from "@/lib/testing/fake-data";
 import { seedArtistScenario } from "@/lib/testing/scenarios/artist";
 import { seedFanScenario } from "@/lib/testing/scenarios/fan";
 import {
@@ -15,7 +18,6 @@ import {
 } from "@/lib/testing/step-errors";
 import {
   buildAuthCreateUserLogPayload,
-  logAuthErrorComplete,
   logServiceRoleClientVerification,
 } from "@/lib/testing/log-auth-create-user";
 
@@ -34,68 +36,52 @@ export async function createTestUser(input: {
   scenario: TestScenarioSlug;
   createdBy: string;
   seed?: number;
+  generationMode?: AgencyGenerationMode;
+  roleLabel?: string;
 }): Promise<CreatedTestUser> {
   const log = createTestCreationLog();
   const admin = getSupabaseAdmin();
   const seed = input.seed ?? Date.now() % 100000;
-  const person = fakePerson(seed);
+  const generationMode = input.generationMode ?? "repair";
+  const roleLabel = input.roleLabel ?? input.type;
+  const person = fakePerson(seed, roleLabel);
   const location = fakeLocation(seed);
   const password = `Test!${seed}Lc`;
 
-  logTestStep(log, "Step 1: Creating auth user...");
+  logTestStep(log, "Step 1: Resolving auth user...");
   logServiceRoleClientVerification(admin);
 
   const authPayload = buildAuthCreateUserLogPayload({
-    email: person.email,
+    email: generationMode === "fresh" ? "(fresh unique email)" : person.email,
     type: input.type,
     person,
   });
   console.log("[Testing Center] auth.admin.createUser request payload:", authPayload);
 
-  let authData: Awaited<ReturnType<typeof admin.auth.admin.createUser>>["data"];
-  let authError: Awaited<ReturnType<typeof admin.auth.admin.createUser>>["error"];
-
-  try {
-    const result = await admin.auth.admin.createUser({
-      email: person.email,
-      password,
-      email_confirm: true,
-      user_metadata: {
-        full_name: person.displayName,
-        username: person.username,
-        intended_role: input.type,
-        is_test_account: true,
-      },
-    });
-    authData = result.data;
-    authError = result.error;
-  } catch (thrown) {
-    logAuthErrorComplete("auth.admin.createUser threw", thrown);
-    throwParsedError(log, "Step 1: Creating auth user", thrown, "auth.admin.createUser threw");
-  }
-
-  if (authError) {
-    logAuthErrorComplete("auth.admin.createUser returned error", authError);
-    throwParsedError(log, "Step 1: Creating auth user", authError, "Failed to create auth user");
-  }
-
-  if (!authData?.user) {
-    logAuthErrorComplete("auth.admin.createUser returned no user", { authData, authError });
-    throwParsedError(
-      log,
-      "Step 1: Creating auth user",
-      new Error("Failed to create auth user — no user returned"),
-      "Failed to create auth user — no user returned"
-    );
-  }
-
-  console.log("[Testing Center] auth.admin.createUser succeeded:", {
-    userId: authData.user.id,
-    email: authData.user.email,
-    intendedRole: input.type,
+  const authUser = await resolveOrCreateTestAuthUser(admin, {
+    mode: generationMode,
+    roleLabel,
+    displayName: person.displayName,
+    password,
+    userMetadata: {
+      full_name: person.displayName,
+      username: person.username,
+      intended_role: input.type,
+      is_test_account: true,
+    },
+    log,
+    stableKey:
+      generationMode === "repair" ? `${input.type}:${input.scenario}:${seed}:${roleLabel}` : undefined,
   });
 
-  const userId = authData.user.id;
+  console.log("[Testing Center] auth user resolved:", {
+    userId: authUser.userId,
+    email: authUser.email,
+    intendedRole: input.type,
+    reused: authUser.reused,
+  });
+
+  const userId = authUser.userId;
 
   logTestStep(log, "Step 2: Verifying profile from signup trigger...");
   const profile = requireDbResult<{ id: string; role: string; username: string | null }>(
@@ -129,7 +115,7 @@ export async function createTestUser(input: {
     .from("profiles")
     .update({
       display_name: person.displayName,
-      username: person.username,
+      username: authUser.username,
       avatar_url: fakeAvatar(seed),
       bio: fakeBio(input.type, seed, input.type === "artist" ? resolveArtistCategory(input.scenario) : undefined),
       role: input.type,
@@ -177,8 +163,8 @@ export async function createTestUser(input: {
 
   return {
     userId,
-    email: person.email,
-    username: person.username,
+    email: authUser.email,
+    username: authUser.username,
     displayName: person.displayName,
     role: input.type,
     scenario: input.scenario,

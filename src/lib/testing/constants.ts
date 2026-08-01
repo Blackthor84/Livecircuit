@@ -46,6 +46,25 @@ export const BULK_COUNTS = [10, 100, 500, 1000, 10000] as const;
 
 export const PRODUCTION_BULK_CONFIRM_THRESHOLD = 100;
 
+export type AgencyGenerationMode = "repair" | "fresh";
+
+export const AGENCY_GENERATION_MODES: {
+  value: AgencyGenerationMode;
+  label: string;
+  description: string;
+}[] = [
+  {
+    value: "repair",
+    label: "Repair Existing Organization",
+    description: "Reuse deterministic test accounts when they already exist and repair missing data.",
+  },
+  {
+    value: "fresh",
+    label: "Create Fresh Organization",
+    description: "Generate unique emails and a new organization every run.",
+  },
+];
+
 export const IMPERSONATION_COOKIE = "lc_impersonation";
 export const ADMIN_SESSION_BACKUP_COOKIE = "lc_admin_session_backup";
 

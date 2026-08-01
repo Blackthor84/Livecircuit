@@ -12,6 +12,7 @@ import type { AgencyDashboardConfiguration, AgencyMemberRole } from "@/lib/agenc
 import { getAgencyOrgTemplate, type AgencyScenarioSlug } from "@/lib/agency";
 import { seedAgencyScenario } from "@/lib/testing/scenarios/agency.server";
 import { createAgencyTestUser } from "@/lib/testing/create-agency-user";
+import type { AgencyGenerationMode } from "@/lib/testing/constants";
 import { createTestCreationLog, logTestStep } from "@/lib/testing/step-errors";
 import { AGENCY_DASHBOARD_PATH } from "@/lib/agency/sections";
 
@@ -385,6 +386,8 @@ async function ensureMissingAgencyTeam(
         createdBy: input.createdBy,
         seed: input.seed + slotIndex + 2000,
         orgName: (org?.name as string) ?? template.label,
+        generationMode: "repair",
+        roleSlot: current,
       });
       current += 1;
       slotIndex += 1;
@@ -419,12 +422,14 @@ export async function ensureAgencyOrganizationComplete(
     memberRole: AgencyMemberRole;
     scenario: AgencyScenarioSlug;
     createdBy?: string;
+    generationMode?: AgencyGenerationMode;
   }
 ): Promise<{ ok: true; repaired: string[] } | { ok: false; error: string }> {
   const log = createTestCreationLog();
   const template = getAgencyOrgTemplate(input.scenario);
   const repaired: string[] = [];
   const createdBy = input.createdBy ?? input.userId;
+  const generationMode = input.generationMode ?? "repair";
   const seed = Date.now() % 100000;
 
   logTestStep(log, `Ensuring organization complete (${template.label})...`);
@@ -482,6 +487,7 @@ export async function ensureAgencyOrganizationComplete(
       createdBy,
       fillMissingOnly: true,
       teamUserIds: teamMembers.filter((m) => m.userId !== input.userId),
+      generationMode,
     });
     repaired.push("seed_data");
   }
