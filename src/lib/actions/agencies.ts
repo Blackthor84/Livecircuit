@@ -14,6 +14,8 @@ import {
   logAgencyAction,
   runAgencyAutoMatch,
 } from "@/lib/data/agencies";
+import { getSupabaseAdmin } from "@/lib/supabase/admin";
+import { syncAgencyAccountProfile } from "@/lib/auth/agency-account";
 import { createClient } from "@/lib/supabase/server";
 import { isSupabaseConfigured } from "@/lib/config/env";
 
@@ -84,6 +86,13 @@ export async function createAgencyOrganizationAction(input: unknown): Promise<Ag
     user_id: user.id,
     role: "owner",
     accepted_at: new Date().toISOString(),
+  });
+
+  const admin = getSupabaseAdmin();
+  await syncAgencyAccountProfile(admin, {
+    userId: user.id,
+    organizationId: org.id as string,
+    memberRole: "owner",
   });
 
   revalidatePath("/agency");
@@ -232,6 +241,14 @@ export async function inviteAgencyMemberAction(input: {
   });
 
   if (error) return { ok: false, error: error.message };
+
+  const admin = getSupabaseAdmin();
+  await syncAgencyAccountProfile(admin, {
+    userId: input.userId,
+    organizationId: input.orgId,
+    memberRole: input.role,
+  });
+
   revalidatePath(agencyPath(input.orgId, "team"));
   return { ok: true };
 }

@@ -29,6 +29,8 @@ export type HeaderUser = {
   role: import("@/types/database").UserRole;
   sponsorPortal?: boolean;
   agencyPortal?: boolean;
+  primaryAgencyId?: string | null;
+  agencyMemberRole?: string | null;
   unreadNotifications?: number;
 };
 
@@ -97,7 +99,7 @@ export function SiteHeaderUserMenu({ user }: { user: HeaderUser }) {
                 variant="outline"
                 className={cn("mt-2 text-[10px] font-semibold tracking-wider", roleBadgeClass(user.role))}
               >
-                {formatRoleBadge(user.role)}
+                {formatRoleBadge(user.role, user.agencyMemberRole)}
               </Badge>
             </div>
           </div>

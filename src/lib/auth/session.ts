@@ -47,7 +47,10 @@ export async function getHeaderUser() {
 
   const profile = await getProfile();
   const [sponsorPortal, agencyPortal] = isSupabaseConfigured()
-    ? await Promise.all([userHasSponsorAccess(user.id), userHasAgencyAccess(user.id)])
+    ? await Promise.all([
+        userHasSponsorAccess(user.id),
+        profile?.role === "agency" ? Promise.resolve(true) : userHasAgencyAccess(user.id),
+      ])
     : [false, false];
   const unreadNotifications = isSupabaseConfigured()
     ? await getUnreadNotificationCount(user.id)
@@ -61,6 +64,8 @@ export async function getHeaderUser() {
     role: (profile?.role as UserRole) ?? "fan",
     sponsorPortal,
     agencyPortal,
+    primaryAgencyId: (profile?.primary_agency_id as string | null) ?? null,
+    agencyMemberRole: (profile?.agency_member_role as string | null) ?? null,
     unreadNotifications,
   };
 }

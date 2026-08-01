@@ -1,4 +1,4 @@
-export type TestUserType = "fan" | "artist";
+export type TestUserType = "fan" | "artist" | "agency";
 
 export type FanScenarioSlug =
   | "brand_new_fan"
@@ -56,6 +56,8 @@ export type ImpersonationCookiePayload = {
   displayName: string | null;
   role: string;
   scenario: string | null;
+  primaryAgencyId?: string | null;
+  agencyMemberRole?: string | null;
 };
 
 export type SimulatorAction =

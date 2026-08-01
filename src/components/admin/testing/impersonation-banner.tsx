@@ -4,6 +4,8 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { formatRoleBadge } from "@/lib/features/account-menu";
+import { AGENCY_MEMBER_ROLE_LABELS } from "@/lib/agency/permissions";
+import type { AgencyMemberRole } from "@/lib/agency/types";
 import type { ImpersonationCookiePayload } from "@/lib/testing/constants";
 
 export function ImpersonationBanner({ state }: { state: ImpersonationCookiePayload }) {
@@ -30,7 +32,10 @@ export function ImpersonationBanner({ state }: { state: ImpersonationCookiePaylo
         <span className="font-semibold uppercase tracking-wider text-amber-300">Test Mode</span>
         <span>
           Impersonating: <strong>{state.displayName ?? "Test user"}</strong> ·{" "}
-          {formatRoleBadge(state.role as never)}
+          {state.role === "agency"
+            ? AGENCY_MEMBER_ROLE_LABELS[(state.agencyMemberRole ?? "owner") as AgencyMemberRole] ??
+              formatRoleBadge("agency")
+            : formatRoleBadge(state.role as never)}
           {state.scenario ? ` · ${state.scenario.replace(/_/g, " ")}` : ""}
         </span>
         <Button

@@ -1,4 +1,5 @@
 import type { SupabaseClient } from "@supabase/supabase-js";
+import { resolveAgencyRedirect } from "@/lib/auth/agency-account";
 import { createClient } from "@/lib/supabase/server";
 import { isSupabaseConfigured } from "@/lib/config/env";
 import { getAgencyPlanLimits } from "@/lib/agency/permissions";
@@ -247,6 +248,23 @@ export async function getAgencyDashboardStats(
 }
 
 export async function getAgencyRedirectForUser(userId: string): Promise<string | null> {
+  const supabase = await getClient();
+  if (!supabase) return null;
+
+  const { data: profile } = await supabase
+    .from("profiles")
+    .select("role, primary_agency_id")
+    .eq("id", userId)
+    .maybeSingle();
+
+  const fromProfile = profile
+    ? resolveAgencyRedirect({
+        role: profile.role as string,
+        primary_agency_id: profile.primary_agency_id as string | null,
+      })
+    : null;
+  if (fromProfile) return fromProfile;
+
   const orgs = await getUserAgencyOrganizations(userId);
   if (!orgs.length) return null;
   return `/agency/${orgs[0]!.id}`;

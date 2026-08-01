@@ -27,8 +27,7 @@ import {
   SIMULATOR_ACTIONS,
 } from "@/lib/testing/constants";
 import { AGENCY_SCENARIOS } from "@/lib/testing/scenarios/agency";
-import type { TestAccountRow } from "@/lib/testing/list";
-import { formatRoleBadge } from "@/lib/features/account-menu";
+import { formatTestAccountRoleLabel, type TestAccountRow } from "@/lib/testing/list";
 
 type Props = {
   accounts: TestAccountRow[];
@@ -418,9 +417,14 @@ export function TestingCenterPanel({ accounts, totalCount, canManage, canImperso
                   <div>
                     <p className="font-medium">{account.display_name ?? account.username}</p>
                     <p className="text-sm text-muted-foreground">
-                      @{account.username} · {formatRoleBadge(account.role as never)} ·{" "}
+                      @{account.username} · {formatTestAccountRoleLabel(account)} ·{" "}
                       {account.test_scenario?.replace(/_/g, " ") ?? "custom"}
                     </p>
+                    {account.role === "agency" && account.agency ? (
+                      <p className="text-xs text-sky-300">
+                        {account.agency.name} · {account.agency.plan} plan
+                      </p>
+                    ) : null}
                     {account.artist ? (
                       <p className="text-xs text-primary">{account.artist.stage_name}</p>
                     ) : null}

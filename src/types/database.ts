@@ -1,4 +1,4 @@
-export type UserRole = "fan" | "artist" | "admin" | "super_admin";
+export type UserRole = "fan" | "artist" | "agency" | "admin" | "super_admin";
 
 export type ArtistCategory =
   | "music"
@@ -43,6 +43,8 @@ export type Profile = {
   test_scenario?: string | null;
   test_created_by?: string | null;
   test_created_at?: string | null;
+  primary_agency_id?: string | null;
+  agency_member_role?: string | null;
 };
 
 export type Artist = {

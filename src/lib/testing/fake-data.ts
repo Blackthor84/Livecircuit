@@ -59,10 +59,14 @@ export function fakeAvatar(seed: number) {
   return `https://api.dicebear.com/7.x/avataaars/svg?seed=${seedId}${seed}`;
 }
 
-export function fakeBio(type: "fan" | "artist", seed: number, category?: string) {
+export function fakeBio(type: "fan" | "artist" | "agency", seed: number, category?: string) {
   const city = fakeLocation(seed).city;
   if (type === "fan") {
     return `Live music lover from ${city}. Always chasing the next great show.`;
+  }
+  if (type === "agency") {
+    const role = category ?? "Agency professional";
+    return `${role} at a LiveCircuit talent agency. Managing rosters, bookings, and partnerships from ${city}.`;
   }
   const cat = category ?? pick(GENRES, seed);
   return `Performing ${cat} for fans worldwide. Based in ${city}. Bookings open.`;

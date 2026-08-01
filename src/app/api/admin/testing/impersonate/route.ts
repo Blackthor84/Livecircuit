@@ -2,13 +2,13 @@ import { NextResponse } from "next/server";
 import { cookies } from "next/headers";
 import { createClient } from "@/lib/supabase/server";
 import { getSupabaseAdmin } from "@/lib/supabase/admin";
+import { resolveAgencyRedirect } from "@/lib/auth/agency-account";
 import { impersonationCookieOptions } from "@/lib/auth/impersonation";
 import {
   ADMIN_SESSION_BACKUP_COOKIE,
   IMPERSONATION_COOKIE,
   type ImpersonationCookiePayload,
 } from "@/lib/testing/constants";
-import { getAgencyRedirectForUser } from "@/lib/data/agencies";
 import { requireImpersonationAccess } from "@/lib/testing/permissions";
 
 export async function POST(request: Request) {
@@ -25,7 +25,7 @@ export async function POST(request: Request) {
   const admin = getSupabaseAdmin();
   const { data: target } = await admin
     .from("profiles")
-    .select("id, display_name, role, test_scenario, is_test_account")
+    .select("id, display_name, role, test_scenario, is_test_account, primary_agency_id, agency_member_role")
     .eq("id", body.userId)
     .maybeSingle();
 
@@ -92,6 +92,8 @@ export async function POST(request: Request) {
     displayName: (target.display_name as string) ?? null,
     role: target.role as string,
     scenario: (target.test_scenario as string) ?? null,
+    primaryAgencyId: (target.primary_agency_id as string) ?? null,
+    agencyMemberRole: (target.agency_member_role as string) ?? null,
   };
 
   jar.set(IMPERSONATION_COOKIE, JSON.stringify(payload), impersonationCookieOptions());
@@ -99,8 +101,10 @@ export async function POST(request: Request) {
   const redirect =
     target.role === "artist"
       ? "/artist/dashboard"
-      : (await getAgencyRedirectForUser(body.userId)) ??
-        (target.role === "fan" ? "/discover" : "/");
+      : resolveAgencyRedirect({
+          role: target.role as string,
+          primary_agency_id: target.primary_agency_id as string | null,
+        }) ?? (target.role === "fan" ? "/discover" : "/");
 
   return NextResponse.json({ ok: true, redirect });
 }

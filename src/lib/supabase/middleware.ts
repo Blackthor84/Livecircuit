@@ -10,6 +10,9 @@ import { IMPERSONATION_COOKIE } from "@/lib/testing/constants";
 function roleRequiredForPath(pathname: string): UserRole[] | null {
   if (pathname === "/admin" || pathname.startsWith("/admin/")) return [...ADMIN_ROLES];
   if (pathname.startsWith("/artist/")) return ["artist", ...ADMIN_ROLES];
+  if (pathname === "/agency" || pathname.startsWith("/agency/")) {
+    return ["agency", ...ADMIN_ROLES];
+  }
   return null;
 }
 
@@ -77,6 +80,9 @@ export async function updateSession(request: NextRequest) {
     if (!role || !allowedRoles.includes(role)) {
       if (allowedRoles.some((r) => isAdminRole(r))) {
         return NextResponse.redirect(new URL("/", request.url));
+      }
+      if (pathname.startsWith("/agency")) {
+        return NextResponse.redirect(new URL("/agency", request.url));
       }
       return NextResponse.redirect(new URL("/register?role=artist", request.url));
     }

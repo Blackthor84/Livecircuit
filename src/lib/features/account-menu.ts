@@ -1,5 +1,8 @@
 import type { LucideIcon } from "lucide-react";
 import { Bell, Briefcase, Mic2, Rocket, Settings, Shield, User } from "lucide-react";
+import { AGENCY_MEMBER_ROLE_LABELS } from "@/lib/agency/permissions";
+import { agencyPath } from "@/lib/agency/sections";
+import type { AgencyMemberRole } from "@/lib/agency/types";
 import { ROUTES } from "@/lib/constants";
 import type { UserRole } from "@/types/database";
 
@@ -19,6 +22,8 @@ export function getAccountMenuSections(user: {
   role: UserRole;
   sponsorPortal?: boolean;
   agencyPortal?: boolean;
+  primaryAgencyId?: string | null;
+  agencyMemberRole?: string | null;
 }): AccountMenuSection[] {
   const sections: AccountMenuSection[] = [
     {
@@ -30,13 +35,18 @@ export function getAccountMenuSections(user: {
     },
   ];
 
-  if (user.agencyPortal) {
+  if (user.agencyPortal || user.role === "agency") {
+    const agencyHref = user.primaryAgencyId
+      ? agencyPath(user.primaryAgencyId, "dashboard")
+      : ROUTES.agencyHome;
     sections.push({
-      items: [{ label: "Agency Portal", href: ROUTES.agencyHome, icon: Briefcase }],
+      items: [{ label: "Agency Portal", href: agencyHref, icon: Briefcase }],
     });
   }
 
-  if (user.role === "artist") {
+  if (user.role === "agency") {
+    /* agency-specific nav handled above */
+  } else if (user.role === "artist") {
     sections.push({
       items: [{ label: "Artist Dashboard", href: ROUTES.artistDashboard, icon: Mic2 }],
     });
@@ -57,11 +67,13 @@ export function getAccountMenuLinks(user: {
   role: UserRole;
   sponsorPortal?: boolean;
   agencyPortal?: boolean;
+  primaryAgencyId?: string | null;
+  agencyMemberRole?: string | null;
 }): AccountMenuItem[] {
   return getAccountMenuSections(user).flatMap((section) => section.items);
 }
 
-export function formatRoleBadge(role: UserRole): string {
+export function formatRoleBadge(role: UserRole, agencyMemberRole?: string | null): string {
   switch (role) {
     case "super_admin":
       return "SUPER ADMIN";
@@ -69,6 +81,28 @@ export function formatRoleBadge(role: UserRole): string {
       return "ADMIN";
     case "artist":
       return "ARTIST";
+    case "agency":
+      if (agencyMemberRole) {
+        return (
+          AGENCY_MEMBER_ROLE_LABELS[agencyMemberRole as AgencyMemberRole]?.toUpperCase() ?? "AGENCY"
+        );
+      }
+      return "AGENCY";
+    default:
+      return "FAN";
+  }
+}
+
+export function formatAccountTypeLabel(role: UserRole): string {
+  switch (role) {
+    case "agency":
+      return "AGENCY";
+    case "artist":
+      return "ARTIST";
+    case "admin":
+      return "ADMIN";
+    case "super_admin":
+      return "SUPER ADMIN";
     default:
       return "FAN";
   }
@@ -82,6 +116,8 @@ export function roleBadgeClass(role: UserRole): string {
       return "border-violet-400/40 bg-violet-500/15 text-violet-200";
     case "artist":
       return "border-emerald-400/40 bg-emerald-500/15 text-emerald-200";
+    case "agency":
+      return "border-sky-400/40 bg-sky-500/15 text-sky-200";
     default:
       return "border-white/15 bg-white/5 text-muted-foreground";
   }
@@ -92,6 +128,8 @@ export function getUserMenuItems(user: {
   role: UserRole;
   sponsorPortal?: boolean;
   agencyPortal?: boolean;
+  primaryAgencyId?: string | null;
+  agencyMemberRole?: string | null;
 }) {
   return getAccountMenuLinks(user).map(({ href, label }) => ({ href, label }));
 }
