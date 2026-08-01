@@ -18,6 +18,12 @@ export type {
 export type { AgencyDashboardConfiguration } from "./types";
 
 export {
+  countAgencyOrgRows,
+  getAgencyDataClient,
+  type AgencyDataClientResult,
+} from "./agency-data.server";
+
+export {
   ensureAgencyMembership,
   ensureAgencySubscription,
   getAdminClientForMembershipRepair,

@@ -8,7 +8,7 @@ export default async function AgencyArtistsPage() {
   const user = await getSessionUser();
   const sessionResult = user ? await loadAgencySessionForUser(user.id) : null;
   const orgId = sessionResult?.ok ? sessionResult.session.orgId : "";
-  const roster = orgId ? await listAgencyManagedArtists(orgId) : [];
+  const roster = orgId && user ? await listAgencyManagedArtists(orgId, user.id) : [];
 
   return (
     <>

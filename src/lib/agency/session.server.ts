@@ -1,13 +1,16 @@
 import "server-only";
 
 import { syncAgencyAccountProfile } from "@/lib/auth/agency-account";
+import { countAgencyOrgRows } from "@/lib/agency/agency-data.server";
 import { runAgencyMembershipDiagnostic } from "@/lib/agency/membership-diagnostic.server";
 import {
   listAgencyMembershipsForUser,
   resolveAgencyMembershipForUser,
   touchAgencyMembershipActivity,
 } from "@/lib/agency/membership.server";
-import type { AgencySessionResult } from "@/lib/agency/membership.types";
+import { ensureAgencyOrganizationComplete } from "@/lib/agency/organization-health.server";
+import type { AgencySession, AgencySessionResult } from "@/lib/agency/membership.types";
+import { getAgencyOrgTemplate, type AgencyScenarioSlug } from "@/lib/agency";
 import { getProfile, getSessionUser } from "@/lib/auth/session";
 import { getSupabaseAdmin } from "@/lib/supabase/admin";
 
@@ -132,9 +135,45 @@ export async function resolveAgencySession(userId: string): Promise<AgencySessio
   };
 }
 
+async function ensureTestAgencySeedData(userId: string, session: AgencySession) {
+  const admin = getSupabaseAdmin();
+  const profile = await getProfile();
+  if (!profile?.is_test_account) return;
+
+  const orgMetadata = (session.organization.metadata ?? {}) as Record<string, unknown>;
+  const scenario = (orgMetadata.scenario as AgencyScenarioSlug | undefined) ?? "boutique_agency";
+  const template = getAgencyOrgTemplate(scenario);
+  const counts = await countAgencyOrgRows(admin, session.orgId);
+
+  const needsSeed =
+    counts.roster < template.artistCount ||
+    counts.bookings < Math.min(template.bookingCount, 10) ||
+    counts.calendar < 12;
+
+  if (!needsSeed) return;
+
+  logSession("Test org missing seed data — auto-repairing", {
+    userId,
+    orgId: session.orgId,
+    scenario,
+    counts,
+    targets: { artists: template.artistCount, bookings: template.bookingCount },
+  });
+
+  await ensureAgencyOrganizationComplete(admin, {
+    userId,
+    organizationId: session.orgId,
+    memberRole: session.memberRole,
+    scenario,
+    createdBy: userId,
+    generationMode: "repair",
+  });
+}
+
 export async function loadAgencySessionForUser(userId: string): Promise<AgencySessionResult> {
   const result = await resolveAgencySession(userId);
   if (result.ok) {
+    await ensureTestAgencySeedData(userId, result.session);
     logSession("Dashboard session ready", {
       userId,
       orgId: result.session.orgId,

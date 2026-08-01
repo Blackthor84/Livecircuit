@@ -25,7 +25,7 @@ export default async function AgencyDashboardPage() {
 
   const stats =
     isSupabaseConfigured() && user && orgId
-      ? await getAgencyDashboardStats(await createClient(), orgId)
+      ? await getAgencyDashboardStats(await createClient(), orgId, user.id)
       : {
           totalArtists: 0,
           activeArtists: 0,

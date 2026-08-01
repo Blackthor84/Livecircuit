@@ -10,8 +10,11 @@ export default async function AgencyCalendarPage() {
   const sessionResult = user ? await loadAgencySessionForUser(user.id) : null;
   const orgId = sessionResult?.ok ? sessionResult.session.orgId : "";
 
-  const [events, roster] = orgId
-    ? await Promise.all([listAgencyCalendarEvents(orgId), listAgencyManagedArtists(orgId)])
+  const [events, roster] = orgId && user
+    ? await Promise.all([
+        listAgencyCalendarEvents(orgId, user.id),
+        listAgencyManagedArtists(orgId, user.id),
+      ])
     : [[], []];
 
   return (

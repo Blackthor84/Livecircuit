@@ -264,8 +264,11 @@ export async function validateAgencyOrganizationHealth(
   });
   checks.push({
     key: "roster",
-    ok: rosterCount > 0,
-    issue: rosterCount > 0 ? undefined : "Managed artist roster is empty",
+    ok: rosterCount >= orgTemplate.artistCount,
+    issue:
+      rosterCount >= orgTemplate.artistCount
+        ? undefined
+        : `Managed artist roster incomplete (${rosterCount}/${orgTemplate.artistCount})`,
     table: "agency_managed_artists",
   });
 
@@ -273,10 +276,14 @@ export async function validateAgencyOrganizationHealth(
     column: "organization_id",
     value: organizationId,
   });
+  const minBookings = Math.min(orgTemplate.bookingCount, 10);
   checks.push({
     key: "bookings",
-    ok: bookingCount > 0,
-    issue: bookingCount > 0 ? undefined : "No booking requests seeded",
+    ok: bookingCount >= minBookings,
+    issue:
+      bookingCount >= minBookings
+        ? undefined
+        : `Booking requests incomplete (${bookingCount}/${minBookings} minimum)`,
     table: "agency_booking_requests",
   });
 
@@ -284,10 +291,14 @@ export async function validateAgencyOrganizationHealth(
     column: "organization_id",
     value: organizationId,
   });
+  const minCalendar = Math.min(12, orgTemplate.artistCount);
   checks.push({
     key: "calendar",
-    ok: calendarCount > 0,
-    issue: calendarCount > 0 ? undefined : "No calendar events seeded",
+    ok: calendarCount >= minCalendar,
+    issue:
+      calendarCount >= minCalendar
+        ? undefined
+        : `Calendar events incomplete (${calendarCount}/${minCalendar} minimum)`,
     table: "agency_calendar_events",
   });
 

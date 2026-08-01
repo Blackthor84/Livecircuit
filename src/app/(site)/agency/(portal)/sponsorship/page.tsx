@@ -11,11 +11,11 @@ export default async function AgencySponsorshipPage() {
   const sessionResult = user ? await loadAgencySessionForUser(user.id) : null;
   const orgId = sessionResult?.ok ? sessionResult.session.orgId : "";
 
-  const [proposals, listings, roster] = orgId
+  const [proposals, listings, roster] = orgId && user
     ? await Promise.all([
         listAgencySponsorshipProposals(orgId),
         browseSponsorshipMarketplace({ status: "available" }),
-        listAgencyManagedArtists(orgId),
+        listAgencyManagedArtists(orgId, user.id),
       ])
     : [[], [], []];
 

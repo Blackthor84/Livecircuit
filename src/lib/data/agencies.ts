@@ -1,6 +1,7 @@
 import "server-only";
 
 import type { SupabaseClient } from "@supabase/supabase-js";
+import { getAgencyDataClient } from "@/lib/agency/agency-data.server";
 import { resolveAgencyRedirect } from "@/lib/auth/agency-account";
 import { agencyDashboardPath, getAgencyPlanLimits } from "@/lib/agency";
 import { resolveAgencyMembershipForUser } from "@/lib/agency/server";
@@ -102,17 +103,26 @@ export async function getAgencyOrganization(orgId: string, userId: string) {
   return { organization: access.organization, role: access.role };
 }
 
-export async function listAgencyManagedArtists(orgId: string): Promise<AgencyManagedArtist[]> {
+export async function listAgencyManagedArtists(orgId: string, userId?: string): Promise<AgencyManagedArtist[]> {
   const supabase = await getClient();
-  if (!supabase) return [];
+  const resolvedUserId = userId ?? (await supabase?.auth.getUser())?.data.user?.id;
+  if (!resolvedUserId) return [];
 
-  const { data } = await supabase
+  const dataClient = await getAgencyDataClient(orgId, resolvedUserId);
+  if (!dataClient) return [];
+
+  const { data, error } = await dataClient.client
     .from("agency_managed_artists")
     .select(
       "*, artists(id, slug, stage_name, banner_url, verified, follower_count, category)"
     )
     .eq("organization_id", orgId)
     .order("created_at", { ascending: false });
+
+  if (error) {
+    console.warn("[Agency Data] Roster query failed", { orgId, userId: resolvedUserId, error: error.message });
+    return [];
+  }
 
   return (data ?? []) as AgencyManagedArtist[];
 }
@@ -137,7 +147,8 @@ export async function listAgencyMembers(orgId: string): Promise<AgencyMember[]> 
 
 export async function getAgencyDashboardStats(
   supabase: SupabaseClient,
-  orgId: string
+  orgId: string,
+  userId?: string
 ): Promise<AgencyDashboardStats> {
   const empty: AgencyDashboardStats = {
     totalArtists: 0,
@@ -158,14 +169,32 @@ export async function getAgencyDashboardStats(
     geoAudience: [],
   };
 
-  const { data: roster } = await supabase
+  const resolvedUserId = userId ?? (await supabase.auth.getUser()).data.user?.id;
+  const dataClient =
+    resolvedUserId != null ? await getAgencyDataClient(orgId, resolvedUserId) : null;
+  const client = dataClient?.client ?? supabase;
+
+  const { data: orgRow } = await client
+    .from("agency_organizations")
+    .select("metadata")
+    .eq("id", orgId)
+    .maybeSingle();
+  const analyticsSnapshot = ((orgRow?.metadata ?? {}) as Record<string, unknown>).analytics_snapshot as
+    | {
+        revenue_cents?: number;
+        ticket_sales?: number;
+        attendance?: number;
+        top_artists?: { artist_id: string; revenue_cents: number }[];
+        top_genres?: { genre: string; share_pct: number }[];
+      }
+    | undefined;
+
+  const { data: roster } = await client
     .from("agency_managed_artists")
     .select("artist_id, status, artists(slug, stage_name, follower_count, category)")
     .eq("organization_id", orgId);
 
   const artistIds = (roster ?? []).map((r) => r.artist_id as string);
-  if (!artistIds.length) return empty;
-
   const activeCount = (roster ?? []).filter((r) => r.status === "active").length;
   const monthStart = new Date();
   monthStart.setDate(1);
@@ -178,41 +207,59 @@ export async function getAgencyDashboardStats(
     { data: tickets },
     { data: orders },
   ] = await Promise.all([
-    supabase
-      .from("events")
-      .select("id", { count: "exact", head: true })
-      .in("artist_id", artistIds)
-      .in("status", ["scheduled", "live"])
-      .gte("scheduled_at", new Date().toISOString()),
-    supabase
+    artistIds.length
+      ? client
+          .from("events")
+          .select("id", { count: "exact", head: true })
+          .in("artist_id", artistIds)
+          .in("status", ["scheduled", "live"])
+          .gte("scheduled_at", new Date().toISOString())
+      : Promise.resolve({ count: 0 }),
+    client
       .from("agency_booking_requests")
       .select("id", { count: "exact", head: true })
       .eq("organization_id", orgId)
       .in("status", ["draft", "pending", "matched"]),
-    supabase
-      .from("events")
-      .select("id, artist_id, peak_viewers, scheduled_at, artists(stage_name, slug, category)")
-      .in("artist_id", artistIds)
-      .order("scheduled_at", { ascending: false })
-      .limit(50),
-    supabase
+    artistIds.length
+      ? client
+          .from("events")
+          .select("id, artist_id, peak_viewers, scheduled_at, artists(stage_name, slug, category)")
+          .in("artist_id", artistIds)
+          .order("scheduled_at", { ascending: false })
+          .limit(50)
+      : Promise.resolve({ data: [] }),
+    client
       .from("tickets")
       .select("id, event_id, price_cents, created_at, events(artist_id)")
       .gte("created_at", monthStart.toISOString()),
-    supabase
+    client
       .from("orders")
       .select("total_cents, created_at, metadata")
       .eq("status", "paid")
       .gte("created_at", monthStart.toISOString()),
   ]);
 
-  const ticketRows = tickets ?? [];
-  const orderRows = orders ?? [];
+  if (!artistIds.length && !pendingBookings && !analyticsSnapshot) {
+    return empty;
+  }
 
-  const grossRevenueCents = (orderRows as { total_cents: number }[]).reduce(
+  const ticketRows = tickets ?? [];
+  const orderRows = (orders ?? []).filter(
+    (o) => (o.metadata as { agency_org_id?: string } | null)?.agency_org_id === orgId
+  );
+
+  let grossRevenueCents = (orderRows as { total_cents: number }[]).reduce(
     (sum, o) => sum + (o.total_cents ?? 0),
     0
   );
+  let ticketsSold = Array.isArray(ticketRows) ? ticketRows.length : 0;
+
+  if (!grossRevenueCents && analyticsSnapshot?.revenue_cents) {
+    grossRevenueCents = analyticsSnapshot.revenue_cents;
+  }
+  if (!ticketsSold && analyticsSnapshot?.ticket_sales) {
+    ticketsSold = analyticsSnapshot.ticket_sales;
+  }
 
   const trending = (roster ?? [])
     .map((r) => {
@@ -237,15 +284,45 @@ export async function getAgencyDashboardStats(
     );
     if (artist) {
       revenueByArtistMap.set(artist.stage_name, 0);
-      revenueByGenreMap.set(artist.category, (revenueByGenreMap.get(artist.category) ?? 0));
+      revenueByGenreMap.set(artist.category, revenueByGenreMap.get(artist.category) ?? 0);
     }
   }
+
+  if (analyticsSnapshot?.top_artists?.length) {
+    for (const entry of analyticsSnapshot.top_artists) {
+      const rosterArtist = (roster ?? []).find((r) => r.artist_id === entry.artist_id);
+      const artist = rosterArtist
+        ? unwrapJoin(
+            rosterArtist.artists as { stage_name: string } | { stage_name: string }[] | null
+          )
+        : null;
+      if (artist?.stage_name) {
+        revenueByArtistMap.set(artist.stage_name, entry.revenue_cents);
+      }
+    }
+  }
+
+  if (analyticsSnapshot?.top_genres?.length) {
+    for (const entry of analyticsSnapshot.top_genres) {
+      revenueByGenreMap.set(entry.genre, entry.share_pct * 1000);
+    }
+  }
+
+  const attendanceTrend =
+    (events ?? []).length > 0
+      ? (events ?? []).slice(0, 6).map((e) => ({
+          month: new Date(e.scheduled_at as string).toLocaleDateString(),
+          viewers: (e.peak_viewers as number) ?? 0,
+        }))
+      : analyticsSnapshot?.attendance
+        ? [{ month: "Seeded", viewers: analyticsSnapshot.attendance }]
+        : [];
 
   return {
     totalArtists: roster?.length ?? 0,
     activeArtists: activeCount,
     upcomingPerformances: upcomingCount ?? 0,
-    ticketsSold: Array.isArray(ticketRows) ? ticketRows.length : 0,
+    ticketsSold,
     grossRevenueCents,
     pendingBookingRequests: pendingBookings ?? 0,
     upcomingSponsorships: 0,
@@ -255,11 +332,8 @@ export async function getAgencyDashboardStats(
     revenueByArtist: [...revenueByArtistMap.entries()].map(([name, cents]) => ({ name, cents })),
     revenueByGenre: [...revenueByGenreMap.entries()].map(([genre, cents]) => ({ genre, cents })),
     revenueTrend: [{ month: monthStart.toLocaleString("default", { month: "short" }), cents: grossRevenueCents }],
-    ticketsTrend: [{ month: monthStart.toLocaleString("default", { month: "short" }), count: Array.isArray(ticketRows) ? ticketRows.length : 0 }],
-    attendanceTrend: (events ?? []).slice(0, 6).map((e) => ({
-      month: new Date(e.scheduled_at as string).toLocaleDateString(),
-      viewers: (e.peak_viewers as number) ?? 0,
-    })),
+    ticketsTrend: [{ month: monthStart.toLocaleString("default", { month: "short" }), count: ticketsSold }],
+    attendanceTrend,
     geoAudience: [],
   };
 }
@@ -287,11 +361,15 @@ export async function getAgencyRedirectForUser(userId: string): Promise<string |
   return agencyDashboardPath();
 }
 
-export async function listAgencyBookingMatches(orgId: string, limit = 20): Promise<AgencyBookingMatch[]> {
+export async function listAgencyBookingMatches(orgId: string, limit = 20, userId?: string): Promise<AgencyBookingMatch[]> {
   const supabase = await getClient();
-  if (!supabase) return [];
+  const resolvedUserId = userId ?? (await supabase?.auth.getUser())?.data.user?.id;
+  if (!resolvedUserId) return [];
 
-  const { data: requests } = await supabase
+  const dataClient = await getAgencyDataClient(orgId, resolvedUserId);
+  if (!dataClient) return [];
+
+  const { data: requests } = await dataClient.client
     .from("agency_booking_requests")
     .select("id")
     .eq("organization_id", orgId);
@@ -299,7 +377,7 @@ export async function listAgencyBookingMatches(orgId: string, limit = 20): Promi
   const requestIds = (requests ?? []).map((r) => r.id as string);
   if (!requestIds.length) return [];
 
-  const { data: matchRows } = await supabase
+  const { data: matchRows } = await dataClient.client
     .from("agency_booking_matches")
     .select("*, artists(slug, stage_name)")
     .in("booking_request_id", requestIds)
@@ -317,11 +395,15 @@ export async function listAgencyBookingMatches(orgId: string, limit = 20): Promi
   }));
 }
 
-export async function listAgencyBookingRequests(orgId: string, limit = 10) {
+export async function listAgencyBookingRequests(orgId: string, limit = 10, userId?: string) {
   const supabase = await getClient();
-  if (!supabase) return [];
+  const resolvedUserId = userId ?? (await supabase?.auth.getUser())?.data.user?.id;
+  if (!resolvedUserId) return [];
 
-  const { data } = await supabase
+  const dataClient = await getAgencyDataClient(orgId, resolvedUserId);
+  if (!dataClient) return [];
+
+  const { data } = await dataClient.client
     .from("agency_booking_requests")
     .select("id, title, status, artist_ids, created_at")
     .eq("organization_id", orgId)

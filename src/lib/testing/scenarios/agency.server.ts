@@ -272,6 +272,79 @@ async function ensureArtistEvents(
   }
 }
 
+async function ensureUpcomingPerformances(
+  admin: SupabaseClient,
+  log: TestCreationLog,
+  artistIds: string[],
+  count: number
+) {
+  const { data: existingUpcoming } = await admin
+    .from("events")
+    .select("id")
+    .in("artist_id", artistIds.slice(0, count))
+    .in("status", ["scheduled", "live"])
+    .gte("scheduled_at", new Date().toISOString())
+    .limit(1);
+
+  if ((existingUpcoming?.length ?? 0) > 0) return;
+
+  const target = Math.min(count, artistIds.length, 8);
+  for (let i = 0; i < target; i++) {
+    const artistId = artistIds[i]!;
+    const { data: artist } = await admin.from("artists").select("id, slug").eq("id", artistId).maybeSingle();
+    if (!artist) continue;
+
+    const slugBase = (artist.slug as string) ?? `artist-${i}`;
+    const at = new Date(Date.now() + (i + 3) * 7 * 86400000);
+
+    const { data: tour } = await admin
+      .from("tours")
+      .insert({
+        artist_id: artistId,
+        title: `Upcoming Tour ${i + 1}`,
+        slug: `${slugBase}-upcoming-${i}`.slice(0, 80),
+        description: "Upcoming performance for agency dashboard QA",
+        status: "published",
+      })
+      .select("id")
+      .maybeSingle();
+
+    if (!tour?.id) continue;
+
+    const { data: stop } = await admin
+      .from("tour_stops")
+      .insert({
+        tour_id: tour.id,
+        virtual_location_label: `Upcoming Stop ${i + 1}`,
+        tour_city: ["Nashville", "Portland", "Miami", "Phoenix"][i % 4],
+        tour_state_code: ["TN", "OR", "FL", "AZ"][i % 4],
+        scheduled_at: at.toISOString(),
+        show_starts_at: at.toISOString(),
+        ticket_price_cents: 4000 + i * 500,
+        capacity: 3000,
+        stop_order: 1,
+      })
+      .select("id")
+      .maybeSingle();
+
+    if (!stop?.id) continue;
+
+    await admin.from("events").insert({
+      tour_stop_id: stop.id,
+      artist_id: artistId,
+      slug: `${slugBase}-upcoming-event-${i}`.slice(0, 80),
+      title: `Upcoming Show ${i + 1}`,
+      status: "scheduled",
+      scheduled_at: at.toISOString(),
+      peak_viewers: 0,
+    });
+  }
+
+  if (target > 0) {
+    logTestStep(log, `Ensured ${target} upcoming performance(s) for dashboard`);
+  }
+}
+
 async function seedAgencyBookings(
   admin: SupabaseClient,
   log: TestCreationLog,
@@ -508,13 +581,14 @@ async function seedAgencyAnalyticsSnapshot(
   scenario: AgencyScenarioSlug,
   artistIds: string[],
   templateLabel: string,
-  plan: "starter" | "pro" | "enterprise"
+  plan: "starter" | "pro" | "enterprise",
+  fillMissingOnly = false
 ) {
   logTestStep(log, "Seeding analytics snapshot...");
   const { data: org } = await admin.from("agency_organizations").select("metadata").eq("id", orgId).maybeSingle();
   const metadata = ((org?.metadata ?? {}) as Record<string, unknown>) ?? {};
 
-  if (metadata.analytics_snapshot) return;
+  if (metadata.analytics_snapshot && fillMissingOnly) return;
 
   const baseRevenue = plan === "enterprise" ? 125000000 : plan === "pro" ? 45000000 : 8500000;
   const snapshot = {
@@ -589,33 +663,45 @@ export async function seedAgencyScenario(
     template.artistCount
   );
 
-  if (!fillMissingOnly || counts.bookings === 0) {
-    await seedAgencyBookings(
-      admin,
-      log,
-      orgId,
-      ownerUserId,
-      bookingManager,
-      artistIds,
-      scenario,
-      seed,
-      template.bookingCount
-    );
+  if (!fillMissingOnly || counts.bookings < template.bookingCount) {
+    const bookingTarget = fillMissingOnly
+      ? Math.max(0, template.bookingCount - counts.bookings)
+      : template.bookingCount;
+    if (bookingTarget > 0) {
+      await seedAgencyBookings(
+        admin,
+        log,
+        orgId,
+        ownerUserId,
+        bookingManager,
+        artistIds,
+        scenario,
+        seed,
+        bookingTarget
+      );
+    }
   } else {
     logTestStep(log, "Bookings already seeded — skipping");
   }
 
-  const calendarTarget = Math.min(24, Math.max(12, artistIds.length));
-  if (!fillMissingOnly || counts.calendar === 0) {
-    await seedAgencyCalendar(admin, log, orgId, artistIds, calendarTarget);
+  const calendarTarget = Math.min(24, Math.max(12, template.artistCount));
+  if (!fillMissingOnly || counts.calendar < calendarTarget) {
+    const calendarSeedCount = fillMissingOnly
+      ? Math.max(0, calendarTarget - counts.calendar)
+      : calendarTarget;
+    if (calendarSeedCount > 0) {
+      await seedAgencyCalendar(admin, log, orgId, artistIds, calendarSeedCount);
+    }
   } else {
     logTestStep(log, "Calendar already seeded — skipping");
   }
 
   if (!fillMissingOnly || counts.orders === 0) {
     await seedAgencyRevenue(admin, log, orgId, ownerUserId, artistIds, template.plan);
+    await ensureUpcomingPerformances(admin, log, artistIds, template.artistCount);
   } else {
     logTestStep(log, "Revenue already seeded — skipping");
+    await ensureUpcomingPerformances(admin, log, artistIds, template.artistCount);
   }
 
   if (!fillMissingOnly) {
@@ -666,7 +752,8 @@ export async function seedAgencyScenario(
     scenario,
     artistIds,
     template.label,
-    template.plan
+    template.plan,
+    fillMissingOnly
   );
 
   logTestStep(log, "Ensuring dashboard settings...");

@@ -1,4 +1,5 @@
 import { createClient } from "@/lib/supabase/server";
+import { getAgencyDataClient } from "@/lib/agency/agency-data.server";
 import { isSupabaseConfigured } from "@/lib/config/env";
 import type { AgencyCalendarEvent } from "@/lib/agency/calendar";
 import type { AgencyRevenueReport, AgencyRevenueLine } from "@/lib/agency/revenue-export";
@@ -13,11 +14,17 @@ function unwrapJoin<T>(value: T | T[] | null | undefined): T | null {
   return Array.isArray(value) ? value[0] ?? null : value;
 }
 
-export async function listAgencyCalendarEvents(orgId: string): Promise<AgencyCalendarEvent[]> {
+export async function listAgencyCalendarEvents(orgId: string, userId?: string): Promise<AgencyCalendarEvent[]> {
   const supabase = await getClient();
   if (!supabase) return [];
 
-  const { data } = await supabase
+  const resolvedUserId = userId ?? (await supabase.auth.getUser()).data.user?.id;
+  if (!resolvedUserId) return [];
+
+  const dataClient = await getAgencyDataClient(orgId, resolvedUserId);
+  if (!dataClient) return [];
+
+  const { data } = await dataClient.client
     .from("agency_calendar_events")
     .select("id, title, starts_at, ends_at, color, artist_id, notes, artists(stage_name)")
     .eq("organization_id", orgId)
@@ -43,7 +50,10 @@ export async function getAgencyRevenueReport(orgId: string, userId: string, peri
   const supabase = await getClient();
   if (!supabase) return null;
 
-  const { data: membership } = await supabase
+  const dataClient = await getAgencyDataClient(orgId, userId);
+  const client = dataClient?.client ?? supabase;
+
+  const { data: membership } = await client
     .from("agency_organization_members")
     .select("role")
     .eq("organization_id", orgId)
@@ -52,23 +62,27 @@ export async function getAgencyRevenueReport(orgId: string, userId: string, peri
 
   if (!membership) return null;
 
-  const { data: org } = await supabase
+  const { data: org } = await client
     .from("agency_organizations")
-    .select("name")
+    .select("name, metadata")
     .eq("id", orgId)
     .maybeSingle();
 
   const since = new Date();
   since.setDate(since.getDate() - periodDays);
 
-  const { data: roster } = await supabase
+  const { data: roster } = await client
     .from("agency_managed_artists")
     .select("artist_id, genres, artists(id, stage_name, category)")
     .eq("organization_id", orgId)
     .eq("status", "active");
 
   const artistIds = (roster ?? []).map((r) => r.artist_id as string);
-  if (!artistIds.length) {
+  const analyticsSnapshot = ((org?.metadata ?? {}) as Record<string, unknown>).analytics_snapshot as
+    | { revenue_cents?: number }
+    | undefined;
+
+  if (!artistIds.length && !analyticsSnapshot) {
     return {
       orgName: (org?.name as string) ?? "Agency",
       periodLabel: `Last ${periodDays} days`,

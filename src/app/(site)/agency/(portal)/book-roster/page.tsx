@@ -15,11 +15,11 @@ export default async function AgencyBookRosterPage() {
   const sessionResult = user ? await loadAgencySessionForUser(user.id) : null;
   const orgId = sessionResult?.ok ? sessionResult.session.orgId : "";
 
-  const [roster, requests, matches, jobs] = orgId
+  const [roster, requests, matches, jobs] = orgId && user
     ? await Promise.all([
-        listAgencyManagedArtists(orgId),
-        listAgencyBookingRequests(orgId),
-        listAgencyBookingMatches(orgId),
+        listAgencyManagedArtists(orgId, user.id),
+        listAgencyBookingRequests(orgId, 10, user.id),
+        listAgencyBookingMatches(orgId, 20, user.id),
         listAgencyBackgroundJobs(orgId),
       ])
     : [[], [], [], []];

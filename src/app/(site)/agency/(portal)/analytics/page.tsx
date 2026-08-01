@@ -12,8 +12,8 @@ export default async function AgencyAnalyticsPage() {
   const orgId = sessionResult?.ok ? sessionResult.session.orgId : null;
 
   const stats =
-    isSupabaseConfigured() && orgId
-      ? await getAgencyDashboardStats(await createClient(), orgId)
+    isSupabaseConfigured() && orgId && user
+      ? await getAgencyDashboardStats(await createClient(), orgId, user.id)
       : null;
 
   return (
