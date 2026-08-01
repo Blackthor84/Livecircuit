@@ -1,11 +1,12 @@
 import "server-only";
 
 import { syncAgencyAccountProfile } from "@/lib/auth/agency-account";
+import { runAgencyMembershipDiagnostic } from "@/lib/agency/membership-diagnostic.server";
 import {
   listAgencyMembershipsForUser,
   resolveAgencyMembershipForUser,
   touchAgencyMembershipActivity,
-} from "@/lib/agency/server";
+} from "@/lib/agency/membership.server";
 import type { AgencySessionResult } from "@/lib/agency/membership.types";
 import { getProfile, getSessionUser } from "@/lib/auth/session";
 import { getSupabaseAdmin } from "@/lib/supabase/admin";
@@ -148,6 +149,7 @@ export async function loadAgencySessionForUser(userId: string): Promise<AgencySe
       message: result.message,
       details: result.details,
     });
+    await runAgencyMembershipDiagnostic(userId);
   }
   return result;
 }

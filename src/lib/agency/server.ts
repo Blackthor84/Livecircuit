@@ -29,6 +29,13 @@ export {
 } from "./membership.server";
 
 export {
+  runAgencyMembershipDiagnostic,
+  verifyMembershipRowAdmin,
+  type AgencyMembershipDiagnosticReport,
+  type MembershipDiagnosticStep,
+} from "./membership-diagnostic.server";
+
+export {
   getAgencySessionOrgId,
   loadAgencySessionForUser,
   requireAgencySessionUserId,

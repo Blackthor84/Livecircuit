@@ -8,6 +8,7 @@ import type {
 } from "@/lib/agency/membership.types";
 import type { AgencyMemberRole } from "@/lib/agency/types";
 import { syncAgencyAccountProfile } from "@/lib/auth/agency-account";
+import { isActiveAgencyMembership, verifyMembershipRowAdmin } from "@/lib/agency/membership-diagnostic.server";
 import { isSupabaseConfigured } from "@/lib/config/env";
 import { getSupabaseAdmin } from "@/lib/supabase/admin";
 import { createClient } from "@/lib/supabase/server";
@@ -28,31 +29,53 @@ async function getUserClient() {
   return createClient();
 }
 
+const MEMBERSHIP_SELECT =
+  "id, organization_id, user_id, role, status, invitation_status, accepted_at, last_active_at";
+
 /** List memberships for the authenticated user (RLS-aware). */
 export async function listAgencyMembershipsForUser(userId: string): Promise<AgencyMembershipRecord[]> {
   const supabase = await getUserClient();
   if (!supabase) return [];
 
-  logMembership("Finding membership rows", { table: "agency_organization_members", userId });
+  const {
+    data: { user: authUser },
+  } = await supabase.auth.getUser();
+  const authUid = authUser?.id ?? null;
+
+  logMembership("Finding membership rows", {
+    table: "agency_organization_members",
+    userId,
+    authUid,
+    authMatchesUser: authUid === userId,
+  });
 
   const { data, error } = await supabase
     .from("agency_organization_members")
-    .select("id, organization_id, user_id, role, status, invitation_status, accepted_at, last_active_at")
+    .select(MEMBERSHIP_SELECT)
     .eq("user_id", userId)
     .order("created_at", { ascending: true });
 
   if (error) {
-    logMembership("Membership query failed", { userId, error: error.message, code: error.code });
+    logMembership("Membership query failed", {
+      userId,
+      authUid,
+      error: error.message,
+      code: error.code,
+      hint: error.hint,
+    });
     return [];
   }
 
+  const memberships = ((data ?? []) as AgencyMembershipRecord[]).filter(isActiveAgencyMembership);
+
   logMembership("Membership rows loaded", {
     userId,
-    count: data?.length ?? 0,
-    organizationIds: (data ?? []).map((row) => row.organization_id),
+    authUid,
+    count: memberships.length,
+    organizationIds: memberships.map((row) => row.organization_id),
   });
 
-  return (data ?? []) as AgencyMembershipRecord[];
+  return memberships;
 }
 
 /** Service-role membership lookup (Testing Center / repair). */
@@ -62,7 +85,7 @@ export async function listAgencyMembershipsForUserAdmin(
 ): Promise<AgencyMembershipRecord[]> {
   const { data, error } = await admin
     .from("agency_organization_members")
-    .select("id, organization_id, user_id, role, status, invitation_status, accepted_at, last_active_at")
+    .select(MEMBERSHIP_SELECT)
     .eq("user_id", userId)
     .order("created_at", { ascending: true });
 
@@ -71,13 +94,14 @@ export async function listAgencyMembershipsForUserAdmin(
     return [];
   }
 
-  return (data ?? []) as AgencyMembershipRecord[];
+  return ((data ?? []) as AgencyMembershipRecord[]).filter(isActiveAgencyMembership);
 }
 
 async function loadAgencyOrganizationForMember(
   supabase: NonNullable<Awaited<ReturnType<typeof getUserClient>>>,
   orgId: string,
-  userId: string
+  userId: string,
+  adminFallback?: SupabaseClient
 ) {
   logMembership("Finding agency organization", {
     table: "agency_organizations",
@@ -91,6 +115,36 @@ async function loadAgencyOrganizationForMember(
     .eq("id", orgId)
     .maybeSingle();
 
+  if (!error && data) {
+    return { ok: true as const, organization: data as Record<string, unknown> };
+  }
+
+  if (adminFallback) {
+    logMembership("Organization user-client query failed; trying admin fallback", {
+      organizationId: orgId,
+      userId,
+      error: error?.message,
+    });
+    const { data: adminOrg, error: adminError } = await adminFallback
+      .from("agency_organizations")
+      .select("*")
+      .eq("id", orgId)
+      .maybeSingle();
+
+    if (!adminError && adminOrg) {
+      return { ok: true as const, organization: adminOrg as Record<string, unknown> };
+    }
+
+    if (adminError) {
+      return {
+        ok: false as const,
+        code: "organization_query_failed" as const,
+        message: adminError.message,
+        details: { table: "agency_organizations", organizationId: orgId, userId, source: "admin_fallback" },
+      };
+    }
+  }
+
   if (error) {
     return {
       ok: false as const,
@@ -100,16 +154,12 @@ async function loadAgencyOrganizationForMember(
     };
   }
 
-  if (!data) {
-    return {
-      ok: false as const,
-      code: "organization_not_found" as const,
-      message: "Agency organization record not found.",
-      details: { table: "agency_organizations", organizationId: orgId, userId },
-    };
-  }
-
-  return { ok: true as const, organization: data as Record<string, unknown> };
+  return {
+    ok: false as const,
+    code: "organization_not_found" as const,
+    message: "Agency organization record not found.",
+    details: { table: "agency_organizations", organizationId: orgId, userId },
+  };
 }
 
 /**
@@ -132,13 +182,35 @@ export async function resolveAgencyMembershipForUser(
     };
   }
 
-  const memberships = await listAgencyMembershipsForUser(userId);
+  let memberships = await listAgencyMembershipsForUser(userId);
+  let membershipSource: "user_client" | "admin_fallback" = "user_client";
+
+  if (!memberships.length) {
+    const admin = getSupabaseAdmin();
+    const adminMemberships = await listAgencyMembershipsForUserAdmin(admin, userId);
+    if (adminMemberships.length) {
+      membershipSource = "admin_fallback";
+      memberships = adminMemberships;
+      logMembership("Using admin fallback for membership resolution", {
+        userId,
+        preferredOrgId: preferredOrgId ?? null,
+        reason: "User-scoped membership query returned no active rows",
+        adminCount: adminMemberships.length,
+      });
+    }
+  }
+
   if (!memberships.length) {
     return {
       ok: false,
       code: "no_membership",
       message: "You are not linked to an agency. No row exists in agency_organization_members for this user.",
-      details: { table: "agency_organization_members", userId, preferredOrgId: preferredOrgId ?? null },
+      details: {
+        table: "agency_organization_members",
+        userId,
+        preferredOrgId: preferredOrgId ?? null,
+        membershipSource,
+      },
     };
   }
 
@@ -151,10 +223,17 @@ export async function resolveAgencyMembershipForUser(
     membershipId: membership.id,
     organizationId: membership.organization_id,
     role: membership.role,
+    status: membership.status ?? "active",
     userId,
+    membershipSource,
   });
 
-  const orgResult = await loadAgencyOrganizationForMember(supabase, membership.organization_id, userId);
+  const orgResult = await loadAgencyOrganizationForMember(
+    supabase,
+    membership.organization_id,
+    userId,
+    membershipSource === "admin_fallback" ? getSupabaseAdmin() : undefined
+  );
   if (!orgResult.ok) {
     return orgResult;
   }
@@ -227,11 +306,38 @@ export async function ensureAgencyMembership(
       },
       { onConflict: "organization_id,user_id" }
     )
-    .select("id, organization_id, user_id, role, status, invitation_status, accepted_at, last_active_at")
+    .select(MEMBERSHIP_SELECT)
     .single();
 
   if (error || !data) {
+    logMembership("Membership upsert failed", {
+      userId: input.userId,
+      organizationId: input.organizationId,
+      role: input.role,
+      error: error?.message,
+      code: error?.code,
+    });
     throw new Error(error?.message ?? "Failed to upsert agency_organization_members");
+  }
+
+  const verified = await verifyMembershipRowAdmin(admin, {
+    userId: input.userId,
+    organizationId: input.organizationId,
+  });
+
+  logMembership("Membership upsert succeeded", {
+    table: "agency_organization_members",
+    membershipId: data.id,
+    userId: input.userId,
+    organizationId: input.organizationId,
+    role: input.role,
+    status: data.status,
+    verified: Boolean(verified),
+    verifiedMembershipId: verified?.id ?? null,
+  });
+
+  if (!verified) {
+    throw new Error("Membership upsert reported success but verification query returned no row");
   }
 
   await syncAgencyAccountProfile(admin, {
@@ -240,7 +346,7 @@ export async function ensureAgencyMembership(
     memberRole: input.role,
   });
 
-  return data as AgencyMembershipRecord;
+  return verified;
 }
 
 /** Validate org subscription fields exist; patch test defaults if missing. */

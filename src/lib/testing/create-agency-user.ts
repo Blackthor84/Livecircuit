@@ -29,6 +29,7 @@ export type CreatedAgencyTestUser = {
   accountType: "agency";
   memberRole: AgencyMemberRole;
   organizationId: string;
+  membershipId: string;
   scenario: AgencyScenarioSlug | string;
   reused: boolean;
 };
@@ -135,13 +136,26 @@ export async function createAgencyTestUser(
   });
 
   logTestStep(log, `Ensuring agency_organization_members row (${input.memberRole})...`);
-  await ensureAgencyMembership(admin, {
+  const membership = await ensureAgencyMembership(admin, {
     userId,
     organizationId: input.organizationId,
     role: input.memberRole,
   });
 
-  logTestStep(log, `Membership verified (${input.memberRole}). Continuing...`);
+  logTestStep(
+    log,
+    `Membership verified — id=${membership.id} user=${userId} org=${input.organizationId} role=${membership.role} status=${membership.status ?? "active"}`
+  );
+
+  console.info("[Testing Center] Agency team member created", {
+    authUserId: userId,
+    profileId: userId,
+    agencyId: input.organizationId,
+    role: input.memberRole,
+    membershipId: membership.id,
+    table: "agency_organization_members",
+    status: membership.status ?? "active",
+  });
 
   return {
     userId,
@@ -151,6 +165,7 @@ export async function createAgencyTestUser(
     accountType: "agency",
     memberRole: input.memberRole,
     organizationId: input.organizationId,
+    membershipId: membership.id,
     scenario: input.scenario,
     reused: authUser.reused,
   };

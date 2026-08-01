@@ -37,8 +37,20 @@ export async function POST(request: Request) {
   let agencyRedirect: string | null = null;
   let agencyOrgId: string | null = (target.primary_agency_id as string | null) ?? null;
 
+  const { data: authUser, error: authErr } = await admin.auth.admin.getUserById(body.userId);
+  if (authErr || !authUser.user?.email) {
+    return NextResponse.json({ ok: false, error: "Target auth user not found" }, { status: 404 });
+  }
+
   if (target.role === "agency") {
-    console.info("[Agency Impersonation] Starting agency impersonation", { userId: body.userId });
+    console.info("[Agency Impersonation] Starting agency impersonation", {
+      userId: body.userId,
+      profileId: target.id,
+      email: authUser.user.email,
+      accountType: target.role,
+      memberRole: target.agency_member_role,
+      primaryAgencyId: target.primary_agency_id,
+    });
     const agencyAccess = await verifyAndRepairAgencyForImpersonation({
       userId: body.userId,
       repairedBy: ctx.userId,
@@ -60,6 +72,8 @@ export async function POST(request: Request) {
       userId: body.userId,
       orgId: agencyOrgId,
       redirect: agencyRedirect,
+      email: authUser.user.email,
+      memberRole: target.agency_member_role,
     });
   }
 
@@ -69,11 +83,6 @@ export async function POST(request: Request) {
   } = await supabase.auth.getSession();
   if (!session) {
     return NextResponse.json({ ok: false, error: "No active session" }, { status: 401 });
-  }
-
-  const { data: authUser, error: authErr } = await admin.auth.admin.getUserById(body.userId);
-  if (authErr || !authUser.user?.email) {
-    return NextResponse.json({ ok: false, error: "Target auth user not found" }, { status: 404 });
   }
 
   const { data: linkData, error: linkErr } = await admin.auth.admin.generateLink({
@@ -102,6 +111,11 @@ export async function POST(request: Request) {
   if (verifyErr) {
     jar.delete(ADMIN_SESSION_BACKUP_COOKIE);
     return NextResponse.json({ ok: false, error: verifyErr.message }, { status: 500 });
+  }
+
+  if (target.role === "agency") {
+    const { runAgencyMembershipDiagnostic } = await import("@/lib/agency/membership-diagnostic.server");
+    await runAgencyMembershipDiagnostic(body.userId, agencyOrgId);
   }
 
   const { data: auditRow } = await admin
