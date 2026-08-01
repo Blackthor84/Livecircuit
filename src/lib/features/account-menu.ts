@@ -1,7 +1,7 @@
 import type { LucideIcon } from "lucide-react";
 import { Bell, Briefcase, Mic2, Rocket, Settings, Shield, User } from "lucide-react";
 import { AGENCY_MEMBER_ROLE_LABELS } from "@/lib/agency/permissions";
-import { agencyPath } from "@/lib/agency/sections";
+import { agencyDashboardPath, agencyPortalPath } from "@/lib/agency/sections";
 import type { AgencyMemberRole } from "@/lib/agency/types";
 import { ROUTES } from "@/lib/constants";
 import type { UserRole } from "@/types/database";
@@ -36,9 +36,7 @@ export function getAccountMenuSections(user: {
   ];
 
   if (user.agencyPortal || user.role === "agency") {
-    const agencyHref = user.primaryAgencyId
-      ? agencyPath(user.primaryAgencyId, "dashboard")
-      : ROUTES.agencyHome;
+    const agencyHref = user.agencyPortal || user.role === "agency" ? agencyDashboardPath() : ROUTES.agencyHome;
     sections.push({
       items: [{ label: "Agency Portal", href: agencyHref, icon: Briefcase }],
     });

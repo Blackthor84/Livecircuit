@@ -2,7 +2,7 @@
 
 import { revalidatePath } from "next/cache";
 import { z } from "zod";
-import { agencyPath } from "@/lib/agency/sections";
+import { agencyPortalPath } from "@/lib/agency/sections";
 import {
   agencyRevenueToCsv,
   agencyRevenueToExcel,
@@ -80,7 +80,7 @@ export async function createAgencyCalendarEventAction(input: unknown): Promise<A
     .single();
 
   if (error || !data) return { ok: false, error: error?.message ?? "Failed to create event" };
-  revalidatePath(agencyPath(parsed.data.orgId, "calendar"));
+  revalidatePath(agencyPortalPath("calendar"));
   return { ok: true, eventId: data.id as string };
 }
 
@@ -115,7 +115,7 @@ export async function updateAgencyCalendarEventAction(input: {
     .eq("organization_id", input.orgId);
 
   if (error) return { ok: false, error: error.message };
-  revalidatePath(agencyPath(input.orgId, "calendar"));
+  revalidatePath(agencyPortalPath("calendar"));
   return { ok: true };
 }
 
@@ -133,7 +133,7 @@ export async function deleteAgencyCalendarEventAction(input: {
     .eq("organization_id", input.orgId);
 
   if (error) return { ok: false, error: error.message };
-  revalidatePath(agencyPath(input.orgId, "calendar"));
+  revalidatePath(agencyPortalPath("calendar"));
   return { ok: true };
 }
 
@@ -203,7 +203,7 @@ export async function createAgencyConversationAction(input: unknown): Promise<Ag
     .single();
 
   if (error || !data) return { ok: false, error: error?.message ?? "Failed to create conversation" };
-  revalidatePath(agencyPath(parsed.data.orgId, "communications"));
+  revalidatePath(agencyPortalPath("communications"));
   return { ok: true, conversationId: data.id as string };
 }
 
@@ -240,7 +240,7 @@ export async function sendAgencyMessageAction(input: unknown): Promise<AgencyFea
     .update({ updated_at: new Date().toISOString() })
     .eq("id", parsed.data.conversationId);
 
-  revalidatePath(agencyPath(parsed.data.orgId, "communications"));
+  revalidatePath(agencyPortalPath("communications"));
   return { ok: true };
 }
 
@@ -305,7 +305,7 @@ export async function createAgencySponsorshipProposalAction(input: unknown): Pro
     metadata: { proposalId: data.id },
   });
 
-  revalidatePath(agencyPath(parsed.data.orgId, "sponsorship"));
+  revalidatePath(agencyPortalPath("sponsorship"));
   return { ok: true, proposalId: data.id as string };
 }
 
@@ -329,7 +329,7 @@ export async function updateAgencyProposalStatusAction(input: {
     .eq("organization_id", input.orgId);
 
   if (error) return { ok: false, error: error.message };
-  revalidatePath(agencyPath(input.orgId, "sponsorship"));
+  revalidatePath(agencyPortalPath("sponsorship"));
   return { ok: true };
 }
 
@@ -388,7 +388,7 @@ export async function enqueueBulkBookingJobAction(input: unknown): Promise<Agenc
     metadata: { jobId: job.id, artistCount: parsed.data.artistIds.length },
   });
 
-  revalidatePath(agencyPath(parsed.data.orgId, "book-roster"));
+  revalidatePath(agencyPortalPath("book-roster"));
   return { ok: true, jobId: job.id as string };
 }
 
@@ -423,7 +423,7 @@ export async function processAgencyJobAction(orgId: string, jobId: string): Prom
     ctx.user.id
   );
 
-  revalidatePath(agencyPath(orgId, "book-roster"));
+  revalidatePath(agencyPortalPath("book-roster"));
   if (!result.ok) return result;
   return { ok: true, status: "completed" };
 }

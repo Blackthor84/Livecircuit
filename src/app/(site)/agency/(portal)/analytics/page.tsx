@@ -1,16 +1,20 @@
 import { AgencyPageHeader } from "@/components/agency/agency-dashboard-layout";
 import { AgencyDashboardPanel } from "@/components/agency/agency-dashboard-panel";
+import { loadAgencySessionForUser } from "@/lib/agency/session";
 import { createClient } from "@/lib/supabase/server";
 import { getAgencyDashboardStats } from "@/lib/data/agencies";
+import { getSessionUser } from "@/lib/auth/session";
 import { isSupabaseConfigured } from "@/lib/config/env";
 
-type Props = { params: Promise<{ orgId: string }> };
+export default async function AgencyAnalyticsPage() {
+  const user = await getSessionUser();
+  const sessionResult = user ? await loadAgencySessionForUser(user.id) : null;
+  const orgId = sessionResult?.ok ? sessionResult.session.orgId : null;
 
-export default async function AgencyAnalyticsPage({ params }: Props) {
-  const { orgId } = await params;
-  const stats = isSupabaseConfigured()
-    ? await getAgencyDashboardStats(await createClient(), orgId)
-    : null;
+  const stats =
+    isSupabaseConfigured() && orgId
+      ? await getAgencyDashboardStats(await createClient(), orgId)
+      : null;
 
   return (
     <>

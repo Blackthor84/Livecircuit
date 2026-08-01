@@ -1,28 +1,30 @@
 import type { Metadata } from "next";
 import { AgencyDashboardPanel } from "@/components/agency/agency-dashboard-panel";
 import { AgencyPageHeader } from "@/components/agency/agency-dashboard-layout";
+import { loadAgencySessionForUser } from "@/lib/agency/session";
 import { createClient } from "@/lib/supabase/server";
-import { getAgencyDashboardStats, getAgencyOrganization } from "@/lib/data/agencies";
+import { getAgencyDashboardStats } from "@/lib/data/agencies";
 import { getSessionUser } from "@/lib/auth/session";
 import { isSupabaseConfigured } from "@/lib/config/env";
 
-type Props = { params: Promise<{ orgId: string }> };
-
-export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const { orgId } = await params;
+export async function generateMetadata(): Promise<Metadata> {
   const user = await getSessionUser();
   if (!user) return { title: "Agency Dashboard" };
-  const ctx = await getAgencyOrganization(orgId, user.id);
-  return { title: ctx ? `${ctx.organization.name} · Agency` : "Agency Dashboard" };
+  const sessionResult = await loadAgencySessionForUser(user.id);
+  if (!sessionResult.ok) return { title: "Agency Dashboard" };
+  return {
+    title: `${sessionResult.session.organization.name as string} · Agency`,
+  };
 }
 
-export default async function AgencyDashboardPage({ params }: Props) {
+export default async function AgencyDashboardPage() {
   const user = await getSessionUser();
-  const { orgId } = await params;
-  const ctx = user ? await getAgencyOrganization(orgId, user.id) : null;
+  const sessionResult = user ? await loadAgencySessionForUser(user.id) : null;
+  const orgId = sessionResult?.ok ? sessionResult.session.orgId : null;
+  const org = sessionResult?.ok ? sessionResult.session.organization : null;
 
   const stats =
-    isSupabaseConfigured() && user
+    isSupabaseConfigured() && user && orgId
       ? await getAgencyDashboardStats(await createClient(), orgId)
       : {
           totalArtists: 0,
@@ -48,8 +50,8 @@ export default async function AgencyDashboardPage({ params }: Props) {
       <AgencyPageHeader
         title="Dashboard"
         subtitle="Manage your roster, bookings, revenue, and sponsorship opportunities from one professional command center."
-        orgName={ctx?.organization.name as string}
-        verified={Boolean(ctx?.organization.verified)}
+        orgName={org?.name as string}
+        verified={Boolean(org?.verified)}
       />
       <AgencyDashboardPanel stats={stats} />
     </>

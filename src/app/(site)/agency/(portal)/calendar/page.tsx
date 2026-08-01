@@ -1,16 +1,18 @@
 import { AgencyCalendarPanel } from "@/components/agency/agency-calendar-panel";
 import { AgencyPageHeader } from "@/components/agency/agency-dashboard-layout";
+import { loadAgencySessionForUser } from "@/lib/agency/session";
 import { listAgencyCalendarEvents } from "@/lib/data/agency-features";
 import { listAgencyManagedArtists } from "@/lib/data/agencies";
+import { getSessionUser } from "@/lib/auth/session";
 
-type Props = { params: Promise<{ orgId: string }> };
+export default async function AgencyCalendarPage() {
+  const user = await getSessionUser();
+  const sessionResult = user ? await loadAgencySessionForUser(user.id) : null;
+  const orgId = sessionResult?.ok ? sessionResult.session.orgId : "";
 
-export default async function AgencyCalendarPage({ params }: Props) {
-  const { orgId } = await params;
-  const [events, roster] = await Promise.all([
-    listAgencyCalendarEvents(orgId),
-    listAgencyManagedArtists(orgId),
-  ]);
+  const [events, roster] = orgId
+    ? await Promise.all([listAgencyCalendarEvents(orgId), listAgencyManagedArtists(orgId)])
+    : [[], []];
 
   return (
     <>

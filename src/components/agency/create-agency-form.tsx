@@ -1,7 +1,8 @@
 "use client";
 
-import { useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
+import { useState, useTransition } from "react";
+import { agencyDashboardPath } from "@/lib/agency/sections";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -35,7 +36,7 @@ export function CreateAgencyForm() {
           if (!result.ok) toast.error(result.error);
           else {
             toast.success("Agency created");
-            router.push(`/agency/${result.orgId}`);
+            router.push(agencyDashboardPath());
             router.refresh();
           }
         });

@@ -268,3 +268,19 @@ export async function canUseTestingCenterAction(): Promise<{ ok: boolean; superA
     canImpersonate: access.canImpersonate,
   };
 }
+
+export async function repairTestAgencyAccountAction(userId: string): Promise<TestingActionResult> {
+  const ctx = await requireSuperAdminTesting();
+  if (!ctx.ok) return ctx;
+  if (!isSupabaseConfigured()) return { ok: false, error: "Supabase required" };
+
+  try {
+    const { repairTestAgencyAccount } = await import("@/lib/testing/repair-agency");
+    const result = await repairTestAgencyAccount({ userId, repairedBy: ctx.userId });
+    if (!result.ok) return { ok: false, error: result.error };
+    revalidatePath("/admin/testing");
+    return { ok: true, message: result.message, userId };
+  } catch (e) {
+    return { ok: false, error: e instanceof Error ? e.message : "Repair failed" };
+  }
+}

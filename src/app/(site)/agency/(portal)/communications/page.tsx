@@ -1,14 +1,14 @@
 import { AgencyCommunicationsPanel } from "@/components/agency/agency-communications-panel";
 import { AgencyPageHeader } from "@/components/agency/agency-dashboard-layout";
+import { loadAgencySessionForUser } from "@/lib/agency/session";
 import { listAgencyConversations, listAgencyMessages } from "@/lib/data/agency-features";
 import { getSessionUser } from "@/lib/auth/session";
 
-type Props = { params: Promise<{ orgId: string }> };
-
-export default async function AgencyCommunicationsPage({ params }: Props) {
-  const { orgId } = await params;
+export default async function AgencyCommunicationsPage() {
   const user = await getSessionUser();
-  const conversations = await listAgencyConversations(orgId);
+  const sessionResult = user ? await loadAgencySessionForUser(user.id) : null;
+  const orgId = sessionResult?.ok ? sessionResult.session.orgId : "";
+  const conversations = orgId ? await listAgencyConversations(orgId) : [];
   const initialConversationId = conversations[0]?.id ?? null;
   const initialMessages =
     user && initialConversationId

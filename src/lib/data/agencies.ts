@@ -1,5 +1,6 @@
 import type { SupabaseClient } from "@supabase/supabase-js";
 import { resolveAgencyRedirect } from "@/lib/auth/agency-account";
+import { agencyDashboardPath } from "@/lib/agency/sections";
 import { createClient } from "@/lib/supabase/server";
 import { isSupabaseConfigured } from "@/lib/config/env";
 import { getAgencyPlanLimits } from "@/lib/agency/permissions";
@@ -68,21 +69,58 @@ export async function getAgencyMembership(orgId: string, userId: string) {
   return data?.role as AgencyMemberRole | undefined ?? null;
 }
 
-export async function getAgencyOrganization(orgId: string, userId: string) {
+export type AgencyOrgAccessDeniedCode =
+  | "not_configured"
+  | "no_membership"
+  | "organization_not_found";
+
+export type AgencyOrgAccessResult =
+  | { ok: true; organization: Record<string, unknown>; role: AgencyMemberRole }
+  | { ok: false; code: AgencyOrgAccessDeniedCode; message: string };
+
+export async function resolveAgencyOrgAccess(
+  orgId: string,
+  userId: string
+): Promise<AgencyOrgAccessResult> {
   const supabase = await getClient();
-  if (!supabase) return null;
+  if (!supabase) {
+    return {
+      ok: false,
+      code: "not_configured",
+      message: "Database is not configured, so this agency cannot be loaded.",
+    };
+  }
 
   const role = await getAgencyMembership(orgId, userId);
-  if (!role) return null;
+  if (!role) {
+    return {
+      ok: false,
+      code: "no_membership",
+      message: "You are not a member of this agency organization.",
+    };
+  }
 
-  const { data } = await supabase
+  const { data, error } = await supabase
     .from("agency_organizations")
     .select("*")
     .eq("id", orgId)
     .maybeSingle();
 
-  if (!data) return null;
-  return { organization: data, role };
+  if (error || !data) {
+    return {
+      ok: false,
+      code: "organization_not_found",
+      message: error?.message ?? "No agency organization exists for this ID.",
+    };
+  }
+
+  return { ok: true, organization: data, role };
+}
+
+export async function getAgencyOrganization(orgId: string, userId: string) {
+  const access = await resolveAgencyOrgAccess(orgId, userId);
+  if (!access.ok) return null;
+  return { organization: access.organization, role: access.role };
 }
 
 export async function listAgencyManagedArtists(orgId: string): Promise<AgencyManagedArtist[]> {
@@ -267,7 +305,7 @@ export async function getAgencyRedirectForUser(userId: string): Promise<string |
 
   const orgs = await getUserAgencyOrganizations(userId);
   if (!orgs.length) return null;
-  return `/agency/${orgs[0]!.id}`;
+  return agencyDashboardPath();
 }
 
 export async function listAgencyBookingMatches(orgId: string, limit = 20): Promise<AgencyBookingMatch[]> {

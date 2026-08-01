@@ -1,18 +1,23 @@
 import { AgencyPageHeader } from "@/components/agency/agency-dashboard-layout";
 import { AgencySponsorshipPanel } from "@/components/agency/agency-sponsorship-panel";
+import { loadAgencySessionForUser } from "@/lib/agency/session";
 import { listAgencyManagedArtists } from "@/lib/data/agencies";
 import { listAgencySponsorshipProposals } from "@/lib/data/agency-features";
 import { browseSponsorshipMarketplace } from "@/lib/sponsorship/marketplace";
+import { getSessionUser } from "@/lib/auth/session";
 
-type Props = { params: Promise<{ orgId: string }> };
+export default async function AgencySponsorshipPage() {
+  const user = await getSessionUser();
+  const sessionResult = user ? await loadAgencySessionForUser(user.id) : null;
+  const orgId = sessionResult?.ok ? sessionResult.session.orgId : "";
 
-export default async function AgencySponsorshipPage({ params }: Props) {
-  const { orgId } = await params;
-  const [proposals, listings, roster] = await Promise.all([
-    listAgencySponsorshipProposals(orgId),
-    browseSponsorshipMarketplace({ status: "available" }),
-    listAgencyManagedArtists(orgId),
-  ]);
+  const [proposals, listings, roster] = orgId
+    ? await Promise.all([
+        listAgencySponsorshipProposals(orgId),
+        browseSponsorshipMarketplace({ status: "available" }),
+        listAgencyManagedArtists(orgId),
+      ])
+    : [[], [], []];
 
   return (
     <>

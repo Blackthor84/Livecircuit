@@ -70,6 +70,7 @@ export const ROUTES = {
   about: "/about",
   contact: "/contact",
   agencyHome: "/agency",
+  agencyDashboard: "/agency/dashboard",
   agencies: "/agencies",
   artistEventsNew: "/artist/events/new",
   artistEvent: (eventId: string) => `/artist/events/${eventId}`,

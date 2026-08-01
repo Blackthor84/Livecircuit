@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import { cookies } from "next/headers";
 import { createClient } from "@/lib/supabase/server";
 import { getSupabaseAdmin } from "@/lib/supabase/admin";
-import { resolveAgencyRedirect } from "@/lib/auth/agency-account";
+import { resolveAgencyRedirect, validateAgencyImpersonationTarget } from "@/lib/auth/agency-account";
 import { impersonationCookieOptions } from "@/lib/auth/impersonation";
 import {
   ADMIN_SESSION_BACKUP_COOKIE,
@@ -31,6 +31,34 @@ export async function POST(request: Request) {
 
   if (!target?.is_test_account) {
     return NextResponse.json({ ok: false, error: "Only test accounts can be impersonated" }, { status: 403 });
+  }
+
+  let agencyRedirect: string | null = null;
+  let agencyOrgId: string | null = (target.primary_agency_id as string | null) ?? null;
+
+  if (target.role === "agency") {
+    console.info("[Agency Impersonation] Starting agency impersonation", { userId: body.userId });
+    const agencyAccess = await validateAgencyImpersonationTarget(admin, {
+      id: body.userId,
+      role: target.role as string,
+      primary_agency_id: (target.primary_agency_id as string | null) ?? null,
+      agency_member_role: (target.agency_member_role as string | null) ?? null,
+    });
+    if (!agencyAccess.ok) {
+      console.warn("[Agency Impersonation] Validation failed", {
+        userId: body.userId,
+        error: agencyAccess.error,
+        code: agencyAccess.code,
+      });
+      return NextResponse.json({ ok: false, error: agencyAccess.error, code: agencyAccess.code }, { status: 409 });
+    }
+    agencyRedirect = agencyAccess.redirect;
+    agencyOrgId = agencyAccess.orgId;
+    console.info("[Agency Impersonation] Agency session ready", {
+      userId: body.userId,
+      orgId: agencyOrgId,
+      redirect: agencyRedirect,
+    });
   }
 
   const supabase = await createClient();
@@ -92,7 +120,7 @@ export async function POST(request: Request) {
     displayName: (target.display_name as string) ?? null,
     role: target.role as string,
     scenario: (target.test_scenario as string) ?? null,
-    primaryAgencyId: (target.primary_agency_id as string) ?? null,
+    primaryAgencyId: agencyOrgId,
     agencyMemberRole: (target.agency_member_role as string) ?? null,
   };
 
@@ -101,10 +129,18 @@ export async function POST(request: Request) {
   const redirect =
     target.role === "artist"
       ? "/artist/dashboard"
-      : resolveAgencyRedirect({
+      : agencyRedirect ??
+        resolveAgencyRedirect({
           role: target.role as string,
           primary_agency_id: target.primary_agency_id as string | null,
-        }) ?? (target.role === "fan" ? "/discover" : "/");
+        }) ??
+        (target.role === "fan" ? "/discover" : "/");
 
-  return NextResponse.json({ ok: true, redirect });
+  console.info("[Impersonation] Session switched, navigating", {
+    targetId: body.userId,
+    role: target.role,
+    redirect,
+  });
+
+  return NextResponse.json({ ok: true, redirect, orgId: agencyOrgId });
 }

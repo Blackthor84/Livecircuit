@@ -8,18 +8,22 @@ import { SiteHeaderUserMenu, type HeaderUser } from "@/components/layout/site-he
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
-import { AGENCY_SECTIONS, agencyPath, agencySectionLabel } from "@/lib/agency/sections";
+import {
+  AGENCY_SECTIONS,
+  agencyPortalPath,
+  agencySectionFromPathname,
+  agencySectionLabel,
+} from "@/lib/agency/sections";
 import { ROUTES } from "@/lib/constants";
 import { cn } from "@/lib/utils";
 
-function SidebarNav({ orgId, onNavigate }: { orgId: string; onNavigate?: () => void }) {
+function SidebarNav({ onNavigate }: { onNavigate?: () => void }) {
   const pathname = usePathname();
-  const base = `/agency/${orgId}`;
 
   return (
     <nav className="flex flex-col gap-0.5" aria-label="Agency navigation">
       {AGENCY_SECTIONS.map((item) => {
-        const href = agencyPath(orgId, item.href);
+        const href = agencyPortalPath(item.href);
         const active =
           "exact" in item && item.exact
             ? pathname === href
@@ -83,15 +87,17 @@ export function AgencyDashboardLayout({
   children: React.ReactNode;
 }) {
   const pathname = usePathname();
-  const segment = pathname.replace(`/agency/${orgId}`, "").replace(/^\//, "") || "dashboard";
+  const segment = agencySectionFromPathname(pathname);
 
   return (
     <div className="min-h-[calc(100vh-4rem)] lg:grid lg:grid-cols-[16rem_1fr]">
       <aside className="hidden border-r border-white/10 bg-card/20 lg:block">
         <div className="sticky top-36 flex h-[calc(100vh-9rem)] flex-col p-4">
           <p className="mb-1 px-3 text-xs font-medium uppercase tracking-wide text-primary">Agency</p>
-          <p className="mb-4 truncate px-3 text-sm font-semibold">{orgName}</p>
-          <SidebarNav orgId={orgId} />
+          <p className="mb-4 truncate px-3 text-sm font-semibold" title={orgName}>
+            {orgName}
+          </p>
+          <SidebarNav />
           <div className="mt-auto px-3 pt-4">
             <Button variant="ghost" size="sm" href={ROUTES.agencyHome} className="w-full justify-start">
               All agencies
@@ -115,7 +121,7 @@ export function AgencyDashboardLayout({
                   <SheetTitle>{orgName}</SheetTitle>
                 </SheetHeader>
                 <div className="mt-6">
-                  <SidebarNav orgId={orgId} />
+                  <SidebarNav />
                 </div>
               </SheetContent>
             </Sheet>
@@ -131,7 +137,9 @@ export function AgencyDashboardLayout({
             {user ? <SiteHeaderUserMenu user={user} /> : null}
           </div>
         </header>
-        <div className="flex-1 px-4 py-8 sm:px-6">{children}</div>
+        <div className="flex-1 px-4 py-8 sm:px-6" data-agency-org-id={orgId}>
+          {children}
+        </div>
       </div>
     </div>
   );

@@ -1,25 +1,28 @@
 import { AgencyBookRosterPanel } from "@/components/agency/agency-book-roster-panel";
 import { AgencyBulkJobsPanel } from "@/components/agency/agency-bulk-jobs-panel";
 import { AgencyPageHeader } from "@/components/agency/agency-dashboard-layout";
-import {
-  listAgencyBackgroundJobs,
-} from "@/lib/data/agency-features";
+import { loadAgencySessionForUser } from "@/lib/agency/session";
+import { listAgencyBackgroundJobs } from "@/lib/data/agency-features";
 import {
   listAgencyBookingMatches,
   listAgencyBookingRequests,
   listAgencyManagedArtists,
 } from "@/lib/data/agencies";
+import { getSessionUser } from "@/lib/auth/session";
 
-type Props = { params: Promise<{ orgId: string }> };
+export default async function AgencyBookRosterPage() {
+  const user = await getSessionUser();
+  const sessionResult = user ? await loadAgencySessionForUser(user.id) : null;
+  const orgId = sessionResult?.ok ? sessionResult.session.orgId : "";
 
-export default async function AgencyBookRosterPage({ params }: Props) {
-  const { orgId } = await params;
-  const [roster, requests, matches, jobs] = await Promise.all([
-    listAgencyManagedArtists(orgId),
-    listAgencyBookingRequests(orgId),
-    listAgencyBookingMatches(orgId),
-    listAgencyBackgroundJobs(orgId),
-  ]);
+  const [roster, requests, matches, jobs] = orgId
+    ? await Promise.all([
+        listAgencyManagedArtists(orgId),
+        listAgencyBookingRequests(orgId),
+        listAgencyBookingMatches(orgId),
+        listAgencyBackgroundJobs(orgId),
+      ])
+    : [[], [], [], []];
 
   return (
     <>

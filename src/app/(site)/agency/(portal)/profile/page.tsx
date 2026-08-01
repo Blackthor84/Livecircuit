@@ -1,15 +1,12 @@
 import { AgencyPageHeader } from "@/components/agency/agency-dashboard-layout";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { getAgencyOrganization } from "@/lib/data/agencies";
+import { loadAgencySessionForUser } from "@/lib/agency/session";
 import { getSessionUser } from "@/lib/auth/session";
 
-type Props = { params: Promise<{ orgId: string }> };
-
-export default async function AgencyProfilePage({ params }: Props) {
-  const { orgId } = await params;
+export default async function AgencyProfilePage() {
   const user = await getSessionUser();
-  const ctx = user ? await getAgencyOrganization(orgId, user.id) : null;
-  const org = ctx?.organization;
+  const sessionResult = user ? await loadAgencySessionForUser(user.id) : null;
+  const org = sessionResult?.ok ? sessionResult.session.organization : null;
 
   return (
     <>
@@ -20,21 +17,26 @@ export default async function AgencyProfilePage({ params }: Props) {
       />
       <Card className="glass-panel border-white/10">
         <CardHeader>
-          <CardTitle>{org?.name ?? "Agency"}</CardTitle>
+          <CardTitle>{(org?.name as string) ?? "Agency"}</CardTitle>
         </CardHeader>
         <CardContent className="space-y-2 text-sm text-muted-foreground">
-          <p>{org?.biography ?? "Add a biography to introduce your agency to artists and partners."}</p>
+          <p>{(org?.biography as string) ?? "Add a biography to introduce your agency to artists and partners."}</p>
           {org?.website_url ? (
             <p>
               Website:{" "}
-              <a href={org.website_url as string} className="text-primary hover:underline" target="_blank" rel="noreferrer">
+              <a
+                href={org.website_url as string}
+                className="text-primary hover:underline"
+                target="_blank"
+                rel="noreferrer"
+              >
                 {org.website_url as string}
               </a>
             </p>
           ) : null}
           <p>Plan: {(org?.plan as string) ?? "starter"}</p>
           {(org?.genres as string[] | undefined)?.length ? (
-            <p>Genres: {(org.genres as string[]).join(", ")}</p>
+            <p>Genres: {(org!.genres as string[]).join(", ")}</p>
           ) : null}
         </CardContent>
       </Card>

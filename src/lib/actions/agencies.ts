@@ -4,7 +4,7 @@ import { revalidatePath } from "next/cache";
 import { z } from "zod";
 import { getSessionUser } from "@/lib/auth/session";
 import { hasAgencyPermission } from "@/lib/agency/permissions";
-import { agencyPath } from "@/lib/agency/sections";
+import { agencyDashboardPath, agencyPortalPath, revalidateAgencyPortalPaths } from "@/lib/agency/sections";
 import type { AgencyMemberRole, AgencyPermissions } from "@/lib/agency/types";
 import {
   canAgencyAddArtist,
@@ -133,7 +133,7 @@ export async function inviteAgencyArtistAction(input: unknown): Promise<AgencyAc
     action: "artist_invited",
   });
 
-  revalidatePath(agencyPath(parsed.data.orgId, "artists"));
+  revalidatePath(agencyPortalPath("artists"));
   return { ok: true };
 }
 
@@ -156,7 +156,7 @@ export async function updateAgencyArtistStatusAction(input: {
     .eq("organization_id", input.orgId);
 
   if (error) return { ok: false, error: error.message };
-  revalidatePath(agencyPath(input.orgId, "artists"));
+  revalidatePath(agencyPortalPath("artists"));
   return { ok: true };
 }
 
@@ -192,7 +192,7 @@ export async function createBookRosterRequestAction(input: unknown): Promise<Age
     metadata: { requestId: data.id },
   });
 
-  revalidatePath(agencyPath(parsed.data.orgId, "book-roster"));
+  revalidatePath(agencyPortalPath("book-roster"));
   return { ok: true, requestId: data.id as string };
 }
 
@@ -201,7 +201,7 @@ export async function runAutoMatchAction(orgId: string, requestId: string): Prom
   if (!ctx.ok) return ctx;
 
   const matches = await runAgencyAutoMatch(ctx.supabase, orgId, requestId);
-  revalidatePath(agencyPath(orgId, "book-roster"));
+  revalidatePath(agencyPortalPath("book-roster"));
   return { ok: true, matchCount: matches.length };
 }
 
@@ -219,7 +219,7 @@ export async function updateBookingMatchStatusAction(input: {
     .eq("id", input.matchId);
 
   if (error) return { ok: false, error: error.message };
-  revalidatePath(agencyPath(input.orgId, "book-roster"));
+  revalidatePath(agencyPortalPath("book-roster"));
   return { ok: true };
 }
 
@@ -249,7 +249,7 @@ export async function inviteAgencyMemberAction(input: {
     memberRole: input.role,
   });
 
-  revalidatePath(agencyPath(input.orgId, "team"));
+  revalidatePath(agencyPortalPath("team"));
   return { ok: true };
 }
 
@@ -278,6 +278,6 @@ export async function updateAgencyProfileAction(input: {
     .eq("id", input.orgId);
 
   if (error) return { ok: false, error: error.message };
-  revalidatePath(agencyPath(input.orgId, "profile"));
+  revalidatePath(agencyPortalPath("profile"));
   return { ok: true };
 }

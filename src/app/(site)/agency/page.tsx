@@ -4,10 +4,12 @@ import { redirect } from "next/navigation";
 import { CreateAgencyForm } from "@/components/agency/create-agency-form";
 import { Button } from "@/components/ui/button";
 import { AGENCY_PLANS } from "@/lib/agency/permissions";
+import { agencyDashboardPath } from "@/lib/agency/sections";
+import { getProfile, getSessionUser } from "@/lib/auth/session";
 import { getUserAgencyOrganizations } from "@/lib/data/agencies";
-import { getSessionUser } from "@/lib/auth/session";
+import { syncAgencyAccountProfile } from "@/lib/auth/agency-account";
+import { getSupabaseAdmin } from "@/lib/supabase/admin";
 import { requireFeatureAccess } from "@/lib/features/guard";
-import { agencyPath } from "@/lib/agency/sections";
 
 export const metadata: Metadata = {
   title: "Agency Portal",
@@ -17,9 +19,23 @@ export const metadata: Metadata = {
 export default async function AgencyHomePage() {
   await requireFeatureAccess("agency_portal");
   const user = await getSessionUser();
-  if (!user) redirect("/login?redirect=/agency");
+  if (!user) redirect("/login?redirect=/agency/dashboard");
 
-  const orgs = await getUserAgencyOrganizations(user.id);
+  const [profile, orgs] = await Promise.all([getProfile(), getUserAgencyOrganizations(user.id)]);
+
+  if (profile?.role === "agency" && profile.primary_agency_id) {
+    redirect(agencyDashboardPath());
+  }
+
+  if (profile?.role === "agency" && orgs.length === 1) {
+    const admin = getSupabaseAdmin();
+    await syncAgencyAccountProfile(admin, {
+      userId: user.id,
+      organizationId: orgs[0]!.id,
+      memberRole: orgs[0]!.role,
+    });
+    redirect(agencyDashboardPath());
+  }
 
   return (
     <div className="mx-auto max-w-5xl px-4 py-16 sm:px-6">
@@ -35,7 +51,7 @@ export default async function AgencyHomePage() {
           {orgs.map((org) => (
             <li key={org.id}>
               <Link
-                href={agencyPath(org.id, "dashboard")}
+                href={agencyDashboardPath()}
                 className="glass-panel block rounded-2xl border border-white/10 p-6 transition hover:border-primary/40"
               >
                 <p className="text-lg font-semibold">{org.name}</p>

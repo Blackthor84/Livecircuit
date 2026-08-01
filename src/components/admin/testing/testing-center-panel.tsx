@@ -16,6 +16,7 @@ import {
   createTestUserAction,
   deleteAllTestDataAction,
   deleteTestUserAction,
+  repairTestAgencyAccountAction,
   resetTestUserAction,
   runSimulatorAction,
   type TestingActionResult,
@@ -62,8 +63,7 @@ export function TestingCenterPanel({ accounts, totalCount, canManage, canImperso
       if (!data.ok) toast.error(data.error ?? "Impersonation failed");
       else {
         toast.success("Now impersonating test user");
-        router.push(data.redirect ?? "/");
-        router.refresh();
+        window.location.assign(data.redirect ?? "/");
       }
     } finally {
       setBusy(null);
@@ -437,6 +437,18 @@ export function TestingCenterPanel({ accounts, totalCount, canManage, canImperso
                         onClick={() => void impersonate(account.id)}
                       >
                         Impersonate
+                      </Button>
+                    ) : null}
+                    {canManage && account.role === "agency" ? (
+                      <Button
+                        size="sm"
+                        variant="outline"
+                        disabled={Boolean(busy)}
+                        onClick={() =>
+                          void runAction(`repair-${account.id}`, () => repairTestAgencyAccountAction(account.id))
+                        }
+                      >
+                        Repair agency
                       </Button>
                     ) : null}
                     {canManage ? (

@@ -24,15 +24,36 @@ export const AGENCY_SECTIONS = [
   { href: "profile", label: "Agency Profile", icon: Sparkles },
 ] as const;
 
+export type AgencySectionHref = (typeof AGENCY_SECTIONS)[number]["href"];
+
+export const AGENCY_DASHBOARD_PATH = "/agency/dashboard";
+
+export function agencyPortalPath(section: string): string {
+  return section === "dashboard" ? AGENCY_DASHBOARD_PATH : `/agency/${section}`;
+}
+
+/** Session-based portal path (org resolved from authenticated user, not URL). */
+export function agencyPath(_orgId: string | null | undefined, section: string): string {
+  return agencyPortalPath(section);
+}
+
+export function agencyDashboardPath(): string {
+  return AGENCY_DASHBOARD_PATH;
+}
+
 export function agencySectionLabel(segment: string): string {
   const match = AGENCY_SECTIONS.find((item) => item.href === segment);
   return match?.label ?? "Agency";
 }
 
-export function agencyBasePath(orgId: string) {
-  return `/agency/${orgId}`;
+export function agencySectionFromPathname(pathname: string): string {
+  if (pathname === AGENCY_DASHBOARD_PATH) return "dashboard";
+  const prefix = "/agency/";
+  if (!pathname.startsWith(prefix)) return "dashboard";
+  const segment = pathname.slice(prefix.length).split("/")[0] ?? "dashboard";
+  return AGENCY_SECTIONS.some((item) => item.href === segment) ? segment : "dashboard";
 }
 
-export function agencyPath(orgId: string, section: string) {
-  return section === "dashboard" ? agencyBasePath(orgId) : `${agencyBasePath(orgId)}/${section}`;
+export function revalidateAgencyPortalPaths() {
+  return AGENCY_SECTIONS.map((section) => agencyPortalPath(section.href));
 }
