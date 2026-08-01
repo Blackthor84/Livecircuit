@@ -1,5 +1,9 @@
 import type { SupabaseClient } from "@supabase/supabase-js";
 import { agencyDashboardPath } from "@/lib/agency/sections";
+import { getAgencyPermissions } from "@/lib/agency/permissions";
+import { listAgencyMembershipsForUserAdmin } from "@/lib/agency/membership";
+import type { AgencyScenarioSlug } from "@/lib/agency/org-templates";
+import { ensureAgencyDashboardSettings } from "@/lib/agency/organization-health";
 import type { AgencyMemberRole } from "@/lib/agency/types";
 
 export type AgencyAccountProfile = {
@@ -67,74 +71,39 @@ export async function validateAgencyImpersonationTarget(
     return { ok: false, code: "not_agency", error: "Target account is not an agency user." };
   }
 
-  let orgId = target.primary_agency_id;
+  const memberships = await listAgencyMembershipsForUserAdmin(admin, target.id);
+  logImpersonation("Membership rows loaded", {
+    userId: target.id,
+    count: memberships.length,
+    table: "agency_organization_members",
+  });
 
-  if (orgId) {
-    const { data: linkedOrg } = await admin
-      .from("agency_organizations")
-      .select("id, name")
-      .eq("id", orgId)
-      .maybeSingle();
-    if (!linkedOrg) {
-      logImpersonation("Primary agency not found", { orgId });
-      orgId = null;
-    } else {
-      logImpersonation("Agency found via primary_agency_id", { orgId, name: linkedOrg.name });
-    }
-  }
-
-  if (!orgId) {
-    const { data: memberships, error: membershipListError } = await admin
-      .from("agency_organization_members")
-      .select("organization_id, role")
-      .eq("user_id", target.id)
-      .order("created_at", { ascending: true })
-      .limit(1);
-
-    if (membershipListError) {
-      return { ok: false, code: "membership_query_failed", error: membershipListError.message };
-    }
-
-    const membership = memberships?.[0];
-    if (!membership) {
-      return {
-        ok: false,
-        code: "no_membership",
-        error: "This test agency has not been fully generated. No organization membership exists for this account.",
-      };
-    }
-
-    orgId = membership.organization_id as string;
-    logImpersonation("Agency resolved from membership", { orgId, role: membership.role });
-    await syncAgencyAccountProfile(admin, {
-      userId: target.id,
-      organizationId: orgId,
-      memberRole: (membership.role ?? target.agency_member_role ?? "owner") as AgencyMemberRole,
-    });
-  }
-
-  const { data: member, error: memberError } = await admin
-    .from("agency_organization_members")
-    .select("role")
-    .eq("organization_id", orgId)
-    .eq("user_id", target.id)
-    .maybeSingle();
-
-  if (memberError) {
-    return { ok: false, code: "membership_query_failed", error: memberError.message };
-  }
-
-  if (!member) {
+  if (!memberships.length) {
     return {
       ok: false,
-      code: "permission_mismatch",
-      error: "User is not linked to this agency team. Recreate or repair the test agency account.",
+      code: "no_membership",
+      error: "User is not linked to an agency. Missing agency_organization_members row.",
     };
   }
 
+  const active =
+    (target.primary_agency_id
+      ? memberships.find((m) => m.organization_id === target.primary_agency_id)
+      : null) ?? memberships[0]!;
+
+  const orgId = active.organization_id;
+  const memberRole = active.role;
+
+  logImpersonation("Membership resolved", {
+    userId: target.id,
+    membershipId: active.id,
+    organizationId: orgId,
+    role: memberRole,
+  });
+
   const { data: org, error: orgError } = await admin
     .from("agency_organizations")
-    .select("id, name, plan, stripe_subscription_id")
+    .select("id, name, plan, stripe_subscription_id, metadata")
     .eq("id", orgId)
     .maybeSingle();
 
@@ -150,17 +119,33 @@ export async function validateAgencyImpersonationTarget(
     };
   }
 
-  if (target.primary_agency_id !== orgId || target.agency_member_role !== member.role) {
+  if (!org.plan) {
+    return { ok: false, code: "subscription_missing", error: "Agency subscription plan is missing." };
+  }
+
+  const permissions = getAgencyPermissions(memberRole);
+  if (!Object.keys(permissions).length) {
+    return { ok: false, code: "permissions_missing", error: "Agency permissions could not be resolved for role." };
+  }
+
+  const metadata = (org as { metadata?: Record<string, unknown> }).metadata ?? {};
+  if (!metadata.dashboard_settings) {
+    const scenario = (metadata.scenario as AgencyScenarioSlug | undefined) ?? "boutique_agency";
+    await ensureAgencyDashboardSettings(admin, orgId, scenario);
+    logImpersonation("Dashboard settings patched", { orgId, scenario });
+  }
+
+  if (target.primary_agency_id !== orgId || target.agency_member_role !== memberRole) {
     await syncAgencyAccountProfile(admin, {
       userId: target.id,
       organizationId: orgId,
-      memberRole: member.role as AgencyMemberRole,
+      memberRole: memberRole!,
     });
   }
 
   logImpersonation("Agency permissions validated", {
     orgId,
-    memberRole: member.role,
+    memberRole,
     plan: org.plan,
   });
 

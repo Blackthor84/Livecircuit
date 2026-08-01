@@ -2,7 +2,8 @@ import { NextResponse } from "next/server";
 import { cookies } from "next/headers";
 import { createClient } from "@/lib/supabase/server";
 import { getSupabaseAdmin } from "@/lib/supabase/admin";
-import { resolveAgencyRedirect, validateAgencyImpersonationTarget } from "@/lib/auth/agency-account";
+import { resolveAgencyRedirect } from "@/lib/auth/agency-account";
+import { verifyAndRepairAgencyForImpersonation } from "@/lib/testing/repair-agency";
 import { impersonationCookieOptions } from "@/lib/auth/impersonation";
 import {
   ADMIN_SESSION_BACKUP_COOKIE,
@@ -38,8 +39,9 @@ export async function POST(request: Request) {
 
   if (target.role === "agency") {
     console.info("[Agency Impersonation] Starting agency impersonation", { userId: body.userId });
-    const agencyAccess = await validateAgencyImpersonationTarget(admin, {
-      id: body.userId,
+    const agencyAccess = await verifyAndRepairAgencyForImpersonation({
+      userId: body.userId,
+      repairedBy: ctx.userId,
       role: target.role as string,
       primary_agency_id: (target.primary_agency_id as string | null) ?? null,
       agency_member_role: (target.agency_member_role as string | null) ?? null,

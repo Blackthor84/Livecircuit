@@ -1,24 +1,27 @@
 import { getAgencyPermissions } from "@/lib/agency/permissions";
 import type { AgencyMemberRole, AgencyPermissions } from "@/lib/agency/types";
-import { getProfile, getSessionUser } from "@/lib/auth/session";
-import {
-  getUserAgencyOrganizations,
-  resolveAgencyOrgAccess,
-} from "@/lib/data/agencies";
-import { getSupabaseAdmin } from "@/lib/supabase/admin";
 import { syncAgencyAccountProfile } from "@/lib/auth/agency-account";
+import {
+  listAgencyMembershipsForUser,
+  resolveAgencyMembershipForUser,
+  touchAgencyMembershipActivity,
+} from "@/lib/agency/membership";
+import { getProfile, getSessionUser } from "@/lib/auth/session";
+import { getSupabaseAdmin } from "@/lib/supabase/admin";
 
 export type AgencySessionFailureCode =
   | "not_authenticated"
   | "not_agency_account"
-  | "no_organization"
   | "no_membership"
   | "organization_not_found"
+  | "permissions_missing"
+  | "subscription_missing"
   | "not_configured";
 
 export type AgencySession = {
   userId: string;
   orgId: string;
+  membershipId: string;
   memberRole: AgencyMemberRole;
   organization: Record<string, unknown>;
   permissions: AgencyPermissions;
@@ -32,95 +35,139 @@ export type AgencySession = {
 
 export type AgencySessionResult =
   | { ok: true; session: AgencySession }
-  | { ok: false; code: AgencySessionFailureCode; message: string };
+  | { ok: false; code: AgencySessionFailureCode; message: string; details?: Record<string, unknown> };
+
+function logSession(step: string, data?: Record<string, unknown>) {
+  console.info(`[Agency Session] ${step}`, data ?? {});
+}
 
 export async function resolveAgencySession(userId: string): Promise<AgencySessionResult> {
-  const profile = await getProfile();
-  if (!profile || profile.id !== userId) {
-    return { ok: false, code: "not_authenticated", message: "Sign in to access the agency portal." };
+  logSession("Loading authenticated user", { userId });
+
+  const user = await getSessionUser();
+  if (!user || user.id !== userId) {
+    return {
+      ok: false,
+      code: "not_authenticated",
+      message: "Sign in to access the agency portal.",
+      details: { userId },
+    };
   }
 
-  if (profile.role !== "agency") {
+  const profile = await getProfile();
+  if (profile?.role !== "agency") {
     return {
       ok: false,
       code: "not_agency_account",
       message: "This account is not an agency user.",
+      details: { userId, role: profile?.role ?? null },
     };
   }
 
-  let orgId = (profile.primary_agency_id as string | null) ?? null;
+  const preferredOrgId = (profile.primary_agency_id as string | null) ?? null;
+  logSession("Resolving membership (membership-first)", { userId, preferredOrgId });
 
-  if (!orgId) {
-    const orgs = await getUserAgencyOrganizations(userId);
-    orgId = orgs[0]?.id ?? null;
-    if (orgId && orgs[0]) {
-      const admin = getSupabaseAdmin();
-      await syncAgencyAccountProfile(admin, {
-        userId,
-        organizationId: orgId,
-        memberRole: orgs[0].role,
-      });
-    }
-  }
-
-  if (!orgId) {
-    return {
-      ok: false,
-      code: "no_organization",
-      message: "No agency organization is linked to this account.",
-    };
-  }
-
-  const access = await resolveAgencyOrgAccess(orgId, userId);
-  if (!access.ok) {
+  const resolved = await resolveAgencyMembershipForUser(userId, preferredOrgId);
+  if (!resolved.ok) {
     return {
       ok: false,
       code:
-        access.code === "no_membership"
+        resolved.code === "no_membership"
           ? "no_membership"
-          : access.code === "organization_not_found"
+          : resolved.code === "organization_not_found"
             ? "organization_not_found"
             : "not_configured",
-      message: access.message,
+      message: resolved.message,
+      details: resolved.details,
     };
   }
 
-  const org = access.organization;
-  const permissions = getAgencyPermissions(access.role);
+  const { membership, organization, permissions } = resolved;
+
+  if (!membership.role || Object.keys(permissions).length === 0) {
+    return {
+      ok: false,
+      code: "permissions_missing",
+      message: "Agency permissions could not be resolved for your membership role.",
+      details: {
+        userId,
+        membershipId: membership.id,
+        role: membership.role,
+        table: "agency_organization_members",
+      },
+    };
+  }
+
+  if (!organization.plan) {
+    return {
+      ok: false,
+      code: "subscription_missing",
+      message: "Agency subscription is missing. The organization has no active plan.",
+      details: {
+        userId,
+        organizationId: membership.organization_id,
+        table: "agency_organizations",
+      },
+    };
+  }
+
+  if (preferredOrgId !== membership.organization_id) {
+    logSession("Syncing profile primary_agency_id from membership", {
+      userId,
+      from: preferredOrgId,
+      to: membership.organization_id,
+    });
+    const admin = getSupabaseAdmin();
+    await syncAgencyAccountProfile(admin, {
+      userId,
+      organizationId: membership.organization_id,
+      memberRole: membership.role,
+    });
+  }
+
+  logSession("Loading subscription", {
+    organizationId: membership.organization_id,
+    plan: organization.plan,
+    stripeSubscriptionId: organization.stripe_subscription_id ?? null,
+  });
+
+  void touchAgencyMembershipActivity(membership.id);
 
   return {
     ok: true,
     session: {
       userId,
-      orgId,
-      memberRole: access.role,
-      organization: org,
+      orgId: membership.organization_id,
+      membershipId: membership.id,
+      memberRole: membership.role,
+      organization,
       permissions,
       subscription: {
-        plan: (org.plan as string) ?? "starter",
-        planStartedAt: (org.plan_started_at as string | null) ?? null,
-        planRenewsAt: (org.plan_renews_at as string | null) ?? null,
-        stripeSubscriptionId: (org.stripe_subscription_id as string | null) ?? null,
+        plan: (organization.plan as string) ?? "starter",
+        planStartedAt: (organization.plan_started_at as string | null) ?? null,
+        planRenewsAt: (organization.plan_renews_at as string | null) ?? null,
+        stripeSubscriptionId: (organization.stripe_subscription_id as string | null) ?? null,
       },
     },
   };
 }
 
 export async function loadAgencySessionForUser(userId: string): Promise<AgencySessionResult> {
-  console.info("[Agency Session] Loading agency session", { userId });
   const result = await resolveAgencySession(userId);
   if (result.ok) {
-    console.info("[Agency Session] Agency session loaded", {
+    logSession("Dashboard session ready", {
       userId,
       orgId: result.session.orgId,
+      membershipId: result.session.membershipId,
       memberRole: result.session.memberRole,
       plan: result.session.subscription.plan,
     });
   } else {
-    console.warn("[Agency Session] Agency session failed", {
+    logSession("Dashboard session failed", {
       userId,
       code: result.code,
       message: result.message,
+      details: result.details,
     });
   }
   return result;
@@ -134,4 +181,10 @@ export async function getAgencySessionOrgId(userId: string): Promise<string | nu
 export async function requireAgencySessionUserId(): Promise<string | null> {
   const user = await getSessionUser();
   return user?.id ?? null;
+}
+
+/** Quick membership count for UI hints. */
+export async function userHasAgencyMembership(userId: string): Promise<boolean> {
+  const memberships = await listAgencyMembershipsForUser(userId);
+  return memberships.length > 0;
 }

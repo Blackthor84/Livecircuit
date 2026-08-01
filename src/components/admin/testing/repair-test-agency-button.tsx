@@ -6,7 +6,7 @@ import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { repairTestAgencyAccountAction } from "@/lib/actions/testing";
 
-export function RepairTestAgencyButton({ userId }: { userId: string }) {
+export function RepairTestAgencyButton({ userId, label = "Repair Test Account" }: { userId: string; label?: string }) {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
 
@@ -28,7 +28,7 @@ export function RepairTestAgencyButton({ userId }: { userId: string }) {
           .finally(() => setLoading(false));
       }}
     >
-      {loading ? "Repairing…" : "Repair Test Account"}
+      {loading ? "Repairing…" : label}
     </Button>
   );
 }

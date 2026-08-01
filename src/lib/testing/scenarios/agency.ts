@@ -1,38 +1,15 @@
 import type { SupabaseClient } from "@supabase/supabase-js";
 import type { AgencyMemberRole } from "@/lib/agency/types";
+import {
+  AGENCY_SCENARIOS,
+  getAgencyOrgTemplate,
+  type AgencyScenarioSlug,
+} from "@/lib/agency/org-templates";
+import { ensureAgencyDashboardSettings } from "@/lib/agency/organization-health";
 import { logTestStep, throwDbError, type TestCreationLog } from "@/lib/testing/step-errors";
 
-export type AgencyScenarioSlug = "boutique_agency" | "mid_size_agency" | "enterprise_agency";
-
-export const AGENCY_SCENARIOS: {
-  slug: AgencyScenarioSlug;
-  label: string;
-  description: string;
-  artistCount: number;
-  plan: "starter" | "pro" | "enterprise";
-}[] = [
-  {
-    slug: "boutique_agency",
-    label: "Boutique Agency",
-    description: "Starter plan with 5 artists and basic booking history.",
-    artistCount: 5,
-    plan: "starter",
-  },
-  {
-    slug: "mid_size_agency",
-    label: "Mid-Size Agency",
-    description: "Pro plan with 25 artists, team members, and revenue data.",
-    artistCount: 25,
-    plan: "pro",
-  },
-  {
-    slug: "enterprise_agency",
-    label: "Enterprise Agency",
-    description: "Enterprise plan with 50 artists and full analytics seed.",
-    artistCount: 50,
-    plan: "enterprise",
-  },
-];
+export type { AgencyScenarioSlug } from "@/lib/agency/org-templates";
+export { AGENCY_SCENARIOS } from "@/lib/agency/org-templates";
 
 export const AGENCY_TEAM_ROLES: AgencyMemberRole[] = [
   "owner",
@@ -42,9 +19,50 @@ export const AGENCY_TEAM_ROLES: AgencyMemberRole[] = [
   "marketing",
   "finance",
   "assistant",
+  "read_only",
 ];
 
 type TeamMember = { userId: string; role: AgencyMemberRole };
+
+const BOOKING_STATUSES = ["draft", "pending", "matched", "approved"] as const;
+const BOOKING_TITLES = [
+  "Spring tour routing",
+  "Festival season outreach",
+  "Corporate event pipeline",
+  "College circuit bookings",
+  "Holiday market push",
+  "West coast expansion",
+  "East coast residency",
+  "International routing",
+];
+
+async function seedNotifications(
+  admin: SupabaseClient,
+  userIds: string[],
+  orgName: string
+) {
+  const titles = [
+    { type: "system" as const, title: `${orgName}: roster sync complete`, body: "Weekly roster review finished." },
+    { type: "system" as const, title: "New booking match available", body: "3 venues matched your latest request." },
+    { type: "ticket_reminder" as const, title: "Ticket sales milestone", body: "Agency revenue crossed this week's target." },
+    { type: "system" as const, title: "Team invitation accepted", body: "A booking manager joined your organization." },
+  ];
+
+  for (const userId of userIds.slice(0, 5)) {
+    for (let i = 0; i < titles.length; i++) {
+      const n = titles[i]!;
+      await admin.from("notifications").insert({
+        user_id: userId,
+        type: n.type,
+        title: n.title,
+        body: n.body,
+        link: "/agency/dashboard",
+        metadata: { test: true, agency: true },
+        read_at: i % 2 === 0 ? new Date().toISOString() : null,
+      });
+    }
+  }
+}
 
 export async function seedAgencyScenario(
   admin: SupabaseClient,
@@ -53,20 +71,32 @@ export async function seedAgencyScenario(
   ownerUserId: string,
   scenario: AgencyScenarioSlug,
   seed: number,
-  options?: { teamUserIds?: TeamMember[] }
+  options?: { teamUserIds?: TeamMember[]; skipIfPopulated?: boolean }
 ) {
-  const config = AGENCY_SCENARIOS.find((s) => s.slug === scenario) ?? AGENCY_SCENARIOS[0]!;
+  const template = getAgencyOrgTemplate(scenario);
   const team = options?.teamUserIds ?? [];
   const bookingManager = team.find((t) => t.role === "booking_manager")?.userId ?? ownerUserId;
   const artistManager = team.find((t) => t.role === "artist_manager")?.userId ?? ownerUserId;
 
-  logTestStep(log, `Step A: Loading artists for roster (${config.artistCount})...`);
+  if (options?.skipIfPopulated) {
+    const { count } = await admin
+      .from("agency_managed_artists")
+      .select("id", { count: "exact", head: true })
+      .eq("organization_id", orgId);
+    if ((count ?? 0) >= Math.min(3, template.artistCount)) {
+      logTestStep(log, "Scenario seed skipped — roster already populated");
+      await ensureAgencyDashboardSettings(admin, orgId, scenario);
+      return;
+    }
+  }
+
+  logTestStep(log, `Step A: Loading artists for roster (${template.artistCount})...`);
   const { data: testProfiles } = await admin
     .from("profiles")
     .select("id, artists(id, category)")
     .eq("is_test_account", true)
     .eq("role", "artist")
-    .limit(config.artistCount * 2);
+    .limit(template.artistCount * 2);
 
   const artistPool = (testProfiles ?? [])
     .map((p) => {
@@ -75,19 +105,20 @@ export async function seedAgencyScenario(
       return artist ? { id: artist.id, category: artist.category } : null;
     })
     .filter(Boolean)
-    .slice(0, config.artistCount) as { id: string; category: string }[];
+    .slice(0, template.artistCount) as { id: string; category: string }[];
 
   if (!artistPool.length) {
     const { data: fallbackArtists, error: artistsError } = await admin
       .from("artists")
       .select("id, category, stage_name")
-      .limit(config.artistCount);
+      .limit(template.artistCount);
     if (artistsError) throwDbError(log, "Step A: Load artists for roster", artistsError);
     artistPool.push(...((fallbackArtists ?? []) as { id: string; category: string }[]));
   }
 
   if (!artistPool.length) {
     logTestStep(log, "Step A: Skipped roster — no artists in database");
+    await ensureAgencyDashboardSettings(admin, orgId, scenario);
     return;
   }
 
@@ -111,45 +142,61 @@ export async function seedAgencyScenario(
 
   const artistIds = artistPool.map((a) => a.id as string);
 
-  logTestStep(log, "Step C: Seeding booking requests and matches...");
-  const { data: bookingRequest, error: bookingError } = await admin
-    .from("agency_booking_requests")
-    .insert({
-      organization_id: orgId,
-      created_by: ownerUserId,
-      title: `${config.label} spring tour`,
-      status: "matched",
-      artist_ids: artistIds.slice(0, Math.min(10, artistIds.length)),
-      preferred_states: ["CA", "NY", "TX", "FL"],
-      preferred_genres: ["music", "comedy"],
-      is_bulk: artistIds.length > 1,
-      metadata: { test: true, seed },
-    })
-    .select("id")
-    .single();
-  if (bookingError) throwDbError(log, "Step C: Seed booking request", bookingError);
+  logTestStep(log, `Step C: Seeding booking requests (${template.bookingCount})...`);
+  const { data: venues } = await admin.from("venues").select("id, name, slug, state_code").limit(20);
 
-  const { data: venues } = await admin.from("venues").select("id, name, slug, state_code").limit(5);
-  if (bookingRequest?.id) {
-    for (let i = 0; i < Math.min(5, artistIds.length); i++) {
-      const venue = venues?.[i % (venues?.length ?? 1)];
-      if (!venue) break;
-      await admin.from("agency_booking_matches").insert({
-        booking_request_id: bookingRequest.id,
-        artist_id: artistIds[i],
-        venue_id: venue.id,
-        match_score: 88 - i * 4,
-        status: i === 0 ? "accepted" : "recommended",
-        recommendation: { venueName: venue.name, venueSlug: venue.slug, test: true },
-      });
+  const bookingBatchSize = Math.min(template.bookingCount, 100);
+  for (let b = 0; b < bookingBatchSize; b++) {
+    const status = BOOKING_STATUSES[b % BOOKING_STATUSES.length]!;
+    const title = `${BOOKING_TITLES[b % BOOKING_TITLES.length]!} #${b + 1}`;
+    const sliceStart = (b * 3) % Math.max(1, artistIds.length);
+    const batchArtistIds = artistIds.slice(sliceStart, sliceStart + Math.min(10, artistIds.length));
+
+    const { data: bookingRequest, error: bookingError } = await admin
+      .from("agency_booking_requests")
+      .insert({
+        organization_id: orgId,
+        created_by: b % 3 === 0 ? bookingManager : ownerUserId,
+        title,
+        status,
+        artist_ids: batchArtistIds.length ? batchArtistIds : artistIds.slice(0, 3),
+        preferred_states: ["CA", "NY", "TX", "FL", "IL"],
+        preferred_genres: ["music", "comedy"],
+        is_bulk: batchArtistIds.length > 1,
+        metadata: { test: true, seed: seed + b, scenario },
+      })
+      .select("id")
+      .single();
+
+    if (bookingError) {
+      if (b === 0) throwDbError(log, "Step C: Seed booking request", bookingError);
+      break;
+    }
+
+    if (bookingRequest?.id && venues?.length) {
+      const matchCount = Math.min(3, batchArtistIds.length);
+      for (let i = 0; i < matchCount; i++) {
+        const venue = venues[(b + i) % venues.length]!;
+        const artistId = batchArtistIds[i];
+        if (!artistId) continue;
+        await admin.from("agency_booking_matches").insert({
+          booking_request_id: bookingRequest.id,
+          artist_id: artistId,
+          venue_id: venue.id,
+          match_score: 92 - (i * 3 + b % 5),
+          status: i === 0 ? "accepted" : "recommended",
+          recommendation: { venueName: venue.name, venueSlug: venue.slug, test: true },
+        });
+      }
     }
   }
 
   logTestStep(log, "Step D: Seeding calendar and background jobs...");
-  for (let i = 0; i < Math.min(8, artistIds.length); i++) {
+  const calendarCount = Math.min(24, artistIds.length);
+  for (let i = 0; i < calendarCount; i++) {
     await admin.from("agency_calendar_events").insert({
       organization_id: orgId,
-      artist_id: artistIds[i],
+      artist_id: artistIds[i % artistIds.length],
       title: `Performance ${i + 1}`,
       starts_at: new Date(Date.now() + (i + 2) * 86400000).toISOString(),
       ends_at: new Date(Date.now() + (i + 2) * 86400000 + 7200000).toISOString(),
@@ -163,7 +210,7 @@ export async function seedAgencyScenario(
     created_by: ownerUserId,
     job_type: "bulk_booking",
     status: "completed",
-    payload: { title: `${config.label} bulk`, artistIds: artistIds.slice(0, 3), runAutoMatch: true },
+    payload: { title: `${template.label} bulk`, artistIds: artistIds.slice(0, 3), runAutoMatch: true },
     result: { artistsProcessed: Math.min(3, artistIds.length), test: true },
     progress: 6,
     total_steps: 6,
@@ -175,17 +222,27 @@ export async function seedAgencyScenario(
   const { data: events } = await admin
     .from("events")
     .select("id, artist_id, title, tour_state_code")
-    .in("artist_id", artistIds.slice(0, 10))
-    .limit(10);
+    .in("artist_id", artistIds.slice(0, Math.min(30, artistIds.length)))
+    .limit(30);
 
-  for (let i = 0; i < Math.min(6, events?.length ?? 0); i++) {
+  const revenueRows = Math.min(
+    template.plan === "enterprise" ? 30 : template.plan === "pro" ? 18 : 10,
+    events?.length ?? 0
+  );
+
+  for (let i = 0; i < revenueRows; i++) {
     const event = events![i]!;
-    const price = 2500 + (i * 500);
+    const price = 2500 + i * 500;
     await admin.from("orders").insert({
       user_id: ownerUserId,
       status: "paid",
       total_cents: price,
-      metadata: { test: true, kind: i % 3 === 0 ? "merch" : "ticket", artist_id: event.artist_id, agency_org_id: orgId },
+      metadata: {
+        test: true,
+        kind: i % 3 === 0 ? "merch" : "ticket",
+        artist_id: event.artist_id,
+        agency_org_id: orgId,
+      },
     });
     await admin.from("tickets").upsert(
       {
@@ -200,39 +257,53 @@ export async function seedAgencyScenario(
   }
 
   logTestStep(log, "Step F: Seeding sponsorship proposals...");
-  const slot = venues?.[0];
-  await admin.from("agency_sponsorship_proposals").insert({
-    organization_id: orgId,
-    created_by: ownerUserId,
-    artist_id: artistIds[0] ?? null,
-    venue_id: slot?.id ?? null,
-    title: `${config.label} naming package`,
-    description: "Test sponsorship proposal for agency dashboard QA.",
-    budget_cents: config.plan === "enterprise" ? 25000000 : config.plan === "pro" ? 5000000 : 500000,
-    status: "submitted",
-    submitted_at: new Date().toISOString(),
-    metadata: { test: true },
-  });
-
-  logTestStep(log, "Step G: Seeding communications...");
-  const { data: conversation } = await admin
-    .from("agency_conversations")
-    .insert({
+  const sponsorCount = template.plan === "enterprise" ? 5 : template.plan === "pro" ? 3 : 2;
+  for (let s = 0; s < sponsorCount; s++) {
+    const slot = venues?.[s % (venues?.length ?? 1)];
+    await admin.from("agency_sponsorship_proposals").insert({
       organization_id: orgId,
-      subject: "Roster coordination",
-      participant_type: "team",
       created_by: ownerUserId,
-    })
-    .select("id")
-    .single();
-
-  if (conversation?.id) {
-    await admin.from("agency_messages").insert({
-      conversation_id: conversation.id,
-      sender_id: ownerUserId,
-      body: "Weekly roster sync — all markets confirmed.",
+      artist_id: artistIds[s % artistIds.length] ?? null,
+      venue_id: slot?.id ?? null,
+      title: `${template.label} package ${s + 1}`,
+      description: "Test sponsorship proposal for agency dashboard QA.",
+      budget_cents:
+        template.plan === "enterprise" ? 25000000 : template.plan === "pro" ? 5000000 : 500000,
+      status: s === 0 ? "submitted" : "draft",
+      submitted_at: s === 0 ? new Date().toISOString() : null,
+      metadata: { test: true, scenario },
     });
   }
+
+  logTestStep(log, "Step G: Seeding communications...");
+  const conversationSubjects = ["Roster coordination", "Booking pipeline", "Finance review", "Marketing sync"];
+  for (const subject of conversationSubjects) {
+    const { data: conversation } = await admin
+      .from("agency_conversations")
+      .insert({
+        organization_id: orgId,
+        subject,
+        participant_type: "team",
+        created_by: ownerUserId,
+      })
+      .select("id")
+      .single();
+
+    if (conversation?.id) {
+      await admin.from("agency_messages").insert({
+        conversation_id: conversation.id,
+        sender_id: ownerUserId,
+        body: `${subject} — all markets confirmed for ${template.label}.`,
+      });
+    }
+  }
+
+  logTestStep(log, "Step H: Seeding notifications for team...");
+  const notifyUserIds = [ownerUserId, ...team.map((t) => t.userId)];
+  await seedNotifications(admin, notifyUserIds, template.label);
+
+  logTestStep(log, "Step I: Ensuring dashboard settings...");
+  await ensureAgencyDashboardSettings(admin, orgId, scenario);
 
   logTestStep(log, "Agency scenario seed complete");
 }

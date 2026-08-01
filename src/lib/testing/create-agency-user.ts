@@ -1,6 +1,6 @@
 import type { SupabaseClient } from "@supabase/supabase-js";
 import { getSupabaseAdmin } from "@/lib/supabase/admin";
-import { syncAgencyAccountProfile } from "@/lib/auth/agency-account";
+import { ensureAgencyMembership } from "@/lib/agency/membership";
 import { AGENCY_MEMBER_ROLE_LABELS } from "@/lib/agency/permissions";
 import type { AgencyMemberRole } from "@/lib/agency/types";
 import { fakeAvatar, fakeBio, fakePerson } from "@/lib/testing/fake-data";
@@ -132,25 +132,14 @@ export async function createAgencyTestUser(
     emptyMessage: "Agency profile update returned no rows",
   });
 
-  await syncAgencyAccountProfile(admin, {
+  logTestStep(log, `Ensuring agency_organization_members row (${input.memberRole})...`);
+  await ensureAgencyMembership(admin, {
     userId,
     organizationId: input.organizationId,
-    memberRole: input.memberRole,
+    role: input.memberRole,
   });
 
-  logTestStep(log, `Adding org membership (${input.memberRole})...`);
-  const { error: memberError } = await admin.from("agency_organization_members").upsert(
-    {
-      organization_id: input.organizationId,
-      user_id: userId,
-      role: input.memberRole,
-      accepted_at: new Date().toISOString(),
-    },
-    { onConflict: "organization_id,user_id" }
-  );
-  if (memberError) {
-    throwParsedError(log, `Agency membership ${input.memberRole}`, memberError, memberError.message);
-  }
+  logTestStep(log, `Verified membership in agency_organization_members (${input.memberRole})`);
 
   return {
     userId,

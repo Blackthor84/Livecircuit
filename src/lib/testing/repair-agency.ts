@@ -1,13 +1,18 @@
 import { getSupabaseAdmin } from "@/lib/supabase/admin";
-import { syncAgencyAccountProfile } from "@/lib/auth/agency-account";
-import { validateAgencyImpersonationTarget } from "@/lib/auth/agency-account";
-import type { AgencyMemberRole } from "@/lib/agency/types";
+import { syncAgencyAccountProfile, validateAgencyImpersonationTarget } from "@/lib/auth/agency-account";
 import {
-  AGENCY_SCENARIOS,
-  seedAgencyScenario,
-  type AgencyScenarioSlug,
-} from "@/lib/testing/scenarios/agency";
-import { createAgencyTestUser } from "@/lib/testing/create-agency-user";
+  ensureAgencyMembership,
+  ensureAgencySubscription,
+  listAgencyMembershipsForUserAdmin,
+  verifyAgencyMembershipAdmin,
+} from "@/lib/agency/membership";
+import { getAgencyOrgTemplate, type AgencyScenarioSlug } from "@/lib/agency/org-templates";
+import {
+  ensureAgencyOrganizationComplete,
+  validateAgencyOrganizationHealth,
+} from "@/lib/agency/organization-health";
+import type { AgencyMemberRole } from "@/lib/agency/types";
+import { AGENCY_SCENARIOS } from "@/lib/testing/scenarios/agency";
 import { createTestCreationLog, logTestStep } from "@/lib/testing/step-errors";
 
 export type TestAgencyValidation = {
@@ -15,7 +20,16 @@ export type TestAgencyValidation = {
   issues: string[];
   orgId: string | null;
   userId: string;
+  checks?: { key: string; ok: boolean; issue?: string }[];
 };
+
+function normalizeScenarioSlug(raw: string | null | undefined): AgencyScenarioSlug {
+  const base = (raw ?? "boutique_agency").replace(
+    /_(owner|admin|booking_manager|artist_manager|marketing|finance|assistant|read_only)(_\d+)?$/,
+    ""
+  );
+  return (AGENCY_SCENARIOS.some((s) => s.slug === base) ? base : "boutique_agency") as AgencyScenarioSlug;
+}
 
 export async function validateTestAgencyAccount(userId: string): Promise<TestAgencyValidation> {
   const admin = getSupabaseAdmin();
@@ -27,46 +41,60 @@ export async function validateTestAgencyAccount(userId: string): Promise<TestAge
     .eq("id", userId)
     .maybeSingle();
 
-  if (!profile) {
-    return { ok: false, issues: ["Profile missing"], orgId: null, userId };
-  }
+  if (!profile) return { ok: false, issues: ["Profile missing"], orgId: null, userId };
+  if (profile.role !== "agency") issues.push("Account is not role=agency");
+  if (!profile.is_test_account) issues.push("Not a test account");
 
-  if (profile.role !== "agency") {
-    issues.push("Account is not role=agency");
-  }
+  const memberships = await listAgencyMembershipsForUserAdmin(admin, userId);
+  if (!memberships.length) issues.push("agency_organization_members row missing");
 
-  if (!profile.is_test_account) {
-    issues.push("Not a test account");
-  }
+  let orgId: string | null =
+    memberships[0]?.organization_id ?? (profile.primary_agency_id as string | null) ?? null;
 
-  let orgId = (profile.primary_agency_id as string | null) ?? null;
-
-  const { data: memberships } = await admin
-    .from("agency_organization_members")
-    .select("organization_id, role")
-    .eq("user_id", userId);
-
-  if (!memberships?.length) {
-    issues.push("Agency membership missing");
-  } else if (!orgId) {
-    orgId = memberships[0]!.organization_id as string;
-    issues.push("primary_agency_id not set on profile");
-  }
-
+  let checks: TestAgencyValidation["checks"];
   if (orgId) {
-    const { data: org } = await admin.from("agency_organizations").select("id, name").eq("id", orgId).maybeSingle();
-    if (!org) {
-      issues.push("Agency organization not found");
-      orgId = null;
+    const health = await validateAgencyOrganizationHealth(admin, { userId, organizationId: orgId });
+    checks = health.checks;
+    for (const check of health.checks) {
+      if (!check.ok && check.issue) issues.push(check.issue);
     }
   } else {
     issues.push("No agency organization linked");
   }
 
-  return { ok: issues.length === 0, issues, orgId, userId };
+  if (memberships[0] && !memberships[0].role) issues.push("Agency member role missing");
+
+  return { ok: issues.length === 0, issues, orgId, userId, checks };
 }
 
-export async function repairTestAgencyAccount(input: {
+async function findOrgFromSiblingOwner(
+  admin: ReturnType<typeof getSupabaseAdmin>,
+  profile: { test_scenario: string | null; test_created_by: string | null }
+): Promise<{ orgId: string; ownerUserId: string | null } | null> {
+  const scenarioBase = normalizeScenarioSlug(profile.test_scenario);
+  const { data: owners } = await admin
+    .from("profiles")
+    .select("id, primary_agency_id, test_scenario")
+    .eq("is_test_account", true)
+    .eq("role", "agency")
+    .eq("agency_member_role", "owner")
+    .like("test_scenario", `${scenarioBase}%`)
+    .limit(5);
+
+  for (const owner of owners ?? []) {
+    if (owner.primary_agency_id) {
+      return { orgId: owner.primary_agency_id as string, ownerUserId: owner.id as string };
+    }
+    const ownerMemberships = await listAgencyMembershipsForUserAdmin(admin, owner.id as string);
+    if (ownerMemberships[0]) {
+      return { orgId: ownerMemberships[0].organization_id, ownerUserId: owner.id as string };
+    }
+  }
+
+  return null;
+}
+
+export async function ensureAgencyAccountDependencies(input: {
   userId: string;
   repairedBy: string;
 }): Promise<{ ok: true; orgId: string; message: string } | { ok: false; error: string }> {
@@ -75,53 +103,78 @@ export async function repairTestAgencyAccount(input: {
 
   const { data: profile } = await admin
     .from("profiles")
-    .select("id, role, primary_agency_id, agency_member_role, is_test_account, test_scenario, display_name")
+    .select(
+      "id, role, primary_agency_id, agency_member_role, is_test_account, test_scenario, test_created_by, display_name"
+    )
     .eq("id", input.userId)
     .maybeSingle();
 
-  if (!profile?.is_test_account) {
-    return { ok: false, error: "Only test accounts can be repaired from Testing Center." };
+  if (!profile) return { ok: false, error: "User profile not found." };
+  if (!profile.is_test_account) {
+    return { ok: false, error: "Only test accounts can be auto-repaired from Testing Center." };
   }
-
   if (profile.role !== "agency") {
     return { ok: false, error: "This account is not an agency test user." };
   }
 
-  let orgId = (profile.primary_agency_id as string | null) ?? null;
-  const scenario = ((profile.test_scenario as string) ?? "boutique_agency").replace(/_[a-z_]+$/, "") as AgencyScenarioSlug;
-  const config = AGENCY_SCENARIOS.find((s) => s.slug === scenario) ?? AGENCY_SCENARIOS[0]!;
+  const scenario = normalizeScenarioSlug(profile.test_scenario as string | null);
+  const template = getAgencyOrgTemplate(scenario);
 
-  const { data: memberships } = await admin
-    .from("agency_organization_members")
-    .select("organization_id, role")
-    .eq("user_id", input.userId);
+  let orgId: string | null = null;
+  const memberships = await listAgencyMembershipsForUserAdmin(admin, input.userId);
 
-  if (memberships?.length) {
-    orgId = orgId ?? (memberships[0]!.organization_id as string);
+  if (memberships.length) {
+    orgId = memberships[0]!.organization_id;
+    logTestStep(log, `Found existing membership → org ${orgId}`);
   }
 
-  if (orgId) {
-    const { data: org } = await admin.from("agency_organizations").select("id").eq("id", orgId).maybeSingle();
-    if (!org) orgId = null;
+  if (!orgId && profile.primary_agency_id) {
+    const { data: org } = await admin
+      .from("agency_organizations")
+      .select("id")
+      .eq("id", profile.primary_agency_id as string)
+      .maybeSingle();
+    if (org) {
+      orgId = org.id as string;
+      logTestStep(log, `Found agency via profile.primary_agency_id → org ${orgId}`);
+    }
   }
 
   if (!orgId) {
-    logTestStep(log, "Repair: creating missing test agency organization...");
+    const sibling = await findOrgFromSiblingOwner(admin, {
+      test_scenario: profile.test_scenario as string | null,
+      test_created_by: profile.test_created_by as string | null,
+    });
+    if (sibling) {
+      orgId = sibling.orgId;
+      logTestStep(log, `Found agency via sibling owner → org ${orgId}`);
+    }
+  }
+
+  if (!orgId) {
+    logTestStep(log, "Creating missing test agency organization...");
     const seed = Date.now() % 100000;
     const { data: org, error: orgError } = await admin
       .from("agency_organizations")
       .insert({
         slug: `test-agency-repair-${seed}`,
-        name: `${config.label} — Repaired QA`,
+        name: `${template.label} — Repaired QA`,
         biography: "Repaired test agency organization.",
-        plan: config.plan,
+        plan: template.plan,
         verified: scenario !== "boutique_agency",
         is_test: true,
-        genres: ["music", "comedy"],
+        genres: ["music", "comedy", "podcast"],
+        years_in_business: 8,
         plan_started_at: new Date(Date.now() - 90 * 86400000).toISOString(),
         plan_renews_at: new Date(Date.now() + 275 * 86400000).toISOString(),
         stripe_subscription_id: `test_sub_repair_${seed}`,
-        metadata: { test: true, repaired: true },
+        metadata: {
+          test: true,
+          repaired: true,
+          scenario,
+          dashboard_settings: { widgets: ["overview", "bookings", "revenue"], layout: "default" },
+          settings: { timezone: "America/New_York", notifications_enabled: true },
+        },
       })
       .select("id")
       .single();
@@ -132,46 +185,134 @@ export async function repairTestAgencyAccount(input: {
     orgId = org.id as string;
   }
 
-  const memberRole = ((memberships?.[0]?.role as AgencyMemberRole | undefined) ??
+  await ensureAgencySubscription(admin, orgId, template.plan);
+
+  const memberRole = ((memberships[0]?.role as AgencyMemberRole | undefined) ??
     (profile.agency_member_role as AgencyMemberRole | null) ??
     "owner") as AgencyMemberRole;
 
-  if (!memberships?.length) {
-    logTestStep(log, "Repair: creating agency membership...");
-    await admin.from("agency_organization_members").upsert(
-      {
-        organization_id: orgId,
-        user_id: input.userId,
-        role: memberRole,
-        accepted_at: new Date().toISOString(),
-      },
-      { onConflict: "organization_id,user_id" }
-    );
-  }
+  logTestStep(log, `Ensuring agency_organization_members row (${memberRole})...`);
+  await ensureAgencyMembership(admin, {
+    userId: input.userId,
+    organizationId: orgId,
+    role: memberRole,
+  });
 
-  await syncAgencyAccountProfile(admin, {
+  logTestStep(log, "Verifying and repairing complete organization...");
+  const complete = await ensureAgencyOrganizationComplete(admin, {
     userId: input.userId,
     organizationId: orgId,
     memberRole,
+    scenario,
   });
 
-  logTestStep(log, "Repair: seeding agency scenario data if sparse...");
-  await seedAgencyScenario(admin, log, orgId, input.userId, config.slug, Date.now() % 100000);
+  if (!complete.ok) {
+    return { ok: false, error: complete.error };
+  }
 
-  const validation = await validateAgencyImpersonationTarget(admin, {
+  const verified = await verifyAgencyMembershipAdmin(admin, input.userId);
+  if (!verified.ok) {
+    return { ok: false, error: verified.message };
+  }
+
+  const impersonation = await validateAgencyImpersonationTarget(admin, {
     id: input.userId,
     role: "agency",
     primary_agency_id: orgId,
-    agency_member_role: memberRole,
+    agency_member_role: verified.membership.role,
   });
 
-  if (!validation.ok) {
-    return { ok: false, error: validation.error };
+  if (!impersonation.ok) {
+    return { ok: false, error: impersonation.error };
   }
 
   return {
     ok: true,
     orgId,
-    message: `Repaired test agency (${config.label}). You can impersonate again.`,
+    message: `Organization repaired (${template.label}). Membership, subscription, permissions, and dashboard data verified.`,
   };
 }
+
+export async function repairTestAgencyAccount(input: {
+  userId: string;
+  repairedBy: string;
+}): Promise<{ ok: true; orgId: string; message: string } | { ok: false; error: string }> {
+  return ensureAgencyAccountDependencies(input);
+}
+
+export async function verifyAndRepairAgencyForImpersonation(input: {
+  userId: string;
+  repairedBy: string;
+  role: string;
+  primary_agency_id: string | null;
+  agency_member_role: string | null;
+}) {
+  const admin = getSupabaseAdmin();
+
+  let validation = await validateAgencyImpersonationTarget(admin, {
+    id: input.userId,
+    role: input.role,
+    primary_agency_id: input.primary_agency_id,
+    agency_member_role: input.agency_member_role,
+  });
+
+  if (validation.ok) {
+    const orgId = validation.orgId;
+    const { data: profile } = await admin
+      .from("profiles")
+      .select("agency_member_role")
+      .eq("id", input.userId)
+      .maybeSingle();
+
+    const memberRole = ((profile?.agency_member_role as AgencyMemberRole | null) ??
+      (input.agency_member_role as AgencyMemberRole | null) ??
+      "owner") as AgencyMemberRole;
+
+    const scenario = normalizeScenarioSlug(
+      (
+        await admin.from("profiles").select("test_scenario").eq("id", input.userId).maybeSingle()
+      ).data?.test_scenario as string | null
+    );
+
+    await ensureAgencyOrganizationComplete(admin, {
+      userId: input.userId,
+      organizationId: orgId,
+      memberRole,
+      scenario,
+    });
+
+    return validation;
+  }
+
+  console.warn("[Agency Impersonation] Validation failed — auto-repairing", {
+    userId: input.userId,
+    code: validation.code,
+    error: validation.error,
+  });
+
+  const repair = await ensureAgencyAccountDependencies({
+    userId: input.userId,
+    repairedBy: input.repairedBy,
+  });
+
+  if (!repair.ok) {
+    return { ok: false as const, error: repair.error, code: "repair_failed" };
+  }
+
+  const { data: profile } = await admin
+    .from("profiles")
+    .select("primary_agency_id, agency_member_role")
+    .eq("id", input.userId)
+    .maybeSingle();
+
+  validation = await validateAgencyImpersonationTarget(admin, {
+    id: input.userId,
+    role: "agency",
+    primary_agency_id: (profile?.primary_agency_id as string | null) ?? repair.orgId,
+    agency_member_role: (profile?.agency_member_role as string | null) ?? null,
+  });
+
+  return validation;
+}
+
+export { AGENCY_TEAM_ROLES } from "@/lib/testing/scenarios/agency";

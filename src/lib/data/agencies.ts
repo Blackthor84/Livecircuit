@@ -1,6 +1,7 @@
 import type { SupabaseClient } from "@supabase/supabase-js";
 import { resolveAgencyRedirect } from "@/lib/auth/agency-account";
 import { agencyDashboardPath } from "@/lib/agency/sections";
+import { resolveAgencyMembershipForUser } from "@/lib/agency/membership";
 import { createClient } from "@/lib/supabase/server";
 import { isSupabaseConfigured } from "@/lib/config/env";
 import { getAgencyPlanLimits } from "@/lib/agency/permissions";
@@ -33,11 +34,13 @@ export async function getUserAgencyOrganizations(userId: string): Promise<Agency
     .select("role, agency_organizations(id, slug, name, logo_url, plan, verified)")
     .eq("user_id", userId);
 
-  return (data ?? []).map((row) => {
+  return (data ?? [])
+    .map((row) => {
     const org = row.agency_organizations as
       | { id: string; slug: string; name: string; logo_url: string | null; plan: string; verified: boolean }
       | { id: string; slug: string; name: string; logo_url: string | null; plan: string; verified: boolean }[];
     const o = Array.isArray(org) ? org[0] : org;
+    if (!o) return null;
     return {
       id: o.id,
       slug: o.slug,
@@ -47,7 +50,8 @@ export async function getUserAgencyOrganizations(userId: string): Promise<Agency
       verified: o.verified,
       role: row.role as AgencyMemberRole,
     };
-  });
+  })
+    .filter(Boolean) as AgencyOrgSummary[];
 }
 
 export async function userHasAgencyAccess(userId: string): Promise<boolean> {
@@ -56,23 +60,18 @@ export async function userHasAgencyAccess(userId: string): Promise<boolean> {
 }
 
 export async function getAgencyMembership(orgId: string, userId: string) {
-  const supabase = await getClient();
-  if (!supabase) return null;
-
-  const { data } = await supabase
-    .from("agency_organization_members")
-    .select("role")
-    .eq("organization_id", orgId)
-    .eq("user_id", userId)
-    .maybeSingle();
-
-  return data?.role as AgencyMemberRole | undefined ?? null;
+  const resolved = await resolveAgencyMembershipForUser(userId, orgId);
+  if (!resolved.ok) return null;
+  if (resolved.membership.organization_id !== orgId) return null;
+  return resolved.membership.role;
 }
 
 export type AgencyOrgAccessDeniedCode =
   | "not_configured"
   | "no_membership"
-  | "organization_not_found";
+  | "organization_not_found"
+  | "permissions_missing"
+  | "subscription_missing";
 
 export type AgencyOrgAccessResult =
   | { ok: true; organization: Record<string, unknown>; role: AgencyMemberRole }
@@ -82,39 +81,25 @@ export async function resolveAgencyOrgAccess(
   orgId: string,
   userId: string
 ): Promise<AgencyOrgAccessResult> {
-  const supabase = await getClient();
-  if (!supabase) {
+  const resolved = await resolveAgencyMembershipForUser(userId, orgId);
+  if (!resolved.ok) {
     return {
       ok: false,
-      code: "not_configured",
-      message: "Database is not configured, so this agency cannot be loaded.",
+      code:
+        resolved.code === "no_membership"
+          ? "no_membership"
+          : resolved.code === "organization_not_found"
+            ? "organization_not_found"
+            : "not_configured",
+      message: resolved.message,
     };
   }
 
-  const role = await getAgencyMembership(orgId, userId);
-  if (!role) {
-    return {
-      ok: false,
-      code: "no_membership",
-      message: "You are not a member of this agency organization.",
-    };
-  }
-
-  const { data, error } = await supabase
-    .from("agency_organizations")
-    .select("*")
-    .eq("id", orgId)
-    .maybeSingle();
-
-  if (error || !data) {
-    return {
-      ok: false,
-      code: "organization_not_found",
-      message: error?.message ?? "No agency organization exists for this ID.",
-    };
-  }
-
-  return { ok: true, organization: data, role };
+  return {
+    ok: true,
+    organization: resolved.organization,
+    role: resolved.membership.role,
+  };
 }
 
 export async function getAgencyOrganization(orgId: string, userId: string) {

@@ -275,8 +275,8 @@ export async function repairTestAgencyAccountAction(userId: string): Promise<Tes
   if (!isSupabaseConfigured()) return { ok: false, error: "Supabase required" };
 
   try {
-    const { repairTestAgencyAccount } = await import("@/lib/testing/repair-agency");
-    const result = await repairTestAgencyAccount({ userId, repairedBy: ctx.userId });
+    const { ensureAgencyAccountDependencies } = await import("@/lib/testing/repair-agency");
+    const result = await ensureAgencyAccountDependencies({ userId, repairedBy: ctx.userId });
     if (!result.ok) return { ok: false, error: result.error };
     revalidatePath("/admin/testing");
     return { ok: true, message: result.message, userId };

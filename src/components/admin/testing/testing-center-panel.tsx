@@ -45,7 +45,7 @@ export function TestingCenterPanel({ accounts, totalCount, canManage, canImperso
   const [bulkMix, setBulkMix] = useState<"fans" | "artists" | "mixed">("mixed");
   const [agencyScenario, setAgencyScenario] = useState<string>(AGENCY_SCENARIOS[0]!.slug);
   const [agencyBulkCount, setAgencyBulkCount] = useState(1);
-  const [seedTeamMembers, setSeedTeamMembers] = useState(false);
+  const [seedTeamMembers, setSeedTeamMembers] = useState(true);
   const [simAction, setSimAction] = useState(SIMULATOR_ACTIONS[0]!.id);
   const [simCount, setSimCount] = useState(500);
   const [busy, setBusy] = useState<string | null>(null);
@@ -284,7 +284,7 @@ export function TestingCenterPanel({ accounts, totalCount, canManage, canImperso
                   >
                     {AGENCY_SCENARIOS.map((s) => (
                       <option key={s.slug} value={s.slug}>
-                        {s.label} ({s.artistCount} artists)
+                        {s.label} ({s.artistCount} artists, {s.bookingCount} bookings)
                       </option>
                     ))}
                   </select>
@@ -295,7 +295,7 @@ export function TestingCenterPanel({ accounts, totalCount, canManage, canImperso
                     checked={seedTeamMembers}
                     onChange={(e) => setSeedTeamMembers(e.target.checked)}
                   />
-                  Seed team members (owner, admin, booking manager, etc.)
+                  Seed full organization template (team, roster, bookings, revenue)
                 </label>
                 <Button
                   size="sm"

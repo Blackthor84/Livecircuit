@@ -13,6 +13,12 @@ function mapSessionFailure(code: string): AgencyOrgAccessDeniedCode {
       return "no_membership";
     case "organization_not_found":
       return "organization_not_found";
+    case "permissions_missing":
+      return "permissions_missing";
+    case "subscription_missing":
+      return "subscription_missing";
+    case "not_configured":
+      return "not_configured";
     default:
       return "no_membership";
   }
@@ -31,7 +37,7 @@ export default async function AgencyPortalLayout({ children }: Props) {
     const impersonating = Boolean(await getImpersonationState());
     return (
       <AgencyAccessError
-        orgId={sessionResult.code === "no_organization" ? "—" : user.id}
+        orgId="—"
         code={mapSessionFailure(sessionResult.code)}
         message={sessionResult.message}
         impersonating={impersonating}
