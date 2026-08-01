@@ -22,6 +22,12 @@ export function SiteFooter({ user }: { user: HeaderUser | null }) {
               <Link href={ROUTES.venues} className="text-muted-foreground hover:text-foreground">
                 Venues
               </Link>
+              <Link href={ROUTES.creatorPromise} className="text-muted-foreground hover:text-foreground">
+                Creator Promise
+              </Link>
+              <Link href={ROUTES.artistSuccessCenter} className="text-muted-foreground hover:text-foreground">
+                For Artists
+              </Link>
               <Link href="/about" className="text-muted-foreground hover:text-foreground">
                 About
               </Link>
@@ -55,7 +61,7 @@ export function SiteFooter({ user }: { user: HeaderUser | null }) {
           <AuthAccountSection user={user} align="right" />
         </div>
         <p className="mt-12 text-center text-xs text-muted-foreground">
-          © {new Date().getFullYear()} {APP_NAME}. Built for artists touring the world from home.
+          © {new Date().getFullYear()} {APP_NAME}. Built Artist First — digital live entertainment for creators and fans.
         </p>
       </div>
     </footer>

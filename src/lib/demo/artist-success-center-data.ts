@@ -231,14 +231,16 @@ export const GROWTH_ROADMAP = [
 export const FEE_GUIDE_ITEMS = [
   { item: "Creating an account", cost: "FREE", note: "No credit card required" },
   { item: "Building your profile", cost: "FREE", note: "Full artist presence" },
-  { item: "Browsing venues", cost: "FREE", note: "Explore all tiers" },
+  { item: "Browsing digital venues", cost: "FREE", note: "Explore all tiers" },
   { item: "Searching events", cost: "FREE", note: "Discover and research" },
   { item: "Following artists", cost: "FREE", note: "Build your network" },
-  { item: "Booking a show", cost: "Per-event booking fee", note: "Only charged when you book — see tier rates below" },
+  { item: "Merchandise sales", cost: "100% to artist", note: "LiveCircuit does not take merch revenue" },
+  { item: "Tips & donations", cost: "100% to artist", note: "Direct fan support stays with you" },
+  { item: "Booking a digital show", cost: "Per-event booking fee", note: "Only charged when you book — see tier rates below" },
   {
     item: ARTIST_BOOKING_PRICING.platformFeeLabel,
-    cost: `${ARTIST_BOOKING_PRICING.platformFeePercentage}% per sale`,
-    note: "Applied only after your event is booked and tickets begin selling",
+    cost: `${ARTIST_BOOKING_PRICING.platformFeePercentage}% on ticket sales`,
+    note: "Transparent digital ticketing only — disclosed before you publish. Does not apply to merch, tips, or donations.",
   },
   {
     item: ARTIST_BOOKING_PRICING.paymentProcessingLabel,
@@ -272,14 +274,18 @@ export const REVENUE_TIMELINE = [
   { step: 2, title: "Promote Event", description: "Share across social, email, and partner channels. Sales accelerate in the final 2 weeks.", icon: "📣" },
   { step: 3, title: "Sell Tickets", description: "Fans purchase directly on LiveCircuit. Track sales and fill rate in real time.", icon: "🎫" },
   { step: 4, title: "Perform Show", description: "Go live from your venue. Engage fans, collect reviews, capture clips.", icon: "🔴" },
-  { step: 5, title: "Payout Processing", description: "LiveCircuit calculates net earnings (demo: gross minus fees).", icon: "🧾" },
-  { step: 6, title: "Funds Deposited", description: "Demo: payouts within 3–5 business days after your event ends.", icon: "💰" },
+  { step: 5, title: "Payout Processing", description: "LiveCircuit calculates ticket earnings minus transparent digital ticketing and processing fees. Merch, tips, and donations are paid separately—100% to you.", icon: "🧾" },
+  { step: 6, title: "Funds Deposited", description: "Ticket payouts within 3–5 business days after your digital event ends.", icon: "💰" },
 ] as const;
 
 export const SUCCESS_CENTER_FAQ = [
   {
+    q: "Do you take a cut of my merch, tips, or donations?",
+    a: "No. Artists keep 100% of merchandise revenue, tips, and donations. LiveCircuit earns through premium tools, transparent digital ticketing, sponsorships, and fan experiences—not by taxing direct fan support.",
+  },
+  {
     q: "How do I get paid?",
-    a: "After your live event, LiveCircuit calculates net earnings from ticket sales minus demo platform and processing fees. Funds are sent to your connected payment method per your artist dashboard payout schedule.",
+    a: "After your digital event, ticket earnings are calculated minus transparent digital ticketing and payment processing fees. Merch, tips, and donations go directly to you. Funds are sent to your connected payment method per your artist dashboard payout schedule.",
   },
   {
     q: "How do refunds work?",
@@ -295,15 +301,20 @@ export const SUCCESS_CENTER_FAQ = [
   },
   {
     q: "How do I move to a bigger venue?",
-    a: "Complete growth milestones — sell out smaller venues, earn strong reviews, maintain high fill rates, and build your email list. LiveCircuit recommends upgrades when your data supports it.",
+    a: "Complete growth milestones — sell out smaller digital venues, earn strong reviews, maintain high fill rates, and build your email list. LiveCircuit recommends upgrades when your data supports it.",
   },
   {
-    q: "How do platform fees work?",
-    a: "LiveCircuit is free to join. Demo platform fees (example: 10%) apply only when tickets are sold or events are booked. All values on this page are demo examples until production pricing is finalized.",
+    q: "Who owns my content?",
+    a: "You do. Artists retain full ownership of content, publishing rights, and master recording rights. There are no exclusivity contracts—you can perform elsewhere anytime.",
+  },
+  {
+    q: "How do digital ticketing fees work?",
+    a: "Transparent digital ticketing fees apply only to ticket sales and are disclosed before you publish. They cover streaming infrastructure, secure checkout, and event hosting—not merch, tips, or donations.",
   },
 ] as const;
 
 export const ASC_STEPS = [
+  { id: "creator-promise", label: "Creator Promise" },
   { id: "performer-type", label: "Performer Type" },
   { id: "audience-profile", label: "Audience Profile" },
   { id: "audience-fit", label: "Fit Scores" },

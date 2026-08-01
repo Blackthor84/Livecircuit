@@ -8,13 +8,21 @@ import {
   ArtistPricingTransparency,
   BookingFeeExplainer,
 } from "@/components/pricing/artist/booking-fee-explainer";
+import { PlanIncludedPromises } from "@/components/marketing/creator-promise-sections";
 
 export function FeeGuideSection() {
   return (
     <section id="fee-guide" className="scroll-mt-24 px-4 py-20 sm:px-6">
       <div className="mx-auto max-w-3xl space-y-8">
-        <SectionHeader eyebrow="Step 9" title="LiveCircuit Fees"
-          description="Everything is free until you book and sell — clear pricing from our central config." />
+        <SectionHeader eyebrow="Step 9" title="Artist First Pricing"
+          description="Free to join. Keep 100% of merch, tips, and donations. Transparent digital ticketing only." />
+
+        <FadeUp>
+          <div className="glass-panel rounded-2xl p-6">
+            <p className="mb-4 text-sm font-semibold">Included with every plan</p>
+            <PlanIncludedPromises />
+          </div>
+        </FadeUp>
 
         <FadeUp>
           <ArtistNoSubscriptionMessage />
@@ -29,7 +37,7 @@ export function FeeGuideSection() {
                   <p className="font-medium">{item.item}</p>
                   <p className="text-sm text-muted-foreground">{item.note}</p>
                 </div>
-                <p className={`shrink-0 text-lg font-bold ${i < 6 ? "text-emerald-400" : "text-primary"}`}>{item.cost}</p>
+                <p className={`shrink-0 text-lg font-bold ${item.cost === "FREE" || item.cost.startsWith("100%") ? "text-emerald-400" : "text-primary"}`}>{item.cost}</p>
               </div>
             ))}
           </div>

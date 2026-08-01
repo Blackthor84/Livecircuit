@@ -3,6 +3,7 @@
 import { ArtistReportSection } from "@/components/artists/success-center/artist-report-section";
 import { AudienceBuilderStep } from "@/components/artists/success-center/audience-builder-step";
 import { AudienceFitScoreStep } from "@/components/artists/success-center/audience-fit-score-step";
+import { CreatorPromiseSection } from "@/components/artists/success-center/creator-promise-section";
 import { DashboardPreviewSection } from "@/components/artists/success-center/dashboard-preview-section";
 import { FeeGuideSection } from "@/components/artists/success-center/fee-guide-section";
 import { GrowthRoadmapSection } from "@/components/artists/success-center/growth-roadmap-section";
@@ -26,6 +27,7 @@ export function ArtistSuccessCenter() {
       <SuccessCenterToolbar />
       <div className="gradient-mesh min-h-screen pb-20">
         <SuccessCenterHero />
+        <CreatorPromiseSection />
         <PerformerTypeStep />
         <AudienceBuilderStep />
         <AudienceFitScoreStep />

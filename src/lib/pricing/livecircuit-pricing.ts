@@ -76,7 +76,7 @@ export const BOOKING_FEES: Record<ArenaTierId, number> = {
 export const ARTIST_BOOKING_PRICING = {
   bookingFees: BOOKING_FEES,
   platformFeePercentage: 10,
-  platformFeeLabel: "Platform Service Fee",
+  platformFeeLabel: "Digital Ticketing Service",
   paymentProcessingLabel: "Payment Processing",
   paymentProcessingDescription: "Standard card processing rates (typically 2.9% + $0.30 per transaction)",
   paymentProcessingRatePercent: 2.9,
@@ -84,24 +84,32 @@ export const ARTIST_BOOKING_PRICING = {
   taxesLabel: "Taxes",
   taxesDescription: "Calculated where applicable based on event location and tax rules",
   defaultTaxRatePercent: 0,
+  artistFirstIncluded: [
+    "100% Merchandise Revenue",
+    "100% Tips",
+    "100% Donations",
+    "Content Ownership",
+    "No Exclusivity",
+    "Transparent Ticketing",
+  ],
   noSubscriptionMessage: {
     headline: "No monthly subscription.",
     lines: [
       "Create your artist profile for free.",
-      "Browse venues for free.",
-      "Only pay when you book a show.",
-      "Platform fees apply only after your event is booked and tickets begin selling.",
+      "Browse digital venues for free.",
+      "Keep 100% of merch, tips, and donations.",
+      "Only pay transparent digital ticketing fees when you sell tickets.",
     ],
   },
   transparencyMessage:
-    "LiveCircuit believes artists should understand every fee before publishing an event. No hidden fees. No monthly subscriptions. Clear pricing.",
+    "LiveCircuit is Artist First. You keep 100% of merchandise, tips, and donations. Digital ticketing fees are disclosed upfront—no hidden cuts on direct fan support.",
   bookingFeeExplainer: {
     title: "What am I paying for?",
     items: [
-      "Venue operations",
+      "Digital venue operations",
       "Streaming infrastructure",
       "Audience discovery",
-      "Ticketing",
+      "Transparent digital ticketing",
       "Event hosting",
       "Customer support",
       "Analytics",

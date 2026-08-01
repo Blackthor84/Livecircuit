@@ -33,6 +33,7 @@ export function getPublicNav(): NavItem[] {
     { href: ROUTES.artists, label: "Artists" },
     { href: ROUTES.venues, label: "Venues" },
     { href: ROUTES.about, label: "About" },
+    { href: ROUTES.creatorPromise, label: "Creator Promise" },
   ];
 }
 
@@ -60,7 +61,7 @@ export function getArtistNav(): NavItem[] {
       icon: Mic,
       badge: "NEW",
       description:
-        "Learn how to book smarter shows, maximize attendance, understand earnings, and grow your audience.",
+        "Artist First tools — keep 100% of merch, tips, and donations. Book smarter digital shows and grow your audience.",
       featured: true,
     },
   ];

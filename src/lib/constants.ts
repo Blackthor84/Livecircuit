@@ -2,9 +2,9 @@ export const APP_NAME = "LiveCircuit";
 export const LIVECIRCUIT_LOGO = "/livecircuit-logo.png";
 export const LIVECIRCUIT_LOGO_WIDTH = 1024;
 export const LIVECIRCUIT_LOGO_HEIGHT = 682;
-export const APP_TAGLINE = "Tour the world without leaving home.";
+export const APP_TAGLINE = "Digital live entertainment — built Artist First.";
 export const APP_DESCRIPTION =
-  "LiveCircuit — ticketed livestreams, virtual concerts, comedy, podcasts, and interactive creator experiences. Watch live music and performances from anywhere in the world.";
+  "LiveCircuit — digital performances, virtual festivals, and interactive fan experiences. Artists keep 100% of merch, tips, and donations. Watch live music and creator shows from anywhere.";
 
 export const ARTIST_CATEGORIES = [
   { value: "music", label: "Music" },
@@ -69,6 +69,7 @@ export const ROUTES = {
   following: "/following",
   about: "/about",
   contact: "/contact",
+  creatorPromise: "/creator-promise",
   agencyHome: "/agency",
   agencyDashboard: "/agency/dashboard",
   agencies: "/agencies",

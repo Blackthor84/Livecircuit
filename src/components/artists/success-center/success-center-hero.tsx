@@ -36,7 +36,7 @@ export function SuccessCenterHero() {
         <FadeUp delay={0.1}>
           <p className="mx-auto mt-8 max-w-2xl text-lg leading-relaxed text-muted-foreground">
             Whether you&apos;re performing for 50 fans or 50,000, LiveCircuit helps you choose the right
-            venue, price your tickets, understand your earnings, and build a loyal audience.
+            digital venue, price your tickets transparently, keep 100% of merch and tips, and build a loyal audience.
           </p>
         </FadeUp>
 

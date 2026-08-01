@@ -3,6 +3,7 @@
 import { useMemo, useState } from "react";
 import { AlertCircle, CheckCircle2 } from "lucide-react";
 import { ARTIST_VENUE_GUIDES, DEMO_PLATFORM_FEE_RATE, type ArtistVenueId } from "@/lib/demo/artist-success-center-data";
+import { ARTIST_BOOKING_PRICING } from "@/lib/pricing/livecircuit-pricing";
 import { calculatePricingAdvisor } from "@/lib/demo/artist-success-center-utils";
 import { useSuccessCenter } from "@/components/artists/success-center/success-center-context";
 import { AnimatedCounter } from "@/components/demo/naming-rights/animated-counter";
@@ -62,7 +63,7 @@ export function TicketPricingAdvisorSection() {
                   {[
                     { label: "Gross Revenue", value: result.grossRevenue },
                     { label: "Booking Fee", value: result.bookingFee, muted: true },
-                    { label: `Platform Fee (${Math.round(DEMO_PLATFORM_FEE_RATE * 100)}%)`, value: result.platformFee, muted: true },
+                    { label: `${ARTIST_BOOKING_PRICING.platformFeeLabel} (${Math.round(DEMO_PLATFORM_FEE_RATE * 100)}%)`, value: result.platformFee, muted: true },
                     { label: "Payment Processing", value: result.processingFees, muted: true },
                     { label: "Taxes", value: result.taxes, muted: true },
                     { label: "Net Earnings", value: result.netEarnings, highlight: true },

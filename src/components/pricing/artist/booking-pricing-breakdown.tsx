@@ -39,7 +39,7 @@ export function BookingPricingBreakdown({
     {
       label: ARTIST_BOOKING_PRICING.platformFeeLabel,
       value: breakdown.platformFee,
-      note: `${ARTIST_BOOKING_PRICING.platformFeePercentage}% of ticket sales`,
+      note: `${ARTIST_BOOKING_PRICING.platformFeePercentage}% of digital ticket sales only`,
     },
     {
       label: ARTIST_BOOKING_PRICING.paymentProcessingLabel,

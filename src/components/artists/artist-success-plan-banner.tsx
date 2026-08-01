@@ -8,10 +8,10 @@ export function ArtistSuccessPlanBanner() {
       <div className="pointer-events-none absolute -right-8 -top-8 size-32 rounded-full bg-violet-500/20 blur-3xl" />
       <div className="relative flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
-          <p className="text-xs font-semibold uppercase tracking-wide text-violet-300">Artist Success Center</p>
-          <h2 className="mt-1 text-xl font-bold sm:text-2xl">Build smarter shows. Sell more tickets.</h2>
+          <p className="text-xs font-semibold uppercase tracking-wide text-violet-300">Artist First</p>
+          <h2 className="mt-1 text-xl font-bold sm:text-2xl">Keep 100% of merch, tips, and donations.</h2>
           <p className="mt-2 max-w-lg text-sm text-muted-foreground">
-            Interactive venue matching, pricing advisor, and growth roadmap — free for all performers.
+            Explore the Creator Promise, venue matching, pricing advisor, and growth roadmap — free for all digital performers.
           </p>
         </div>
         <Button size="lg" href={ROUTES.artistSuccessCenter} className="shrink-0 gap-2">

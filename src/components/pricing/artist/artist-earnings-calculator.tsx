@@ -2,7 +2,7 @@
 
 import { useMemo, useState } from "react";
 import { motion } from "framer-motion";
-import { ARENA_TIER_META, type ArenaTierId } from "@/lib/pricing/livecircuit-pricing";
+import { ARENA_TIER_META, ARTIST_BOOKING_PRICING, type ArenaTierId } from "@/lib/pricing/livecircuit-pricing";
 import {
   calculateArtistEarnings,
   formatPricingCurrency,
@@ -39,7 +39,7 @@ export function ArtistEarningsCalculator({
   const outputs = [
     { label: "Gross Revenue", value: result.grossRevenue, highlight: false },
     { label: "Booking Fee", value: result.bookingFee, muted: true },
-    { label: "Platform Fee", value: result.platformFee, muted: true },
+    { label: ARTIST_BOOKING_PRICING.platformFeeLabel, value: result.platformFee, muted: true },
     { label: "Payment Processing", value: result.paymentProcessing, muted: true },
     { label: "Estimated Taxes", value: result.taxes, muted: true },
     { label: "Estimated Net Earnings", value: result.estimatedNetEarnings, highlight: true },

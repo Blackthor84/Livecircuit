@@ -12,6 +12,7 @@ import {
 } from "lucide-react";
 import { ArtistCard } from "@/components/artists/artist-card";
 import { AnimatedGlobe } from "@/components/landing/animated-globe";
+import { ArtistFirstHomeSection } from "@/components/marketing/creator-promise-sections";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ROUTES } from "@/lib/constants";
@@ -92,8 +93,8 @@ export function MarketingHomepage({
             <span className="text-gradient">The Future of Live Entertainment.</span>
           </h1>
           <p className="mt-6 max-w-xl text-lg text-muted-foreground">
-            Watch concerts, comedy shows, podcasts, speakers, creators, and exclusive performances
-            from anywhere in the world.
+            Watch digital concerts, comedy shows, podcasts, creators, and exclusive live performances from
+            anywhere in the world — on a platform built Artist First.
           </p>
           <div className="mt-8 flex flex-wrap gap-3">
             <Button size="lg" href={`${ROUTES.register}?role=artist`}>
@@ -309,7 +310,7 @@ export function MarketingHomepage({
                 <li>Buy tickets and watch live from anywhere</li>
                 <li>Chat, react, and support artists in real time</li>
                 <li>Collect Tour Passport stamps at every show</li>
-                <li>Tip, subscribe, and join exclusive communities</li>
+                <li>Tip, subscribe, and support artists directly — they keep 100%</li>
               </ul>
             </CardContent>
           </Card>
@@ -320,16 +321,18 @@ export function MarketingHomepage({
             </CardHeader>
             <CardContent>
               <ul className="space-y-2 text-sm text-muted-foreground">
-                <li>Create events and sell tickets with secure checkout</li>
+                <li>Create digital events and sell tickets with transparent pricing</li>
                 <li>Go live with Green Room prep and Producer Mode</li>
-                <li>Build subscribers and earn revenue from every show</li>
+                <li>Keep 100% of merch, tips, and donations from your fans</li>
                 <li>Manage multi-city virtual tours from one dashboard</li>
-                <li>View analytics, fan heat maps, and performance data</li>
+                <li>Own your content — no exclusivity required</li>
               </ul>
             </CardContent>
           </Card>
         </div>
       </section>
+
+      <ArtistFirstHomeSection />
 
       <section className="mx-auto max-w-7xl px-4 py-16 sm:px-6">
         <div className="glass-panel overflow-hidden rounded-3xl border border-violet-500/20 bg-gradient-to-br from-violet-500/10 via-transparent to-primary/10 p-8 sm:p-12">
