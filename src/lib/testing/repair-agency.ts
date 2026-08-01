@@ -205,6 +205,7 @@ export async function ensureAgencyAccountDependencies(input: {
     organizationId: orgId,
     memberRole,
     scenario,
+    createdBy: input.repairedBy,
   });
 
   if (!complete.ok) {
@@ -280,6 +281,7 @@ export async function verifyAndRepairAgencyForImpersonation(input: {
       organizationId: orgId,
       memberRole,
       scenario,
+      createdBy: input.repairedBy,
     });
 
     return validation;

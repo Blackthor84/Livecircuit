@@ -160,6 +160,7 @@ export async function createTestAgency(input: {
   logTestStep(log, "Step 4: Seeding complete organization data...");
   await seedAgencyScenario(admin, log, org.id as string, owner.userId, input.scenario, seed, {
     teamUserIds: teamUserIds.map((t) => ({ userId: t.userId, role: t.role })),
+    createdBy: input.createdBy,
   });
 
   logTestStep(log, "Step 5: Verifying organization health...");
@@ -168,6 +169,7 @@ export async function createTestAgency(input: {
     organizationId: org.id as string,
     memberRole: "owner",
     scenario: input.scenario,
+    createdBy: input.createdBy,
   });
 
   if (!complete.ok) {

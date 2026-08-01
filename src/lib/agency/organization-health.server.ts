@@ -11,6 +11,7 @@ import type { OrganizationHealthCheck } from "@/lib/agency/membership.types";
 import type { AgencyDashboardConfiguration, AgencyMemberRole } from "@/lib/agency/types";
 import { getAgencyOrgTemplate, type AgencyScenarioSlug } from "@/lib/agency";
 import { seedAgencyScenario } from "@/lib/testing/scenarios/agency.server";
+import { createAgencyTestUser } from "@/lib/testing/create-agency-user";
 import { createTestCreationLog, logTestStep } from "@/lib/testing/step-errors";
 import { AGENCY_DASHBOARD_PATH } from "@/lib/agency/sections";
 
@@ -227,6 +228,8 @@ export async function validateAgencyOrganizationHealth(
   });
 
   const metadata = (org?.metadata ?? {}) as Record<string, unknown>;
+  const scenarioSlug = (metadata.scenario as AgencyScenarioSlug | undefined) ?? "boutique_agency";
+  const orgTemplate = getAgencyOrgTemplate(scenarioSlug);
   checks.push({
     key: "dashboard_settings",
     ok: Boolean(metadata.dashboard_settings && metadata.settings && metadata.analytics && metadata.feature_flags),
@@ -235,6 +238,23 @@ export async function validateAgencyOrganizationHealth(
         ? undefined
         : "Agency dashboard settings, preferences, analytics, or feature flags missing in organization metadata",
     table: "agency_organizations",
+  });
+
+  const expectedTeamSize =
+    1 + orgTemplate.team.reduce((sum, slot) => sum + slot.count, 0);
+
+  const teamCount = await countRows(admin, "agency_organization_members", {
+    column: "organization_id",
+    value: organizationId,
+  });
+  checks.push({
+    key: "team",
+    ok: teamCount >= expectedTeamSize,
+    issue:
+      teamCount >= expectedTeamSize
+        ? undefined
+        : `Agency team incomplete (${teamCount}/${expectedTeamSize} members)`,
+    table: "agency_organization_members",
   });
 
   const rosterCount = await countRows(admin, "agency_managed_artists", {
@@ -305,6 +325,13 @@ export async function validateAgencyOrganizationHealth(
     table: "notifications",
   });
 
+  checks.push({
+    key: "analytics",
+    ok: Boolean(metadata.analytics_snapshot),
+    issue: metadata.analytics_snapshot ? undefined : "Analytics snapshot missing from organization metadata",
+    table: "agency_organizations",
+  });
+
   const ok = checks.every((c) => c.ok);
   logHealth("Organization health result", {
     userId,
@@ -316,6 +343,74 @@ export async function validateAgencyOrganizationHealth(
   return { ok, checks };
 }
 
+async function ensureMissingAgencyTeam(
+  admin: SupabaseClient,
+  log: ReturnType<typeof createTestCreationLog>,
+  input: {
+    organizationId: string;
+    scenario: AgencyScenarioSlug;
+    createdBy: string;
+    seed: number;
+  }
+): Promise<{ userId: string; role: AgencyMemberRole }[]> {
+  const template = getAgencyOrgTemplate(input.scenario);
+  const { data: org } = await admin
+    .from("agency_organizations")
+    .select("name")
+    .eq("id", input.organizationId)
+    .maybeSingle();
+
+  const { data: members } = await admin
+    .from("agency_organization_members")
+    .select("role")
+    .eq("organization_id", input.organizationId);
+
+  const roleCounts = new Map<AgencyMemberRole, number>();
+  for (const member of members ?? []) {
+    const role = member.role as AgencyMemberRole;
+    roleCounts.set(role, (roleCounts.get(role) ?? 0) + 1);
+  }
+
+  const created: { userId: string; role: AgencyMemberRole }[] = [];
+  let slotIndex = 0;
+
+  for (const { role, count } of template.team) {
+    let current = roleCounts.get(role) ?? 0;
+    while (current < count) {
+      logTestStep(log, `Creating missing team member (${role} ${current + 1}/${count})...`);
+      const member = await createAgencyTestUser(admin, log, {
+        organizationId: input.organizationId,
+        memberRole: role,
+        scenario: `${input.scenario}_${role}_${current}`,
+        createdBy: input.createdBy,
+        seed: input.seed + slotIndex + 2000,
+        orgName: (org?.name as string) ?? template.label,
+      });
+      current += 1;
+      slotIndex += 1;
+      roleCounts.set(role, current);
+      created.push({ userId: member.userId, role });
+    }
+  }
+
+  return created;
+}
+
+async function loadAgencyTeamMembers(
+  admin: SupabaseClient,
+  organizationId: string
+): Promise<{ userId: string; role: AgencyMemberRole }[]> {
+  const { data } = await admin
+    .from("agency_organization_members")
+    .select("user_id, role")
+    .eq("organization_id", organizationId);
+
+  return (data ?? []).map((row) => ({
+    userId: row.user_id as string,
+    role: row.role as AgencyMemberRole,
+  }));
+}
+
 export async function ensureAgencyOrganizationComplete(
   admin: SupabaseClient,
   input: {
@@ -323,11 +418,14 @@ export async function ensureAgencyOrganizationComplete(
     organizationId: string;
     memberRole: AgencyMemberRole;
     scenario: AgencyScenarioSlug;
+    createdBy?: string;
   }
 ): Promise<{ ok: true; repaired: string[] } | { ok: false; error: string }> {
   const log = createTestCreationLog();
   const template = getAgencyOrgTemplate(input.scenario);
   const repaired: string[] = [];
+  const createdBy = input.createdBy ?? input.userId;
+  const seed = Date.now() % 100000;
 
   logTestStep(log, `Ensuring organization complete (${template.label})...`);
 
@@ -354,18 +452,37 @@ export async function ensureAgencyOrganizationComplete(
   await ensureAgencyDashboardSettings(admin, input.organizationId, input.scenario);
   repaired.push("dashboard_settings");
 
+  let teamMembers = await loadAgencyTeamMembers(admin, input.organizationId);
+  logTestStep(log, "Ensuring complete agency team...");
+  const createdTeam = await ensureMissingAgencyTeam(admin, log, {
+    organizationId: input.organizationId,
+    scenario: input.scenario,
+    createdBy,
+    seed,
+  });
+  if (createdTeam.length) {
+    repaired.push("team");
+    teamMembers = await loadAgencyTeamMembers(admin, input.organizationId);
+  }
+
   const health = await validateAgencyOrganizationHealth(admin, {
     userId: input.userId,
     organizationId: input.organizationId,
   });
 
   const needsSeed = health.checks.some(
-    (c) => !c.ok && ["roster", "bookings", "calendar", "sponsors", "messages", "notifications"].includes(c.key)
+    (c) =>
+      !c.ok &&
+      ["roster", "bookings", "calendar", "sponsors", "messages", "notifications", "analytics"].includes(c.key)
   );
 
   if (needsSeed) {
     logTestStep(log, "Seeding missing organization data...");
-    await seedAgencyScenario(admin, log, input.organizationId, input.userId, input.scenario, Date.now() % 100000);
+    await seedAgencyScenario(admin, log, input.organizationId, input.userId, input.scenario, seed, {
+      createdBy,
+      fillMissingOnly: true,
+      teamUserIds: teamMembers.filter((m) => m.userId !== input.userId),
+    });
     repaired.push("seed_data");
   }
 
