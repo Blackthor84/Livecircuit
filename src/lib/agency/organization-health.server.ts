@@ -1,21 +1,19 @@
+import "server-only";
+
 import type { SupabaseClient } from "@supabase/supabase-js";
 import { getAgencyPermissions } from "@/lib/agency/permissions";
 import {
   ensureAgencyMembership,
   ensureAgencySubscription,
   listAgencyMembershipsForUserAdmin,
-} from "@/lib/agency/membership";
+} from "@/lib/agency/membership.server";
+import type { OrganizationHealthCheck } from "@/lib/agency/membership.types";
 import type { AgencyMemberRole } from "@/lib/agency/types";
 import { getAgencyOrgTemplate, type AgencyScenarioSlug } from "@/lib/agency/org-templates";
-import { seedAgencyScenario } from "@/lib/testing/scenarios/agency";
+import { seedAgencyScenario } from "@/lib/testing/scenarios/agency.server";
 import { createTestCreationLog, logTestStep } from "@/lib/testing/step-errors";
 
-export type OrganizationHealthCheck = {
-  key: string;
-  ok: boolean;
-  issue?: string;
-  table?: string;
-};
+export type { OrganizationHealthCheck } from "@/lib/agency/membership.types";
 
 function logHealth(step: string, data?: Record<string, unknown>) {
   console.info(`[Agency Organization] ${step}`, data ?? {});

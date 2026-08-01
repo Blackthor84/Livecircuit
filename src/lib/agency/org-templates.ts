@@ -18,6 +18,18 @@ export type AgencyOrgTemplate = {
   team: AgencyTeamSlot[];
 };
 
+/** All agency member roles including owner (for reference lists). */
+export const AGENCY_TEAM_ROLES: AgencyMemberRole[] = [
+  "owner",
+  "admin",
+  "booking_manager",
+  "artist_manager",
+  "marketing",
+  "finance",
+  "assistant",
+  "read_only",
+];
+
 export const AGENCY_ORG_TEMPLATES: AgencyOrgTemplate[] = [
   {
     slug: "boutique_agency",

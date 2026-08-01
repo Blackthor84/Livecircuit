@@ -1,6 +1,6 @@
 import { AgencyCalendarPanel } from "@/components/agency/agency-calendar-panel";
 import { AgencyPageHeader } from "@/components/agency/agency-dashboard-layout";
-import { loadAgencySessionForUser } from "@/lib/agency/session";
+import { loadAgencySessionForUser } from "@/lib/agency/session.server";
 import { listAgencyCalendarEvents } from "@/lib/data/agency-features";
 import { listAgencyManagedArtists } from "@/lib/data/agencies";
 import { getSessionUser } from "@/lib/auth/session";

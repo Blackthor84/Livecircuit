@@ -1,6 +1,6 @@
 import { AgencyPageHeader } from "@/components/agency/agency-dashboard-layout";
 import { AgencyTeamPanel } from "@/components/agency/agency-team-panel";
-import { loadAgencySessionForUser } from "@/lib/agency/session";
+import { loadAgencySessionForUser } from "@/lib/agency/session.server";
 import { listAgencyMembers } from "@/lib/data/agencies";
 import { getSessionUser } from "@/lib/auth/session";
 

@@ -5,8 +5,8 @@ import { RepairTestAgencyButton } from "@/components/admin/testing/repair-test-a
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { AGENCY_DASHBOARD_PATH } from "@/lib/agency/sections";
-import type { AgencyOrgAccessDeniedCode } from "@/lib/data/agencies";
-import type { AgencySessionFailureCode } from "@/lib/agency/session";
+import type { AgencyOrgAccessDeniedCode } from "@/lib/agency/types";
+import type { AgencySessionFailureCode } from "@/lib/agency/membership.types";
 import { ROUTES } from "@/lib/constants";
 
 const CODE_HINTS: Record<AgencyOrgAccessDeniedCode, string> = {

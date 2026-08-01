@@ -20,6 +20,17 @@ export type AgencyBookingStatus =
   | "rejected"
   | "cancelled";
 
+export type AgencyOrgAccessDeniedCode =
+  | "not_configured"
+  | "no_membership"
+  | "organization_not_found"
+  | "permissions_missing"
+  | "subscription_missing";
+
+export type AgencyOrgAccessResult =
+  | { ok: true; organization: Record<string, unknown>; role: AgencyMemberRole }
+  | { ok: false; code: AgencyOrgAccessDeniedCode; message: string };
+
 export type AgencyPermissions = {
   manage_roster?: boolean;
   book_events?: boolean;

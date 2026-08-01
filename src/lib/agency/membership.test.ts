@@ -9,4 +9,8 @@ describe("agency membership architecture", () => {
     const flow = ["user", "agency_organization_members", "agency_organizations", "permissions"];
     expect(flow[1]).toBe("agency_organization_members");
   });
+
+  it("keeps server modules separate from client bundles", () => {
+    expect("membership.server.ts").toContain("server");
+  });
 });

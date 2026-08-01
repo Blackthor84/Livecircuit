@@ -1,10 +1,12 @@
+import "server-only";
+
 import type { SupabaseClient } from "@supabase/supabase-js";
 import { getSupabaseAdmin } from "@/lib/supabase/admin";
-import { ensureAgencyMembership } from "@/lib/agency/membership";
+import { ensureAgencyMembership } from "@/lib/agency/membership.server";
 import { AGENCY_MEMBER_ROLE_LABELS } from "@/lib/agency/permissions";
 import type { AgencyMemberRole } from "@/lib/agency/types";
+import type { AgencyScenarioSlug } from "@/lib/agency/org-templates";
 import { fakeAvatar, fakeBio, fakePerson } from "@/lib/testing/fake-data";
-import type { AgencyScenarioSlug } from "@/lib/testing/scenarios/agency";
 import {
   logTestStep,
   requireDbResult,

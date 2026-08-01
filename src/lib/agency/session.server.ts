@@ -1,41 +1,20 @@
-import { getAgencyPermissions } from "@/lib/agency/permissions";
-import type { AgencyMemberRole, AgencyPermissions } from "@/lib/agency/types";
+import "server-only";
+
 import { syncAgencyAccountProfile } from "@/lib/auth/agency-account";
 import {
   listAgencyMembershipsForUser,
   resolveAgencyMembershipForUser,
   touchAgencyMembershipActivity,
-} from "@/lib/agency/membership";
+} from "@/lib/agency/membership.server";
+import type { AgencySessionResult } from "@/lib/agency/membership.types";
 import { getProfile, getSessionUser } from "@/lib/auth/session";
 import { getSupabaseAdmin } from "@/lib/supabase/admin";
 
-export type AgencySessionFailureCode =
-  | "not_authenticated"
-  | "not_agency_account"
-  | "no_membership"
-  | "organization_not_found"
-  | "permissions_missing"
-  | "subscription_missing"
-  | "not_configured";
-
-export type AgencySession = {
-  userId: string;
-  orgId: string;
-  membershipId: string;
-  memberRole: AgencyMemberRole;
-  organization: Record<string, unknown>;
-  permissions: AgencyPermissions;
-  subscription: {
-    plan: string;
-    planStartedAt: string | null;
-    planRenewsAt: string | null;
-    stripeSubscriptionId: string | null;
-  };
-};
-
-export type AgencySessionResult =
-  | { ok: true; session: AgencySession }
-  | { ok: false; code: AgencySessionFailureCode; message: string; details?: Record<string, unknown> };
+export type {
+  AgencySession,
+  AgencySessionFailureCode,
+  AgencySessionResult,
+} from "@/lib/agency/membership.types";
 
 function logSession(step: string, data?: Record<string, unknown>) {
   console.info(`[Agency Session] ${step}`, data ?? {});

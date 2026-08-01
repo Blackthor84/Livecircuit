@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { AgencyDashboardPanel } from "@/components/agency/agency-dashboard-panel";
 import { AgencyPageHeader } from "@/components/agency/agency-dashboard-layout";
-import { loadAgencySessionForUser } from "@/lib/agency/session";
+import { loadAgencySessionForUser } from "@/lib/agency/session.server";
 import { createClient } from "@/lib/supabase/server";
 import { getAgencyDashboardStats } from "@/lib/data/agencies";
 import { getSessionUser } from "@/lib/auth/session";

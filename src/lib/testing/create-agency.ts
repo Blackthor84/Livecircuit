@@ -1,15 +1,17 @@
+import "server-only";
+
 import { getSupabaseAdmin } from "@/lib/supabase/admin";
-import { ensureAgencyOrganizationComplete } from "@/lib/agency/organization-health";
+import { ensureAgencyOrganizationComplete } from "@/lib/agency/organization-health.server";
 import {
   AGENCY_SCENARIOS,
   expandAgencyTeamTemplate,
   getAgencyOrgTemplate,
   type AgencyScenarioSlug,
 } from "@/lib/agency/org-templates";
-import { ensureAgencySubscription, verifyAgencyMembershipAdmin } from "@/lib/agency/membership";
+import { ensureAgencySubscription, verifyAgencyMembershipAdmin } from "@/lib/agency/membership.server";
 import type { AgencyMemberRole } from "@/lib/agency/types";
 import { createAgencyTestUser } from "@/lib/testing/create-agency-user";
-import { seedAgencyScenario } from "@/lib/testing/scenarios/agency";
+import { seedAgencyScenario } from "@/lib/testing/scenarios/agency.server";
 import {
   createTestCreationLog,
   logTestStep,

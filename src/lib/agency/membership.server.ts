@@ -1,44 +1,23 @@
+import "server-only";
+
 import type { SupabaseClient } from "@supabase/supabase-js";
 import { getAgencyPermissions } from "@/lib/agency/permissions";
+import type {
+  AgencyMembershipRecord,
+  AgencyMembershipResolution,
+} from "@/lib/agency/membership.types";
 import type { AgencyMemberRole } from "@/lib/agency/types";
-import { createClient } from "@/lib/supabase/server";
-import { getSupabaseAdmin } from "@/lib/supabase/admin";
-import { isSupabaseConfigured } from "@/lib/config/env";
 import { syncAgencyAccountProfile } from "@/lib/auth/agency-account";
+import { isSupabaseConfigured } from "@/lib/config/env";
+import { getSupabaseAdmin } from "@/lib/supabase/admin";
+import { createClient } from "@/lib/supabase/server";
 
-export type AgencyMembershipStatus = "active" | "invited" | "suspended" | "removed";
-export type AgencyInvitationStatus = "pending" | "accepted" | "declined" | "expired";
-
-/** Canonical join table: agency_organization_members */
-export type AgencyMembershipRecord = {
-  id: string;
-  organization_id: string;
-  user_id: string;
-  role: AgencyMemberRole;
-  status?: AgencyMembershipStatus;
-  invitation_status?: AgencyInvitationStatus;
-  accepted_at: string | null;
-  last_active_at?: string | null;
-};
-
-export type AgencyMembershipResolution =
-  | {
-      ok: true;
-      membership: AgencyMembershipRecord;
-      organization: Record<string, unknown>;
-      permissions: ReturnType<typeof getAgencyPermissions>;
-    }
-  | {
-      ok: false;
-      code:
-        | "not_configured"
-        | "no_membership"
-        | "organization_not_found"
-        | "membership_query_failed"
-        | "organization_query_failed";
-      message: string;
-      details?: Record<string, unknown>;
-    };
+export type {
+  AgencyInvitationStatus,
+  AgencyMembershipRecord,
+  AgencyMembershipResolution,
+  AgencyMembershipStatus,
+} from "@/lib/agency/membership.types";
 
 function logMembership(step: string, data?: Record<string, unknown>) {
   console.info(`[Agency Membership] ${step}`, data ?? {});

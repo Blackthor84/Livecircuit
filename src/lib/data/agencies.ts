@@ -1,7 +1,9 @@
+import "server-only";
+
 import type { SupabaseClient } from "@supabase/supabase-js";
 import { resolveAgencyRedirect } from "@/lib/auth/agency-account";
 import { agencyDashboardPath } from "@/lib/agency/sections";
-import { resolveAgencyMembershipForUser } from "@/lib/agency/membership";
+import { resolveAgencyMembershipForUser } from "@/lib/agency/membership.server";
 import { createClient } from "@/lib/supabase/server";
 import { isSupabaseConfigured } from "@/lib/config/env";
 import { getAgencyPlanLimits } from "@/lib/agency/permissions";
@@ -11,6 +13,8 @@ import type {
   AgencyManagedArtist,
   AgencyMember,
   AgencyMemberRole,
+  AgencyOrgAccessDeniedCode,
+  AgencyOrgAccessResult,
   AgencyOrgSummary,
   AgencyPublicProfile,
 } from "@/lib/agency/types";
@@ -66,16 +70,7 @@ export async function getAgencyMembership(orgId: string, userId: string) {
   return resolved.membership.role;
 }
 
-export type AgencyOrgAccessDeniedCode =
-  | "not_configured"
-  | "no_membership"
-  | "organization_not_found"
-  | "permissions_missing"
-  | "subscription_missing";
-
-export type AgencyOrgAccessResult =
-  | { ok: true; organization: Record<string, unknown>; role: AgencyMemberRole }
-  | { ok: false; code: AgencyOrgAccessDeniedCode; message: string };
+export type { AgencyOrgAccessDeniedCode, AgencyOrgAccessResult } from "@/lib/agency/types";
 
 export async function resolveAgencyOrgAccess(
   orgId: string,

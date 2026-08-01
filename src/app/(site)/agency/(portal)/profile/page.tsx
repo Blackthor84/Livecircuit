@@ -1,6 +1,6 @@
 import { AgencyPageHeader } from "@/components/agency/agency-dashboard-layout";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { loadAgencySessionForUser } from "@/lib/agency/session";
+import { loadAgencySessionForUser } from "@/lib/agency/session.server";
 import { getSessionUser } from "@/lib/auth/session";
 
 export default async function AgencyProfilePage() {

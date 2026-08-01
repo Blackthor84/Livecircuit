@@ -1,3 +1,5 @@
+import "server-only";
+
 import { getSupabaseAdmin } from "@/lib/supabase/admin";
 import { syncAgencyAccountProfile, validateAgencyImpersonationTarget } from "@/lib/auth/agency-account";
 import {
@@ -5,14 +7,13 @@ import {
   ensureAgencySubscription,
   listAgencyMembershipsForUserAdmin,
   verifyAgencyMembershipAdmin,
-} from "@/lib/agency/membership";
-import { getAgencyOrgTemplate, type AgencyScenarioSlug } from "@/lib/agency/org-templates";
+} from "@/lib/agency/membership.server";
+import { AGENCY_SCENARIOS, getAgencyOrgTemplate, type AgencyScenarioSlug } from "@/lib/agency/org-templates";
 import {
   ensureAgencyOrganizationComplete,
   validateAgencyOrganizationHealth,
-} from "@/lib/agency/organization-health";
+} from "@/lib/agency/organization-health.server";
 import type { AgencyMemberRole } from "@/lib/agency/types";
-import { AGENCY_SCENARIOS } from "@/lib/testing/scenarios/agency";
 import { createTestCreationLog, logTestStep } from "@/lib/testing/step-errors";
 
 export type TestAgencyValidation = {
@@ -315,4 +316,4 @@ export async function verifyAndRepairAgencyForImpersonation(input: {
   return validation;
 }
 
-export { AGENCY_TEAM_ROLES } from "@/lib/testing/scenarios/agency";
+export { AGENCY_TEAM_ROLES } from "@/lib/agency/org-templates";

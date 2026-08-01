@@ -6,7 +6,7 @@ import { isSupabaseConfigured } from "@/lib/config/env";
 import { createTestUser, deleteAllTestUsers, deleteTestUser, resetTestUser } from "@/lib/testing/create-user";
 import { bulkGenerateTestAgencies, createTestAgency } from "@/lib/testing/create-agency";
 import { bulkGenerateTestUsers } from "@/lib/testing/bulk";
-import type { AgencyScenarioSlug } from "@/lib/testing/scenarios/agency";
+import type { AgencyScenarioSlug } from "@/lib/agency/org-templates";
 import { runPlatformSimulator } from "@/lib/testing/simulator";
 import { PRODUCTION_BULK_CONFIRM_THRESHOLD } from "@/lib/testing/constants";
 import { getTestingAccessForUser, requireSuperAdminTesting } from "@/lib/testing/permissions";
