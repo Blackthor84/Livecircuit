@@ -40,6 +40,42 @@ export type AgencyPermissions = {
   export_data?: boolean;
 };
 
+export type AgencyDashboardNavigationItem = {
+  id: string;
+  label: string;
+  href: string;
+};
+
+export type AgencyDashboardConfiguration = {
+  dashboard_settings: {
+    widgets: string[];
+    layout: string;
+    navigation: AgencyDashboardNavigationItem[];
+    preferences: {
+      compact_mode: boolean;
+      default_date_range: string;
+      show_revenue: boolean;
+    };
+  };
+  settings: {
+    timezone: string;
+    notifications_enabled: boolean;
+    booking_auto_match: boolean;
+  };
+  analytics: {
+    enabled: boolean;
+    default_range: string;
+    modules: string[];
+  };
+  feature_flags: {
+    bulk_booking: boolean;
+    sponsorship: boolean;
+    team_management: boolean;
+    advanced_analytics: boolean;
+    calendar_sync: boolean;
+  };
+};
+
 export type AgencyOrgSummary = {
   id: string;
   slug: string;

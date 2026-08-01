@@ -1,12 +1,9 @@
 import "server-only";
 
 import type { SupabaseClient } from "@supabase/supabase-js";
-import { agencyDashboardPath } from "@/lib/agency/sections";
-import { getAgencyPermissions } from "@/lib/agency/permissions";
-import { listAgencyMembershipsForUserAdmin } from "@/lib/agency/membership.server";
-import type { AgencyScenarioSlug } from "@/lib/agency/org-templates";
-import { ensureAgencyDashboardSettings } from "@/lib/agency/organization-health.server";
-import type { AgencyMemberRole } from "@/lib/agency/types";
+import { agencyDashboardPath, getAgencyPermissions } from "@/lib/agency";
+import { ensureAgencyDashboardSettings, listAgencyMembershipsForUserAdmin } from "@/lib/agency/server";
+import type { AgencyMemberRole, AgencyScenarioSlug } from "@/lib/agency";
 
 export type AgencyAccountProfile = {
   role: "agency";

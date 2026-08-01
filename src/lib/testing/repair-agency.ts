@@ -7,13 +7,13 @@ import {
   ensureAgencySubscription,
   listAgencyMembershipsForUserAdmin,
   verifyAgencyMembershipAdmin,
-} from "@/lib/agency/membership.server";
-import { AGENCY_SCENARIOS, getAgencyOrgTemplate, type AgencyScenarioSlug } from "@/lib/agency/org-templates";
+} from "@/lib/agency/server";
+import { AGENCY_SCENARIOS, getAgencyOrgTemplate, type AgencyScenarioSlug } from "@/lib/agency";
 import {
   ensureAgencyOrganizationComplete,
   validateAgencyOrganizationHealth,
-} from "@/lib/agency/organization-health.server";
-import type { AgencyMemberRole } from "@/lib/agency/types";
+} from "@/lib/agency/server";
+import type { AgencyMemberRole } from "@/lib/agency";
 import { createTestCreationLog, logTestStep } from "@/lib/testing/step-errors";
 
 export type TestAgencyValidation = {
@@ -316,4 +316,4 @@ export async function verifyAndRepairAgencyForImpersonation(input: {
   return validation;
 }
 
-export { AGENCY_TEAM_ROLES } from "@/lib/agency/org-templates";
+export { AGENCY_TEAM_ROLES } from "@/lib/agency";

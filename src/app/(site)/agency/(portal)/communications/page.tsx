@@ -1,6 +1,6 @@
 import { AgencyCommunicationsPanel } from "@/components/agency/agency-communications-panel";
 import { AgencyPageHeader } from "@/components/agency/agency-dashboard-layout";
-import { loadAgencySessionForUser } from "@/lib/agency/session.server";
+import { loadAgencySessionForUser } from "@/lib/agency/server";
 import { listAgencyConversations, listAgencyMessages } from "@/lib/data/agency-features";
 import { getSessionUser } from "@/lib/auth/session";
 

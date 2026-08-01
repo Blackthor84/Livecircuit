@@ -4,9 +4,8 @@ import { AlertTriangle } from "lucide-react";
 import { RepairTestAgencyButton } from "@/components/admin/testing/repair-test-agency-button";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { AGENCY_DASHBOARD_PATH } from "@/lib/agency/sections";
-import type { AgencyOrgAccessDeniedCode } from "@/lib/agency/types";
-import type { AgencySessionFailureCode } from "@/lib/agency/membership.types";
+import { AGENCY_DASHBOARD_PATH } from "@/lib/agency";
+import type { AgencyOrgAccessDeniedCode, AgencySessionFailureCode } from "@/lib/agency";
 import { ROUTES } from "@/lib/constants";
 
 const CODE_HINTS: Record<AgencyOrgAccessDeniedCode, string> = {

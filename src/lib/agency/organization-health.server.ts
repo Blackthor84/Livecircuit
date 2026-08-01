@@ -6,24 +6,117 @@ import {
   ensureAgencyMembership,
   ensureAgencySubscription,
   listAgencyMembershipsForUserAdmin,
-} from "@/lib/agency/membership.server";
+} from "@/lib/agency/server";
 import type { OrganizationHealthCheck } from "@/lib/agency/membership.types";
-import type { AgencyMemberRole } from "@/lib/agency/types";
-import { getAgencyOrgTemplate, type AgencyScenarioSlug } from "@/lib/agency/org-templates";
+import type { AgencyDashboardConfiguration, AgencyMemberRole } from "@/lib/agency/types";
+import { getAgencyOrgTemplate, type AgencyScenarioSlug } from "@/lib/agency";
 import { seedAgencyScenario } from "@/lib/testing/scenarios/agency.server";
 import { createTestCreationLog, logTestStep } from "@/lib/testing/step-errors";
+import { AGENCY_DASHBOARD_PATH } from "@/lib/agency/sections";
 
 export type { OrganizationHealthCheck } from "@/lib/agency/membership.types";
+export type { AgencyDashboardConfiguration } from "@/lib/agency/types";
 
 function logHealth(step: string, data?: Record<string, unknown>) {
   console.info(`[Agency Organization] ${step}`, data ?? {});
+}
+
+export function buildDefaultAgencyDashboardConfiguration(
+  scenario: AgencyScenarioSlug
+): AgencyDashboardConfiguration {
+  const template = getAgencyOrgTemplate(scenario);
+  const basePath = AGENCY_DASHBOARD_PATH.replace(/\/dashboard$/, "");
+
+  return {
+    dashboard_settings: {
+      widgets: ["overview", "bookings", "revenue", "roster", "calendar", "messages", "analytics"],
+      layout: "default",
+      navigation: [
+        { id: "dashboard", label: "Dashboard", href: `${basePath}/dashboard` },
+        { id: "artists", label: "Artists", href: `${basePath}/artists` },
+        { id: "book-roster", label: "Bookings", href: `${basePath}/book-roster` },
+        { id: "revenue", label: "Revenue", href: `${basePath}/revenue` },
+        { id: "analytics", label: "Analytics", href: `${basePath}/analytics` },
+        { id: "calendar", label: "Calendar", href: `${basePath}/calendar` },
+        { id: "team", label: "Team", href: `${basePath}/team` },
+        { id: "communications", label: "Messages", href: `${basePath}/communications` },
+        { id: "sponsorship", label: "Sponsors", href: `${basePath}/sponsorship` },
+      ],
+      preferences: {
+        compact_mode: false,
+        default_date_range: "30d",
+        show_revenue: true,
+      },
+    },
+    settings: {
+      timezone: "America/New_York",
+      notifications_enabled: true,
+      booking_auto_match: true,
+    },
+    analytics: {
+      enabled: true,
+      default_range: template.plan === "enterprise" ? "90d" : template.plan === "pro" ? "60d" : "30d",
+      modules:
+        template.plan === "enterprise"
+          ? ["revenue", "bookings", "roster", "geo", "sponsors", "team"]
+          : template.plan === "pro"
+            ? ["revenue", "bookings", "roster", "sponsors"]
+            : ["revenue", "bookings", "roster"],
+    },
+    feature_flags: {
+      bulk_booking: true,
+      sponsorship: template.plan !== "starter",
+      team_management: true,
+      advanced_analytics: template.plan !== "starter",
+      calendar_sync: true,
+    },
+  };
+}
+
+function mergeDashboardConfiguration(
+  existing: Record<string, unknown>,
+  scenario: AgencyScenarioSlug
+): AgencyDashboardConfiguration {
+  const defaults = buildDefaultAgencyDashboardConfiguration(scenario);
+  const dashboardSettings =
+    (existing.dashboard_settings as Partial<AgencyDashboardConfiguration["dashboard_settings"]> | undefined) ?? {};
+  const settings = (existing.settings as Partial<AgencyDashboardConfiguration["settings"]> | undefined) ?? {};
+  const analytics = (existing.analytics as Partial<AgencyDashboardConfiguration["analytics"]> | undefined) ?? {};
+  const featureFlags = (existing.feature_flags as Partial<AgencyDashboardConfiguration["feature_flags"]> | undefined) ?? {};
+
+  return {
+    dashboard_settings: {
+      widgets: dashboardSettings.widgets?.length ? dashboardSettings.widgets : defaults.dashboard_settings.widgets,
+      layout: dashboardSettings.layout ?? defaults.dashboard_settings.layout,
+      navigation: dashboardSettings.navigation?.length
+        ? dashboardSettings.navigation
+        : defaults.dashboard_settings.navigation,
+      preferences: {
+        ...defaults.dashboard_settings.preferences,
+        ...dashboardSettings.preferences,
+      },
+    },
+    settings: {
+      ...defaults.settings,
+      ...settings,
+    },
+    analytics: {
+      ...defaults.analytics,
+      ...analytics,
+      modules: analytics.modules?.length ? analytics.modules : defaults.analytics.modules,
+    },
+    feature_flags: {
+      ...defaults.feature_flags,
+      ...featureFlags,
+    },
+  };
 }
 
 export async function ensureAgencyDashboardSettings(
   admin: SupabaseClient,
   organizationId: string,
   scenario: AgencyScenarioSlug
-) {
+): Promise<AgencyDashboardConfiguration> {
   const { data: org } = await admin
     .from("agency_organizations")
     .select("metadata")
@@ -31,32 +124,37 @@ export async function ensureAgencyDashboardSettings(
     .maybeSingle();
 
   const metadata = ((org?.metadata ?? {}) as Record<string, unknown>) ?? {};
-  const dashboardSettings = metadata.dashboard_settings as Record<string, unknown> | undefined;
-  const orgSettings = metadata.settings as Record<string, unknown> | undefined;
+  const configuration = mergeDashboardConfiguration(metadata, scenario);
 
-  if (dashboardSettings && orgSettings) return;
+  const needsPatch =
+    !metadata.dashboard_settings ||
+    !metadata.settings ||
+    !metadata.analytics ||
+    !metadata.feature_flags ||
+    JSON.stringify(metadata.dashboard_settings) !== JSON.stringify(configuration.dashboard_settings) ||
+    JSON.stringify(metadata.settings) !== JSON.stringify(configuration.settings) ||
+    JSON.stringify(metadata.analytics) !== JSON.stringify(configuration.analytics) ||
+    JSON.stringify(metadata.feature_flags) !== JSON.stringify(configuration.feature_flags);
 
-  logHealth("Patching agency dashboard settings", { organizationId, scenario });
-
-  await admin
-    .from("agency_organizations")
-    .update({
-      metadata: {
-        ...metadata,
-        test: metadata.test ?? true,
-        scenario,
-        dashboard_settings: dashboardSettings ?? {
-          widgets: ["overview", "bookings", "revenue", "roster", "calendar", "messages"],
-          layout: "default",
+  if (needsPatch) {
+    logHealth("Patching agency dashboard settings", { organizationId, scenario });
+    await admin
+      .from("agency_organizations")
+      .update({
+        metadata: {
+          ...metadata,
+          test: metadata.test ?? true,
+          scenario,
+          dashboard_settings: configuration.dashboard_settings,
+          settings: configuration.settings,
+          analytics: configuration.analytics,
+          feature_flags: configuration.feature_flags,
         },
-        settings: orgSettings ?? {
-          timezone: "America/New_York",
-          notifications_enabled: true,
-          booking_auto_match: true,
-        },
-      },
-    })
-    .eq("id", organizationId);
+      })
+      .eq("id", organizationId);
+  }
+
+  return configuration;
 }
 
 async function countRows(
@@ -131,11 +229,11 @@ export async function validateAgencyOrganizationHealth(
   const metadata = (org?.metadata ?? {}) as Record<string, unknown>;
   checks.push({
     key: "dashboard_settings",
-    ok: Boolean(metadata.dashboard_settings && metadata.settings),
+    ok: Boolean(metadata.dashboard_settings && metadata.settings && metadata.analytics && metadata.feature_flags),
     issue:
-      metadata.dashboard_settings && metadata.settings
+      metadata.dashboard_settings && metadata.settings && metadata.analytics && metadata.feature_flags
         ? undefined
-        : "Agency dashboard settings missing in organization metadata",
+        : "Agency dashboard settings, preferences, analytics, or feature flags missing in organization metadata",
     table: "agency_organizations",
   });
 

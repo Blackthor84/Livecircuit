@@ -2,8 +2,8 @@ import "server-only";
 
 import type { SupabaseClient } from "@supabase/supabase-js";
 import type { AgencyMemberRole } from "@/lib/agency/types";
-import { getAgencyOrgTemplate, type AgencyScenarioSlug } from "@/lib/agency/org-templates";
-import { ensureAgencyDashboardSettings } from "@/lib/agency/organization-health.server";
+import { getAgencyOrgTemplate, type AgencyScenarioSlug } from "@/lib/agency";
+import { ensureAgencyDashboardSettings } from "@/lib/agency/server";
 import { logTestStep, throwDbError, type TestCreationLog } from "@/lib/testing/step-errors";
 
 type TeamMember = { userId: string; role: AgencyMemberRole };

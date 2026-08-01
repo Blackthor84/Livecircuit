@@ -4,7 +4,7 @@ import { AdminPageHeader } from "@/components/admin/command-center/admin-dashboa
 import { TestingCenterPanel } from "@/components/admin/testing/testing-center-panel";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { getTestingAccessForUser } from "@/lib/testing/permissions";
-import { countTestAccounts, listTestAccounts } from "@/lib/testing/list.server";
+import { countTestAccounts, listTestAccounts } from "@/lib/testing/server";
 import { getSessionUser } from "@/lib/auth/session";
 import { isImpersonating } from "@/lib/auth/impersonation";
 

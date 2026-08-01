@@ -6,7 +6,7 @@ import { isSupabaseConfigured } from "@/lib/config/env";
 import { createTestUser, deleteAllTestUsers, deleteTestUser, resetTestUser } from "@/lib/testing/create-user";
 import { bulkGenerateTestAgencies, createTestAgency } from "@/lib/testing/create-agency";
 import { bulkGenerateTestUsers } from "@/lib/testing/bulk";
-import type { AgencyScenarioSlug } from "@/lib/agency/org-templates";
+import type { AgencyScenarioSlug } from "@/lib/agency";
 import { runPlatformSimulator } from "@/lib/testing/simulator";
 import { PRODUCTION_BULK_CONFIRM_THRESHOLD } from "@/lib/testing/constants";
 import { getTestingAccessForUser, requireSuperAdminTesting } from "@/lib/testing/permissions";
@@ -275,7 +275,7 @@ export async function repairTestAgencyAccountAction(userId: string): Promise<Tes
   if (!isSupabaseConfigured()) return { ok: false, error: "Supabase required" };
 
   try {
-    const { ensureAgencyAccountDependencies } = await import("@/lib/testing/repair-agency");
+    const { ensureAgencyAccountDependencies } = await import("@/lib/testing/server");
     const result = await ensureAgencyAccountDependencies({ userId, repairedBy: ctx.userId });
     if (!result.ok) return { ok: false, error: result.error };
     revalidatePath("/admin/testing");

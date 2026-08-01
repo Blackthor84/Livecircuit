@@ -5,7 +5,7 @@ import {
   listAgencyMembershipsForUser,
   resolveAgencyMembershipForUser,
   touchAgencyMembershipActivity,
-} from "@/lib/agency/membership.server";
+} from "@/lib/agency/server";
 import type { AgencySessionResult } from "@/lib/agency/membership.types";
 import { getProfile, getSessionUser } from "@/lib/auth/session";
 import { getSupabaseAdmin } from "@/lib/supabase/admin";

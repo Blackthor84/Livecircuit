@@ -1,11 +1,11 @@
 import { redirect } from "next/navigation";
 import { AgencyAccessError } from "@/components/agency/agency-access-error";
 import { AgencyDashboardLayout } from "@/components/agency/agency-dashboard-layout";
-import { loadAgencySessionForUser } from "@/lib/agency/session.server";
+import { loadAgencySessionForUser } from "@/lib/agency/server";
 import { getImpersonationState } from "@/lib/auth/impersonation";
 import { getHeaderUser, getSessionUser } from "@/lib/auth/session";
 import { requireFeatureAccess } from "@/lib/features/guard";
-import type { AgencyOrgAccessDeniedCode } from "@/lib/agency/types";
+import type { AgencyOrgAccessDeniedCode } from "@/lib/agency";
 
 function mapSessionFailure(code: string): AgencyOrgAccessDeniedCode {
   switch (code) {

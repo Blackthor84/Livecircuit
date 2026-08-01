@@ -1,6 +1,6 @@
 import { AgencyPageHeader } from "@/components/agency/agency-dashboard-layout";
 import { AgencySponsorshipPanel } from "@/components/agency/agency-sponsorship-panel";
-import { loadAgencySessionForUser } from "@/lib/agency/session.server";
+import { loadAgencySessionForUser } from "@/lib/agency/server";
 import { listAgencyManagedArtists } from "@/lib/data/agencies";
 import { listAgencySponsorshipProposals } from "@/lib/data/agency-features";
 import { browseSponsorshipMarketplace } from "@/lib/sponsorship/marketplace";

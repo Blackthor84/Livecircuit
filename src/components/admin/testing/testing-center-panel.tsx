@@ -27,8 +27,8 @@ import {
   FAN_SCENARIOS,
   SIMULATOR_ACTIONS,
 } from "@/lib/testing/constants";
-import { AGENCY_SCENARIOS } from "@/lib/agency/org-templates";
-import { formatTestAccountRoleLabel, type TestAccountRow } from "@/lib/testing/list.utils";
+import { AGENCY_SCENARIOS } from "@/lib/agency";
+import { formatTestAccountRoleLabel, type TestAccountRow } from "@/lib/testing";
 
 type Props = {
   accounts: TestAccountRow[];

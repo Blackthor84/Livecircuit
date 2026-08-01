@@ -1,6 +1,6 @@
 import { AgencyPageHeader } from "@/components/agency/agency-dashboard-layout";
 import { AgencyDashboardPanel } from "@/components/agency/agency-dashboard-panel";
-import { loadAgencySessionForUser } from "@/lib/agency/session.server";
+import { loadAgencySessionForUser } from "@/lib/agency/server";
 import { createClient } from "@/lib/supabase/server";
 import { getAgencyDashboardStats } from "@/lib/data/agencies";
 import { getSessionUser } from "@/lib/auth/session";

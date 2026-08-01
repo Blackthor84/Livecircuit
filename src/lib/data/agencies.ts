@@ -2,11 +2,10 @@ import "server-only";
 
 import type { SupabaseClient } from "@supabase/supabase-js";
 import { resolveAgencyRedirect } from "@/lib/auth/agency-account";
-import { agencyDashboardPath } from "@/lib/agency/sections";
-import { resolveAgencyMembershipForUser } from "@/lib/agency/membership.server";
+import { agencyDashboardPath, getAgencyPlanLimits } from "@/lib/agency";
+import { resolveAgencyMembershipForUser } from "@/lib/agency/server";
 import { createClient } from "@/lib/supabase/server";
 import { isSupabaseConfigured } from "@/lib/config/env";
-import { getAgencyPlanLimits } from "@/lib/agency/permissions";
 import type {
   AgencyBookingMatch,
   AgencyDashboardStats,
@@ -17,7 +16,7 @@ import type {
   AgencyOrgAccessResult,
   AgencyOrgSummary,
   AgencyPublicProfile,
-} from "@/lib/agency/types";
+} from "@/lib/agency";
 
 async function getClient() {
   if (!isSupabaseConfigured()) return null;
@@ -70,7 +69,7 @@ export async function getAgencyMembership(orgId: string, userId: string) {
   return resolved.membership.role;
 }
 
-export type { AgencyOrgAccessDeniedCode, AgencyOrgAccessResult } from "@/lib/agency/types";
+export type { AgencyOrgAccessDeniedCode, AgencyOrgAccessResult } from "@/lib/agency";
 
 export async function resolveAgencyOrgAccess(
   orgId: string,
