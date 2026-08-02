@@ -21,9 +21,18 @@ import { VenueComparisonSection } from "@/components/artists/success-center/venu
 import { VenueMatchStep } from "@/components/artists/success-center/venue-match-step";
 import { WhatIfPanel } from "@/components/artists/success-center/what-if-panel";
 
-export function ArtistSuccessCenter() {
+import type { MonetizationSnapshot } from "@/lib/monetization/types";
+import type { BusinessRulesSnapshot } from "@/lib/business-rules/types";
+
+export function ArtistSuccessCenter({
+  pricingSnapshot,
+  rulesSnapshot,
+}: {
+  pricingSnapshot: MonetizationSnapshot;
+  rulesSnapshot: BusinessRulesSnapshot;
+}) {
   return (
-    <SuccessCenterProvider>
+    <SuccessCenterProvider pricingSnapshot={pricingSnapshot} rulesSnapshot={rulesSnapshot}>
       <SuccessCenterToolbar />
       <div className="gradient-mesh min-h-screen pb-20">
         <SuccessCenterHero />

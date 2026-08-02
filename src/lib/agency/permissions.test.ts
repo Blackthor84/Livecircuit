@@ -14,9 +14,15 @@ describe("agency permissions", () => {
     expect(hasAgencyPermission("booking_manager", "manage_team")).toBe(false);
   });
 
-  it("returns starter plan limits", () => {
+  it("returns boutique plan limits", () => {
+    const limits = getAgencyPlanLimits("boutique");
+    expect(limits.artistLimit).toBe(10);
+    expect(limits.teamLimit).toBe(5);
+  });
+
+  it("normalizes legacy starter plan id", () => {
     const limits = getAgencyPlanLimits("starter");
     expect(limits.artistLimit).toBe(10);
-    expect(limits.teamLimit).toBe(2);
+    expect(limits.teamLimit).toBe(5);
   });
 });

@@ -18,7 +18,7 @@ export default async function AgencyTeamPage() {
       />
       <AgencyTeamPanel
         members={members}
-        plan={(sessionResult?.ok ? (sessionResult.session.organization.plan as string) : null) ?? "starter"}
+        plan={(sessionResult?.ok ? (sessionResult.session.organization.plan as string) : null) ?? "boutique"}
       />
     </>
   );

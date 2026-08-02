@@ -7,12 +7,15 @@ import { ROUTES } from "@/lib/constants";
 import {
   ARTIST_FIRST_COMPARISON,
   ARTIST_FIRST_HOMEPAGE,
+  AGENCY_SUBSCRIPTION_HIGHLIGHT,
   CREATOR_PROMISE_COMMITMENTS,
   CREATOR_PROMISE_FAQ,
   CREATOR_PROMISE_TAGLINE,
+  FREE_TO_JOIN_HOMEPAGE,
   LIVECIRCUIT_REVENUE_SOURCES,
   PLAN_INCLUDED_PROMISES,
   TRUST_SECTION,
+  VENUE_BOOKING_FEES_DISPLAY,
 } from "@/lib/home/creator-promise-content";
 
 function PromiseCard({ text, icon: Icon }: { text: string; icon: LucideIcon }) {
@@ -46,6 +49,42 @@ export function CreatorPromiseTagline() {
     <p className="mx-auto max-w-3xl text-center text-lg font-medium leading-relaxed text-foreground/90">
       {CREATOR_PROMISE_TAGLINE}
     </p>
+  );
+}
+
+export function FreeToJoinHomeSection({
+  venueFees = VENUE_BOOKING_FEES_DISPLAY,
+}: {
+  venueFees?: readonly { tier: string; fee: string }[];
+}) {
+  return (
+    <section className="mx-auto max-w-7xl px-4 py-16 sm:px-6">
+      <div className="glass-panel overflow-hidden rounded-3xl border border-primary/25 bg-gradient-to-br from-primary/15 via-transparent to-violet-600/10 p-8 sm:p-12">
+        <div className="grid gap-10 lg:grid-cols-2 lg:items-center">
+          <div>
+            <p className="text-sm font-medium uppercase tracking-widest text-primary">Artist First</p>
+            <h2 className="mt-3 text-3xl font-bold tracking-tight sm:text-4xl">{FREE_TO_JOIN_HOMEPAGE.headline}</h2>
+            <p className="mt-4 text-lg text-muted-foreground">{FREE_TO_JOIN_HOMEPAGE.subheadline}</p>
+            <div className="mt-8 flex flex-wrap gap-3">
+              <Button size="lg" href={`${ROUTES.register}?role=artist`}>Join free</Button>
+              <Button size="lg" variant="secondary" href={ROUTES.creatorPromise}>Creator Promise</Button>
+            </div>
+          </div>
+          <div className="space-y-4">
+            <p className="text-sm font-semibold uppercase tracking-wide text-muted-foreground">Affordable venue booking</p>
+            <ul className="grid gap-2 sm:grid-cols-2">
+              {venueFees.map((row) => (
+                <li key={row.tier} className="flex items-center justify-between rounded-xl border border-white/10 bg-white/[0.03] px-4 py-3 text-sm">
+                  <span>{row.tier}</span>
+                  <span className="font-semibold tabular-nums text-emerald-400">{row.fee}</span>
+                </li>
+              ))}
+            </ul>
+            <p className="text-xs text-muted-foreground">Plus transparent ticketing fees on ticket sales only. No monthly artist fees.</p>
+          </div>
+        </div>
+      </div>
+    </section>
   );
 }
 
@@ -129,11 +168,12 @@ export function CreatorPromiseComparison() {
   );
 }
 
-export function CreatorPromiseFaq({ limit }: { limit?: number }) {
-  const items = limit ? CREATOR_PROMISE_FAQ.slice(0, limit) : CREATOR_PROMISE_FAQ;
+export function CreatorPromiseFaq({ limit, items }: { limit?: number; items?: readonly { q: string; a: string }[] }) {
+  const source = items ?? CREATOR_PROMISE_FAQ;
+  const list = limit ? source.slice(0, limit) : source;
   return (
     <div className="space-y-3">
-      {items.map((item) => (
+      {list.map((item) => (
         <details key={item.q} className="glass-panel group rounded-2xl border border-white/10">
           <summary className="cursor-pointer list-none px-6 py-4 font-medium marker:content-none [&::-webkit-details-marker]:hidden">
             {item.q}
@@ -141,7 +181,7 @@ export function CreatorPromiseFaq({ limit }: { limit?: number }) {
           <p className="border-t border-white/5 px-6 pb-5 pt-3 text-sm text-muted-foreground">{item.a}</p>
         </details>
       ))}
-      {limit && limit < CREATOR_PROMISE_FAQ.length ? (
+      {limit && limit < source.length ? (
         <p className="pt-2 text-center text-sm">
           <Link href={ROUTES.creatorPromise} className="text-primary hover:underline">
             View all Creator Promise FAQs
@@ -164,8 +204,8 @@ export function CreatorPromiseHero() {
           <span className="text-gradient">Artist First. Always.</span>
         </h1>
         <p className="mx-auto mt-6 max-w-2xl text-lg text-muted-foreground">
-          We make money by helping artists grow—not by taking money directly from artists. Every commitment below
-          is part of how we build a digital-first home for live entertainment.
+          Join LiveCircuit free. Build your audience, keep 100% of tips and merch, and only pay when you book a
+          digital venue and sell tickets.
         </p>
         <div className="mt-8 flex flex-wrap justify-center gap-3">
           <Button size="lg" href={`${ROUTES.register}?role=artist`}>
@@ -180,7 +220,13 @@ export function CreatorPromiseHero() {
   );
 }
 
-export function CreatorPromisePageContent() {
+export function CreatorPromisePageContent({
+  venueFees,
+  faq,
+}: {
+  venueFees?: readonly { tier: string; fee: string }[];
+  faq?: readonly { q: string; a: string }[];
+} = {}) {
   return (
     <div className="gradient-mesh pb-24">
       <CreatorPromiseHero />
@@ -192,6 +238,20 @@ export function CreatorPromisePageContent() {
         </div>
         <div className="mt-10">
           <CreatorPromiseTagline />
+        </div>
+      </section>
+
+      <section className="mx-auto max-w-7xl px-4 py-12 sm:px-6">
+        <h2 className="text-2xl font-semibold sm:text-3xl">{AGENCY_SUBSCRIPTION_HIGHLIGHT.title}</h2>
+        <p className="mt-2 max-w-2xl text-muted-foreground">{AGENCY_SUBSCRIPTION_HIGHLIGHT.subtitle}</p>
+        <div className="mt-6 flex flex-wrap gap-3">
+          {AGENCY_SUBSCRIPTION_HIGHLIGHT.plans.map((plan) => (
+            <div key={plan.name} className="glass-panel rounded-xl border border-white/10 px-5 py-3 text-sm">
+              <span className="font-semibold">{plan.name}</span>
+              <span className="ml-2 text-muted-foreground">{plan.price}</span>
+            </div>
+          ))}
+          <Button href="/agency/pricing" variant="outline" size="sm">Agency pricing</Button>
         </div>
       </section>
 
@@ -229,10 +289,14 @@ export function CreatorPromisePageContent() {
         </div>
       </section>
 
+      <section className="mx-auto max-w-7xl px-4 py-12 sm:px-6">
+        <FreeToJoinHomeSection venueFees={venueFees} />
+      </section>
+
       <section className="mx-auto max-w-3xl px-4 py-12 sm:px-6">
         <h2 className="text-center text-2xl font-semibold sm:text-3xl">Frequently asked questions</h2>
         <div className="mt-8">
-          <CreatorPromiseFaq />
+          <CreatorPromiseFaq items={faq} />
         </div>
       </section>
 

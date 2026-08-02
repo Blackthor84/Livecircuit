@@ -13,6 +13,7 @@ export const checkoutBodySchema = z.object({
   tipAmountCents: z.coerce.number().int().min(100).max(500_00).optional(),
   tipMessage: z.string().max(280).optional(),
   quantity: z.coerce.number().int().min(1).max(20).optional().default(1),
+  couponCode: z.string().max(64).optional(),
 });
 
 export type CheckoutBody = z.infer<typeof checkoutBodySchema>;
@@ -29,6 +30,7 @@ export const checkoutPreviewQuerySchema = z.object({
   tier: z.enum(["general", "vip"]).optional(),
   tipAmountCents: z.coerce.number().int().min(100).max(500_00).optional(),
   quantity: z.coerce.number().int().min(1).max(20).optional(),
+  couponCode: z.string().max(64).optional(),
 });
 
 export function previewQueryToBody(
@@ -46,5 +48,6 @@ export function previewQueryToBody(
     tier: query.tier ?? "general",
     tipAmountCents: query.tipAmountCents,
     quantity: query.quantity ?? 1,
+    couponCode: query.couponCode,
   };
 }

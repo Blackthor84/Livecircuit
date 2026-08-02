@@ -2,6 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import { useState, useTransition } from "react";
+import { Sparkles } from "lucide-react";
 import { agencyDashboardPath } from "@/lib/agency/sections";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -17,7 +18,7 @@ function slugify(value: string) {
     .slice(0, 60);
 }
 
-export function CreateAgencyForm() {
+export function CreateAgencyForm({ starterPlanLabel }: { starterPlanLabel?: string }) {
   const router = useRouter();
   const [pending, startTransition] = useTransition();
   const [name, setName] = useState("");
@@ -35,13 +36,17 @@ export function CreateAgencyForm() {
           });
           if (!result.ok) toast.error(result.error);
           else {
-            toast.success("Agency created");
+            toast.success("Partnership workspace created — Boutique plan activated");
             router.push(agencyDashboardPath());
             router.refresh();
           }
         });
       }}
     >
+      <div className="flex items-center gap-2 text-sm text-primary">
+        <Sparkles className="size-4" />
+        Starts on {starterPlanLabel ?? "Boutique Partnership"}
+      </div>
       <div className="space-y-2">
         <Label htmlFor="agency-name">Agency name</Label>
         <Input
@@ -63,8 +68,11 @@ export function CreateAgencyForm() {
           required
         />
       </div>
+      <p className="text-xs text-muted-foreground">
+        Included Community & Club venues, Booking CRM, and $100/mo promotional credits from day one.
+      </p>
       <Button type="submit" disabled={pending}>
-        Create agency
+        Start partnership
       </Button>
     </form>
   );

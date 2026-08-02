@@ -74,7 +74,7 @@ export async function createAgencyOrganizationAction(input: unknown): Promise<Ag
       name: parsed.data.name,
       slug: parsed.data.slug,
       billing_email: parsed.data.billingEmail ?? user.email,
-      plan: "starter",
+      plan: "boutique",
     })
     .select("id")
     .single();

@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { APP_NAME } from "@/lib/constants";
 import { SponsorVisualizer } from "@/components/demo/naming-rights/sponsor-visualizer";
+import { getMonetizationSnapshot } from "@/lib/monetization/pricing-resolver.server";
+import { buildSponsorPricingBundle } from "@/lib/monetization/sponsor-pricing.server";
 
 export const metadata: Metadata = {
   title: {
@@ -15,6 +17,8 @@ export const metadata: Metadata = {
   },
 };
 
-export default function SponsorVisualizerPage() {
-  return <SponsorVisualizer />;
+export default async function SponsorVisualizerPage() {
+  const snapshot = await getMonetizationSnapshot();
+  const pricing = buildSponsorPricingBundle(snapshot);
+  return <SponsorVisualizer pricing={pricing} />;
 }

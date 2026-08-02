@@ -25,8 +25,8 @@ export default function AboutPage() {
         <p>
           Our Artist First philosophy means we do not profit from the direct relationship between artists
           and their fans. Artists keep 100% of merchandise revenue, tips, and donations, own their content,
-          and face no exclusivity contracts. LiveCircuit earns through premium tools, transparent digital
-          ticketing, sponsorships, and enhanced fan experiences.
+          and face no exclusivity contracts. LiveCircuit earns through digital ticketing, talent agency
+          subscriptions, sponsorships, and fan experiences—not monthly artist fees.
         </p>
         <p>{DIGITAL_ONLY_STATEMENT}</p>
         <p>{TRUST_SECTION.body}</p>

@@ -9,7 +9,8 @@ import {
   type AudienceInputs,
   type PerformerTypeId,
 } from "@/lib/demo/artist-success-center-data";
-import { calculateArtistEarnings } from "@/lib/pricing/artist-booking-utils";
+import { calculateArtistEarnings, type TicketPricingRates } from "@/lib/pricing/artist-booking-utils";
+import type { MonetizationSnapshot } from "@/lib/monetization/types";
 
 export function getVenueById(id: ArtistVenueId) {
   return ARTIST_VENUE_GUIDES.find((v) => v.id === id) ?? ARTIST_VENUE_GUIDES[0];
@@ -229,15 +230,25 @@ export function calculatePricingAdvisor({
   ticketPrice,
   marketingBudget = 0,
   platformFeeRate = DEMO_PLATFORM_FEE_RATE,
+  snapshot,
+  pricing,
 }: {
   venueId: ArtistVenueId;
   expectedAttendance: number;
   ticketPrice: number;
   marketingBudget?: number;
   platformFeeRate?: number;
+  snapshot?: MonetizationSnapshot;
+  pricing?: TicketPricingRates;
 }): PricingAdvisorResult {
   const venue = getVenueById(venueId);
-  const earnings = calculateArtistEarnings({ venueId, ticketPrice, expectedAttendance });
+  const earnings = calculateArtistEarnings({
+    venueId,
+    ticketPrice,
+    expectedAttendance,
+    snapshot,
+    pricing,
+  });
   const grossRevenue = earnings.grossRevenue;
   const bookingFee = earnings.bookingFee;
   const platformFee = grossRevenue * platformFeeRate;

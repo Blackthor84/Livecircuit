@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { APP_NAME } from "@/lib/constants";
 import { ArtistSuccessCenter } from "@/components/artists/success-center/artist-success-center";
+import { getMonetizationSnapshot } from "@/lib/monetization/pricing-resolver.server";
+import { getBusinessRulesSnapshot } from "@/lib/business-rules/rules-resolver.server";
 
 export const metadata: Metadata = {
   title: { absolute: `Artist Success Center | ${APP_NAME}` },
@@ -13,6 +15,12 @@ export const metadata: Metadata = {
   },
 };
 
-export default function ArtistSuccessCenterPage() {
-  return <ArtistSuccessCenter />;
+export default async function ArtistSuccessCenterPage() {
+  const [pricingSnapshot, rulesSnapshot] = await Promise.all([
+    getMonetizationSnapshot(),
+    getBusinessRulesSnapshot(),
+  ]);
+  return (
+    <ArtistSuccessCenter pricingSnapshot={pricingSnapshot} rulesSnapshot={rulesSnapshot} />
+  );
 }

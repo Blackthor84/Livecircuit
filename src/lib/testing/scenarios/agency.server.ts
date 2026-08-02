@@ -450,7 +450,7 @@ async function seedAgencyRevenue(
   orgId: string,
   ownerUserId: string,
   artistIds: string[],
-  plan: "starter" | "pro" | "enterprise"
+  plan: "boutique" | "growth" | "enterprise"
 ) {
   logTestStep(log, "Seeding revenue (orders + tickets)...");
   await ensureArtistEvents(admin, log, artistIds, 30);
@@ -462,7 +462,7 @@ async function seedAgencyRevenue(
     .limit(30);
 
   const revenueRows = Math.min(
-    plan === "enterprise" ? 30 : plan === "pro" ? 18 : 10,
+    plan === "enterprise" ? 30 : plan === "growth" ? 18 : 10,
     Math.max(events?.length ?? 0, 5)
   );
 
@@ -503,7 +503,7 @@ async function seedAgencySponsorships(
   artistIds: string[],
   templateLabel: string,
   scenario: AgencyScenarioSlug,
-  plan: "starter" | "pro" | "enterprise",
+  plan: "boutique" | "growth" | "enterprise",
   sponsorCount: number
 ) {
   logTestStep(log, `Seeding sponsorship proposals (${sponsorCount})...`);
@@ -520,7 +520,7 @@ async function seedAgencySponsorships(
       title: `${templateLabel} package ${s + 1}`,
       description: "Test sponsorship proposal for agency dashboard QA.",
       budget_cents:
-        plan === "enterprise" ? 25000000 : plan === "pro" ? 5000000 : 500000,
+        plan === "enterprise" ? 25000000 : plan === "growth" ? 5000000 : 500000,
       status,
       submitted_at: status !== "draft" ? new Date(Date.now() - s * 86400000).toISOString() : null,
       metadata: { test: true, scenario, lifecycle: status },
@@ -581,7 +581,7 @@ async function seedAgencyAnalyticsSnapshot(
   scenario: AgencyScenarioSlug,
   artistIds: string[],
   templateLabel: string,
-  plan: "starter" | "pro" | "enterprise",
+  plan: "boutique" | "growth" | "enterprise",
   fillMissingOnly = false
 ) {
   logTestStep(log, "Seeding analytics snapshot...");
@@ -590,12 +590,12 @@ async function seedAgencyAnalyticsSnapshot(
 
   if (metadata.analytics_snapshot && fillMissingOnly) return;
 
-  const baseRevenue = plan === "enterprise" ? 125000000 : plan === "pro" ? 45000000 : 8500000;
+  const baseRevenue = plan === "enterprise" ? 125000000 : plan === "growth" ? 45000000 : 8500000;
   const snapshot = {
     revenue_cents: baseRevenue,
-    attendance: plan === "enterprise" ? 145000 : plan === "pro" ? 42000 : 8500,
-    watch_time_hours: plan === "enterprise" ? 48000 : plan === "pro" ? 12000 : 2400,
-    ticket_sales: plan === "enterprise" ? 85000 : plan === "pro" ? 22000 : 4200,
+    attendance: plan === "enterprise" ? 145000 : plan === "growth" ? 42000 : 8500,
+    watch_time_hours: plan === "enterprise" ? 48000 : plan === "growth" ? 12000 : 2400,
+    ticket_sales: plan === "enterprise" ? 85000 : plan === "growth" ? 22000 : 4200,
     top_artists: artistIds.slice(0, 5).map((id, i) => ({
       artist_id: id,
       rank: i + 1,
@@ -719,7 +719,7 @@ export async function seedAgencyScenario(
     });
   }
 
-  const sponsorCount = template.plan === "enterprise" ? 5 : template.plan === "pro" ? 3 : 2;
+  const sponsorCount = template.plan === "enterprise" ? 5 : template.plan === "growth" ? 3 : 2;
   if (!fillMissingOnly || counts.sponsors === 0) {
     await seedAgencySponsorships(
       admin,

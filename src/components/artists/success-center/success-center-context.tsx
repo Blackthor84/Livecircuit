@@ -14,6 +14,14 @@ import {
   getVenueMatch,
   type ArtistReport,
 } from "@/lib/demo/artist-success-center-utils";
+import type { MonetizationSnapshot } from "@/lib/monetization/types";
+import type { BusinessRulesSnapshot } from "@/lib/business-rules/types";
+import {
+  buildArtistBookingPricingDisplay,
+  buildBookingFeeByVenue,
+  buildFeeGuideItems,
+  type ArtistBookingPricingDisplay,
+} from "@/lib/monetization/pricing-utils";
 
 type SuccessCenterContextValue = {
   performerType: PerformerTypeId;
@@ -32,11 +40,24 @@ type SuccessCenterContextValue = {
   compareVenueB: ArtistVenueId;
   setCompareVenueA: (id: ArtistVenueId) => void;
   setCompareVenueB: (id: ArtistVenueId) => void;
+  pricingSnapshot: MonetizationSnapshot;
+  rulesSnapshot: BusinessRulesSnapshot;
+  artistPricing: ArtistBookingPricingDisplay;
+  feeGuideItems: ReturnType<typeof buildFeeGuideItems>;
+  bookingFeeByVenue: ReturnType<typeof buildBookingFeeByVenue>;
 };
 
 const SuccessCenterContext = createContext<SuccessCenterContextValue | null>(null);
 
-export function SuccessCenterProvider({ children }: { children: ReactNode }) {
+export function SuccessCenterProvider({
+  children,
+  pricingSnapshot,
+  rulesSnapshot,
+}: {
+  children: ReactNode;
+  pricingSnapshot: MonetizationSnapshot;
+  rulesSnapshot: BusinessRulesSnapshot;
+}) {
   const [performerType, setPerformerType] = useState<PerformerTypeId>("musician");
   const [audience, setAudience] = useState<AudienceInputs>(DEFAULT_AUDIENCE);
   const [presentationMode, setPresentationMode] = useState(false);
@@ -56,6 +77,9 @@ export function SuccessCenterProvider({ children }: { children: ReactNode }) {
     const venueMatch = getVenueMatch(audience, performerType);
     const multiScores = calculateMultiScores(audience, performerType, venueMatch.venue.id);
     const report = generateArtistReport(audience, performerType);
+    const artistPricing = buildArtistBookingPricingDisplay(pricingSnapshot);
+    const feeGuideItems = buildFeeGuideItems(pricingSnapshot);
+    const bookingFeeByVenue = buildBookingFeeByVenue(pricingSnapshot);
 
     return {
       performerType,
@@ -75,8 +99,13 @@ export function SuccessCenterProvider({ children }: { children: ReactNode }) {
       compareVenueB,
       setCompareVenueA,
       setCompareVenueB,
+      pricingSnapshot,
+      rulesSnapshot,
+      artistPricing,
+      feeGuideItems,
+      bookingFeeByVenue,
     };
-  }, [performerType, audience, presentationMode, presentationStep, compareVenueA, compareVenueB]);
+  }, [performerType, audience, presentationMode, presentationStep, compareVenueA, compareVenueB, pricingSnapshot, rulesSnapshot]);
 
   return <SuccessCenterContext.Provider value={value}>{children}</SuccessCenterContext.Provider>;
 }
@@ -85,4 +114,8 @@ export function useSuccessCenter() {
   const ctx = useContext(SuccessCenterContext);
   if (!ctx) throw new Error("useSuccessCenter must be used within SuccessCenterProvider");
   return ctx;
+}
+
+export function useOptionalSuccessCenter() {
+  return useContext(SuccessCenterContext);
 }

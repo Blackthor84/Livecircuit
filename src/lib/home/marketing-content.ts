@@ -19,7 +19,7 @@ export const WHY_LIVECIRCUIT_FEATURES = [
   { title: "Digital Passport", body: "Fans collect stamps for every city they attend. Complete states, countries, and world tours." },
   { title: "Virtual Arenas", body: "Community, Club, Theater, Arena, and Stadium tiers — scale your tour as your audience grows." },
   { title: "Tour Progress Maps", body: "Live route maps show where the artist has been, where they are now, and what's next." },
-  { title: "Fan Subscriptions", body: "Turn followers into recurring supporters — 100% of tips and donations go to artists." },
+  { title: "Fan Backstage Passes", body: "Fans can subscribe to support artists directly — 100% of tips and donations go to artists." },
   { title: "Tour Merchandise", body: "Launch tour-exclusive merch at every stop. Artists keep 100% of merchandise revenue." },
   { title: "Transparent Ticketing", body: "Secure digital checkout with upfront fees — no hidden platform cuts on fan support." },
   { title: "Community Building", body: "Followers, local chat, and venue communities that grow with every tour stop." },

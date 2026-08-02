@@ -2,12 +2,14 @@
 
 import { useMemo, useState } from "react";
 import { motion } from "framer-motion";
-import { ARENA_TIER_META, ARTIST_BOOKING_PRICING, type ArenaTierId } from "@/lib/pricing/livecircuit-pricing";
+import { ARENA_TIER_META, type ArenaTierId } from "@/lib/pricing/livecircuit-pricing";
 import {
   calculateArtistEarnings,
   formatPricingCurrency,
 } from "@/lib/pricing/artist-booking-utils";
 import { AnimatedCounter } from "@/components/demo/naming-rights/animated-counter";
+import { useOptionalSuccessCenter } from "@/components/artists/success-center/success-center-context";
+import type { MonetizationSnapshot } from "@/lib/monetization/types";
 import { cn } from "@/lib/utils";
 
 type Props = {
@@ -15,6 +17,7 @@ type Props = {
   defaultTicketPrice?: number;
   defaultAttendance?: number;
   className?: string;
+  pricingSnapshot?: MonetizationSnapshot;
 };
 
 export function ArtistEarningsCalculator({
@@ -22,8 +25,11 @@ export function ArtistEarningsCalculator({
   defaultTicketPrice = 25,
   defaultAttendance = 500,
   className,
+  pricingSnapshot,
 }: Props) {
-  const venue = ARENA_TIER_META.find((t) => t.id === defaultVenueId)!;
+  const ctx = useOptionalSuccessCenter();
+  const snapshot = pricingSnapshot ?? ctx?.pricingSnapshot;
+  const artistPricing = ctx?.artistPricing;
   const [venueId, setVenueId] = useState<ArenaTierId>(defaultVenueId);
   const [ticketPrice, setTicketPrice] = useState(defaultTicketPrice);
   const [expectedAttendance, setExpectedAttendance] = useState(defaultAttendance);
@@ -32,14 +38,23 @@ export function ArtistEarningsCalculator({
   const resetKey = `${venueId}-${ticketPrice}-${expectedAttendance}`;
 
   const result = useMemo(
-    () => calculateArtistEarnings({ venueId, ticketPrice, expectedAttendance }),
-    [venueId, ticketPrice, expectedAttendance]
+    () =>
+      calculateArtistEarnings({
+        venueId,
+        ticketPrice,
+        expectedAttendance,
+        snapshot: snapshot ?? undefined,
+        pricing: snapshot ? undefined : artistPricing,
+      }),
+    [venueId, ticketPrice, expectedAttendance, snapshot, artistPricing]
   );
+
+  const platformFeeLabel = artistPricing?.platformFeeLabel ?? "Digital Ticketing Fee";
 
   const outputs = [
     { label: "Gross Revenue", value: result.grossRevenue, highlight: false },
     { label: "Booking Fee", value: result.bookingFee, muted: true },
-    { label: ARTIST_BOOKING_PRICING.platformFeeLabel, value: result.platformFee, muted: true },
+    { label: platformFeeLabel, value: result.platformFee, muted: true },
     { label: "Payment Processing", value: result.paymentProcessing, muted: true },
     { label: "Estimated Taxes", value: result.taxes, muted: true },
     { label: "Estimated Net Earnings", value: result.estimatedNetEarnings, highlight: true },

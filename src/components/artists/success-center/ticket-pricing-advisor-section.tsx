@@ -2,8 +2,7 @@
 
 import { useMemo, useState } from "react";
 import { AlertCircle, CheckCircle2 } from "lucide-react";
-import { ARTIST_VENUE_GUIDES, DEMO_PLATFORM_FEE_RATE, type ArtistVenueId } from "@/lib/demo/artist-success-center-data";
-import { ARTIST_BOOKING_PRICING } from "@/lib/pricing/livecircuit-pricing";
+import { ARTIST_VENUE_GUIDES, type ArtistVenueId } from "@/lib/demo/artist-success-center-data";
 import { calculatePricingAdvisor } from "@/lib/demo/artist-success-center-utils";
 import { useSuccessCenter } from "@/components/artists/success-center/success-center-context";
 import { AnimatedCounter } from "@/components/demo/naming-rights/animated-counter";
@@ -12,7 +11,8 @@ import { SectionHeader } from "@/components/artists/success-center/section-heade
 import { cn } from "@/lib/utils";
 
 export function TicketPricingAdvisorSection() {
-  const { venueMatch } = useSuccessCenter();
+  const { venueMatch, artistPricing, pricingSnapshot } = useSuccessCenter();
+  const platformFeeRate = artistPricing.platformFeePercentage / 100;
   const [venueId, setVenueId] = useState<ArtistVenueId>(venueMatch.venue.id);
   const [expectedAttendance, setExpectedAttendance] = useState(venueMatch.expectedAttendance);
   const [ticketPrice, setTicketPrice] = useState(venueMatch.recommendedPrice);
@@ -22,8 +22,16 @@ export function TicketPricingAdvisorSection() {
   const resetKey = `${venueId}-${expectedAttendance}-${ticketPrice}-${marketingBudget}`;
 
   const result = useMemo(
-    () => calculatePricingAdvisor({ venueId, expectedAttendance, ticketPrice, marketingBudget, platformFeeRate: DEMO_PLATFORM_FEE_RATE }),
-    [venueId, expectedAttendance, ticketPrice, marketingBudget]
+    () =>
+      calculatePricingAdvisor({
+        venueId,
+        expectedAttendance,
+        ticketPrice,
+        marketingBudget,
+        platformFeeRate,
+        snapshot: pricingSnapshot,
+      }),
+    [venueId, expectedAttendance, ticketPrice, marketingBudget, platformFeeRate, pricingSnapshot]
   );
 
   const isWarning = result.recommendation !== "competitive";
@@ -63,7 +71,7 @@ export function TicketPricingAdvisorSection() {
                   {[
                     { label: "Gross Revenue", value: result.grossRevenue },
                     { label: "Booking Fee", value: result.bookingFee, muted: true },
-                    { label: `${ARTIST_BOOKING_PRICING.platformFeeLabel} (${Math.round(DEMO_PLATFORM_FEE_RATE * 100)}%)`, value: result.platformFee, muted: true },
+                    { label: `${artistPricing.platformFeeLabel} (${artistPricing.platformFeePercentage}%)`, value: result.platformFee, muted: true },
                     { label: "Payment Processing", value: result.processingFees, muted: true },
                     { label: "Taxes", value: result.taxes, muted: true },
                     { label: "Net Earnings", value: result.netEarnings, highlight: true },

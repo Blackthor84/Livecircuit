@@ -17,8 +17,10 @@ import {
   Settings,
   Sparkles,
   Tags,
+  Ticket,
   ToggleLeft,
   Users,
+  Workflow,
 } from "lucide-react";
 
 /** Phase 1 Command Center sidebar navigation. */
@@ -34,13 +36,15 @@ export const ADMIN_SECTIONS = [
   { href: "/admin/sponsorships", label: "Sponsorships", icon: Sparkles },
   { href: "/admin/founding-partners", label: "Founding Partners", icon: Crown },
   { href: "/admin/revenue", label: "Revenue", icon: DollarSign },
+  { href: "/admin/monetization", label: "Monetization Center", icon: Ticket },
+  { href: "/admin/business-rules", label: "Business Rules", icon: Workflow },
+  { href: "/admin/platform/feature-flags", label: "Feature Flags", icon: ToggleLeft },
   { href: "/admin/tours", label: "Tours", icon: Route },
   { href: "/admin/genres", label: "Genres", icon: Tags },
   { href: "/admin/analytics", label: "Analytics", icon: BarChart3 },
   { href: "/admin/moderation", label: "Moderation", icon: Flag },
   { href: "/admin/observers", label: "Observer Accounts", icon: Eye },
   { href: "/admin/testing", label: "Testing Center", icon: FlaskConical },
-  { href: "/admin/health#features", label: "Feature Flags", icon: ToggleLeft },
   { href: "/admin/health#settings", label: "Platform Settings", icon: Settings },
   { href: "/admin/health", label: "System Health", icon: Activity },
 ] as const;

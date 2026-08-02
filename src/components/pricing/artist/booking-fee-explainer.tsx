@@ -3,12 +3,21 @@
 import { ChevronDown } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useState } from "react";
+import { useOptionalSuccessCenter } from "@/components/artists/success-center/success-center-context";
 import { ARTIST_BOOKING_PRICING } from "@/lib/pricing/livecircuit-pricing";
+import type { ArtistBookingPricingDisplay } from "@/lib/monetization/pricing-utils";
 import { cn } from "@/lib/utils";
 
-export function BookingFeeExplainer({ className }: { className?: string }) {
+type ExplainerProps = {
+  className?: string;
+  artistPricing?: ArtistBookingPricingDisplay;
+};
+
+export function BookingFeeExplainer({ className, artistPricing }: ExplainerProps) {
+  const ctx = useOptionalSuccessCenter();
+  const pricing = artistPricing ?? ctx?.artistPricing ?? ARTIST_BOOKING_PRICING;
   const [open, setOpen] = useState(false);
-  const { bookingFeeExplainer } = ARTIST_BOOKING_PRICING;
+  const { bookingFeeExplainer } = pricing;
 
   return (
     <div className={cn("glass-panel rounded-2xl border border-white/10", className)}>
@@ -44,8 +53,10 @@ export function BookingFeeExplainer({ className }: { className?: string }) {
   );
 }
 
-export function ArtistNoSubscriptionMessage({ className }: { className?: string }) {
-  const { noSubscriptionMessage } = ARTIST_BOOKING_PRICING;
+export function ArtistNoSubscriptionMessage({ className, artistPricing }: ExplainerProps) {
+  const ctx = useOptionalSuccessCenter();
+  const pricing = artistPricing ?? ctx?.artistPricing ?? ARTIST_BOOKING_PRICING;
+  const { noSubscriptionMessage } = pricing;
 
   return (
     <div
@@ -64,10 +75,13 @@ export function ArtistNoSubscriptionMessage({ className }: { className?: string 
   );
 }
 
-export function ArtistPricingTransparency({ className }: { className?: string }) {
+export function ArtistPricingTransparency({ className, artistPricing }: ExplainerProps) {
+  const ctx = useOptionalSuccessCenter();
+  const pricing = artistPricing ?? ctx?.artistPricing ?? ARTIST_BOOKING_PRICING;
+
   return (
     <p className={cn("text-center text-sm leading-relaxed text-muted-foreground", className)}>
-      {ARTIST_BOOKING_PRICING.transparencyMessage}
+      {pricing.transparencyMessage}
     </p>
   );
 }

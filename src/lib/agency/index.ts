@@ -10,10 +10,23 @@ export type * from "./membership.types";
 export {
   AGENCY_MEMBER_ROLE_LABELS,
   AGENCY_PLANS,
+  AGENCY_PARTNERSHIP_PLANS,
   getAgencyPermissions,
   getAgencyPlanLimits,
   hasAgencyPermission,
+  normalizeAgencyPlan,
+  agencyPlanLabel,
 } from "./permissions";
+
+export {
+  AGENCY_WHOLESALE_BENEFITS,
+  AGENCY_EXCLUSIVE_FEATURES,
+  AGENCY_PREMIUM_PERKS,
+  AGENCY_PARTNERSHIP_PHILOSOPHY,
+  getAgencyPartnershipPlan,
+  computeAgencyMonthlySavingsExample,
+  agencyPlanHasCapability,
+} from "./partnership-program";
 
 export {
   AGENCY_DASHBOARD_PATH,

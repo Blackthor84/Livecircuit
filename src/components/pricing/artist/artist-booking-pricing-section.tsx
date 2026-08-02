@@ -24,7 +24,7 @@ export function ArtistBookingPricingSection({ venueId, ticketPrice, expectedAtte
         <SectionHeader
           eyebrow="Pricing"
           title="Artist Booking Pricing"
-          description="Understand every fee before you publish — no subscriptions, no surprises."
+          description="Free to join. Pay only when you book a digital venue and sell tickets."
         />
 
         <FadeUp>

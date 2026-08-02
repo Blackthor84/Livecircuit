@@ -2,9 +2,8 @@
 
 import { motion } from "framer-motion";
 import {
-  ARTIST_BOOKING_PRICING,
   ARENA_TIER_META,
-  BOOKING_FEES,
+  STADIUM_BOOKING,
   type ArenaTierId,
 } from "@/lib/pricing/livecircuit-pricing";
 import {
@@ -12,6 +11,10 @@ import {
   formatPricingCurrency,
 } from "@/lib/pricing/artist-booking-utils";
 import { AnimatedCounter } from "@/components/demo/naming-rights/animated-counter";
+import { useOptionalSuccessCenter } from "@/components/artists/success-center/success-center-context";
+import { formatBookingFeeFromSnapshot } from "@/lib/monetization/pricing-utils";
+import { resolveVenuePriceSync } from "@/lib/business-rules/pricing-client";
+import type { MonetizationSnapshot } from "@/lib/monetization/types";
 import { cn } from "@/lib/utils";
 
 type Props = {
@@ -20,6 +23,7 @@ type Props = {
   expectedAttendance?: number;
   compact?: boolean;
   className?: string;
+  pricingSnapshot?: MonetizationSnapshot;
 };
 
 export function BookingPricingBreakdown({
@@ -28,28 +32,52 @@ export function BookingPricingBreakdown({
   expectedAttendance,
   compact,
   className,
+  pricingSnapshot,
 }: Props) {
+  const ctx = useOptionalSuccessCenter();
+  const snapshot = pricingSnapshot ?? ctx?.pricingSnapshot;
+  const rulesSnapshot = ctx?.rulesSnapshot;
+  if (!snapshot) {
+    throw new Error("BookingPricingBreakdown requires pricingSnapshot or SuccessCenterProvider");
+  }
+
+  const artistPricing = ctx?.artistPricing;
   const venue = ARENA_TIER_META.find((t) => t.id === venueId)!;
   const attendance = expectedAttendance ?? Math.round(venue.maxCapacity * 0.4);
-  const breakdown = calculateArtistEarnings({ venueId, ticketPrice, expectedAttendance: attendance });
+  const breakdown = calculateArtistEarnings({
+    venueId,
+    ticketPrice,
+    expectedAttendance: attendance,
+    snapshot,
+    rulesSnapshot,
+    ruleContext: { userType: "artist", artistStatus: ["new"], eventCount: 0 },
+  });
   const resetKey = `${venueId}-${ticketPrice}-${attendance}`;
+
+  const venuePriceResolved = rulesSnapshot
+    ? resolveVenuePriceSync(snapshot, rulesSnapshot, {
+        userType: "artist",
+        venueType: venueId,
+        eventCount: 0,
+      })
+    : null;
 
   const rows = [
     { label: "Booking Fee", value: breakdown.bookingFee, fixed: true },
     {
-      label: ARTIST_BOOKING_PRICING.platformFeeLabel,
+      label: artistPricing?.platformFeeLabel ?? "Digital Ticketing Fee",
       value: breakdown.platformFee,
-      note: `${ARTIST_BOOKING_PRICING.platformFeePercentage}% of digital ticket sales only`,
+      note: `${snapshot.tickets.platformFeePercent}% of digital ticket sales only`,
     },
     {
-      label: ARTIST_BOOKING_PRICING.paymentProcessingLabel,
+      label: artistPricing?.paymentProcessingLabel ?? "Payment Processing",
       value: breakdown.paymentProcessing,
-      note: ARTIST_BOOKING_PRICING.paymentProcessingDescription,
+      note: artistPricing?.paymentProcessingDescription,
     },
     {
-      label: ARTIST_BOOKING_PRICING.taxesLabel,
+      label: artistPricing?.taxesLabel ?? "Taxes",
       value: breakdown.taxes,
-      note: ARTIST_BOOKING_PRICING.taxesDescription,
+      note: artistPricing?.taxesDescription,
     },
   ];
 
@@ -62,7 +90,15 @@ export function BookingPricingBreakdown({
         </div>
         <div className="text-right">
           <p className="text-[10px] uppercase tracking-widest text-muted-foreground">Booking Fee</p>
-          <p className="text-xl font-bold text-emerald-400">{formatPricingCurrency(BOOKING_FEES[venueId])}</p>
+          <p className="text-xl font-bold text-emerald-400">
+            {venueId === "stadium"
+              ? STADIUM_BOOKING.headline
+              : venuePriceResolved
+                ? venuePriceResolved.isFree
+                  ? "FREE"
+                  : `$${(venuePriceResolved.feeCents / 100).toLocaleString("en-US", { maximumFractionDigits: 0 })}`
+                : formatBookingFeeFromSnapshot(snapshot, venueId)}
+          </p>
           <p className="text-[10px] text-muted-foreground">per event</p>
         </div>
       </div>
@@ -98,7 +134,13 @@ export function BookingPricingBreakdown({
   );
 }
 
-export function BookingPricingBreakdownGrid({ className }: { className?: string }) {
+export function BookingPricingBreakdownGrid({
+  className,
+  pricingSnapshot,
+}: {
+  className?: string;
+  pricingSnapshot: MonetizationSnapshot;
+}) {
   return (
     <div className={cn("grid gap-4 sm:grid-cols-2 xl:grid-cols-3", className)}>
       {ARENA_TIER_META.map((tier, i) => (
@@ -109,7 +151,7 @@ export function BookingPricingBreakdownGrid({ className }: { className?: string 
           viewport={{ once: true }}
           transition={{ delay: i * 0.05 }}
         >
-          <BookingPricingBreakdown venueId={tier.id} compact />
+          <BookingPricingBreakdown venueId={tier.id} compact pricingSnapshot={pricingSnapshot} />
         </motion.div>
       ))}
     </div>

@@ -1,6 +1,7 @@
 import "server-only";
 
 import type { SupabaseClient } from "@supabase/supabase-js";
+import { agencyPlanHasCapability } from "@/lib/agency/partnership-program";
 import { getAgencyPermissions } from "@/lib/agency/permissions";
 import {
   ensureAgencyMembership,
@@ -57,19 +58,19 @@ export function buildDefaultAgencyDashboardConfiguration(
     },
     analytics: {
       enabled: true,
-      default_range: template.plan === "enterprise" ? "90d" : template.plan === "pro" ? "60d" : "30d",
+      default_range: template.plan === "enterprise" ? "90d" : template.plan === "growth" ? "60d" : "30d",
       modules:
         template.plan === "enterprise"
           ? ["revenue", "bookings", "roster", "geo", "sponsors", "team"]
-          : template.plan === "pro"
+          : template.plan === "growth"
             ? ["revenue", "bookings", "roster", "sponsors"]
             : ["revenue", "bookings", "roster"],
     },
     feature_flags: {
       bulk_booking: true,
-      sponsorship: template.plan !== "starter",
+      sponsorship: agencyPlanHasCapability(template.plan, "sponsor_marketplace"),
       team_management: true,
-      advanced_analytics: template.plan !== "starter",
+      advanced_analytics: agencyPlanHasCapability(template.plan, "advanced_analytics"),
       calendar_sync: true,
     },
   };

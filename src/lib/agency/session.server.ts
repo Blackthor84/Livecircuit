@@ -126,7 +126,7 @@ export async function resolveAgencySession(userId: string): Promise<AgencySessio
       organization,
       permissions,
       subscription: {
-        plan: (organization.plan as string) ?? "starter",
+        plan: (organization.plan as string) ?? "boutique",
         planStartedAt: (organization.plan_started_at as string | null) ?? null,
         planRenewsAt: (organization.plan_renews_at as string | null) ?? null,
         stripeSubscriptionId: (organization.stripe_subscription_id as string | null) ?? null,

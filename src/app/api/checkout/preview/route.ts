@@ -6,6 +6,7 @@ import {
   assertCheckoutAllowed,
   resolveCheckout,
 } from "@/lib/services/orders.service";
+import { calculateCheckoutTotals } from "@/lib/monetization/coupon.service";
 import { createClient } from "@/lib/supabase/server";
 import {
   checkoutPreviewQuerySchema,
@@ -37,6 +38,7 @@ export async function GET(request: Request) {
       tier: searchParams.get("tier") ?? undefined,
       festivalTier: searchParams.get("festivalTier") ?? undefined,
       tipAmountCents: searchParams.get("tipAmountCents") ?? undefined,
+      couponCode: searchParams.get("coupon") ?? searchParams.get("couponCode") ?? undefined,
       quantity: searchParams.get("quantity") ?? undefined,
     });
 
@@ -87,13 +89,28 @@ export async function GET(request: Request) {
     }
 
     const quantity = body.type === "ticket" ? 1 : (body.quantity ?? 1);
+    const subtotalCents = resolved.pricing.unitAmountCents * quantity;
+
+    const totals = await calculateCheckoutTotals({
+      subtotalCents,
+      couponCode: body.couponCode,
+      userId: user?.id,
+      purchaseType: body.type === "ticket" ? "ticket" : "general",
+      supabase,
+    });
 
     return NextResponse.json({
       description: resolved.pricing.description,
       unitAmountCents: resolved.pricing.unitAmountCents,
       currency: resolved.pricing.currency,
       quantity,
-      totalCents: resolved.pricing.unitAmountCents * quantity,
+      subtotalCents,
+      platformFeeCents: totals.platformFeeCents,
+      discountCents: totals.discountCents,
+      totalCents: totals.totalCents,
+      platformFeePercent: totals.platformFeePercent,
+      couponApplied: totals.coupon?.valid ? totals.coupon.code : null,
+      couponError: totals.coupon && !totals.coupon.valid ? totals.coupon.error : null,
       tier: resolved.tier,
       vipAvailable,
       availabilityError,

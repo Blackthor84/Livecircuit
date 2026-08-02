@@ -18,7 +18,7 @@ const CODE_HINTS: Record<AgencyOrgAccessDeniedCode, string> = {
   permissions_missing:
     "Your agency role exists but permissions could not be loaded. Repair the organization to restore role permissions.",
   subscription_missing:
-    "The agency organization has no subscription plan. Repair will attach a starter/pro/enterprise plan.",
+    "The agency organization has no subscription plan. Repair will attach a boutique/growth/enterprise partnership.",
 };
 
 const FAILURE_LABELS: Record<string, string> = {

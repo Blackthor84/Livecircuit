@@ -353,7 +353,7 @@ export async function ensureAgencyMembership(
 export async function ensureAgencySubscription(
   admin: SupabaseClient,
   organizationId: string,
-  plan: "starter" | "pro" | "enterprise" = "starter"
+  plan: "boutique" | "growth" | "enterprise" = "boutique"
 ) {
   const { data: org } = await admin
     .from("agency_organizations")

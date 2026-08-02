@@ -30,6 +30,7 @@ import {
   type SponsorVisualizerStepId,
 } from "@/lib/demo/sponsor-visualizer-steps";
 import type { ArenaTierId, ContractLengthYears, PaymentOptionId, SponsorshipAddonId } from "@/lib/pricing/livecircuit-pricing";
+import type { SponsorPricingBundle } from "@/lib/monetization/sponsor-pricing-types";
 import { calculateSponsorshipQuote, type SponsorshipQuote } from "@/lib/pricing/sponsorship-quote-utils";
 
 export type { ArenaTierId, ContractLengthYears, PaymentOptionId, SponsorshipAddonId };
@@ -101,6 +102,7 @@ type SponsorVisualizerContextValue = {
   setCompareTierA: (v: ArenaTierId) => void;
   setCompareTierB: (v: ArenaTierId) => void;
   sponsorshipQuote: SponsorshipQuote;
+  pricing?: SponsorPricingBundle;
 };
 
 const SponsorVisualizerContext = createContext<SponsorVisualizerContextValue | null>(null);
@@ -122,7 +124,13 @@ const INITIAL_FORM: SponsorVisualizerForm = {
   expectedAttendance: 10_000,
 };
 
-export function SponsorVisualizerProvider({ children }: { children: ReactNode }) {
+export function SponsorVisualizerProvider({
+  children,
+  pricing,
+}: {
+  children: ReactNode;
+  pricing?: SponsorPricingBundle;
+}) {
   const [phase, setPhase] = useState<ConfiguratorPhase>("intro");
   const [step, setStep] = useState<SponsorVisualizerStepId>(1);
   const [form, setForm] = useState<SponsorVisualizerForm>(INITIAL_FORM);
@@ -390,6 +398,7 @@ export function SponsorVisualizerProvider({ children }: { children: ReactNode })
       setCompareTierA,
       setCompareTierB,
       sponsorshipQuote,
+      pricing,
     ]
   );
 

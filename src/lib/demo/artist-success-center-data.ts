@@ -249,13 +249,11 @@ export const FEE_GUIDE_ITEMS = [
   },
 ] as const;
 
-export const BOOKING_FEE_BY_VENUE = (Object.entries(BOOKING_FEES) as [ArtistVenueId, number][]).map(
-  ([id, fee]) => ({
-    venueId: id,
-    label: ARTIST_VENUE_GUIDES.find((v) => v.id === id)?.name ?? id,
-    fee: formatPricingCurrency(fee),
-  })
-);
+export const BOOKING_FEE_BY_VENUE = ARTIST_VENUE_GUIDES.map((v) => ({
+  venueId: v.id,
+  label: v.name,
+  fee: v.id === "stadium" ? STADIUM_BOOKING.headline : formatBookingFee(v.id),
+}));
 
 export const TICKET_SALES_TIPS = [
   { title: "Start with the right venue", description: "Match venue size to realistic demand. A sellout beats a half-empty room every time.", icon: "🎯" },
@@ -280,8 +278,20 @@ export const REVENUE_TIMELINE = [
 
 export const SUCCESS_CENTER_FAQ = [
   {
+    q: "Why don't artists pay monthly?",
+    a: "LiveCircuit is Artist First. There are no monthly artist fees, Pro plans, or Premium subscriptions. Join free and only pay when you host a digital event.",
+  },
+  {
+    q: "Why is there a venue booking fee?",
+    a: "Booking fees reserve digital venue inventory and reduce abandoned bookings. They are intentionally affordable—not a major revenue source.",
+  },
+  {
+    q: "How much does it cost to host an event?",
+    a: "Community venues from $25, Club $75, Theater $200, Arena $500 per event, plus transparent ticketing fees on ticket sales. Stadium requires approval.",
+  },
+  {
     q: "Do you take a cut of my merch, tips, or donations?",
-    a: "No. Artists keep 100% of merchandise revenue, tips, and donations. LiveCircuit earns through premium tools, transparent digital ticketing, sponsorships, and fan experiences—not by taxing direct fan support.",
+    a: "No. Artists keep 100% of merchandise revenue, tips, and donations. LiveCircuit earns through digital ticketing, agency subscriptions, sponsorships, and fan experiences—not monthly artist fees or cuts on direct fan support.",
   },
   {
     q: "How do I get paid?",
@@ -332,7 +342,7 @@ export const ASC_STEPS = [
   { id: "ready-to-book", label: "Book" },
 ] as const;
 
-import { ARTIST_BOOKING_PRICING, BOOKING_FEES } from "@/lib/pricing/livecircuit-pricing";
+import { ARTIST_BOOKING_PRICING, DEFAULT_BOOKING_FEES, STADIUM_BOOKING, formatBookingFee } from "@/lib/pricing/livecircuit-pricing";
 import { formatPricingCurrency } from "@/lib/pricing/artist-booking-utils";
 
 /** @deprecated Use ARTIST_BOOKING_PRICING.platformFeePercentage / 100 */

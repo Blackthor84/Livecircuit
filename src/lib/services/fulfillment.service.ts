@@ -1,5 +1,9 @@
 import type { SupabaseClient } from "@supabase/supabase-js";
 import type Stripe from "stripe";
+import {
+  recordCouponRedemption,
+  recordPayment,
+} from "@/lib/monetization/financial-ledger.service";
 import { generateTicketQrPayload } from "@/lib/tickets/qr";
 import { resolveEventIdForTourStop } from "@/lib/services/orders.service";
 
@@ -54,6 +58,40 @@ export async function fulfillPaidOrder(
         typeof session.payment_intent === "string" ? session.payment_intent : null,
     })
     .eq("id", order.id);
+
+  const platformFeeCents = Number(meta.platform_fee_cents ?? session.metadata?.platform_fee_cents ?? 0);
+  const discountCents = Number(meta.discount_cents ?? session.metadata?.discount_cents ?? 0);
+  const subtotalCents = Number(meta.subtotal_cents ?? session.metadata?.subtotal_cents ?? order.total_cents);
+  const couponId = (meta.coupon_id as string | undefined) || session.metadata?.coupon_id || null;
+  const couponCode = (meta.coupon_code as string | undefined) || session.metadata?.coupon_code || null;
+
+  const paymentRecordId = await recordPayment(supabase, {
+    orderId: order.id,
+    userId: order.user_id,
+    purchaseType: order.order_type,
+    subtotalCents,
+    platformFeeCents,
+    discountCents,
+    totalCents: session.amount_total ?? order.total_cents,
+    couponId: couponId || null,
+    couponCode: couponCode || null,
+    stripeCheckoutSessionId: session.id,
+    stripePaymentIntentId:
+      typeof session.payment_intent === "string" ? session.payment_intent : null,
+    metadata: { order_type: order.order_type },
+  });
+
+  if (couponId && discountCents > 0) {
+    await recordCouponRedemption(supabase, {
+      couponId,
+      userId: order.user_id,
+      orderId: order.id,
+      paymentRecordId,
+      discountCents,
+      stripeEventId: session.id,
+      metadata: { coupon_code: couponCode },
+    });
+  }
 
   if (meta.fulfilled === true) {
     return { duplicate: true };

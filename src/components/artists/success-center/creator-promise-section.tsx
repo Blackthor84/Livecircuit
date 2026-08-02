@@ -37,7 +37,7 @@ export function CreatorPromiseSection() {
         <FadeUp>
           <Card className="glass-panel border-primary/20">
             <CardHeader>
-              <CardTitle className="text-lg">Included with every artist plan</CardTitle>
+              <CardTitle className="text-lg">Always included — free to join</CardTitle>
             </CardHeader>
             <CardContent>
               <PlanIncludedPromises />

@@ -40,9 +40,9 @@ function SponsorVisualizerInner() {
   );
 }
 
-export function SponsorVisualizer() {
+export function SponsorVisualizer({ pricing }: { pricing?: import("@/lib/monetization/sponsor-pricing-types").SponsorPricingBundle }) {
   return (
-    <SponsorVisualizerProvider>
+    <SponsorVisualizerProvider pricing={pricing}>
       <SponsorVisualizerInner />
     </SponsorVisualizerProvider>
   );

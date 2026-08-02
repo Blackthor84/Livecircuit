@@ -3,7 +3,15 @@
 import { FOUNDER_PROGRAM } from "@/lib/pricing/livecircuit-pricing";
 import { cn } from "@/lib/utils";
 
-export function PricingLegalNote({ compact, className }: { compact?: boolean; className?: string }) {
+export function PricingLegalNote({
+  compact,
+  className,
+  legalNote,
+}: {
+  compact?: boolean;
+  className?: string;
+  legalNote?: string;
+}) {
   return (
     <p
       className={cn(
@@ -12,7 +20,7 @@ export function PricingLegalNote({ compact, className }: { compact?: boolean; cl
         className
       )}
     >
-      {FOUNDER_PROGRAM.legalNote}
+      {legalNote ?? FOUNDER_PROGRAM.legalNote}
     </p>
   );
 }

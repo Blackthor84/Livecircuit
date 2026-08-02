@@ -55,6 +55,7 @@ export function StepContent({
     setStep,
     enterPresentation,
     enterFlyover,
+    pricing,
   } = ctx;
 
   const executiveMetrics = buildExecutiveMetrics(form.tierId);
@@ -243,6 +244,7 @@ export function StepContent({
             selectedTierId={form.tierId as ArenaTierId}
             contractYears={form.contractYears}
             compact={presentation}
+            pricing={pricing}
           />
         </>
       )}

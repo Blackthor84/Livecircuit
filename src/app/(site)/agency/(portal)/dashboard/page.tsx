@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { AgencyDashboardPanel } from "@/components/agency/agency-dashboard-panel";
+import { AgencyPartnershipValueBanner } from "@/components/agency/agency-partnership-pricing";
 import { AgencyPageHeader } from "@/components/agency/agency-dashboard-layout";
 import { loadAgencySessionForUser } from "@/lib/agency/server";
 import { createClient } from "@/lib/supabase/server";
@@ -49,10 +50,13 @@ export default async function AgencyDashboardPage() {
     <>
       <AgencyPageHeader
         title="Dashboard"
-        subtitle="Manage your roster, bookings, revenue, and sponsorship opportunities from one professional command center."
+        subtitle="Your wholesale partnership command center — roster, bookings, revenue, CRM, and promotional credits in one place."
         orgName={org?.name as string}
         verified={Boolean(org?.verified)}
       />
+      <div className="mb-8">
+        <AgencyPartnershipValueBanner plan={(org?.plan as string) ?? "boutique"} />
+      </div>
       <AgencyDashboardPanel stats={stats} />
     </>
   );

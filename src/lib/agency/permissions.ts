@@ -1,73 +1,31 @@
-import type { AgencyMemberRole, AgencyPermissions, AgencyPlan } from "@/lib/agency/types";
+import type { AgencyMemberRole, AgencyPermissions } from "@/lib/agency/types";
+import {
+  AGENCY_PLANS,
+  AGENCY_PARTNERSHIP_PLANS,
+  getAgencyPlanLimits as getPartnershipPlanLimits,
+  normalizeAgencyPlan,
+} from "@/lib/agency/partnership-program";
 
-export const AGENCY_PLANS: {
-  id: AgencyPlan;
-  name: string;
-  priceLabel: string;
-  priceCents: number | null;
-  popular?: boolean;
-  features: string[];
-  artistLimit: number | null;
-  teamLimit: number | null;
-}[] = [
-  {
-    id: "starter",
-    name: "Starter",
-    priceLabel: "$149/month",
-    priceCents: 14900,
-    features: [
-      "Up to 10 artists",
-      "Unlimited booking requests",
-      "Unlimited digital venues",
-      "Basic analytics",
-      "2 team members",
-    ],
-    artistLimit: 10,
-    teamLimit: 2,
-  },
-  {
-    id: "pro",
-    name: "Pro",
-    priceLabel: "$499/month",
-    priceCents: 49900,
-    popular: true,
-    features: [
-      "Up to 100 artists",
-      "Unlimited booking requests",
-      "Unlimited digital venues",
-      "Unlimited performances",
-      "Unlimited states",
-      "Advanced analytics",
-      "10 team members",
-      "Verified Agency badge",
-      "Priority support",
-    ],
-    artistLimit: 100,
-    teamLimit: 10,
-  },
-  {
-    id: "enterprise",
-    name: "Enterprise",
-    priceLabel: "Custom pricing",
-    priceCents: null,
-    features: [
-      "Unlimited artists",
-      "Unlimited users",
-      "Unlimited teams",
-      "White label portal",
-      "API access",
-      "CRM integrations",
-      "Dedicated account manager",
-      "Custom reporting",
-      "Stadium access (future)",
-    ],
-    artistLimit: null,
-    teamLimit: null,
-  },
-];
+export {
+  AGENCY_PLANS,
+  AGENCY_PARTNERSHIP_PLANS,
+  normalizeAgencyPlan,
+  agencyPlanLabel,
+  getAgencyPartnershipPlan,
+  getAgencyPromotionalCredits,
+  agencyIncludesVenueTier,
+  computeAgencyMonthlySavingsExample,
+  agencyPlanHasCapability,
+  AGENCY_WHOLESALE_BENEFITS,
+  AGENCY_EXCLUSIVE_FEATURES,
+  AGENCY_PREMIUM_PERKS,
+  MARKETING_CREDIT_USES,
+  AGENCY_COMPARISON_ROWS,
+  AGENCY_PARTNERSHIP_PHILOSOPHY,
+} from "@/lib/agency/partnership-program";
 
-export function getAgencyPlanLimits(plan: AgencyPlan) {
-  return AGENCY_PLANS.find((p) => p.id === plan) ?? AGENCY_PLANS[0];
+export function getAgencyPlanLimits(plan: string | null | undefined) {
+  return getPartnershipPlanLimits(plan);
 }
 
 const ROLE_DEFAULTS: Record<AgencyMemberRole, AgencyPermissions> = {

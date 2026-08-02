@@ -1,4 +1,7 @@
-export type AgencyPlan = "starter" | "pro" | "enterprise";
+export type AgencyPlan = "boutique" | "growth" | "enterprise";
+
+/** @deprecated Legacy plan ids — use normalizeAgencyPlan() */
+export type LegacyAgencyPlan = "starter" | "pro";
 
 export type AgencyMemberRole =
   | "owner"

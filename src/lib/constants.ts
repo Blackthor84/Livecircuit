@@ -2,9 +2,9 @@ export const APP_NAME = "LiveCircuit";
 export const LIVECIRCUIT_LOGO = "/livecircuit-logo.png";
 export const LIVECIRCUIT_LOGO_WIDTH = 1024;
 export const LIVECIRCUIT_LOGO_HEIGHT = 682;
-export const APP_TAGLINE = "The world's first Digital Touring Platform — built Artist First.";
+export const APP_TAGLINE = "The world's first Digital Touring Platform — free for artists, pay only when you perform.";
 export const APP_DESCRIPTION =
-  "LiveCircuit — digital tours across real cities, virtual arenas, and ticketed tour stops. Artists keep 100% of merch, tips, and donations. Fans follow tours, not streams.";
+  "LiveCircuit — join free, build your audience, and only pay when you book a digital venue and sell tickets. Artists keep 100% of merch, tips, and donations.";
 
 export const ARTIST_CATEGORIES = [
   { value: "music", label: "Music" },

@@ -450,10 +450,24 @@ export async function createPendingOrder(
     resolved: ResolvedCheckout;
     body: CheckoutBody;
     stripeCheckoutSessionId?: string | null;
+    checkoutTotals?: {
+      subtotalCents: number;
+      platformFeeCents: number;
+      discountCents: number;
+      totalCents: number;
+      couponId?: string | null;
+      couponCode?: string | null;
+    };
   }
 ) {
   const quantity = bodyQuantity(input.body);
   const lineTotal = input.resolved.pricing.unitAmountCents * quantity;
+  const totals = input.checkoutTotals ?? {
+    subtotalCents: lineTotal,
+    platformFeeCents: 0,
+    discountCents: 0,
+    totalCents: lineTotal,
+  };
   const orderType =
     input.body.type === "digital" || input.body.type === "festival"
       ? "digital"
@@ -468,8 +482,9 @@ export async function createPendingOrder(
       artist_id: input.resolved.artistId,
       order_type: orderType,
       status: "pending",
-      subtotal_cents: lineTotal,
-      total_cents: lineTotal,
+      subtotal_cents: totals.subtotalCents,
+      tax_cents: 0,
+      total_cents: totals.totalCents,
       currency: input.resolved.pricing.currency,
       stripe_checkout_session_id: input.stripeCheckoutSessionId ?? null,
       metadata: {
@@ -481,6 +496,10 @@ export async function createPendingOrder(
         tip_message: input.body.tipMessage ?? null,
         festival_tier_id: input.resolved.festivalTierId ?? input.body.festivalTierId ?? null,
         festival_id: input.resolved.festivalId ?? null,
+        platform_fee_cents: totals.platformFeeCents,
+        discount_cents: totals.discountCents,
+        coupon_id: totals.couponId ?? null,
+        coupon_code: totals.couponCode ?? null,
         fulfilled: false,
       },
     })

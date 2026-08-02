@@ -17,6 +17,8 @@ import { DIGITAL_TOURING_BRAND } from "@/lib/home/digital-touring-content";
 import { listPlatformSponsors } from "@/lib/sponsorship/inventory";
 import { getLiveTourSnapshots } from "@/lib/touring/tour-context";
 import { getHomepageTouringPayload } from "@/lib/touring/homepage-data";
+import { buildVenueBookingFeesDisplay } from "@/lib/monetization/build-content.server";
+import { getMonetizationSnapshot } from "@/lib/monetization/pricing-resolver.server";
 
 export const metadata: Metadata = {
   title: DIGITAL_TOURING_BRAND.heroHeadline,
@@ -42,6 +44,7 @@ export default async function HomePage() {
     platformSponsors,
     liveTourSnapshots,
     touring,
+    monetizationSnapshot,
   ] = await Promise.all([
     getFeaturedArtists(4),
     getUpcomingEvents(6),
@@ -53,6 +56,7 @@ export default async function HomePage() {
     listPlatformSponsors(),
     getLiveTourSnapshots(2),
     getHomepageTouringPayload(),
+    getMonetizationSnapshot(),
   ]);
 
   const showSponsor = featureAccess.canAccess("sponsorships");
@@ -72,6 +76,7 @@ export default async function HomePage() {
         showTicketing={showTicketing}
         liveTourSnapshots={liveTourSnapshots}
         touring={touring}
+        venueFees={buildVenueBookingFeesDisplay(monetizationSnapshot)}
       />
 
       {homepageSponsor && showSponsor ? (

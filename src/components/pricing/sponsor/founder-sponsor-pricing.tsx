@@ -17,10 +17,9 @@ import {
   FUTURE_ENTERPRISE_PRICING,
   FUTURE_GROWTH_PRICING,
   SPONSOR_COMPARISON,
-  getFounderSavings,
-  getFounderSavingsPercent,
   type ArenaTierId,
 } from "@/lib/pricing/livecircuit-pricing";
+import type { SponsorPricingBundle } from "@/lib/monetization/sponsor-pricing-types";
 import { formatPricingCurrency } from "@/lib/pricing/artist-booking-utils";
 import { getFounderSponsorRoi } from "@/lib/pricing/founder-sponsor-utils";
 import { cn } from "@/lib/utils";
@@ -30,34 +29,68 @@ type Props = {
   contractYears?: number;
   compact?: boolean;
   showLegal?: boolean;
+  pricing?: SponsorPricingBundle;
 };
+
+function resolvePricing(pricing?: SponsorPricingBundle) {
+  const founderPricing = pricing?.founderPricing ?? FOUNDER_SPONSOR_PRICING;
+  const founderProgram = pricing?.founderProgram ?? FOUNDER_PROGRAM;
+  const futureGrowth = pricing?.futureGrowth ?? FUTURE_GROWTH_PRICING;
+  const futureEnterprise = pricing?.futureEnterprise ?? FUTURE_ENTERPRISE_PRICING;
+  return { founderPricing, founderProgram, futureGrowth, futureEnterprise };
+}
+
+function founderSavings(
+  tierId: ArenaTierId,
+  founderPricing: Record<string, { annual: number; monthly: number; regularAnnual: number }>
+) {
+  const p = founderPricing[tierId];
+  if (!p) return 0;
+  return p.regularAnnual - p.annual;
+}
+
+function founderSavingsPercent(
+  tierId: ArenaTierId,
+  founderPricing: Record<string, { annual: number; monthly: number; regularAnnual: number }>
+) {
+  const p = founderPricing[tierId];
+  if (!p?.regularAnnual) return 0;
+  return Math.round(((p.regularAnnual - p.annual) / p.regularAnnual) * 100);
+}
 
 export function FounderSponsorPricing({
   selectedTierId = "theater",
   contractYears = 1,
   compact,
   showLegal = true,
+  pricing,
 }: Props) {
+  const { founderPricing, founderProgram, futureGrowth, futureEnterprise } = resolvePricing(pricing);
   const roi = getFounderSponsorRoi(selectedTierId, contractYears);
   const resetKey = `${selectedTierId}-${contractYears}`;
 
   return (
     <div className="space-y-12">
       <FadeUp className="text-center">
-        <Badge className="border-amber-500/40 bg-amber-500/15 text-amber-400">{FOUNDER_PROGRAM.badge}</Badge>
+        <Badge className="border-amber-500/40 bg-amber-500/15 text-amber-400">{founderProgram.badge}</Badge>
         <h2 className={cn("mt-4 font-bold tracking-tight", compact ? "text-3xl" : "text-4xl sm:text-5xl")}>
-          {FOUNDER_PROGRAM.headline}
+          {founderProgram.headline}
         </h2>
-        <p className="mx-auto mt-4 max-w-2xl text-muted-foreground">{FOUNDER_PROGRAM.subheadline}</p>
+        <p className="mx-auto mt-4 max-w-2xl text-muted-foreground">{founderProgram.subheadline}</p>
+        {pricing?.loadedAt ? (
+          <p className="mt-2 text-[10px] uppercase tracking-widest text-muted-foreground">
+            Pricing as of {new Date(pricing.loadedAt).toLocaleDateString()}
+          </p>
+        ) : null}
       </FadeUp>
 
       <FadeUp>
-        <h3 className="mb-6 text-center text-2xl font-bold">{FOUNDER_PROGRAM.sectionTitle}</h3>
+        <h3 className="mb-6 text-center text-2xl font-bold">{founderProgram.sectionTitle}</h3>
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
           {ARENA_TIER_META.map((tier, i) => {
-            const pricing = FOUNDER_SPONSOR_PRICING[tier.id];
-            const savings = getFounderSavings(tier.id);
-            const savingsPct = getFounderSavingsPercent(tier.id);
+            const tierPricing = founderPricing[tier.id as ArenaTierId] ?? FOUNDER_SPONSOR_PRICING[tier.id];
+            const savings = founderSavings(tier.id, founderPricing as Record<string, { annual: number; monthly: number; regularAnnual: number }>);
+            const savingsPct = founderSavingsPercent(tier.id, founderPricing as Record<string, { annual: number; monthly: number; regularAnnual: number }>);
             const isSelected = tier.id === selectedTierId;
 
             return (
@@ -73,12 +106,12 @@ export function FounderSponsorPricing({
                 )}
               >
                 <p className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">{tier.name}</p>
-                <p className="mt-3 text-2xl font-bold text-emerald-400">{formatPricingCurrency(pricing.annual)}</p>
+                <p className="mt-3 text-2xl font-bold text-emerald-400">{formatPricingCurrency(tierPricing.annual)}</p>
                 <p className="text-xs text-muted-foreground">/year</p>
-                <p className="mt-2 text-sm font-semibold">{formatPricingCurrency(pricing.monthly)}/mo</p>
+                <p className="mt-2 text-sm font-semibold">{formatPricingCurrency(tierPricing.monthly)}/mo</p>
                 <div className="mt-4 space-y-1 border-t border-white/10 pt-4 text-[11px]">
                   <p className="text-muted-foreground line-through">
-                    Regular: {formatPricingCurrency(pricing.regularAnnual)}/yr
+                    Regular: {formatPricingCurrency(tierPricing.regularAnnual)}/yr
                   </p>
                   <p className="font-semibold text-amber-400">
                     Save {formatPricingCurrency(savings)} ({savingsPct}%)
@@ -106,16 +139,19 @@ export function FounderSponsorPricing({
               </tr>
             </thead>
             <tbody>
-              {ARENA_TIER_META.map((tier) => (
-                <tr key={tier.id} className="border-b border-white/5">
-                  <td className="py-3 pr-4 font-medium">{tier.name}</td>
-                  <td className="py-3 pr-4 text-emerald-400">
-                    {formatPricingCurrency(FOUNDER_SPONSOR_PRICING[tier.id].annual)}
-                  </td>
-                  <td className="py-3 pr-4">{formatPricingCurrency(FUTURE_GROWTH_PRICING[tier.id])}</td>
-                  <td className="py-3 text-muted-foreground">{FUTURE_ENTERPRISE_PRICING[tier.id]}</td>
-                </tr>
-              ))}
+              {ARENA_TIER_META.map((tier) => {
+                const tierPricing = founderPricing[tier.id as ArenaTierId] ?? FOUNDER_SPONSOR_PRICING[tier.id];
+                const growth = futureGrowth[tier.id as ArenaTierId] ?? FUTURE_GROWTH_PRICING[tier.id];
+                const enterprise = futureEnterprise[tier.id as ArenaTierId] ?? FUTURE_ENTERPRISE_PRICING[tier.id];
+                return (
+                  <tr key={tier.id} className="border-b border-white/5">
+                    <td className="py-3 pr-4 font-medium">{tier.name}</td>
+                    <td className="py-3 pr-4 text-emerald-400">{formatPricingCurrency(tierPricing.annual)}</td>
+                    <td className="py-3 pr-4">{formatPricingCurrency(growth)}</td>
+                    <td className="py-3 text-muted-foreground">{enterprise}</td>
+                  </tr>
+                );
+              })}
             </tbody>
           </table>
         </div>
@@ -138,10 +174,10 @@ export function FounderSponsorPricing({
       <FadeUp className="glass-panel rounded-2xl border border-amber-500/20 p-6 text-center sm:p-8">
         <div className="flex items-center justify-center gap-2 text-amber-400">
           <Clock className="size-5" />
-          <p className="text-sm font-semibold uppercase tracking-widest">{FOUNDER_PROGRAM.timerTitle}</p>
+          <p className="text-sm font-semibold uppercase tracking-widest">{founderProgram.timerTitle}</p>
         </div>
-        <p className="mt-2 text-lg font-bold">{FOUNDER_PROGRAM.timerSubtitle}</p>
-        <p className="mx-auto mt-4 max-w-2xl text-sm text-muted-foreground">{FOUNDER_PROGRAM.timerMessage}</p>
+        <p className="mt-2 text-lg font-bold">{founderProgram.timerSubtitle}</p>
+        <p className="mx-auto mt-4 max-w-2xl text-sm text-muted-foreground">{founderProgram.timerMessage}</p>
       </FadeUp>
 
       <FadeUp>
@@ -206,7 +242,7 @@ export function FounderSponsorPricing({
         </div>
       </FadeUp>
 
-      {showLegal ? <PricingLegalNote /> : null}
+      {showLegal ? <PricingLegalNote legalNote={founderProgram.legalNote} /> : null}
     </div>
   );
 }

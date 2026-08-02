@@ -18,7 +18,10 @@ import { ArtistCard } from "@/components/artists/artist-card";
 import { DigitalTouringHero } from "@/components/home/digital-touring-hero";
 import { LiveTourExperience } from "@/components/home/live-tour-experience";
 import { PassportStampPreview } from "@/components/home/passport-stamp-preview";
-import { ArtistFirstHomeSection } from "@/components/marketing/creator-promise-sections";
+import {
+  ArtistFirstHomeSection,
+  FreeToJoinHomeSection,
+} from "@/components/marketing/creator-promise-sections";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ROUTES } from "@/lib/constants";
@@ -133,6 +136,7 @@ export function MarketingHomepage({
   showTicketing,
   liveTourSnapshots = [],
   touring,
+  venueFees,
 }: {
   liveEvents: LiveEvent[];
   artists: ArtistWithProfile[];
@@ -141,6 +145,7 @@ export function MarketingHomepage({
   showTicketing: boolean;
   liveTourSnapshots?: LiveTourSnapshot[];
   touring: HomepageTouringPayload;
+  venueFees?: readonly { tier: string; fee: string }[];
 }) {
   const heroSnapshot = liveTourSnapshots[0] ?? null;
 
@@ -403,6 +408,7 @@ export function MarketingHomepage({
         </div>
       </section>
 
+      <FreeToJoinHomeSection venueFees={venueFees} />
       <ArtistFirstHomeSection />
 
       <section className="mx-auto max-w-7xl px-4 py-16 sm:px-6">

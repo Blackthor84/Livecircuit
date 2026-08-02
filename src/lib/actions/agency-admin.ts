@@ -13,7 +13,7 @@ const orgIdSchema = z.object({ orgId: z.string().uuid() });
 
 const planSchema = z.object({
   orgId: z.string().uuid(),
-  plan: z.enum(["starter", "pro", "enterprise"]),
+  plan: z.enum(["boutique", "growth", "enterprise"]),
 });
 
 async function requirePlatformAdmin() {

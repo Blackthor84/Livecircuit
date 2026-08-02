@@ -1,9 +1,11 @@
 /**
- * LiveCircuit Pricing System 2.0
- * Single source of truth — never hardcode prices in components.
+ * LiveCircuit Pricing — Artist-First model
+ * Single source of truth for default fees. Admin overrides live in platform_pricing_config.
  */
 
 export type ArenaTierId = "community" | "club" | "theater" | "arena" | "stadium";
+
+export type BookableArenaTierId = Exclude<ArenaTierId, "stadium">;
 
 export type ArenaTierMeta = {
   id: ArenaTierId;
@@ -19,8 +21,8 @@ export type ArenaTierMeta = {
 export const ARENA_TIER_META: ArenaTierMeta[] = [
   {
     id: "community",
-    name: "Community Arena",
-    tagline: "Perfect for Local Businesses",
+    name: "Community Venue",
+    tagline: "Perfect for emerging artists",
     maxCapacity: 500,
     monthlyVisitors: 15_000,
     annualEvents: 120,
@@ -28,8 +30,8 @@ export const ARENA_TIER_META: ArenaTierMeta[] = [
   },
   {
     id: "club",
-    name: "Club Arena",
-    tagline: "Growing Regional Brands",
+    name: "Club Venue",
+    tagline: "Growing regional audiences",
     maxCapacity: 2_500,
     monthlyVisitors: 76_000,
     annualEvents: 280,
@@ -38,7 +40,7 @@ export const ARENA_TIER_META: ArenaTierMeta[] = [
   {
     id: "theater",
     name: "Theater",
-    tagline: "Mid-Market Companies",
+    tagline: "Mid-market digital performances",
     maxCapacity: 8_000,
     monthlyVisitors: 200_000,
     annualEvents: 520,
@@ -47,7 +49,7 @@ export const ARENA_TIER_META: ArenaTierMeta[] = [
   {
     id: "arena",
     name: "Arena",
-    tagline: "Major Regional Sponsors",
+    tagline: "Major digital events",
     maxCapacity: 25_000,
     monthlyVisitors: 675_000,
     annualEvents: 840,
@@ -56,7 +58,7 @@ export const ARENA_TIER_META: ArenaTierMeta[] = [
   {
     id: "stadium",
     name: "Stadium",
-    tagline: "National Brands",
+    tagline: "Flagship experiences",
     maxCapacity: 50_000,
     monthlyVisitors: 1_500_000,
     annualEvents: 1_200,
@@ -64,19 +66,61 @@ export const ARENA_TIER_META: ArenaTierMeta[] = [
   },
 ];
 
-/** Artist booking fees — per event, charged when booking a show. */
-export const BOOKING_FEES: Record<ArenaTierId, number> = {
-  community: 75,
-  club: 250,
-  theater: 750,
-  arena: 2_000,
-  stadium: 5_000,
+/** Default per-event venue booking fees — admin-configurable via platform_pricing_config. */
+export const DEFAULT_BOOKING_FEES: Record<BookableArenaTierId, number> = {
+  community: 25,
+  club: 75,
+  theater: 200,
+  arena: 500,
 };
 
+/** @deprecated Use DEFAULT_BOOKING_FEES — kept for imports during migration. */
+export const BOOKING_FEES: Record<ArenaTierId, number | null> = {
+  ...DEFAULT_BOOKING_FEES,
+  stadium: null,
+};
+
+export const STADIUM_BOOKING = {
+  requiresApproval: true,
+  headline: "Custom pricing",
+  description: "Stadium bookings require approval and custom pricing. Contact LiveCircuit partnerships.",
+} as const;
+
+export const TICKET_PRODUCT_TYPES = [
+  "General Admission",
+  "VIP Tickets",
+  "Digital Meet & Greets",
+  "Virtual Backstage Passes",
+  "Festival Passes",
+  "Weekend Passes",
+  "Replay Purchases",
+] as const;
+
+export const ARTIST_FREE_INCLUDES = [
+  "Create a profile",
+  "Upload content",
+  "Build a fanbase",
+  "Receive tips",
+  "Receive donations",
+  "Sell merchandise",
+  "Interact with fans",
+] as const;
+
+export const ARTIST_FIRST_KEEPS = [
+  "100% of Tips",
+  "100% of Donations",
+  "100% of Merchandise Revenue",
+  "100% Ownership of Content",
+  "100% Publishing Rights",
+  "100% Master Recording Rights",
+  "No Exclusivity",
+  "No Monthly Fees",
+] as const;
+
 export const ARTIST_BOOKING_PRICING = {
-  bookingFees: BOOKING_FEES,
+  bookingFees: DEFAULT_BOOKING_FEES,
   platformFeePercentage: 10,
-  platformFeeLabel: "Digital Ticketing Service",
+  platformFeeLabel: "Digital Ticketing Fee",
   paymentProcessingLabel: "Payment Processing",
   paymentProcessingDescription: "Standard card processing rates (typically 2.9% + $0.30 per transaction)",
   paymentProcessingRatePercent: 2.9,
@@ -91,31 +135,47 @@ export const ARTIST_BOOKING_PRICING = {
     "Content Ownership",
     "No Exclusivity",
     "Transparent Ticketing",
+    "Affordable Venue Booking",
+    "No Monthly Artist Fees",
   ],
+  payWhenYouPerformMessage: {
+    headline: "Free to Join. Pay Only When You Perform.",
+    subheadline:
+      "Join LiveCircuit at no cost. Build your audience, sell tickets, receive tips, accept donations, and sell merchandise. You only pay when you book a digital venue and sell tickets.",
+  },
   noSubscriptionMessage: {
-    headline: "No monthly subscription.",
+    headline: "No monthly artist fees. Ever.",
     lines: [
       "Create your artist profile for free.",
-      "Browse digital venues for free.",
+      "Build your audience, sell merch, and receive tips at no cost.",
       "Keep 100% of merch, tips, and donations.",
-      "Only pay transparent digital ticketing fees when you sell tickets.",
+      "Pay only when you host a digital event — an affordable venue booking fee plus transparent ticketing fees on ticket sales.",
     ],
   },
+  bookingFeePurpose:
+    "Venue booking fees reserve digital venue inventory and reduce abandoned bookings. They are intentionally affordable — not a major revenue source.",
   transparencyMessage:
-    "LiveCircuit is Artist First. You keep 100% of merchandise, tips, and donations. Digital ticketing fees are disclosed upfront—no hidden cuts on direct fan support.",
+    "LiveCircuit is Artist First. Join free, keep 100% of merchandise, tips, and donations, and only pay when you choose to host a digital event.",
   bookingFeeExplainer: {
-    title: "What am I paying for?",
+    title: "What does the venue booking fee cover?",
     items: [
-      "Digital venue operations",
+      "Digital venue reservation",
       "Streaming infrastructure",
-      "Audience discovery",
-      "Transparent digital ticketing",
-      "Event hosting",
+      "Event hosting & discovery",
+      "Secure checkout & ticketing",
       "Customer support",
-      "Analytics",
-      "Security",
-      "Moderation",
-      "Payment processing",
+      "Analytics & reporting",
+      "Moderation & security",
+    ],
+  },
+  ticketFeeExplainer: {
+    title: "How ticketing fees work",
+    items: [
+      "Ticket pricing is set by you",
+      "Platform ticketing fee applies to ticket sales only",
+      "Fees are disclosed before you publish",
+      "Merch, tips, and donations are never taxed by LiveCircuit",
+      "Stripe Connect payout support planned",
     ],
   },
 } as const;
@@ -223,8 +283,15 @@ export function getArenaTierMeta(id: ArenaTierId): ArenaTierMeta {
   return ARENA_TIER_META.find((t) => t.id === id) ?? ARENA_TIER_META[0];
 }
 
-export function getBookingFee(id: ArenaTierId): number {
-  return BOOKING_FEES[id];
+export function getBookingFee(id: ArenaTierId): number | null {
+  if (id === "stadium") return null;
+  return DEFAULT_BOOKING_FEES[id];
+}
+
+export function formatBookingFee(id: ArenaTierId): string {
+  if (id === "stadium") return STADIUM_BOOKING.headline;
+  const fee = DEFAULT_BOOKING_FEES[id];
+  return `$${fee.toLocaleString()}`;
 }
 
 export function getFounderPricing(id: ArenaTierId) {

@@ -35,8 +35,8 @@ export const AGENCY_ORG_TEMPLATES: AgencyOrgTemplate[] = [
     slug: "boutique_agency",
     label: "Boutique Agency",
     description:
-      "Starter plan — owner, 2 booking managers, artist manager, marketing, finance, assistant, 10 artists, 50 bookings.",
-    plan: "starter",
+      "Boutique plan — owner, 2 booking managers, artist manager, marketing, finance, assistant, 10 artists, 50 bookings.",
+    plan: "boutique",
     artistCount: 10,
     bookingCount: 50,
     team: [
@@ -51,8 +51,8 @@ export const AGENCY_ORG_TEMPLATES: AgencyOrgTemplate[] = [
     slug: "mid_size_agency",
     label: "Mid-Size Agency",
     description:
-      "Pro plan — admins, booking & artist managers, marketing & finance teams, 40 artists, 250 bookings.",
-    plan: "pro",
+      "Growth plan — admins, booking & artist managers, marketing & finance teams, 40 artists, 250 bookings.",
+    plan: "growth",
     artistCount: 40,
     bookingCount: 250,
     team: [

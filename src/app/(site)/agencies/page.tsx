@@ -22,7 +22,8 @@ export default async function PublicAgenciesPage() {
           <p className="text-sm font-medium uppercase tracking-widest text-primary">Agencies</p>
           <h1 className="mt-4 text-4xl font-bold tracking-tight">Discover agencies</h1>
           <p className="mt-4 max-w-2xl text-muted-foreground">
-            Verified talent agencies representing music, comedy, speakers, creators, and more on LiveCircuit.
+            Verified talent agencies on LiveCircuit receive included venue access, Booking CRM, promotional credits,
+            and exclusive partner advantages — wholesale partners, not per-booking customers.
           </p>
         </div>
         <Link href={ROUTES.agencyHome} className="text-sm text-primary hover:underline">
