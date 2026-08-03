@@ -21,6 +21,7 @@ export type DemoShow = {
   arena: string;
   tier: ArenaTier;
   state: string;
+  city: string;
   date: string;
   time: string;
   ticketPrice: number;
@@ -86,10 +87,24 @@ export type DemoFeedItem = {
 
 export type ScheduleShowForm = {
   arena: ArenaTier;
+  city: string;
   date: string;
   time: string;
   ticketPrice: number;
   vipPrice: number;
-  merchEnabled: boolean;
+  merchOptions: string[];
   expectedAttendance: number;
+};
+
+export type DemoArtistProfile = DemoArtist & {
+  monthlyListeners: number;
+  messages: { id: string; from: string; preview: string; time: string; unread?: boolean }[];
+  notifications: { id: string; title: string; time: string; type: "sale" | "fan" | "booking" }[];
+  merchSales: number;
+  contracts: { id: string; venue: string; date: string; fee: number; status: string }[];
+  bookings: { id: string; city: string; date: string; status: string }[];
+  sponsorDeals: { id: string; brand: string; value: number; expires: string }[];
+  demographics: { label: string; pct: number }[];
+  audienceGrowth: { month: string; followers: number }[];
+  revenueHistory: { month: string; revenue: number }[];
 };

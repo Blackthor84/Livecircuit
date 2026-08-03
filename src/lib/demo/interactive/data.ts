@@ -13,23 +13,59 @@ export const DEMO_ARTIST: DemoArtist = {
   slug: "nova-ray",
   genre: "Electronic / Pop",
   avatar: "NR",
-  followers: 284_500,
+  followers: 92_114,
   verified: true,
-  revenue: 1_247_800,
-  upcomingShows: 12,
-  statesReached: 38,
+  revenue: 18_430,
+  upcomingShows: 3,
+  statesReached: 24,
 };
 
+export const DEMO_ARTIST_DASHBOARD = {
+  monthlyListeners: 1_284_000,
+  merchSales: 4_820,
+  messages: [
+    { id: "m1", from: "Sarah K.", preview: "Can't wait for Boston! Any meet & greet?", time: "2m ago", unread: true },
+    { id: "m2", from: "Venue Ops", preview: "Chicago arena confirmed — load-in 4pm", time: "18m ago" },
+    { id: "m3", from: "Agency Rep", preview: "Sponsor deck approved for Dallas", time: "1h ago" },
+  ],
+  notifications: [
+    { id: "n1", title: "47 tickets sold — Boston", time: "Just now", type: "sale" as const },
+    { id: "n2", title: "892 new followers today", time: "12m ago", type: "fan" as const },
+    { id: "n3", title: "Chicago booking confirmed", time: "1h ago", type: "booking" as const },
+  ],
+};
+
+export const TOUR_PUBLISH_CITIES = ["Boston", "Chicago", "Dallas", "Seattle"];
+
+export const TOUR_SALE_SEQUENCE = {
+  fanIncrements: [1, 4, 13, 27, 48, 92, 140],
+  revenueSteps: [25, 300, 1200, 6800, 14900, 18430],
+};
+
+export const DEMO_CITIES = [
+  "Boston", "Chicago", "Dallas", "Seattle", "Austin", "Nashville", "Denver", "Miami", "Atlanta", "Los Angeles",
+];
+
+export const MERCH_OPTIONS = [
+  "Tour T-Shirt ($35)",
+  "Signed Poster ($25)",
+  "VIP Bundle ($89)",
+  "Limited Vinyl ($45)",
+  "Glow Wristband ($15)",
+];
+
 export const DEMO_AGENCY_STATS = {
-  totalArtists: 47,
-  upcomingPerformances: 156,
-  revenue: 8_420_000,
+  totalArtists: 117,
+  upcomingPerformances: 489,
+  revenue: 8_400_000,
   ticketSales: 1_240_000,
   attendance: 3_800_000,
-  fanGrowth: 24.5,
+  fanGrowth: 18,
   merchRevenue: 890_000,
   sponsorRevenue: 2_100_000,
-  activeContracts: 23,
+  activeContracts: 132,
+  upcomingTours: 132,
+  showsThisMonth: 489,
 };
 
 export const DEMO_AGENCY_ARTISTS: DemoArtist[] = [
@@ -37,12 +73,59 @@ export const DEMO_AGENCY_ARTISTS: DemoArtist[] = [
   { id: "a2", name: "The Midnight Echo", slug: "midnight-echo", genre: "Indie Rock", avatar: "ME", followers: 192_000, verified: true, revenue: 890_400, upcomingShows: 8, statesReached: 28 },
   { id: "a3", name: "DJ Prism", slug: "dj-prism", genre: "House / EDM", avatar: "DP", followers: 412_000, verified: true, revenue: 2_100_000, upcomingShows: 18, statesReached: 44 },
   { id: "a4", name: "Luna Vale", slug: "luna-vale", genre: "R&B / Soul", avatar: "LV", followers: 156_800, verified: false, revenue: 620_000, upcomingShows: 6, statesReached: 22 },
+  { id: "a5", name: "Kai Rivers", slug: "kai-rivers", genre: "Hip-Hop", avatar: "KR", followers: 278_000, verified: true, revenue: 1_450_000, upcomingShows: 14, statesReached: 32 },
+  { id: "a6", name: "Aurora Pulse", slug: "aurora-pulse", genre: "Synthwave", avatar: "AP", followers: 98_400, verified: true, revenue: 540_000, upcomingShows: 5, statesReached: 18 },
 ];
 
+export const DEMO_ARTIST_PROFILES: Record<string, {
+  contracts: { id: string; venue: string; date: string; fee: number; status: string }[];
+  bookings: { id: string; city: string; date: string; status: string }[];
+  sponsorDeals: { id: string; brand: string; value: number; expires: string }[];
+  demographics: { label: string; pct: number }[];
+  audienceGrowth: { month: string; followers: number }[];
+  revenueHistory: { month: string; revenue: number }[];
+  upcomingTours: { city: string; date: string; venue: string }[];
+}> = {
+  "artist-1": {
+    contracts: [
+      { id: "c1", venue: "Harbor Lights Arena", date: "Sep 12", fee: 85000, status: "Signed" },
+      { id: "c2", venue: "Windy City Stadium", date: "Sep 19", fee: 120000, status: "Signed" },
+      { id: "c3", venue: "Lone Star Arena", date: "Sep 26", fee: 95000, status: "Pending" },
+    ],
+    bookings: [
+      { id: "b1", city: "Boston", date: "Sep 12", status: "Confirmed" },
+      { id: "b2", city: "Chicago", date: "Sep 19", status: "Confirmed" },
+      { id: "b3", city: "Dallas", date: "Sep 26", status: "Hold" },
+      { id: "b4", city: "Seattle", date: "Oct 3", status: "Negotiating" },
+    ],
+    sponsorDeals: [
+      { id: "s1", brand: "TechCorp", value: 250000, expires: "Dec 2026" },
+      { id: "s2", brand: "StreamMax", value: 180000, expires: "Mar 2027" },
+    ],
+    demographics: [
+      { label: "18–24", pct: 32 }, { label: "25–34", pct: 41 }, { label: "35–44", pct: 18 }, { label: "45+", pct: 9 },
+    ],
+    audienceGrowth: [
+      { month: "Feb", followers: 72000 }, { month: "Mar", followers: 78000 }, { month: "Apr", followers: 82000 },
+      { month: "May", followers: 86000 }, { month: "Jun", followers: 89000 }, { month: "Jul", followers: 92114 },
+    ],
+    revenueHistory: [
+      { month: "Feb", revenue: 8200 }, { month: "Mar", revenue: 11400 }, { month: "Apr", revenue: 9800 },
+      { month: "May", revenue: 14200 }, { month: "Jun", revenue: 16800 }, { month: "Jul", revenue: 18430 },
+    ],
+    upcomingTours: [
+      { city: "Boston", date: "Sep 12", venue: "Harbor Lights Arena" },
+      { city: "Chicago", date: "Sep 19", venue: "Windy City Stadium" },
+      { city: "Dallas", date: "Sep 26", venue: "Lone Star Arena" },
+      { city: "Seattle", date: "Oct 3", venue: "Pacific Sound Arena" },
+    ],
+  },
+};
+
 export const DEMO_SHOWS: DemoShow[] = [
-  { id: "s1", title: "Neon Dreams Tour — Austin", arena: "Texas Theater Arena", tier: "theater", state: "TX", date: "2026-08-15", time: "8:00 PM", ticketPrice: 45, vipPrice: 125, capacity: 8500, sold: 7200, revenue: 384_000, status: "upcoming" },
-  { id: "s2", title: "Neon Dreams Tour — Nashville", arena: "Music City Arena", tier: "arena", state: "TN", date: "2026-08-22", time: "7:30 PM", ticketPrice: 55, vipPrice: 150, capacity: 12000, sold: 12000, revenue: 720_000, status: "sold_out" },
-  { id: "s3", title: "Neon Dreams Tour — Chicago", arena: "Windy City Stadium", tier: "stadium", state: "IL", date: "2026-09-05", time: "8:00 PM", ticketPrice: 65, vipPrice: 199, capacity: 18000, sold: 14200, revenue: 1_020_000, status: "upcoming" },
+  { id: "s1", title: "Neon Dreams — Boston", arena: "Harbor Lights Arena", tier: "arena", state: "MA", city: "Boston", date: "2026-09-12", time: "8:00 PM", ticketPrice: 55, vipPrice: 149, capacity: 10000, sold: 6200, revenue: 341_000, status: "upcoming" },
+  { id: "s2", title: "Neon Dreams — Chicago", arena: "Windy City Stadium", tier: "stadium", state: "IL", city: "Chicago", date: "2026-09-19", time: "7:30 PM", ticketPrice: 65, vipPrice: 175, capacity: 14000, sold: 4800, revenue: 312_000, status: "upcoming" },
+  { id: "s3", title: "Neon Dreams — Dallas", arena: "Lone Star Arena", tier: "arena", state: "TX", city: "Dallas", date: "2026-09-26", time: "8:00 PM", ticketPrice: 55, vipPrice: 149, capacity: 12000, sold: 3100, revenue: 170_500, status: "upcoming" },
 ];
 
 export const DEMO_EVENTS: DemoEvent[] = [
@@ -148,7 +231,9 @@ export const CHAT_MESSAGES = [
 ];
 
 export const AI_RECOMMENDATIONS = [
-  { artist: "Nova Ray", insight: "Your artist should perform in Texas next week.", detail: "Estimated revenue: $28,000", confidence: 94 },
-  { artist: "DJ Prism", insight: "Miami and Orlando show strong EDM demand.", detail: "Estimated revenue: $45,000 combined", confidence: 89 },
-  { artist: "Luna Vale", insight: "Atlanta R&B audience overlap is 78%.", detail: "Estimated revenue: $18,500", confidence: 86 },
+  { artist: "Nova Ray", insight: "Your artist should schedule another show in Texas next week.", detail: "Houston and San Antonio show 82% audience overlap with Dallas.", projectedRevenue: 28000, confidence: 94 },
+  { artist: "DJ Prism", insight: "Miami and Orlando show strong EDM demand.", detail: "Combined weekend festival slot could 2× ticket velocity.", projectedRevenue: 45000, confidence: 89 },
+  { artist: "Luna Vale", insight: "Atlanta R&B audience overlap is 78%.", detail: "Pair with local soul collective for co-headline boost.", projectedRevenue: 18500, confidence: 86 },
+  { artist: "The Midnight Echo", insight: "Pacific Northwest acoustic tour extension recommended.", detail: "Portland and Seattle searches up 34% this month.", projectedRevenue: 22000, confidence: 91 },
+  { artist: "Kai Rivers", insight: "Chicago hip-hop market ready for arena upgrade.", detail: "Current club shows at 98% capacity — move to 8K venue.", projectedRevenue: 52000, confidence: 88 },
 ];
