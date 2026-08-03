@@ -16,6 +16,7 @@ import {
 } from "lucide-react";
 import { ArtistCard } from "@/components/artists/artist-card";
 import { DigitalTouringHero } from "@/components/home/digital-touring-hero";
+import { InteractiveDemoShowcase } from "@/components/home/interactive-demo-showcase";
 import { LiveTourExperience } from "@/components/home/live-tour-experience";
 import { PassportStampPreview } from "@/components/home/passport-stamp-preview";
 import {
@@ -159,6 +160,8 @@ export function MarketingHomepage({
         showHeroRoute={touring.showHeroRoute}
         hasLiveActivity={touring.hasLiveActivity}
       />
+
+      <InteractiveDemoShowcase />
 
       {heroSnapshot ? <LiveTourExperience snapshot={heroSnapshot} /> : null}
 

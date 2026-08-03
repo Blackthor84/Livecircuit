@@ -1,5 +1,6 @@
-import { InteractiveDemoHub } from "@/components/demo/interactive/interactive-demo-hub";
+import { redirect } from "next/navigation";
+import { ROUTES } from "@/lib/constants";
 
 export default function InteractiveDemoPage() {
-  return <InteractiveDemoHub />;
+  redirect(ROUTES.demo);
 }

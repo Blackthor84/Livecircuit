@@ -1,6 +1,6 @@
 "use client";
 
-import { ArrowRight, Globe2, Radio, Sparkles } from "lucide-react";
+import { ArrowRight, Globe2, Play, Radio, Sparkles } from "lucide-react";
 import { GlobalTourMap } from "@/components/home/global-tour-map";
 import { TourActivityTicker } from "@/components/home/tour-activity-ticker";
 import { AnimatedStatCounter } from "@/components/home/tour-globe-map";
@@ -76,13 +76,21 @@ export function DigitalTouringHero({
             <p className="mt-3 text-sm text-muted-foreground">{HOMEPAGE_EMPTY_STATES.globe.body}</p>
           )}
           <div className="mt-8 flex flex-wrap gap-3">
+            <Button
+              size="lg"
+              href={ROUTES.demo}
+              className="gap-2 bg-gradient-to-r from-primary to-accent shadow-lg shadow-primary/25"
+            >
+              <Play className="size-4 fill-current" />
+              Experience LiveCircuit
+            </Button>
             {hasLiveActivity ? (
-              <Button size="lg" href={ROUTES.tours}>
+              <Button size="lg" variant="secondary" href={ROUTES.tours}>
                 <Radio className="size-4" />
                 {DIGITAL_TOURING_BRAND.secondaryCta}
               </Button>
             ) : null}
-            <Button size="lg" variant={hasLiveActivity ? "secondary" : "default"} href={`${ROUTES.register}?role=artist`}>
+            <Button size="lg" variant={hasLiveActivity ? "outline" : "default"} href={`${ROUTES.register}?role=artist`}>
               {hasLiveActivity ? (
                 <>
                   {DIGITAL_TOURING_BRAND.primaryCta}

@@ -1,5 +1,5 @@
 import type { LucideIcon } from "lucide-react";
-import { Building2, Mic } from "lucide-react";
+import { Building2, Mic, Sparkles } from "lucide-react";
 import { ROUTES } from "@/lib/constants";
 import type { UserRole } from "@/types/database";
 
@@ -29,6 +29,14 @@ type NavUser = {
 export function getPublicNav(): NavItem[] {
   return [
     { href: ROUTES.home, label: "Home" },
+    {
+      href: ROUTES.demo,
+      label: "Interactive Demo",
+      icon: Sparkles,
+      badge: "Live",
+      description: "Take an interactive tour as an artist, fan, or agency — no signup required.",
+      featured: true,
+    },
     { href: ROUTES.tours, label: "Tours" },
     { href: ROUTES.discover, label: "Discover" },
     { href: ROUTES.artists, label: "Artists" },
@@ -43,6 +51,13 @@ export function getPublicNav(): NavItem[] {
 export function getAuthenticatedNav(_user: NavUser): NavItem[] {
   return [
     { href: ROUTES.home, label: "Home" },
+    {
+      href: ROUTES.demo,
+      label: "Interactive Demo",
+      icon: Sparkles,
+      badge: "Live",
+      featured: true,
+    },
     { href: ROUTES.discover, label: "Discover" },
     { href: ROUTES.dashboard, label: "Events" },
     { href: ROUTES.following, label: "Following" },
