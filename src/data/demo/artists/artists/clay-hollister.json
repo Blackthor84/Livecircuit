@@ -1,0 +1,173 @@
+{
+  "isDemoArtist": true,
+  "visibility": "demo-only",
+  "environment": "demo",
+  "id": "clay-hollister",
+  "stageName": "Clay Hollister",
+  "realName": "Clay Hollister",
+  "genre": "Country",
+  "subGenre": "Country",
+  "hometown": "Fort Worth, TX",
+  "country": "United States",
+  "yearsActive": 5,
+  "label": "LiveCircuit Originals",
+  "management": "Marcus Lee",
+  "bio": "Clay Hollister is a country act from Fort Worth, TX. Honky-tonk to headline journey. Known for classic cowboy modern, they've built a devoted global fanbase on LiveCircuit with 650,000 followers.",
+  "brand": {
+    "primaryColor": "#f59e0b",
+    "secondaryColor": "#d97706",
+    "accentColor": "#fbbf24",
+    "gradientClass": "from-amber-500 to-orange-600",
+    "typography": "Space Grotesk",
+    "logoPath": "/assets/logos/clay-hollister.png",
+    "brandIconPath": "/assets/logos/clay-hollister-icon.png",
+    "brandDescription": "Classic cowboy modern",
+    "brandVoice": "Confident, arena-ready, fan-first"
+  },
+  "appearance": {
+    "skinTone": "golden tan",
+    "hairTexture": "straight sleek",
+    "hairColor": "honey blonde",
+    "eyeColor": "amber brown",
+    "faceDescription": "Distinctive country performer with amber brown eyes and straight sleek honey blonde hair",
+    "bodyType": "curvy strong",
+    "height": "5'4\"",
+    "fashionStyle": "Classic cowboy modern",
+    "accessories": [
+      "signature hat"
+    ],
+    "stageOutfit": "Classic cowboy modern — premium tour edition",
+    "streetOutfit": "Casual classic cowboy modern off-stage look",
+    "performanceOutfit": "Signature Country stage ensemble with LED accents"
+  },
+  "images": {
+    "heroImage": "/demo/performers/country-mic.png",
+    "portraitImage": "/demo/performers/country-mic.png",
+    "transparentPNG": "/demo/performers/country-mic.png",
+    "tourPoster": "/assets/tours/clay-hollister-poster.png",
+    "albumCover": "/assets/albums/clay-hollister.png",
+    "arenaBanner": "/assets/backgrounds/clay-hollister-arena.png",
+    "vipImage": "/demo/performers/country-mic.png",
+    "poses": {
+      "hero": "/demo/performers/country-mic.png",
+      "portrait": "/demo/performers/country-mic.png",
+      "transparent": "/demo/performers/country-mic.png",
+      "performance": "/demo/performers/country-guitar.png",
+      "walk": "/demo/performers/country-mic.png",
+      "crowd": "/demo/performers/country-mic.png",
+      "closeUp": "/demo/performers/country-mic.png",
+      "profile": "/demo/performers/country-mic.png",
+      "back": "/demo/performers/country-mic.png",
+      "instrument": "/demo/performers/country-guitar.png",
+      "mic": "/demo/performers/country-mic.png",
+      "promo": "/demo/performers/country-mic.png",
+      "vip": "/demo/performers/country-mic.png",
+      "arenaBanner": "/demo/performers/country-mic.png"
+    }
+  },
+  "merchCollection": [
+    {
+      "id": "clay-hollister-tee",
+      "name": "Hollister Highway Tour Tee",
+      "price": 35,
+      "imagePath": "/assets/merch/clay-hollister/clay-hollister-tee.png"
+    },
+    {
+      "id": "clay-hollister-hoodie",
+      "name": "Clay Hollister Glow Hoodie",
+      "price": 65,
+      "imagePath": "/assets/merch/clay-hollister/clay-hollister-hoodie.png"
+    },
+    {
+      "id": "clay-hollister-vinyl",
+      "name": "Dust & Dreams Vinyl",
+      "price": 45,
+      "imagePath": "/assets/merch/clay-hollister/clay-hollister-vinyl.png"
+    }
+  ],
+  "followers": 650000,
+  "monthlyListeners": 1480000,
+  "fanRating": 4.3,
+  "averageAttendance": 5400,
+  "ticketPrice": 45,
+  "vipPrice": 125,
+  "merchRevenue": 176880,
+  "tourRevenue": 301500,
+  "careerRevenue": 1206000,
+  "verified": true,
+  "featured": false,
+  "socialLinks": {
+    "livecircuit": "/clay-hollister",
+    "website": "https://livecircuit.demo/clay-hollister",
+    "instagram": "@clayhollister"
+  },
+  "currentTour": {
+    "name": "Hollister Highway",
+    "posterPath": "/assets/tours/clay-hollister-poster.png",
+    "upcomingShows": [
+      {
+        "city": "Boston",
+        "venue": "Boston Harbor Arena",
+        "date": "Sep 12",
+        "ticketPrice": 45,
+        "vipPrice": 125
+      },
+      {
+        "city": "Chicago",
+        "venue": "Windy City Stadium",
+        "date": "Sep 19",
+        "ticketPrice": 55,
+        "vipPrice": 151
+      },
+      {
+        "city": "Dallas",
+        "venue": "Lone Star Arena",
+        "date": "Sep 26",
+        "ticketPrice": 45,
+        "vipPrice": 125
+      },
+      {
+        "city": "Miami",
+        "venue": "Miami Pulse Arena",
+        "date": "Oct 3",
+        "ticketPrice": 50,
+        "vipPrice": 125
+      }
+    ]
+  },
+  "favoriteVenue": "Boston Harbor Arena",
+  "performance": {
+    "signatureMove": "Honky-tonk to headline journey",
+    "signatureLighting": "purple-magenta-cyan",
+    "signatureAnimation": "crowd-wave pulse",
+    "preferredArenaTheme": "premium-festival",
+    "preferredPyro": false,
+    "preferredConfetti": false,
+    "preferredLighting": [
+      "purple",
+      "cyan",
+      "magenta"
+    ],
+    "preferredCameraAngles": [
+      "vip",
+      "stage-left",
+      "default"
+    ],
+    "musicStyle": "Country",
+    "performanceStyle": "Classic cowboy modern"
+  },
+  "personality": "Honky-tonk to headline journey",
+  "fanDemographics": "25–50, traditional country",
+  "targetAudience": "25–50, traditional country",
+  "catchPhrase": "Honky-tonk to headline journey",
+  "actType": "solo",
+  "liveStatus": "ON TOUR",
+  "poseCategory": "country",
+  "liveAudience": 5400,
+  "revenueTonight": 6700,
+  "growthPct": 9,
+  "showsScheduled": 4,
+  "albumTitle": "Dust & Dreams",
+  "singleTitle": "Long Road",
+  "avatarInitials": "CH"
+}

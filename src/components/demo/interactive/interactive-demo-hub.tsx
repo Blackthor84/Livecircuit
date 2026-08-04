@@ -4,6 +4,7 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 import { ArrowRight, Building2, Map, Mic2, Sparkles, Ticket, Users } from "lucide-react";
 import { FadeUp, FadeUpItem, FadeUpStagger } from "@/components/demo/naming-rights/fade-up";
+import { DemoArtistsSpotlight } from "@/components/demo/interactive/demo-artists-spotlight";
 import { LiveRevenueTicker } from "@/components/demo/interactive/shared/live-revenue-ticker";
 import { LiveSocialFeed } from "@/components/demo/interactive/shared/live-social-feed";
 import { DemoStadiumBackground } from "@/components/demo/interactive/shared/demo-stadium-bg";
@@ -139,6 +140,8 @@ export function InteractiveDemoHub() {
           </div>
         </FadeUp>
       </section>
+
+      <DemoArtistsSpotlight />
     </div>
   );
 }

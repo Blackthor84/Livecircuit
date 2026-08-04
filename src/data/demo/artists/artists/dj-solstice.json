@@ -1,0 +1,173 @@
+{
+  "isDemoArtist": true,
+  "visibility": "demo-only",
+  "environment": "demo",
+  "id": "dj-solstice",
+  "stageName": "DJ Solstice",
+  "realName": "DJ Solstice",
+  "genre": "EDM",
+  "subGenre": "EDM",
+  "hometown": "Stockholm, SE",
+  "country": "United States",
+  "yearsActive": 14,
+  "label": "LiveCircuit Originals",
+  "management": "Marcus Lee",
+  "bio": "DJ Solstice is a edm act from Stockholm, SE. Emotional EDM storyteller. Known for scandi edm clean, they've built a devoted global fanbase on LiveCircuit with 490,000 followers.",
+  "brand": {
+    "primaryColor": "#06b6d4",
+    "secondaryColor": "#0891b2",
+    "accentColor": "#22d3ee",
+    "gradientClass": "from-cyan-500 to-blue-600",
+    "typography": "Space Grotesk",
+    "logoPath": "/assets/logos/dj-solstice.png",
+    "brandIconPath": "/assets/logos/dj-solstice-icon.png",
+    "brandDescription": "Scandi EDM clean",
+    "brandVoice": "Confident, arena-ready, fan-first"
+  },
+  "appearance": {
+    "skinTone": "light brown",
+    "hairTexture": "afro natural",
+    "hairColor": "silver grey",
+    "eyeColor": "blue",
+    "faceDescription": "Distinctive edm performer with blue eyes and afro natural silver grey hair",
+    "bodyType": "dancer-fit",
+    "height": "5'10\"",
+    "fashionStyle": "Scandi EDM clean",
+    "accessories": [
+      "stud earrings"
+    ],
+    "stageOutfit": "Scandi EDM clean — premium tour edition",
+    "streetOutfit": "Casual scandi edm clean off-stage look",
+    "performanceOutfit": "Signature EDM stage ensemble with LED accents"
+  },
+  "images": {
+    "heroImage": "/demo/performers/dj-table.png",
+    "portraitImage": "/demo/performers/dj-table.png",
+    "transparentPNG": "/demo/performers/dj-table.png",
+    "tourPoster": "/assets/tours/dj-solstice-poster.png",
+    "albumCover": "/assets/albums/dj-solstice.png",
+    "arenaBanner": "/assets/backgrounds/dj-solstice-arena.png",
+    "vipImage": "/demo/performers/dj-table.png",
+    "poses": {
+      "hero": "/demo/performers/dj-table.png",
+      "portrait": "/demo/performers/dj-table.png",
+      "transparent": "/demo/performers/dj-table.png",
+      "performance": "/demo/performers/dj-arms-up.png",
+      "walk": "/demo/performers/dj-table.png",
+      "crowd": "/demo/performers/dj-table.png",
+      "closeUp": "/demo/performers/dj-table.png",
+      "profile": "/demo/performers/dj-table.png",
+      "back": "/demo/performers/dj-table.png",
+      "instrument": "/demo/performers/dj-table.png",
+      "mic": "/demo/performers/dj-table.png",
+      "promo": "/demo/performers/dj-table.png",
+      "vip": "/demo/performers/dj-table.png",
+      "arenaBanner": "/demo/performers/dj-table.png"
+    }
+  },
+  "merchCollection": [
+    {
+      "id": "dj-solstice-tee",
+      "name": "Solstice Live Tour Tee",
+      "price": 35,
+      "imagePath": "/assets/merch/dj-solstice/dj-solstice-tee.png"
+    },
+    {
+      "id": "dj-solstice-hoodie",
+      "name": "DJ Solstice Glow Hoodie",
+      "price": 65,
+      "imagePath": "/assets/merch/dj-solstice/dj-solstice-hoodie.png"
+    },
+    {
+      "id": "dj-solstice-vinyl",
+      "name": "Long Day Vinyl",
+      "price": 45,
+      "imagePath": "/assets/merch/dj-solstice/dj-solstice-vinyl.png"
+    }
+  ],
+  "followers": 490000,
+  "monthlyListeners": 1120000,
+  "fanRating": 4.2,
+  "averageAttendance": 39200,
+  "ticketPrice": 45,
+  "vipPrice": 125,
+  "merchRevenue": 116160,
+  "tourRevenue": 198000,
+  "careerRevenue": 792000,
+  "verified": true,
+  "featured": false,
+  "socialLinks": {
+    "livecircuit": "/dj-solstice",
+    "website": "https://livecircuit.demo/dj-solstice",
+    "instagram": "@djsolstice"
+  },
+  "currentTour": {
+    "name": "Solstice Live",
+    "posterPath": "/assets/tours/dj-solstice-poster.png",
+    "upcomingShows": [
+      {
+        "city": "Boston",
+        "venue": "Boston Harbor Arena",
+        "date": "Sep 12",
+        "ticketPrice": 45,
+        "vipPrice": 125
+      },
+      {
+        "city": "Chicago",
+        "venue": "Windy City Stadium",
+        "date": "Sep 19",
+        "ticketPrice": 55,
+        "vipPrice": 151
+      },
+      {
+        "city": "Dallas",
+        "venue": "Lone Star Arena",
+        "date": "Sep 26",
+        "ticketPrice": 45,
+        "vipPrice": 125
+      },
+      {
+        "city": "Miami",
+        "venue": "Miami Pulse Arena",
+        "date": "Oct 3",
+        "ticketPrice": 50,
+        "vipPrice": 125
+      }
+    ]
+  },
+  "favoriteVenue": "Boston Harbor Arena",
+  "performance": {
+    "signatureMove": "Emotional EDM storyteller",
+    "signatureLighting": "purple-magenta-cyan",
+    "signatureAnimation": "crowd-wave pulse",
+    "preferredArenaTheme": "premium-festival",
+    "preferredPyro": true,
+    "preferredConfetti": true,
+    "preferredLighting": [
+      "purple",
+      "cyan",
+      "magenta"
+    ],
+    "preferredCameraAngles": [
+      "vip",
+      "stage-left",
+      "default"
+    ],
+    "musicStyle": "EDM",
+    "performanceStyle": "Scandi EDM clean"
+  },
+  "personality": "Emotional EDM storyteller",
+  "fanDemographics": "18–32, progressive EDM",
+  "targetAudience": "18–32, progressive EDM",
+  "catchPhrase": "Emotional EDM storyteller",
+  "actType": "solo",
+  "liveStatus": "REHEARSAL",
+  "poseCategory": "dj",
+  "liveAudience": 0,
+  "revenueTonight": 4400,
+  "growthPct": 16,
+  "showsScheduled": 11,
+  "albumTitle": "Long Day",
+  "singleTitle": "Dusk",
+  "avatarInitials": "DS"
+}

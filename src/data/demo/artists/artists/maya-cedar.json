@@ -1,0 +1,173 @@
+{
+  "isDemoArtist": true,
+  "visibility": "demo-only",
+  "environment": "demo",
+  "id": "maya-cedar",
+  "stageName": "Maya Cedar",
+  "realName": "Maya Cedar",
+  "genre": "Acoustic",
+  "subGenre": "Acoustic",
+  "hometown": "Boulder, CO",
+  "country": "United States",
+  "yearsActive": 13,
+  "label": "LiveCircuit Originals",
+  "management": "James Park",
+  "bio": "Maya Cedar is a acoustic act from Boulder, CO. Fingerstyle phenomenon. Known for mountain acoustic, they've built a devoted global fanbase on LiveCircuit with 300,000 followers.",
+  "brand": {
+    "primaryColor": "#10b981",
+    "secondaryColor": "#059669",
+    "accentColor": "#34d399",
+    "gradientClass": "from-emerald-500 to-teal-600",
+    "typography": "Space Grotesk",
+    "logoPath": "/assets/logos/maya-cedar.png",
+    "brandIconPath": "/assets/logos/maya-cedar-icon.png",
+    "brandDescription": "Mountain acoustic",
+    "brandVoice": "Confident, arena-ready, fan-first"
+  },
+  "appearance": {
+    "skinTone": "warm caramel",
+    "hairTexture": "wavy",
+    "hairColor": "platinum blonde",
+    "eyeColor": "deep brown",
+    "faceDescription": "Distinctive acoustic performer with deep brown eyes and wavy platinum blonde hair",
+    "bodyType": "long-limbed",
+    "height": "5'8\"",
+    "fashionStyle": "Mountain acoustic",
+    "accessories": [
+      "wrist cuffs"
+    ],
+    "stageOutfit": "Mountain acoustic — premium tour edition",
+    "streetOutfit": "Casual mountain acoustic off-stage look",
+    "performanceOutfit": "Signature Acoustic stage ensemble with LED accents"
+  },
+  "images": {
+    "heroImage": "/demo/performers/acoustic-mic.png",
+    "portraitImage": "/demo/performers/acoustic-mic.png",
+    "transparentPNG": "/demo/performers/acoustic-mic.png",
+    "tourPoster": "/assets/tours/maya-cedar-poster.png",
+    "albumCover": "/assets/albums/maya-cedar.png",
+    "arenaBanner": "/assets/backgrounds/maya-cedar-arena.png",
+    "vipImage": "/demo/performers/acoustic-mic.png",
+    "poses": {
+      "hero": "/demo/performers/acoustic-mic.png",
+      "portrait": "/demo/performers/acoustic-mic.png",
+      "transparent": "/demo/performers/acoustic-mic.png",
+      "performance": "/demo/performers/acoustic-piano.png",
+      "walk": "/demo/performers/acoustic-mic.png",
+      "crowd": "/demo/performers/acoustic-mic.png",
+      "closeUp": "/demo/performers/acoustic-mic.png",
+      "profile": "/demo/performers/acoustic-mic.png",
+      "back": "/demo/performers/acoustic-mic.png",
+      "instrument": "/demo/performers/acoustic-piano.png",
+      "mic": "/demo/performers/acoustic-mic.png",
+      "promo": "/demo/performers/acoustic-mic.png",
+      "vip": "/demo/performers/acoustic-mic.png",
+      "arenaBanner": "/demo/performers/acoustic-mic.png"
+    }
+  },
+  "merchCollection": [
+    {
+      "id": "maya-cedar-tee",
+      "name": "Cedar Live Tour Tee",
+      "price": 35,
+      "imagePath": "/assets/merch/maya-cedar/maya-cedar-tee.png"
+    },
+    {
+      "id": "maya-cedar-hoodie",
+      "name": "Maya Cedar Glow Hoodie",
+      "price": 65,
+      "imagePath": "/assets/merch/maya-cedar/maya-cedar-hoodie.png"
+    },
+    {
+      "id": "maya-cedar-vinyl",
+      "name": "Wood & Wire Vinyl",
+      "price": 45,
+      "imagePath": "/assets/merch/maya-cedar/maya-cedar-vinyl.png"
+    }
+  ],
+  "followers": 300000,
+  "monthlyListeners": 680000,
+  "fanRating": 4.3,
+  "averageAttendance": 8900,
+  "ticketPrice": 45,
+  "vipPrice": 125,
+  "merchRevenue": 364320,
+  "tourRevenue": 621000,
+  "careerRevenue": 2484000,
+  "verified": true,
+  "featured": false,
+  "socialLinks": {
+    "livecircuit": "/maya-cedar",
+    "website": "https://livecircuit.demo/maya-cedar",
+    "instagram": "@mayacedar"
+  },
+  "currentTour": {
+    "name": "Cedar Live",
+    "posterPath": "/assets/tours/maya-cedar-poster.png",
+    "upcomingShows": [
+      {
+        "city": "Boston",
+        "venue": "Boston Harbor Arena",
+        "date": "Sep 12",
+        "ticketPrice": 45,
+        "vipPrice": 125
+      },
+      {
+        "city": "Chicago",
+        "venue": "Windy City Stadium",
+        "date": "Sep 19",
+        "ticketPrice": 55,
+        "vipPrice": 151
+      },
+      {
+        "city": "Dallas",
+        "venue": "Lone Star Arena",
+        "date": "Sep 26",
+        "ticketPrice": 45,
+        "vipPrice": 125
+      },
+      {
+        "city": "Miami",
+        "venue": "Miami Pulse Arena",
+        "date": "Oct 3",
+        "ticketPrice": 50,
+        "vipPrice": 125
+      }
+    ]
+  },
+  "favoriteVenue": "Boston Harbor Arena",
+  "performance": {
+    "signatureMove": "Fingerstyle phenomenon",
+    "signatureLighting": "purple-magenta-cyan",
+    "signatureAnimation": "crowd-wave pulse",
+    "preferredArenaTheme": "premium-festival",
+    "preferredPyro": false,
+    "preferredConfetti": false,
+    "preferredLighting": [
+      "purple",
+      "cyan",
+      "magenta"
+    ],
+    "preferredCameraAngles": [
+      "vip",
+      "stage-left",
+      "default"
+    ],
+    "musicStyle": "Acoustic",
+    "performanceStyle": "Mountain acoustic"
+  },
+  "personality": "Fingerstyle phenomenon",
+  "fanDemographics": "24–48, acoustic",
+  "targetAudience": "24–48, acoustic",
+  "catchPhrase": "Fingerstyle phenomenon",
+  "actType": "solo",
+  "liveStatus": "LIVE",
+  "poseCategory": "acoustic",
+  "liveAudience": 8900,
+  "revenueTonight": 13800,
+  "growthPct": 9,
+  "showsScheduled": 4,
+  "albumTitle": "Wood & Wire",
+  "singleTitle": "Root",
+  "avatarInitials": "MC"
+}

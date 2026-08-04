@@ -1,0 +1,173 @@
+{
+  "isDemoArtist": true,
+  "visibility": "demo-only",
+  "environment": "demo",
+  "id": "ruth-emerald",
+  "stageName": "Ruth Emerald",
+  "realName": "Ruth Emerald",
+  "genre": "Singer Songwriter",
+  "subGenre": "Singer Songwriter",
+  "hometown": "London, UK",
+  "country": "United Kingdom",
+  "yearsActive": 3,
+  "label": "LiveCircuit Originals",
+  "management": "Marcus Lee",
+  "bio": "Ruth Emerald is a singer songwriter act from London, UK. Piano-led confessionals. Known for uk piano pop acoustic, they've built a devoted global fanbase on LiveCircuit with 390,000 followers.",
+  "brand": {
+    "primaryColor": "#a855f7",
+    "secondaryColor": "#7c3aed",
+    "accentColor": "#c084fc",
+    "gradientClass": "from-violet-500 to-purple-600",
+    "typography": "Space Grotesk",
+    "logoPath": "/assets/logos/ruth-emerald.png",
+    "brandIconPath": "/assets/logos/ruth-emerald-icon.png",
+    "brandDescription": "UK piano pop acoustic",
+    "brandVoice": "Confident, arena-ready, fan-first"
+  },
+  "appearance": {
+    "skinTone": "rich brown",
+    "hairTexture": "loose curls",
+    "hairColor": "auburn",
+    "eyeColor": "heterochromia green-brown",
+    "faceDescription": "Distinctive singer songwriter performer with heterochromia green-brown eyes and loose curls auburn hair",
+    "bodyType": "athletic lean",
+    "height": "5'8\"",
+    "fashionStyle": "UK piano pop acoustic",
+    "accessories": [
+      "ring stack"
+    ],
+    "stageOutfit": "UK piano pop acoustic — premium tour edition",
+    "streetOutfit": "Casual uk piano pop acoustic off-stage look",
+    "performanceOutfit": "Signature Singer Songwriter stage ensemble with LED accents"
+  },
+  "images": {
+    "heroImage": "/demo/performers/acoustic-mic.png",
+    "portraitImage": "/demo/performers/acoustic-mic.png",
+    "transparentPNG": "/demo/performers/acoustic-mic.png",
+    "tourPoster": "/assets/tours/ruth-emerald-poster.png",
+    "albumCover": "/assets/albums/ruth-emerald.png",
+    "arenaBanner": "/assets/backgrounds/ruth-emerald-arena.png",
+    "vipImage": "/demo/performers/acoustic-mic.png",
+    "poses": {
+      "hero": "/demo/performers/acoustic-mic.png",
+      "portrait": "/demo/performers/acoustic-mic.png",
+      "transparent": "/demo/performers/acoustic-mic.png",
+      "performance": "/demo/performers/acoustic-piano.png",
+      "walk": "/demo/performers/acoustic-mic.png",
+      "crowd": "/demo/performers/acoustic-mic.png",
+      "closeUp": "/demo/performers/acoustic-mic.png",
+      "profile": "/demo/performers/acoustic-mic.png",
+      "back": "/demo/performers/acoustic-mic.png",
+      "instrument": "/demo/performers/acoustic-piano.png",
+      "mic": "/demo/performers/acoustic-mic.png",
+      "promo": "/demo/performers/acoustic-mic.png",
+      "vip": "/demo/performers/acoustic-mic.png",
+      "arenaBanner": "/demo/performers/acoustic-mic.png"
+    }
+  },
+  "merchCollection": [
+    {
+      "id": "ruth-emerald-tee",
+      "name": "Emerald Keys Tour Tee",
+      "price": 35,
+      "imagePath": "/assets/merch/ruth-emerald/ruth-emerald-tee.png"
+    },
+    {
+      "id": "ruth-emerald-hoodie",
+      "name": "Ruth Emerald Glow Hoodie",
+      "price": 65,
+      "imagePath": "/assets/merch/ruth-emerald/ruth-emerald-hoodie.png"
+    },
+    {
+      "id": "ruth-emerald-vinyl",
+      "name": "Green Room Vinyl",
+      "price": 45,
+      "imagePath": "/assets/merch/ruth-emerald/ruth-emerald-vinyl.png"
+    }
+  ],
+  "followers": 390000,
+  "monthlyListeners": 890000,
+  "fanRating": 4.2,
+  "averageAttendance": 15200,
+  "ticketPrice": 45,
+  "vipPrice": 125,
+  "merchRevenue": 696960,
+  "tourRevenue": 1188000,
+  "careerRevenue": 4752000,
+  "verified": true,
+  "featured": false,
+  "socialLinks": {
+    "livecircuit": "/ruth-emerald",
+    "website": "https://livecircuit.demo/ruth-emerald",
+    "instagram": "@ruthemerald"
+  },
+  "currentTour": {
+    "name": "Emerald Keys",
+    "posterPath": "/assets/tours/ruth-emerald-poster.png",
+    "upcomingShows": [
+      {
+        "city": "Boston",
+        "venue": "Boston Harbor Arena",
+        "date": "Sep 12",
+        "ticketPrice": 45,
+        "vipPrice": 125
+      },
+      {
+        "city": "Chicago",
+        "venue": "Windy City Stadium",
+        "date": "Sep 19",
+        "ticketPrice": 55,
+        "vipPrice": 151
+      },
+      {
+        "city": "Dallas",
+        "venue": "Lone Star Arena",
+        "date": "Sep 26",
+        "ticketPrice": 45,
+        "vipPrice": 125
+      },
+      {
+        "city": "Miami",
+        "venue": "Miami Pulse Arena",
+        "date": "Oct 3",
+        "ticketPrice": 50,
+        "vipPrice": 125
+      }
+    ]
+  },
+  "favoriteVenue": "Boston Harbor Arena",
+  "performance": {
+    "signatureMove": "Piano-led confessionals",
+    "signatureLighting": "purple-magenta-cyan",
+    "signatureAnimation": "crowd-wave pulse",
+    "preferredArenaTheme": "premium-festival",
+    "preferredPyro": false,
+    "preferredConfetti": false,
+    "preferredLighting": [
+      "purple",
+      "cyan",
+      "magenta"
+    ],
+    "preferredCameraAngles": [
+      "vip",
+      "stage-left",
+      "default"
+    ],
+    "musicStyle": "Singer Songwriter",
+    "performanceStyle": "UK piano pop acoustic"
+  },
+  "personality": "Piano-led confessionals",
+  "fanDemographics": "20–38, piano pop",
+  "targetAudience": "20–38, piano pop",
+  "catchPhrase": "Piano-led confessionals",
+  "actType": "solo",
+  "liveStatus": "LIVE",
+  "poseCategory": "acoustic",
+  "liveAudience": 15200,
+  "revenueTonight": 26400,
+  "growthPct": 16,
+  "showsScheduled": 11,
+  "albumTitle": "Green Room",
+  "singleTitle": "Ivory",
+  "avatarInitials": "RE"
+}

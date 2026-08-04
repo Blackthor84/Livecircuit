@@ -1,0 +1,173 @@
+{
+  "isDemoArtist": true,
+  "visibility": "demo-only",
+  "environment": "demo",
+  "id": "dj-polarity",
+  "stageName": "DJ Polarity",
+  "realName": "DJ Polarity",
+  "genre": "EDM",
+  "subGenre": "EDM",
+  "hometown": "Berlin, DE",
+  "country": "Germany",
+  "yearsActive": 14,
+  "label": "LiveCircuit Originals",
+  "management": "Marcus Lee",
+  "bio": "DJ Polarity is a edm act from Berlin, DE. Bass drop scientist. Known for techno precision wear, they've built a devoted global fanbase on LiveCircuit with 980,000 followers.",
+  "brand": {
+    "primaryColor": "#a855f7",
+    "secondaryColor": "#7c3aed",
+    "accentColor": "#c084fc",
+    "gradientClass": "from-violet-500 to-purple-600",
+    "typography": "Space Grotesk",
+    "logoPath": "/assets/logos/dj-polarity.png",
+    "brandIconPath": "/assets/logos/dj-polarity-icon.png",
+    "brandDescription": "Techno precision wear",
+    "brandVoice": "Confident, arena-ready, fan-first"
+  },
+  "appearance": {
+    "skinTone": "sand neutral",
+    "hairTexture": "coily 4C",
+    "hairColor": "dark brown",
+    "eyeColor": "hazel",
+    "faceDescription": "Distinctive edm performer with hazel eyes and coily 4C dark brown hair",
+    "bodyType": "muscular broad",
+    "height": "5'10\"",
+    "fashionStyle": "Techno precision wear",
+    "accessories": [
+      "chain necklace"
+    ],
+    "stageOutfit": "Techno precision wear — premium tour edition",
+    "streetOutfit": "Casual techno precision wear off-stage look",
+    "performanceOutfit": "Signature EDM stage ensemble with LED accents"
+  },
+  "images": {
+    "heroImage": "/demo/performers/dj-table.png",
+    "portraitImage": "/demo/performers/dj-table.png",
+    "transparentPNG": "/demo/performers/dj-table.png",
+    "tourPoster": "/assets/tours/dj-polarity-poster.png",
+    "albumCover": "/assets/albums/dj-polarity.png",
+    "arenaBanner": "/assets/backgrounds/dj-polarity-arena.png",
+    "vipImage": "/demo/performers/dj-table.png",
+    "poses": {
+      "hero": "/demo/performers/dj-table.png",
+      "portrait": "/demo/performers/dj-table.png",
+      "transparent": "/demo/performers/dj-table.png",
+      "performance": "/demo/performers/dj-arms-up.png",
+      "walk": "/demo/performers/dj-table.png",
+      "crowd": "/demo/performers/dj-table.png",
+      "closeUp": "/demo/performers/dj-table.png",
+      "profile": "/demo/performers/dj-table.png",
+      "back": "/demo/performers/dj-table.png",
+      "instrument": "/demo/performers/dj-table.png",
+      "mic": "/demo/performers/dj-table.png",
+      "promo": "/demo/performers/dj-table.png",
+      "vip": "/demo/performers/dj-table.png",
+      "arenaBanner": "/demo/performers/dj-table.png"
+    }
+  },
+  "merchCollection": [
+    {
+      "id": "dj-polarity-tee",
+      "name": "Polarity Live Tour Tee",
+      "price": 35,
+      "imagePath": "/assets/merch/dj-polarity/dj-polarity-tee.png"
+    },
+    {
+      "id": "dj-polarity-hoodie",
+      "name": "DJ Polarity Glow Hoodie",
+      "price": 65,
+      "imagePath": "/assets/merch/dj-polarity/dj-polarity-hoodie.png"
+    },
+    {
+      "id": "dj-polarity-vinyl",
+      "name": "Magnetic Vinyl",
+      "price": 45,
+      "imagePath": "/assets/merch/dj-polarity/dj-polarity-vinyl.png"
+    }
+  ],
+  "followers": 980000,
+  "monthlyListeners": 2240000,
+  "fanRating": 4.4,
+  "averageAttendance": 9800,
+  "ticketPrice": 45,
+  "vipPrice": 125,
+  "merchRevenue": 411840,
+  "tourRevenue": 702000,
+  "careerRevenue": 2808000,
+  "verified": true,
+  "featured": false,
+  "socialLinks": {
+    "livecircuit": "/dj-polarity",
+    "website": "https://livecircuit.demo/dj-polarity",
+    "instagram": "@djpolarity"
+  },
+  "currentTour": {
+    "name": "Polarity Live",
+    "posterPath": "/assets/tours/dj-polarity-poster.png",
+    "upcomingShows": [
+      {
+        "city": "Boston",
+        "venue": "Boston Harbor Arena",
+        "date": "Sep 12",
+        "ticketPrice": 45,
+        "vipPrice": 125
+      },
+      {
+        "city": "Chicago",
+        "venue": "Windy City Stadium",
+        "date": "Sep 19",
+        "ticketPrice": 55,
+        "vipPrice": 151
+      },
+      {
+        "city": "Dallas",
+        "venue": "Lone Star Arena",
+        "date": "Sep 26",
+        "ticketPrice": 45,
+        "vipPrice": 125
+      },
+      {
+        "city": "Miami",
+        "venue": "Miami Pulse Arena",
+        "date": "Oct 3",
+        "ticketPrice": 50,
+        "vipPrice": 125
+      }
+    ]
+  },
+  "favoriteVenue": "Boston Harbor Arena",
+  "performance": {
+    "signatureMove": "Bass drop scientist",
+    "signatureLighting": "purple-magenta-cyan",
+    "signatureAnimation": "crowd-wave pulse",
+    "preferredArenaTheme": "premium-festival",
+    "preferredPyro": true,
+    "preferredConfetti": true,
+    "preferredLighting": [
+      "purple",
+      "cyan",
+      "magenta"
+    ],
+    "preferredCameraAngles": [
+      "vip",
+      "stage-left",
+      "default"
+    ],
+    "musicStyle": "EDM",
+    "performanceStyle": "Techno precision wear"
+  },
+  "personality": "Bass drop scientist",
+  "fanDemographics": "18–30, bass/EDM",
+  "targetAudience": "18–30, bass/EDM",
+  "catchPhrase": "Bass drop scientist",
+  "actType": "solo",
+  "liveStatus": "LIVE",
+  "poseCategory": "dj",
+  "liveAudience": 9800,
+  "revenueTonight": 15600,
+  "growthPct": 10,
+  "showsScheduled": 5,
+  "albumTitle": "Magnetic",
+  "singleTitle": "Flip",
+  "avatarInitials": "DP"
+}

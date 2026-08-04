@@ -1,0 +1,173 @@
+{
+  "isDemoArtist": true,
+  "visibility": "demo-only",
+  "environment": "demo",
+  "id": "meridian-sound",
+  "stageName": "Meridian Sound",
+  "realName": "Meridian Sound (collective)",
+  "genre": "Electronic Duo",
+  "subGenre": "Electronic Duo",
+  "hometown": "Paris, FR",
+  "country": "United States",
+  "yearsActive": 5,
+  "label": "LiveCircuit Originals",
+  "management": "Marcus Lee",
+  "bio": "Meridian Sound is a electronic duo act from Paris, FR. French touch electronic duo. Known for parisian electronic chic, they've built a devoted global fanbase on LiveCircuit with 490,000 followers.",
+  "brand": {
+    "primaryColor": "#a855f7",
+    "secondaryColor": "#7c3aed",
+    "accentColor": "#c084fc",
+    "gradientClass": "from-violet-500 to-purple-600",
+    "typography": "Space Grotesk",
+    "logoPath": "/assets/logos/meridian-sound.png",
+    "brandIconPath": "/assets/logos/meridian-sound-icon.png",
+    "brandDescription": "Parisian electronic chic",
+    "brandVoice": "Confident, arena-ready, fan-first"
+  },
+  "appearance": {
+    "skinTone": "deep mahogany",
+    "hairTexture": "dreadlocks",
+    "hairColor": "natural black",
+    "eyeColor": "hazel",
+    "faceDescription": "Distinctive electronic duo performer with hazel eyes and dreadlocks natural black hair",
+    "bodyType": "muscular broad",
+    "height": "5'2\"",
+    "fashionStyle": "Parisian electronic chic",
+    "accessories": [
+      "chain necklace"
+    ],
+    "stageOutfit": "Parisian electronic chic — premium tour edition",
+    "streetOutfit": "Casual parisian electronic chic off-stage look",
+    "performanceOutfit": "Signature Electronic Duo stage ensemble with LED accents"
+  },
+  "images": {
+    "heroImage": "/demo/performers/dj-table.png",
+    "portraitImage": "/demo/performers/dj-table.png",
+    "transparentPNG": "/demo/performers/dj-table.png",
+    "tourPoster": "/assets/tours/meridian-sound-poster.png",
+    "albumCover": "/assets/albums/meridian-sound.png",
+    "arenaBanner": "/assets/backgrounds/meridian-sound-arena.png",
+    "vipImage": "/demo/performers/dj-table.png",
+    "poses": {
+      "hero": "/demo/performers/dj-table.png",
+      "portrait": "/demo/performers/dj-table.png",
+      "transparent": "/demo/performers/dj-table.png",
+      "performance": "/demo/performers/dj-arms-up.png",
+      "walk": "/demo/performers/dj-table.png",
+      "crowd": "/demo/performers/dj-table.png",
+      "closeUp": "/demo/performers/dj-table.png",
+      "profile": "/demo/performers/dj-table.png",
+      "back": "/demo/performers/dj-table.png",
+      "instrument": "/demo/performers/dj-table.png",
+      "mic": "/demo/performers/dj-table.png",
+      "promo": "/demo/performers/dj-table.png",
+      "vip": "/demo/performers/dj-table.png",
+      "arenaBanner": "/demo/performers/dj-table.png"
+    }
+  },
+  "merchCollection": [
+    {
+      "id": "meridian-sound-tee",
+      "name": "Meridian Live Tour Tee",
+      "price": 35,
+      "imagePath": "/assets/merch/meridian-sound/meridian-sound-tee.png"
+    },
+    {
+      "id": "meridian-sound-hoodie",
+      "name": "Meridian Sound Glow Hoodie",
+      "price": 65,
+      "imagePath": "/assets/merch/meridian-sound/meridian-sound-hoodie.png"
+    },
+    {
+      "id": "meridian-sound-vinyl",
+      "name": "Ligne Vinyl",
+      "price": 45,
+      "imagePath": "/assets/merch/meridian-sound/meridian-sound-vinyl.png"
+    }
+  ],
+  "followers": 490000,
+  "monthlyListeners": 1120000,
+  "fanRating": 4.8,
+  "averageAttendance": 13400,
+  "ticketPrice": 45,
+  "vipPrice": 125,
+  "merchRevenue": 601920,
+  "tourRevenue": 1026000,
+  "careerRevenue": 4104000,
+  "verified": true,
+  "featured": false,
+  "socialLinks": {
+    "livecircuit": "/meridian-sound",
+    "website": "https://livecircuit.demo/meridian-sound",
+    "instagram": "@meridiansound"
+  },
+  "currentTour": {
+    "name": "Meridian Live",
+    "posterPath": "/assets/tours/meridian-sound-poster.png",
+    "upcomingShows": [
+      {
+        "city": "Boston",
+        "venue": "Boston Harbor Arena",
+        "date": "Sep 12",
+        "ticketPrice": 45,
+        "vipPrice": 125
+      },
+      {
+        "city": "Chicago",
+        "venue": "Windy City Stadium",
+        "date": "Sep 19",
+        "ticketPrice": 55,
+        "vipPrice": 151
+      },
+      {
+        "city": "Dallas",
+        "venue": "Lone Star Arena",
+        "date": "Sep 26",
+        "ticketPrice": 45,
+        "vipPrice": 125
+      },
+      {
+        "city": "Miami",
+        "venue": "Miami Pulse Arena",
+        "date": "Oct 3",
+        "ticketPrice": 50,
+        "vipPrice": 125
+      }
+    ]
+  },
+  "favoriteVenue": "Boston Harbor Arena",
+  "performance": {
+    "signatureMove": "French touch electronic duo",
+    "signatureLighting": "purple-magenta-cyan",
+    "signatureAnimation": "crowd-wave pulse",
+    "preferredArenaTheme": "premium-festival",
+    "preferredPyro": false,
+    "preferredConfetti": false,
+    "preferredLighting": [
+      "purple",
+      "cyan",
+      "magenta"
+    ],
+    "preferredCameraAngles": [
+      "vip",
+      "stage-left",
+      "default"
+    ],
+    "musicStyle": "Electronic Duo",
+    "performanceStyle": "Parisian electronic chic"
+  },
+  "personality": "French touch electronic duo",
+  "fanDemographics": "20–36, French electronic",
+  "targetAudience": "20–36, French electronic",
+  "catchPhrase": "French touch electronic duo",
+  "actType": "duo",
+  "liveStatus": "LIVE",
+  "poseCategory": "dj",
+  "liveAudience": 13400,
+  "revenueTonight": 22800,
+  "growthPct": 14,
+  "showsScheduled": 9,
+  "albumTitle": "Ligne",
+  "singleTitle": "Metro",
+  "avatarInitials": "MS"
+}

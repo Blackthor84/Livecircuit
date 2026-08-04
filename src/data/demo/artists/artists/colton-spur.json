@@ -1,0 +1,173 @@
+{
+  "isDemoArtist": true,
+  "visibility": "demo-only",
+  "environment": "demo",
+  "id": "colton-spur",
+  "stageName": "Colton Spur",
+  "realName": "Colton Spur",
+  "genre": "Country",
+  "subGenre": "Country",
+  "hometown": "Oklahoma City, OK",
+  "country": "United States",
+  "yearsActive": 14,
+  "label": "LiveCircuit Originals",
+  "management": "James Park",
+  "bio": "Colton Spur is a country act from Oklahoma City, OK. Boot-stomp arena filler. Known for rodeo-ready country, they've built a devoted global fanbase on LiveCircuit with 290,000 followers.",
+  "brand": {
+    "primaryColor": "#f59e0b",
+    "secondaryColor": "#d97706",
+    "accentColor": "#fbbf24",
+    "gradientClass": "from-amber-500 to-orange-600",
+    "typography": "Space Grotesk",
+    "logoPath": "/assets/logos/colton-spur.png",
+    "brandIconPath": "/assets/logos/colton-spur-icon.png",
+    "brandDescription": "Rodeo-ready country",
+    "brandVoice": "Confident, arena-ready, fan-first"
+  },
+  "appearance": {
+    "skinTone": "deep ebony",
+    "hairTexture": "tight curls",
+    "hairColor": "chestnut",
+    "eyeColor": "green",
+    "faceDescription": "Distinctive country performer with green eyes and tight curls chestnut hair",
+    "bodyType": "petite compact",
+    "height": "5'4\"",
+    "fashionStyle": "Rodeo-ready country",
+    "accessories": [
+      "stud earrings"
+    ],
+    "stageOutfit": "Rodeo-ready country — premium tour edition",
+    "streetOutfit": "Casual rodeo-ready country off-stage look",
+    "performanceOutfit": "Signature Country stage ensemble with LED accents"
+  },
+  "images": {
+    "heroImage": "/demo/performers/country-mic.png",
+    "portraitImage": "/demo/performers/country-mic.png",
+    "transparentPNG": "/demo/performers/country-mic.png",
+    "tourPoster": "/assets/tours/colton-spur-poster.png",
+    "albumCover": "/assets/albums/colton-spur.png",
+    "arenaBanner": "/assets/backgrounds/colton-spur-arena.png",
+    "vipImage": "/demo/performers/country-mic.png",
+    "poses": {
+      "hero": "/demo/performers/country-mic.png",
+      "portrait": "/demo/performers/country-mic.png",
+      "transparent": "/demo/performers/country-mic.png",
+      "performance": "/demo/performers/country-guitar.png",
+      "walk": "/demo/performers/country-mic.png",
+      "crowd": "/demo/performers/country-mic.png",
+      "closeUp": "/demo/performers/country-mic.png",
+      "profile": "/demo/performers/country-mic.png",
+      "back": "/demo/performers/country-mic.png",
+      "instrument": "/demo/performers/country-guitar.png",
+      "mic": "/demo/performers/country-mic.png",
+      "promo": "/demo/performers/country-mic.png",
+      "vip": "/demo/performers/country-mic.png",
+      "arenaBanner": "/demo/performers/country-mic.png"
+    }
+  },
+  "merchCollection": [
+    {
+      "id": "colton-spur-tee",
+      "name": "Spur Circuit Tour Tee",
+      "price": 35,
+      "imagePath": "/assets/merch/colton-spur/colton-spur-tee.png"
+    },
+    {
+      "id": "colton-spur-hoodie",
+      "name": "Colton Spur Glow Hoodie",
+      "price": 65,
+      "imagePath": "/assets/merch/colton-spur/colton-spur-hoodie.png"
+    },
+    {
+      "id": "colton-spur-vinyl",
+      "name": "Dust Bowl Dreams Vinyl",
+      "price": 45,
+      "imagePath": "/assets/merch/colton-spur/colton-spur-vinyl.png"
+    }
+  ],
+  "followers": 290000,
+  "monthlyListeners": 640000,
+  "fanRating": 4.7,
+  "averageAttendance": 23200,
+  "ticketPrice": 45,
+  "vipPrice": 125,
+  "merchRevenue": 92400,
+  "tourRevenue": 157500,
+  "careerRevenue": 630000,
+  "verified": true,
+  "featured": false,
+  "socialLinks": {
+    "livecircuit": "/colton-spur",
+    "website": "https://livecircuit.demo/colton-spur",
+    "instagram": "@coltonspur"
+  },
+  "currentTour": {
+    "name": "Spur Circuit",
+    "posterPath": "/assets/tours/colton-spur-poster.png",
+    "upcomingShows": [
+      {
+        "city": "Boston",
+        "venue": "Boston Harbor Arena",
+        "date": "Sep 12",
+        "ticketPrice": 45,
+        "vipPrice": 125
+      },
+      {
+        "city": "Chicago",
+        "venue": "Windy City Stadium",
+        "date": "Sep 19",
+        "ticketPrice": 55,
+        "vipPrice": 151
+      },
+      {
+        "city": "Dallas",
+        "venue": "Lone Star Arena",
+        "date": "Sep 26",
+        "ticketPrice": 45,
+        "vipPrice": 125
+      },
+      {
+        "city": "Miami",
+        "venue": "Miami Pulse Arena",
+        "date": "Oct 3",
+        "ticketPrice": 50,
+        "vipPrice": 125
+      }
+    ]
+  },
+  "favoriteVenue": "Boston Harbor Arena",
+  "performance": {
+    "signatureMove": "Boot-stomp arena filler",
+    "signatureLighting": "purple-magenta-cyan",
+    "signatureAnimation": "crowd-wave pulse",
+    "preferredArenaTheme": "premium-festival",
+    "preferredPyro": false,
+    "preferredConfetti": false,
+    "preferredLighting": [
+      "purple",
+      "cyan",
+      "magenta"
+    ],
+    "preferredCameraAngles": [
+      "vip",
+      "stage-left",
+      "default"
+    ],
+    "musicStyle": "Country",
+    "performanceStyle": "Rodeo-ready country"
+  },
+  "personality": "Boot-stomp arena filler",
+  "fanDemographics": "26–52, rodeo country",
+  "targetAudience": "26–52, rodeo country",
+  "catchPhrase": "Boot-stomp arena filler",
+  "actType": "solo",
+  "liveStatus": "REHEARSAL",
+  "poseCategory": "country",
+  "liveAudience": 0,
+  "revenueTonight": 3500,
+  "growthPct": 13,
+  "showsScheduled": 8,
+  "albumTitle": "Dust Bowl Dreams",
+  "singleTitle": "Stampede",
+  "avatarInitials": "CS"
+}

@@ -1,0 +1,173 @@
+{
+  "isDemoArtist": true,
+  "visibility": "demo-only",
+  "environment": "demo",
+  "id": "the-wild-pines",
+  "stageName": "The Wild Pines",
+  "realName": "The Wild Pines (collective)",
+  "genre": "Country",
+  "subGenre": "Country",
+  "hometown": "Nashville, TN",
+  "country": "United States",
+  "yearsActive": 5,
+  "label": "LiveCircuit Originals",
+  "management": "Sarah Chen",
+  "bio": "The Wild Pines is a country act from Nashville, TN. Stadium country with forest soul. Known for denim, boots, and arena lights, they've built a devoted global fanbase on LiveCircuit with 1,160,000 followers.",
+  "brand": {
+    "primaryColor": "#f59e0b",
+    "secondaryColor": "#d97706",
+    "accentColor": "#fbbf24",
+    "gradientClass": "from-amber-500 to-orange-600",
+    "typography": "Space Grotesk",
+    "logoPath": "/assets/logos/the-wild-pines.png",
+    "brandIconPath": "/assets/logos/the-wild-pines-icon.png",
+    "brandDescription": "Denim, boots, and arena lights",
+    "brandVoice": "Confident, arena-ready, fan-first"
+  },
+  "appearance": {
+    "skinTone": "deep ebony",
+    "hairTexture": "tight curls",
+    "hairColor": "chestnut",
+    "eyeColor": "green",
+    "faceDescription": "Distinctive country performer with green eyes and tight curls chestnut hair",
+    "bodyType": "petite compact",
+    "height": "5'4\"",
+    "fashionStyle": "Denim, boots, and arena lights",
+    "accessories": [
+      "stud earrings"
+    ],
+    "stageOutfit": "Denim, boots, and arena lights — premium tour edition",
+    "streetOutfit": "Casual denim, boots, and arena lights off-stage look",
+    "performanceOutfit": "Signature Country stage ensemble with LED accents"
+  },
+  "images": {
+    "heroImage": "/demo/performers/country-mic.png",
+    "portraitImage": "/demo/performers/country-mic.png",
+    "transparentPNG": "/demo/performers/country-mic.png",
+    "tourPoster": "/assets/tours/the-wild-pines-poster.png",
+    "albumCover": "/assets/albums/the-wild-pines.png",
+    "arenaBanner": "/assets/backgrounds/the-wild-pines-arena.png",
+    "vipImage": "/demo/performers/country-mic.png",
+    "poses": {
+      "hero": "/demo/performers/country-mic.png",
+      "portrait": "/demo/performers/country-mic.png",
+      "transparent": "/demo/performers/country-mic.png",
+      "performance": "/demo/performers/country-guitar.png",
+      "walk": "/demo/performers/country-mic.png",
+      "crowd": "/demo/performers/country-mic.png",
+      "closeUp": "/demo/performers/country-mic.png",
+      "profile": "/demo/performers/country-mic.png",
+      "back": "/demo/performers/country-mic.png",
+      "instrument": "/demo/performers/country-guitar.png",
+      "mic": "/demo/performers/country-mic.png",
+      "promo": "/demo/performers/country-mic.png",
+      "vip": "/demo/performers/country-mic.png",
+      "arenaBanner": "/demo/performers/country-mic.png"
+    }
+  },
+  "merchCollection": [
+    {
+      "id": "the-wild-pines-tee",
+      "name": "Pine Circuit Tour Tee",
+      "price": 35,
+      "imagePath": "/assets/merch/the-wild-pines/the-wild-pines-tee.png"
+    },
+    {
+      "id": "the-wild-pines-hoodie",
+      "name": "The Wild Pines Glow Hoodie",
+      "price": 65,
+      "imagePath": "/assets/merch/the-wild-pines/the-wild-pines-hoodie.png"
+    },
+    {
+      "id": "the-wild-pines-vinyl",
+      "name": "Timber & Gold Vinyl",
+      "price": 45,
+      "imagePath": "/assets/merch/the-wild-pines/the-wild-pines-vinyl.png"
+    }
+  ],
+  "followers": 1160000,
+  "monthlyListeners": 2640000,
+  "fanRating": 4.6000000000000005,
+  "averageAttendance": 8000,
+  "ticketPrice": 45,
+  "vipPrice": 125,
+  "merchRevenue": 316800,
+  "tourRevenue": 540000,
+  "careerRevenue": 2160000,
+  "verified": true,
+  "featured": true,
+  "socialLinks": {
+    "livecircuit": "/the-wild-pines",
+    "website": "https://livecircuit.demo/the-wild-pines",
+    "instagram": "@thewildpines"
+  },
+  "currentTour": {
+    "name": "Pine Circuit",
+    "posterPath": "/assets/tours/the-wild-pines-poster.png",
+    "upcomingShows": [
+      {
+        "city": "Boston",
+        "venue": "Boston Harbor Arena",
+        "date": "Sep 12",
+        "ticketPrice": 45,
+        "vipPrice": 125
+      },
+      {
+        "city": "Chicago",
+        "venue": "Windy City Stadium",
+        "date": "Sep 19",
+        "ticketPrice": 55,
+        "vipPrice": 151
+      },
+      {
+        "city": "Dallas",
+        "venue": "Lone Star Arena",
+        "date": "Sep 26",
+        "ticketPrice": 45,
+        "vipPrice": 125
+      },
+      {
+        "city": "Miami",
+        "venue": "Miami Pulse Arena",
+        "date": "Oct 3",
+        "ticketPrice": 50,
+        "vipPrice": 125
+      }
+    ]
+  },
+  "favoriteVenue": "Boston Harbor Arena",
+  "performance": {
+    "signatureMove": "Stadium country with forest soul",
+    "signatureLighting": "purple-magenta-cyan",
+    "signatureAnimation": "crowd-wave pulse",
+    "preferredArenaTheme": "premium-festival",
+    "preferredPyro": false,
+    "preferredConfetti": false,
+    "preferredLighting": [
+      "purple",
+      "cyan",
+      "magenta"
+    ],
+    "preferredCameraAngles": [
+      "vip",
+      "stage-left",
+      "default"
+    ],
+    "musicStyle": "Country",
+    "performanceStyle": "Denim, boots, and arena lights"
+  },
+  "personality": "Stadium country with forest soul",
+  "fanDemographics": "22–48, country core",
+  "targetAudience": "22–48, country core",
+  "catchPhrase": "Stadium country with forest soul",
+  "actType": "band",
+  "liveStatus": "LIVE",
+  "poseCategory": "country",
+  "liveAudience": 8000,
+  "revenueTonight": 12000,
+  "growthPct": 12,
+  "showsScheduled": 3,
+  "albumTitle": "Timber & Gold",
+  "singleTitle": "Wildfire Road",
+  "avatarInitials": "TW"
+}

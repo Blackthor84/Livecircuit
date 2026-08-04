@@ -1,0 +1,173 @@
+{
+  "isDemoArtist": true,
+  "visibility": "demo-only",
+  "environment": "demo",
+  "id": "aria-sol",
+  "stageName": "Aria Sol",
+  "realName": "Aria Sol",
+  "genre": "Latin Pop",
+  "subGenre": "Latin Pop",
+  "hometown": "Miami, FL",
+  "country": "United States",
+  "yearsActive": 11,
+  "label": "LiveCircuit Originals",
+  "management": "Marcus Lee",
+  "bio": "Aria Sol is a latin pop act from Miami, FL. Bilingual pop powerhouse. Known for tropical futurism, they've built a devoted global fanbase on LiveCircuit with 1,280,000 followers.",
+  "brand": {
+    "primaryColor": "#f59e0b",
+    "secondaryColor": "#d97706",
+    "accentColor": "#fbbf24",
+    "gradientClass": "from-amber-500 to-orange-600",
+    "typography": "Space Grotesk",
+    "logoPath": "/assets/logos/aria-sol.png",
+    "brandIconPath": "/assets/logos/aria-sol-icon.png",
+    "brandDescription": "Tropical futurism",
+    "brandVoice": "Confident, arena-ready, fan-first"
+  },
+  "appearance": {
+    "skinTone": "olive medium",
+    "hairTexture": "braided locs",
+    "hairColor": "copper red",
+    "eyeColor": "grey",
+    "faceDescription": "Distinctive latin pop performer with grey eyes and braided locs copper red hair",
+    "bodyType": "willowy",
+    "height": "5'4\"",
+    "fashionStyle": "Tropical futurism",
+    "accessories": [
+      "chain necklace"
+    ],
+    "stageOutfit": "Tropical futurism — premium tour edition",
+    "streetOutfit": "Casual tropical futurism off-stage look",
+    "performanceOutfit": "Signature Latin Pop stage ensemble with LED accents"
+  },
+  "images": {
+    "heroImage": "/demo/performers/female-pop-mic.png",
+    "portraitImage": "/demo/performers/female-pop-mic.png",
+    "transparentPNG": "/demo/performers/female-pop-mic.png",
+    "tourPoster": "/assets/tours/aria-sol-poster.png",
+    "albumCover": "/assets/albums/aria-sol.png",
+    "arenaBanner": "/assets/backgrounds/aria-sol-arena.png",
+    "vipImage": "/demo/performers/female-pop-mic.png",
+    "poses": {
+      "hero": "/demo/performers/female-pop-mic.png",
+      "portrait": "/demo/performers/female-pop-mic.png",
+      "transparent": "/demo/performers/female-pop-mic.png",
+      "performance": "/demo/performers/female-pop-mic.png",
+      "walk": "/demo/performers/female-pop-point.png",
+      "crowd": "/demo/performers/female-pop-point.png",
+      "closeUp": "/demo/performers/female-pop-closeup.png",
+      "profile": "/demo/performers/female-pop-closeup.png",
+      "back": "/demo/performers/female-pop-back.png",
+      "instrument": "/demo/performers/female-pop-mic.png",
+      "mic": "/demo/performers/female-pop-mic.png",
+      "promo": "/demo/performers/female-pop-mic.png",
+      "vip": "/demo/performers/female-pop-mic.png",
+      "arenaBanner": "/demo/performers/female-pop-mic.png"
+    }
+  },
+  "merchCollection": [
+    {
+      "id": "aria-sol-tee",
+      "name": "Sol y Circuit Tour Tee",
+      "price": 35,
+      "imagePath": "/assets/merch/aria-sol/aria-sol-tee.png"
+    },
+    {
+      "id": "aria-sol-hoodie",
+      "name": "Aria Sol Glow Hoodie",
+      "price": 65,
+      "imagePath": "/assets/merch/aria-sol/aria-sol-hoodie.png"
+    },
+    {
+      "id": "aria-sol-vinyl",
+      "name": "Fuego Suave Vinyl",
+      "price": 45,
+      "imagePath": "/assets/merch/aria-sol/aria-sol-vinyl.png"
+    }
+  ],
+  "followers": 1280000,
+  "monthlyListeners": 2890000,
+  "fanRating": 4.7,
+  "averageAttendance": 7000,
+  "ticketPrice": 45,
+  "vipPrice": 125,
+  "merchRevenue": 250800,
+  "tourRevenue": 427500,
+  "careerRevenue": 1710000,
+  "verified": true,
+  "featured": false,
+  "socialLinks": {
+    "livecircuit": "/aria-sol",
+    "website": "https://livecircuit.demo/aria-sol",
+    "instagram": "@ariasol"
+  },
+  "currentTour": {
+    "name": "Sol y Circuit",
+    "posterPath": "/assets/tours/aria-sol-poster.png",
+    "upcomingShows": [
+      {
+        "city": "Boston",
+        "venue": "Boston Harbor Arena",
+        "date": "Sep 12",
+        "ticketPrice": 45,
+        "vipPrice": 125
+      },
+      {
+        "city": "Chicago",
+        "venue": "Windy City Stadium",
+        "date": "Sep 19",
+        "ticketPrice": 55,
+        "vipPrice": 151
+      },
+      {
+        "city": "Dallas",
+        "venue": "Lone Star Arena",
+        "date": "Sep 26",
+        "ticketPrice": 45,
+        "vipPrice": 125
+      },
+      {
+        "city": "Miami",
+        "venue": "Miami Pulse Arena",
+        "date": "Oct 3",
+        "ticketPrice": 50,
+        "vipPrice": 125
+      }
+    ]
+  },
+  "favoriteVenue": "Boston Harbor Arena",
+  "performance": {
+    "signatureMove": "Bilingual pop powerhouse",
+    "signatureLighting": "purple-magenta-cyan",
+    "signatureAnimation": "crowd-wave pulse",
+    "preferredArenaTheme": "premium-festival",
+    "preferredPyro": false,
+    "preferredConfetti": true,
+    "preferredLighting": [
+      "purple",
+      "cyan",
+      "magenta"
+    ],
+    "preferredCameraAngles": [
+      "vip",
+      "stage-left",
+      "default"
+    ],
+    "musicStyle": "Latin Pop",
+    "performanceStyle": "Tropical futurism"
+  },
+  "personality": "Bilingual pop powerhouse",
+  "fanDemographics": "18–40, Latin pop/global",
+  "targetAudience": "18–40, Latin pop/global",
+  "catchPhrase": "Bilingual pop powerhouse",
+  "actType": "solo",
+  "liveStatus": "ON TOUR",
+  "poseCategory": "female-pop",
+  "liveAudience": 7000,
+  "revenueTonight": 9500,
+  "growthPct": 13,
+  "showsScheduled": 8,
+  "albumTitle": "Fuego Suave",
+  "singleTitle": "Baila Luz",
+  "avatarInitials": "AS"
+}

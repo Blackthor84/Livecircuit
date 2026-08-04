@@ -1,0 +1,173 @@
+{
+  "isDemoArtist": true,
+  "visibility": "demo-only",
+  "environment": "demo",
+  "id": "velvet-static",
+  "stageName": "Velvet Static",
+  "realName": "Velvet Static (collective)",
+  "genre": "Indie Rock",
+  "subGenre": "Indie Rock",
+  "hometown": "Brooklyn, NY",
+  "country": "United States",
+  "yearsActive": 4,
+  "label": "LiveCircuit Originals",
+  "management": "James Park",
+  "bio": "Velvet Static is a indie rock act from Brooklyn, NY. Indie rock built for festival headliners. Known for vintage amps and velvet jackets, they've built a devoted global fanbase on LiveCircuit with 820,000 followers.",
+  "brand": {
+    "primaryColor": "#a855f7",
+    "secondaryColor": "#7c3aed",
+    "accentColor": "#c084fc",
+    "gradientClass": "from-violet-500 to-purple-600",
+    "typography": "Space Grotesk",
+    "logoPath": "/assets/logos/velvet-static.png",
+    "brandIconPath": "/assets/logos/velvet-static-icon.png",
+    "brandDescription": "Vintage amps and velvet jackets",
+    "brandVoice": "Confident, arena-ready, fan-first"
+  },
+  "appearance": {
+    "skinTone": "porcelain cool",
+    "hairTexture": "finger waves",
+    "hairColor": "blue-black",
+    "eyeColor": "dark brown",
+    "faceDescription": "Distinctive indie rock performer with dark brown eyes and finger waves blue-black hair",
+    "bodyType": "slim tall",
+    "height": "5'2\"",
+    "fashionStyle": "Vintage amps and velvet jackets",
+    "accessories": [
+      "wrist cuffs"
+    ],
+    "stageOutfit": "Vintage amps and velvet jackets — premium tour edition",
+    "streetOutfit": "Casual vintage amps and velvet jackets off-stage look",
+    "performanceOutfit": "Signature Indie Rock stage ensemble with LED accents"
+  },
+  "images": {
+    "heroImage": "/demo/performers/indie-mic.png",
+    "portraitImage": "/demo/performers/indie-mic.png",
+    "transparentPNG": "/demo/performers/indie-mic.png",
+    "tourPoster": "/assets/tours/velvet-static-poster.png",
+    "albumCover": "/assets/albums/velvet-static.png",
+    "arenaBanner": "/assets/backgrounds/velvet-static-arena.png",
+    "vipImage": "/demo/performers/indie-mic.png",
+    "poses": {
+      "hero": "/demo/performers/indie-mic.png",
+      "portrait": "/demo/performers/indie-mic.png",
+      "transparent": "/demo/performers/indie-mic.png",
+      "performance": "/demo/performers/indie-guitar.png",
+      "walk": "/demo/performers/indie-mic.png",
+      "crowd": "/demo/performers/indie-mic.png",
+      "closeUp": "/demo/performers/indie-mic.png",
+      "profile": "/demo/performers/indie-mic.png",
+      "back": "/demo/performers/indie-mic.png",
+      "instrument": "/demo/performers/indie-guitar.png",
+      "mic": "/demo/performers/indie-mic.png",
+      "promo": "/demo/performers/indie-mic.png",
+      "vip": "/demo/performers/indie-mic.png",
+      "arenaBanner": "/demo/performers/indie-mic.png"
+    }
+  },
+  "merchCollection": [
+    {
+      "id": "velvet-static-tee",
+      "name": "Static Circuit Tour Tee",
+      "price": 35,
+      "imagePath": "/assets/merch/velvet-static/velvet-static-tee.png"
+    },
+    {
+      "id": "velvet-static-hoodie",
+      "name": "Velvet Static Glow Hoodie",
+      "price": 65,
+      "imagePath": "/assets/merch/velvet-static/velvet-static-hoodie.png"
+    },
+    {
+      "id": "velvet-static-vinyl",
+      "name": "Feedback Bloom Vinyl",
+      "price": 45,
+      "imagePath": "/assets/merch/velvet-static/velvet-static-vinyl.png"
+    }
+  ],
+  "followers": 820000,
+  "monthlyListeners": 1890000,
+  "fanRating": 4.6000000000000005,
+  "averageAttendance": 8000,
+  "ticketPrice": 45,
+  "vipPrice": 125,
+  "merchRevenue": 316800,
+  "tourRevenue": 540000,
+  "careerRevenue": 2160000,
+  "verified": true,
+  "featured": true,
+  "socialLinks": {
+    "livecircuit": "/velvet-static",
+    "website": "https://livecircuit.demo/velvet-static",
+    "instagram": "@velvetstatic"
+  },
+  "currentTour": {
+    "name": "Static Circuit",
+    "posterPath": "/assets/tours/velvet-static-poster.png",
+    "upcomingShows": [
+      {
+        "city": "Boston",
+        "venue": "Boston Harbor Arena",
+        "date": "Sep 12",
+        "ticketPrice": 45,
+        "vipPrice": 125
+      },
+      {
+        "city": "Chicago",
+        "venue": "Windy City Stadium",
+        "date": "Sep 19",
+        "ticketPrice": 55,
+        "vipPrice": 151
+      },
+      {
+        "city": "Dallas",
+        "venue": "Lone Star Arena",
+        "date": "Sep 26",
+        "ticketPrice": 45,
+        "vipPrice": 125
+      },
+      {
+        "city": "Miami",
+        "venue": "Miami Pulse Arena",
+        "date": "Oct 3",
+        "ticketPrice": 50,
+        "vipPrice": 125
+      }
+    ]
+  },
+  "favoriteVenue": "Boston Harbor Arena",
+  "performance": {
+    "signatureMove": "Indie rock built for festival headliners",
+    "signatureLighting": "purple-magenta-cyan",
+    "signatureAnimation": "crowd-wave pulse",
+    "preferredArenaTheme": "premium-festival",
+    "preferredPyro": true,
+    "preferredConfetti": false,
+    "preferredLighting": [
+      "purple",
+      "cyan",
+      "magenta"
+    ],
+    "preferredCameraAngles": [
+      "vip",
+      "stage-left",
+      "default"
+    ],
+    "musicStyle": "Indie Rock",
+    "performanceStyle": "Vintage amps and velvet jackets"
+  },
+  "personality": "Indie rock built for festival headliners",
+  "fanDemographics": "18–34, indie rock",
+  "targetAudience": "18–34, indie rock",
+  "catchPhrase": "Indie rock built for festival headliners",
+  "actType": "band",
+  "liveStatus": "LIVE",
+  "poseCategory": "indie",
+  "liveAudience": 8000,
+  "revenueTonight": 12000,
+  "growthPct": 12,
+  "showsScheduled": 3,
+  "albumTitle": "Feedback Bloom",
+  "singleTitle": "Hum",
+  "avatarInitials": "VS"
+}

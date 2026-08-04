@@ -1,0 +1,173 @@
+{
+  "isDemoArtist": true,
+  "visibility": "demo-only",
+  "environment": "demo",
+  "id": "wes-montclair",
+  "stageName": "Wes Montclair",
+  "realName": "Wes Montclair",
+  "genre": "Country",
+  "subGenre": "Country",
+  "hometown": "Denver, CO",
+  "country": "United States",
+  "yearsActive": 4,
+  "label": "LiveCircuit Originals",
+  "management": "Marcus Lee",
+  "bio": "Wes Montclair is a country act from Denver, CO. Stadium country showman. Known for western arena polish, they've built a devoted global fanbase on LiveCircuit with 490,000 followers.",
+  "brand": {
+    "primaryColor": "#6366f1",
+    "secondaryColor": "#4f46e5",
+    "accentColor": "#818cf8",
+    "gradientClass": "from-indigo-500 to-violet-600",
+    "typography": "Space Grotesk",
+    "logoPath": "/assets/logos/wes-montclair.png",
+    "brandIconPath": "/assets/logos/wes-montclair-icon.png",
+    "brandDescription": "Western arena polish",
+    "brandVoice": "Confident, arena-ready, fan-first"
+  },
+  "appearance": {
+    "skinTone": "honey beige",
+    "hairTexture": "shaved sides",
+    "hairColor": "burgundy",
+    "eyeColor": "blue-grey",
+    "faceDescription": "Distinctive country performer with blue-grey eyes and shaved sides burgundy hair",
+    "bodyType": "average build",
+    "height": "6'2\"",
+    "fashionStyle": "Western arena polish",
+    "accessories": [
+      "ring stack"
+    ],
+    "stageOutfit": "Western arena polish — premium tour edition",
+    "streetOutfit": "Casual western arena polish off-stage look",
+    "performanceOutfit": "Signature Country stage ensemble with LED accents"
+  },
+  "images": {
+    "heroImage": "/demo/performers/country-mic.png",
+    "portraitImage": "/demo/performers/country-mic.png",
+    "transparentPNG": "/demo/performers/country-mic.png",
+    "tourPoster": "/assets/tours/wes-montclair-poster.png",
+    "albumCover": "/assets/albums/wes-montclair.png",
+    "arenaBanner": "/assets/backgrounds/wes-montclair-arena.png",
+    "vipImage": "/demo/performers/country-mic.png",
+    "poses": {
+      "hero": "/demo/performers/country-mic.png",
+      "portrait": "/demo/performers/country-mic.png",
+      "transparent": "/demo/performers/country-mic.png",
+      "performance": "/demo/performers/country-guitar.png",
+      "walk": "/demo/performers/country-mic.png",
+      "crowd": "/demo/performers/country-mic.png",
+      "closeUp": "/demo/performers/country-mic.png",
+      "profile": "/demo/performers/country-mic.png",
+      "back": "/demo/performers/country-mic.png",
+      "instrument": "/demo/performers/country-guitar.png",
+      "mic": "/demo/performers/country-mic.png",
+      "promo": "/demo/performers/country-mic.png",
+      "vip": "/demo/performers/country-mic.png",
+      "arenaBanner": "/demo/performers/country-mic.png"
+    }
+  },
+  "merchCollection": [
+    {
+      "id": "wes-montclair-tee",
+      "name": "Montclair Live Tour Tee",
+      "price": 35,
+      "imagePath": "/assets/merch/wes-montclair/wes-montclair-tee.png"
+    },
+    {
+      "id": "wes-montclair-hoodie",
+      "name": "Wes Montclair Glow Hoodie",
+      "price": 65,
+      "imagePath": "/assets/merch/wes-montclair/wes-montclair-hoodie.png"
+    },
+    {
+      "id": "wes-montclair-vinyl",
+      "name": "Wide Open Vinyl",
+      "price": 45,
+      "imagePath": "/assets/merch/wes-montclair/wes-montclair-vinyl.png"
+    }
+  ],
+  "followers": 490000,
+  "monthlyListeners": 1120000,
+  "fanRating": 4.9,
+  "averageAttendance": 14300,
+  "ticketPrice": 45,
+  "vipPrice": 125,
+  "merchRevenue": 649440,
+  "tourRevenue": 1107000,
+  "careerRevenue": 4428000,
+  "verified": true,
+  "featured": false,
+  "socialLinks": {
+    "livecircuit": "/wes-montclair",
+    "website": "https://livecircuit.demo/wes-montclair",
+    "instagram": "@wesmontclair"
+  },
+  "currentTour": {
+    "name": "Montclair Live",
+    "posterPath": "/assets/tours/wes-montclair-poster.png",
+    "upcomingShows": [
+      {
+        "city": "Boston",
+        "venue": "Boston Harbor Arena",
+        "date": "Sep 12",
+        "ticketPrice": 45,
+        "vipPrice": 125
+      },
+      {
+        "city": "Chicago",
+        "venue": "Windy City Stadium",
+        "date": "Sep 19",
+        "ticketPrice": 55,
+        "vipPrice": 151
+      },
+      {
+        "city": "Dallas",
+        "venue": "Lone Star Arena",
+        "date": "Sep 26",
+        "ticketPrice": 45,
+        "vipPrice": 125
+      },
+      {
+        "city": "Miami",
+        "venue": "Miami Pulse Arena",
+        "date": "Oct 3",
+        "ticketPrice": 50,
+        "vipPrice": 125
+      }
+    ]
+  },
+  "favoriteVenue": "Boston Harbor Arena",
+  "performance": {
+    "signatureMove": "Stadium country showman",
+    "signatureLighting": "purple-magenta-cyan",
+    "signatureAnimation": "crowd-wave pulse",
+    "preferredArenaTheme": "premium-festival",
+    "preferredPyro": false,
+    "preferredConfetti": false,
+    "preferredLighting": [
+      "purple",
+      "cyan",
+      "magenta"
+    ],
+    "preferredCameraAngles": [
+      "vip",
+      "stage-left",
+      "default"
+    ],
+    "musicStyle": "Country",
+    "performanceStyle": "Western arena polish"
+  },
+  "personality": "Stadium country showman",
+  "fanDemographics": "22–44, arena country",
+  "targetAudience": "22–44, arena country",
+  "catchPhrase": "Stadium country showman",
+  "actType": "solo",
+  "liveStatus": "LIVE",
+  "poseCategory": "country",
+  "liveAudience": 14300,
+  "revenueTonight": 24600,
+  "growthPct": 15,
+  "showsScheduled": 10,
+  "albumTitle": "Wide Open",
+  "singleTitle": "Horizon",
+  "avatarInitials": "WM"
+}

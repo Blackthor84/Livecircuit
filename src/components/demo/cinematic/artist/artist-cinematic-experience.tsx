@@ -26,7 +26,8 @@ import { TourBuilderMap } from "@/components/demo/cinematic/artist/tour-builder-
 import { CinematicShell } from "@/components/demo/cinematic/shared/cinematic-shell";
 import { useDemoSound } from "@/components/demo/cinematic/shared/demo-sound-provider";
 import { VirtualArena } from "@/components/demo/cinematic/shared/virtual-arena";
-import { ARTIST_CHAT, ARTIST_LIVE_STATS, DEMO_META } from "@/lib/demo/cinematic/constants";
+import { ARTIST_CHAT, ARTIST_LIVE_STATS, DEMO_ARTIST_ID, DEMO_META } from "@/lib/demo/cinematic/constants";
+import { getPrimaryDemoArtist } from "@/lib/demo/originals";
 
 type Phase = "entry" | "pre-show" | "countdown" | "live" | "ended" | "tour" | "analytics";
 
@@ -50,6 +51,7 @@ export function ArtistCinematicExperience() {
 
 function ArtistCinematicExperienceInner() {
   const meta = DEMO_META.artist;
+  const demoArtist = getPrimaryDemoArtist();
   const [phase, setPhase] = useState<Phase>("entry");
   const [countdown, setCountdown] = useState(3);
   const { effects, patch } = useArenaEffects({
@@ -148,14 +150,14 @@ function ArtistCinematicExperienceInner() {
 
       {phase !== "entry" && (
         <div className="relative h-full pt-16">
-          <VirtualArena effects={effects} className="absolute inset-0 top-14" />
+          <VirtualArena effects={effects} performerArtistId={DEMO_ARTIST_ID} className="absolute inset-0 top-14" />
 
           {phase === "pre-show" && (
             <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="absolute inset-0 top-14 z-10 flex flex-col bg-gradient-to-b from-black/80 via-black/40 to-black/90">
               <div className="flex flex-1 flex-col items-center justify-center px-6 text-center">
-                <p className="text-xs uppercase tracking-[0.35em] text-primary">Backstage</p>
-                <p className="mt-3 max-w-md text-2xl font-bold">Thousands of lights stretch into the distance</p>
-                <p className="mt-2 text-muted-foreground">The crowd is waiting. Stage lights are off.</p>
+                <p className="text-xs uppercase tracking-[0.35em] text-primary">Backstage · {demoArtist.stageName}</p>
+                <p className="mt-3 max-w-md text-2xl font-bold">{demoArtist.currentTour.name}</p>
+                <p className="mt-2 text-muted-foreground">The crowd is waiting for {demoArtist.singleTitle}. Stage lights are off.</p>
               </div>
               <div className="flex flex-wrap justify-center gap-3 px-4 pb-10">
                 <motion.button type="button" onClick={startShow} whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} className="rounded-full bg-gradient-to-r from-primary to-accent px-12 py-4 text-lg font-bold shadow-2xl shadow-primary/40">START SHOW</motion.button>

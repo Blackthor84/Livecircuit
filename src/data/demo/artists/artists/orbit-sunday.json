@@ -1,0 +1,173 @@
+{
+  "isDemoArtist": true,
+  "visibility": "demo-only",
+  "environment": "demo",
+  "id": "orbit-sunday",
+  "stageName": "Orbit Sunday",
+  "realName": "Orbit Sunday (collective)",
+  "genre": "Indie Pop",
+  "subGenre": "Indie Pop",
+  "hometown": "Los Angeles, CA",
+  "country": "United States",
+  "yearsActive": 3,
+  "label": "LiveCircuit Originals",
+  "management": "Sarah Chen",
+  "bio": "Orbit Sunday is a indie pop act from Los Angeles, CA. Dreamy hook specialists. Known for la indie sun haze, they've built a devoted global fanbase on LiveCircuit with 290,000 followers.",
+  "brand": {
+    "primaryColor": "#f59e0b",
+    "secondaryColor": "#d97706",
+    "accentColor": "#fbbf24",
+    "gradientClass": "from-amber-500 to-orange-600",
+    "typography": "Space Grotesk",
+    "logoPath": "/assets/logos/orbit-sunday.png",
+    "brandIconPath": "/assets/logos/orbit-sunday-icon.png",
+    "brandDescription": "LA indie sun haze",
+    "brandVoice": "Confident, arena-ready, fan-first"
+  },
+  "appearance": {
+    "skinTone": "olive medium",
+    "hairTexture": "braided locs",
+    "hairColor": "copper red",
+    "eyeColor": "hazel",
+    "faceDescription": "Distinctive indie pop performer with hazel eyes and braided locs copper red hair",
+    "bodyType": "muscular broad",
+    "height": "5'2\"",
+    "fashionStyle": "LA indie sun haze",
+    "accessories": [
+      "chain necklace"
+    ],
+    "stageOutfit": "LA indie sun haze — premium tour edition",
+    "streetOutfit": "Casual la indie sun haze off-stage look",
+    "performanceOutfit": "Signature Indie Pop stage ensemble with LED accents"
+  },
+  "images": {
+    "heroImage": "/demo/performers/indie-mic.png",
+    "portraitImage": "/demo/performers/indie-mic.png",
+    "transparentPNG": "/demo/performers/indie-mic.png",
+    "tourPoster": "/assets/tours/orbit-sunday-poster.png",
+    "albumCover": "/assets/albums/orbit-sunday.png",
+    "arenaBanner": "/assets/backgrounds/orbit-sunday-arena.png",
+    "vipImage": "/demo/performers/indie-mic.png",
+    "poses": {
+      "hero": "/demo/performers/indie-mic.png",
+      "portrait": "/demo/performers/indie-mic.png",
+      "transparent": "/demo/performers/indie-mic.png",
+      "performance": "/demo/performers/indie-guitar.png",
+      "walk": "/demo/performers/indie-mic.png",
+      "crowd": "/demo/performers/indie-mic.png",
+      "closeUp": "/demo/performers/indie-mic.png",
+      "profile": "/demo/performers/indie-mic.png",
+      "back": "/demo/performers/indie-mic.png",
+      "instrument": "/demo/performers/indie-guitar.png",
+      "mic": "/demo/performers/indie-mic.png",
+      "promo": "/demo/performers/indie-mic.png",
+      "vip": "/demo/performers/indie-mic.png",
+      "arenaBanner": "/demo/performers/indie-mic.png"
+    }
+  },
+  "merchCollection": [
+    {
+      "id": "orbit-sunday-tee",
+      "name": "Sunday Orbit Tour Tee",
+      "price": 35,
+      "imagePath": "/assets/merch/orbit-sunday/orbit-sunday-tee.png"
+    },
+    {
+      "id": "orbit-sunday-hoodie",
+      "name": "Orbit Sunday Glow Hoodie",
+      "price": 65,
+      "imagePath": "/assets/merch/orbit-sunday/orbit-sunday-hoodie.png"
+    },
+    {
+      "id": "orbit-sunday-vinyl",
+      "name": "Lazy Sun Vinyl",
+      "price": 45,
+      "imagePath": "/assets/merch/orbit-sunday/orbit-sunday-vinyl.png"
+    }
+  ],
+  "followers": 290000,
+  "monthlyListeners": 640000,
+  "fanRating": 4.6000000000000005,
+  "averageAttendance": 23200,
+  "ticketPrice": 45,
+  "vipPrice": 125,
+  "merchRevenue": 84480,
+  "tourRevenue": 144000,
+  "careerRevenue": 576000,
+  "verified": true,
+  "featured": false,
+  "socialLinks": {
+    "livecircuit": "/orbit-sunday",
+    "website": "https://livecircuit.demo/orbit-sunday",
+    "instagram": "@orbitsunday"
+  },
+  "currentTour": {
+    "name": "Sunday Orbit",
+    "posterPath": "/assets/tours/orbit-sunday-poster.png",
+    "upcomingShows": [
+      {
+        "city": "Boston",
+        "venue": "Boston Harbor Arena",
+        "date": "Sep 12",
+        "ticketPrice": 45,
+        "vipPrice": 125
+      },
+      {
+        "city": "Chicago",
+        "venue": "Windy City Stadium",
+        "date": "Sep 19",
+        "ticketPrice": 55,
+        "vipPrice": 151
+      },
+      {
+        "city": "Dallas",
+        "venue": "Lone Star Arena",
+        "date": "Sep 26",
+        "ticketPrice": 45,
+        "vipPrice": 125
+      },
+      {
+        "city": "Miami",
+        "venue": "Miami Pulse Arena",
+        "date": "Oct 3",
+        "ticketPrice": 50,
+        "vipPrice": 125
+      }
+    ]
+  },
+  "favoriteVenue": "Boston Harbor Arena",
+  "performance": {
+    "signatureMove": "Dreamy hook specialists",
+    "signatureLighting": "purple-magenta-cyan",
+    "signatureAnimation": "crowd-wave pulse",
+    "preferredArenaTheme": "premium-festival",
+    "preferredPyro": false,
+    "preferredConfetti": true,
+    "preferredLighting": [
+      "purple",
+      "cyan",
+      "magenta"
+    ],
+    "preferredCameraAngles": [
+      "vip",
+      "stage-left",
+      "default"
+    ],
+    "musicStyle": "Indie Pop",
+    "performanceStyle": "LA indie sun haze"
+  },
+  "personality": "Dreamy hook specialists",
+  "fanDemographics": "17–31, LA indie",
+  "targetAudience": "17–31, LA indie",
+  "catchPhrase": "Dreamy hook specialists",
+  "actType": "band",
+  "liveStatus": "REHEARSAL",
+  "poseCategory": "indie",
+  "liveAudience": 0,
+  "revenueTonight": 3200,
+  "growthPct": 12,
+  "showsScheduled": 7,
+  "albumTitle": "Lazy Sun",
+  "singleTitle": "Drift",
+  "avatarInitials": "OS"
+}

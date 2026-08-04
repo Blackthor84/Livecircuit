@@ -1,0 +1,173 @@
+{
+  "isDemoArtist": true,
+  "visibility": "demo-only",
+  "environment": "demo",
+  "id": "wildframe",
+  "stageName": "Wildframe",
+  "realName": "Wildframe (collective)",
+  "genre": "Rock",
+  "subGenre": "Rock",
+  "hometown": "Denver, CO",
+  "country": "United States",
+  "yearsActive": 12,
+  "label": "LiveCircuit Originals",
+  "management": "James Park",
+  "bio": "Wildframe is a rock act from Denver, CO. Mountain-stage warriors. Known for outdoor rock aesthetic, they've built a devoted global fanbase on LiveCircuit with 340,000 followers.",
+  "brand": {
+    "primaryColor": "#10b981",
+    "secondaryColor": "#059669",
+    "accentColor": "#34d399",
+    "gradientClass": "from-emerald-500 to-teal-600",
+    "typography": "Space Grotesk",
+    "logoPath": "/assets/logos/wildframe.png",
+    "brandIconPath": "/assets/logos/wildframe-icon.png",
+    "brandDescription": "Outdoor rock aesthetic",
+    "brandVoice": "Confident, arena-ready, fan-first"
+  },
+  "appearance": {
+    "skinTone": "warm caramel",
+    "hairTexture": "wavy",
+    "hairColor": "platinum blonde",
+    "eyeColor": "dark brown",
+    "faceDescription": "Distinctive rock performer with dark brown eyes and wavy platinum blonde hair",
+    "bodyType": "slim tall",
+    "height": "5'6\"",
+    "fashionStyle": "Outdoor rock aesthetic",
+    "accessories": [
+      "wrist cuffs"
+    ],
+    "stageOutfit": "Outdoor rock aesthetic — premium tour edition",
+    "streetOutfit": "Casual outdoor rock aesthetic off-stage look",
+    "performanceOutfit": "Signature Rock stage ensemble with LED accents"
+  },
+  "images": {
+    "heroImage": "/demo/performers/rock-mic.png",
+    "portraitImage": "/demo/performers/rock-mic.png",
+    "transparentPNG": "/demo/performers/rock-mic.png",
+    "tourPoster": "/assets/tours/wildframe-poster.png",
+    "albumCover": "/assets/albums/wildframe.png",
+    "arenaBanner": "/assets/backgrounds/wildframe-arena.png",
+    "vipImage": "/demo/performers/rock-mic.png",
+    "poses": {
+      "hero": "/demo/performers/rock-mic.png",
+      "portrait": "/demo/performers/rock-mic.png",
+      "transparent": "/demo/performers/rock-mic.png",
+      "performance": "/demo/performers/rock-guitar.png",
+      "walk": "/demo/performers/rock-full-body.png",
+      "crowd": "/demo/performers/rock-mic.png",
+      "closeUp": "/demo/performers/rock-mic.png",
+      "profile": "/demo/performers/rock-profile.png",
+      "back": "/demo/performers/rock-mic.png",
+      "instrument": "/demo/performers/rock-guitar.png",
+      "mic": "/demo/performers/rock-mic.png",
+      "promo": "/demo/performers/rock-mic.png",
+      "vip": "/demo/performers/rock-mic.png",
+      "arenaBanner": "/demo/performers/rock-mic.png"
+    }
+  },
+  "merchCollection": [
+    {
+      "id": "wildframe-tee",
+      "name": "Wildframe Live Tour Tee",
+      "price": 35,
+      "imagePath": "/assets/merch/wildframe/wildframe-tee.png"
+    },
+    {
+      "id": "wildframe-hoodie",
+      "name": "Wildframe Glow Hoodie",
+      "price": 65,
+      "imagePath": "/assets/merch/wildframe/wildframe-hoodie.png"
+    },
+    {
+      "id": "wildframe-vinyl",
+      "name": "Peak Signal Vinyl",
+      "price": 45,
+      "imagePath": "/assets/merch/wildframe/wildframe-vinyl.png"
+    }
+  ],
+  "followers": 340000,
+  "monthlyListeners": 760000,
+  "fanRating": 4.7,
+  "averageAttendance": 27200,
+  "ticketPrice": 45,
+  "vipPrice": 125,
+  "merchRevenue": 92400,
+  "tourRevenue": 157500,
+  "careerRevenue": 630000,
+  "verified": true,
+  "featured": false,
+  "socialLinks": {
+    "livecircuit": "/wildframe",
+    "website": "https://livecircuit.demo/wildframe",
+    "instagram": "@wildframe"
+  },
+  "currentTour": {
+    "name": "Wildframe Live",
+    "posterPath": "/assets/tours/wildframe-poster.png",
+    "upcomingShows": [
+      {
+        "city": "Boston",
+        "venue": "Boston Harbor Arena",
+        "date": "Sep 12",
+        "ticketPrice": 45,
+        "vipPrice": 125
+      },
+      {
+        "city": "Chicago",
+        "venue": "Windy City Stadium",
+        "date": "Sep 19",
+        "ticketPrice": 55,
+        "vipPrice": 151
+      },
+      {
+        "city": "Dallas",
+        "venue": "Lone Star Arena",
+        "date": "Sep 26",
+        "ticketPrice": 45,
+        "vipPrice": 125
+      },
+      {
+        "city": "Miami",
+        "venue": "Miami Pulse Arena",
+        "date": "Oct 3",
+        "ticketPrice": 50,
+        "vipPrice": 125
+      }
+    ]
+  },
+  "favoriteVenue": "Boston Harbor Arena",
+  "performance": {
+    "signatureMove": "Mountain-stage warriors",
+    "signatureLighting": "purple-magenta-cyan",
+    "signatureAnimation": "crowd-wave pulse",
+    "preferredArenaTheme": "premium-festival",
+    "preferredPyro": true,
+    "preferredConfetti": false,
+    "preferredLighting": [
+      "purple",
+      "cyan",
+      "magenta"
+    ],
+    "preferredCameraAngles": [
+      "vip",
+      "stage-left",
+      "default"
+    ],
+    "musicStyle": "Rock",
+    "performanceStyle": "Outdoor rock aesthetic"
+  },
+  "personality": "Mountain-stage warriors",
+  "fanDemographics": "22–44, rock/outdoor",
+  "targetAudience": "22–44, rock/outdoor",
+  "catchPhrase": "Mountain-stage warriors",
+  "actType": "band",
+  "liveStatus": "REHEARSAL",
+  "poseCategory": "rock-band",
+  "liveAudience": 0,
+  "revenueTonight": 3500,
+  "growthPct": 13,
+  "showsScheduled": 8,
+  "albumTitle": "Peak Signal",
+  "singleTitle": "Summit",
+  "avatarInitials": "W"
+}

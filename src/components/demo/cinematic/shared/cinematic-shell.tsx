@@ -7,6 +7,7 @@ import { LiveCircuitLogo } from "@/components/brand/livecircuit-logo";
 import { AmbientBackground } from "@/components/demo/cinematic/shared/ambient-background";
 import { DemoSoundProvider } from "@/components/demo/cinematic/shared/demo-sound-provider";
 import { SoundToggle } from "@/components/demo/cinematic/shared/sound-toggle";
+import { DemoContentNotice } from "@/components/demo/shared/demo-content-notice";
 import { ROUTES } from "@/lib/constants";
 
 export function CinematicShell({
@@ -38,6 +39,7 @@ export function CinematicShell({
           </motion.header>
         )}
         {children}
+        <DemoContentNotice />
       </div>
     </DemoSoundProvider>
   );

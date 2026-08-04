@@ -1,0 +1,173 @@
+{
+  "isDemoArtist": true,
+  "visibility": "demo-only",
+  "environment": "demo",
+  "id": "nyx-protocol",
+  "stageName": "Nyx Protocol",
+  "realName": "Nyx Protocol",
+  "genre": "Hip Hop",
+  "subGenre": "Hip-Hop",
+  "hometown": "Berlin, DE",
+  "country": "Germany",
+  "yearsActive": 3,
+  "label": "LiveCircuit Originals",
+  "management": "Marcus Lee",
+  "bio": "Nyx Protocol is a hip-hop act from Berlin, DE. Futurist rap icon. Known for cyberpunk street, they've built a devoted global fanbase on LiveCircuit with 540,000 followers.",
+  "brand": {
+    "primaryColor": "#a855f7",
+    "secondaryColor": "#7c3aed",
+    "accentColor": "#c084fc",
+    "gradientClass": "from-violet-500 to-purple-600",
+    "typography": "Space Grotesk",
+    "logoPath": "/assets/logos/nyx-protocol.png",
+    "brandIconPath": "/assets/logos/nyx-protocol-icon.png",
+    "brandDescription": "Cyberpunk street",
+    "brandVoice": "Confident, arena-ready, fan-first"
+  },
+  "appearance": {
+    "skinTone": "espresso",
+    "hairTexture": "layered waves",
+    "hairColor": "jet black",
+    "eyeColor": "amber brown",
+    "faceDescription": "Distinctive hip-hop performer with amber brown eyes and layered waves jet black hair",
+    "bodyType": "curvy strong",
+    "height": "6'0\"",
+    "fashionStyle": "Cyberpunk street",
+    "accessories": [
+      "signature hat"
+    ],
+    "stageOutfit": "Cyberpunk street — premium tour edition",
+    "streetOutfit": "Casual cyberpunk street off-stage look",
+    "performanceOutfit": "Signature Hip-Hop stage ensemble with LED accents"
+  },
+  "images": {
+    "heroImage": "/demo/performers/hiphop-mic.png",
+    "portraitImage": "/demo/performers/hiphop-mic.png",
+    "transparentPNG": "/demo/performers/hiphop-mic.png",
+    "tourPoster": "/assets/tours/nyx-protocol-poster.png",
+    "albumCover": "/assets/albums/nyx-protocol.png",
+    "arenaBanner": "/assets/backgrounds/nyx-protocol-arena.png",
+    "vipImage": "/demo/performers/hiphop-mic.png",
+    "poses": {
+      "hero": "/demo/performers/hiphop-mic.png",
+      "portrait": "/demo/performers/hiphop-mic.png",
+      "transparent": "/demo/performers/hiphop-mic.png",
+      "performance": "/demo/performers/hiphop-point.png",
+      "walk": "/demo/performers/hiphop-mic.png",
+      "crowd": "/demo/performers/hiphop-point.png",
+      "closeUp": "/demo/performers/hiphop-mic.png",
+      "profile": "/demo/performers/hiphop-mic.png",
+      "back": "/demo/performers/hiphop-mic.png",
+      "instrument": "/demo/performers/hiphop-mic.png",
+      "mic": "/demo/performers/hiphop-mic.png",
+      "promo": "/demo/performers/hiphop-mic.png",
+      "vip": "/demo/performers/hiphop-mic.png",
+      "arenaBanner": "/demo/performers/hiphop-mic.png"
+    }
+  },
+  "merchCollection": [
+    {
+      "id": "nyx-protocol-tee",
+      "name": "Protocol Live Tour Tee",
+      "price": 35,
+      "imagePath": "/assets/merch/nyx-protocol/nyx-protocol-tee.png"
+    },
+    {
+      "id": "nyx-protocol-hoodie",
+      "name": "Nyx Protocol Glow Hoodie",
+      "price": 65,
+      "imagePath": "/assets/merch/nyx-protocol/nyx-protocol-hoodie.png"
+    },
+    {
+      "id": "nyx-protocol-vinyl",
+      "name": "Dark Net Vinyl",
+      "price": 45,
+      "imagePath": "/assets/merch/nyx-protocol/nyx-protocol-vinyl.png"
+    }
+  ],
+  "followers": 540000,
+  "monthlyListeners": 1240000,
+  "fanRating": 4.9,
+  "averageAttendance": 7800,
+  "ticketPrice": 45,
+  "vipPrice": 125,
+  "merchRevenue": 287760,
+  "tourRevenue": 490500,
+  "careerRevenue": 1962000,
+  "verified": true,
+  "featured": false,
+  "socialLinks": {
+    "livecircuit": "/nyx-protocol",
+    "website": "https://livecircuit.demo/nyx-protocol",
+    "instagram": "@nyxprotocol"
+  },
+  "currentTour": {
+    "name": "Protocol Live",
+    "posterPath": "/assets/tours/nyx-protocol-poster.png",
+    "upcomingShows": [
+      {
+        "city": "Boston",
+        "venue": "Boston Harbor Arena",
+        "date": "Sep 12",
+        "ticketPrice": 45,
+        "vipPrice": 125
+      },
+      {
+        "city": "Chicago",
+        "venue": "Windy City Stadium",
+        "date": "Sep 19",
+        "ticketPrice": 55,
+        "vipPrice": 151
+      },
+      {
+        "city": "Dallas",
+        "venue": "Lone Star Arena",
+        "date": "Sep 26",
+        "ticketPrice": 45,
+        "vipPrice": 125
+      },
+      {
+        "city": "Miami",
+        "venue": "Miami Pulse Arena",
+        "date": "Oct 3",
+        "ticketPrice": 50,
+        "vipPrice": 125
+      }
+    ]
+  },
+  "favoriteVenue": "Boston Harbor Arena",
+  "performance": {
+    "signatureMove": "Futurist rap icon",
+    "signatureLighting": "purple-magenta-cyan",
+    "signatureAnimation": "crowd-wave pulse",
+    "preferredArenaTheme": "premium-festival",
+    "preferredPyro": false,
+    "preferredConfetti": false,
+    "preferredLighting": [
+      "purple",
+      "cyan",
+      "magenta"
+    ],
+    "preferredCameraAngles": [
+      "vip",
+      "stage-left",
+      "default"
+    ],
+    "musicStyle": "Hip-Hop",
+    "performanceStyle": "Cyberpunk street"
+  },
+  "personality": "Futurist rap icon",
+  "fanDemographics": "18–32, experimental rap",
+  "targetAudience": "18–32, experimental rap",
+  "catchPhrase": "Futurist rap icon",
+  "actType": "solo",
+  "liveStatus": "ON TOUR",
+  "poseCategory": "hip-hop",
+  "liveAudience": 7800,
+  "revenueTonight": 10900,
+  "growthPct": 15,
+  "showsScheduled": 10,
+  "albumTitle": "Dark Net",
+  "singleTitle": "Execute",
+  "avatarInitials": "NP"
+}

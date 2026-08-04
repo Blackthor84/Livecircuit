@@ -1,0 +1,173 @@
+{
+  "isDemoArtist": true,
+  "visibility": "demo-only",
+  "environment": "demo",
+  "id": "the-dusk-lines",
+  "stageName": "The Dusk Lines",
+  "realName": "The Dusk Lines (collective)",
+  "genre": "Alternative Rock",
+  "subGenre": "Alternative Rock",
+  "hometown": "Melbourne, AU",
+  "country": "Australia",
+  "yearsActive": 5,
+  "label": "LiveCircuit Originals",
+  "management": "Marcus Lee",
+  "bio": "The Dusk Lines is a alternative rock act from Melbourne, AU. Antipodean alt anthems. Known for sunset rock layers, they've built a devoted global fanbase on LiveCircuit with 410,000 followers.",
+  "brand": {
+    "primaryColor": "#f59e0b",
+    "secondaryColor": "#d97706",
+    "accentColor": "#fbbf24",
+    "gradientClass": "from-amber-500 to-orange-600",
+    "typography": "Space Grotesk",
+    "logoPath": "/assets/logos/the-dusk-lines.png",
+    "brandIconPath": "/assets/logos/the-dusk-lines-icon.png",
+    "brandDescription": "Sunset rock layers",
+    "brandVoice": "Confident, arena-ready, fan-first"
+  },
+  "appearance": {
+    "skinTone": "golden tan",
+    "hairTexture": "straight sleek",
+    "hairColor": "honey blonde",
+    "eyeColor": "light brown",
+    "faceDescription": "Distinctive alternative rock performer with light brown eyes and straight sleek honey blonde hair",
+    "bodyType": "stocky powerful",
+    "height": "6'2\"",
+    "fashionStyle": "Sunset rock layers",
+    "accessories": [
+      "signature hat"
+    ],
+    "stageOutfit": "Sunset rock layers — premium tour edition",
+    "streetOutfit": "Casual sunset rock layers off-stage look",
+    "performanceOutfit": "Signature Alternative Rock stage ensemble with LED accents"
+  },
+  "images": {
+    "heroImage": "/demo/performers/rock-mic.png",
+    "portraitImage": "/demo/performers/rock-mic.png",
+    "transparentPNG": "/demo/performers/rock-mic.png",
+    "tourPoster": "/assets/tours/the-dusk-lines-poster.png",
+    "albumCover": "/assets/albums/the-dusk-lines.png",
+    "arenaBanner": "/assets/backgrounds/the-dusk-lines-arena.png",
+    "vipImage": "/demo/performers/rock-mic.png",
+    "poses": {
+      "hero": "/demo/performers/rock-mic.png",
+      "portrait": "/demo/performers/rock-mic.png",
+      "transparent": "/demo/performers/rock-mic.png",
+      "performance": "/demo/performers/rock-guitar.png",
+      "walk": "/demo/performers/rock-full-body.png",
+      "crowd": "/demo/performers/rock-mic.png",
+      "closeUp": "/demo/performers/rock-mic.png",
+      "profile": "/demo/performers/rock-profile.png",
+      "back": "/demo/performers/rock-mic.png",
+      "instrument": "/demo/performers/rock-guitar.png",
+      "mic": "/demo/performers/rock-mic.png",
+      "promo": "/demo/performers/rock-mic.png",
+      "vip": "/demo/performers/rock-mic.png",
+      "arenaBanner": "/demo/performers/rock-mic.png"
+    }
+  },
+  "merchCollection": [
+    {
+      "id": "the-dusk-lines-tee",
+      "name": "Dusk Circuit Tour Tee",
+      "price": 35,
+      "imagePath": "/assets/merch/the-dusk-lines/the-dusk-lines-tee.png"
+    },
+    {
+      "id": "the-dusk-lines-hoodie",
+      "name": "The Dusk Lines Glow Hoodie",
+      "price": 65,
+      "imagePath": "/assets/merch/the-dusk-lines/the-dusk-lines-hoodie.png"
+    },
+    {
+      "id": "the-dusk-lines-vinyl",
+      "name": "Horizon Lines Vinyl",
+      "price": 45,
+      "imagePath": "/assets/merch/the-dusk-lines/the-dusk-lines-vinyl.png"
+    }
+  ],
+  "followers": 410000,
+  "monthlyListeners": 920000,
+  "fanRating": 4.6000000000000005,
+  "averageAttendance": 32800,
+  "ticketPrice": 45,
+  "vipPrice": 125,
+  "merchRevenue": 84480,
+  "tourRevenue": 144000,
+  "careerRevenue": 576000,
+  "verified": true,
+  "featured": false,
+  "socialLinks": {
+    "livecircuit": "/the-dusk-lines",
+    "website": "https://livecircuit.demo/the-dusk-lines",
+    "instagram": "@thedusklines"
+  },
+  "currentTour": {
+    "name": "Dusk Circuit",
+    "posterPath": "/assets/tours/the-dusk-lines-poster.png",
+    "upcomingShows": [
+      {
+        "city": "Boston",
+        "venue": "Boston Harbor Arena",
+        "date": "Sep 12",
+        "ticketPrice": 45,
+        "vipPrice": 125
+      },
+      {
+        "city": "Chicago",
+        "venue": "Windy City Stadium",
+        "date": "Sep 19",
+        "ticketPrice": 55,
+        "vipPrice": 151
+      },
+      {
+        "city": "Dallas",
+        "venue": "Lone Star Arena",
+        "date": "Sep 26",
+        "ticketPrice": 45,
+        "vipPrice": 125
+      },
+      {
+        "city": "Miami",
+        "venue": "Miami Pulse Arena",
+        "date": "Oct 3",
+        "ticketPrice": 50,
+        "vipPrice": 125
+      }
+    ]
+  },
+  "favoriteVenue": "Boston Harbor Arena",
+  "performance": {
+    "signatureMove": "Antipodean alt anthems",
+    "signatureLighting": "purple-magenta-cyan",
+    "signatureAnimation": "crowd-wave pulse",
+    "preferredArenaTheme": "premium-festival",
+    "preferredPyro": true,
+    "preferredConfetti": false,
+    "preferredLighting": [
+      "purple",
+      "cyan",
+      "magenta"
+    ],
+    "preferredCameraAngles": [
+      "vip",
+      "stage-left",
+      "default"
+    ],
+    "musicStyle": "Alternative Rock",
+    "performanceStyle": "Sunset rock layers"
+  },
+  "personality": "Antipodean alt anthems",
+  "fanDemographics": "19–35, AU alt-rock",
+  "targetAudience": "19–35, AU alt-rock",
+  "catchPhrase": "Antipodean alt anthems",
+  "actType": "band",
+  "liveStatus": "REHEARSAL",
+  "poseCategory": "rock-band",
+  "liveAudience": 0,
+  "revenueTonight": 3200,
+  "growthPct": 12,
+  "showsScheduled": 7,
+  "albumTitle": "Horizon Lines",
+  "singleTitle": "Fade",
+  "avatarInitials": "TD"
+}

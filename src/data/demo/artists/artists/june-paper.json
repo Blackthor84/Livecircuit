@@ -1,0 +1,173 @@
+{
+  "isDemoArtist": true,
+  "visibility": "demo-only",
+  "environment": "demo",
+  "id": "june-paper",
+  "stageName": "June Paper",
+  "realName": "June Paper",
+  "genre": "Indie Pop",
+  "subGenre": "Indie Pop",
+  "hometown": "Chicago, IL",
+  "country": "United States",
+  "yearsActive": 13,
+  "label": "LiveCircuit Originals",
+  "management": "James Park",
+  "bio": "June Paper is a indie pop act from Chicago, IL. Indie-pop confessionals. Known for soft indie fashion, they've built a devoted global fanbase on LiveCircuit with 350,000 followers.",
+  "brand": {
+    "primaryColor": "#f43f5e",
+    "secondaryColor": "#e11d48",
+    "accentColor": "#fb7185",
+    "gradientClass": "from-rose-500 to-pink-600",
+    "typography": "Space Grotesk",
+    "logoPath": "/assets/logos/june-paper.png",
+    "brandIconPath": "/assets/logos/june-paper-icon.png",
+    "brandDescription": "Soft indie fashion",
+    "brandVoice": "Confident, arena-ready, fan-first"
+  },
+  "appearance": {
+    "skinTone": "honey beige",
+    "hairTexture": "shaved sides",
+    "hairColor": "burgundy",
+    "eyeColor": "blue-grey",
+    "faceDescription": "Distinctive indie pop performer with blue-grey eyes and shaved sides burgundy hair",
+    "bodyType": "average build",
+    "height": "5'10\"",
+    "fashionStyle": "Soft indie fashion",
+    "accessories": [
+      "ring stack"
+    ],
+    "stageOutfit": "Soft indie fashion — premium tour edition",
+    "streetOutfit": "Casual soft indie fashion off-stage look",
+    "performanceOutfit": "Signature Indie Pop stage ensemble with LED accents"
+  },
+  "images": {
+    "heroImage": "/demo/performers/indie-mic.png",
+    "portraitImage": "/demo/performers/indie-mic.png",
+    "transparentPNG": "/demo/performers/indie-mic.png",
+    "tourPoster": "/assets/tours/june-paper-poster.png",
+    "albumCover": "/assets/albums/june-paper.png",
+    "arenaBanner": "/assets/backgrounds/june-paper-arena.png",
+    "vipImage": "/demo/performers/indie-mic.png",
+    "poses": {
+      "hero": "/demo/performers/indie-mic.png",
+      "portrait": "/demo/performers/indie-mic.png",
+      "transparent": "/demo/performers/indie-mic.png",
+      "performance": "/demo/performers/indie-guitar.png",
+      "walk": "/demo/performers/indie-mic.png",
+      "crowd": "/demo/performers/indie-mic.png",
+      "closeUp": "/demo/performers/indie-mic.png",
+      "profile": "/demo/performers/indie-mic.png",
+      "back": "/demo/performers/indie-mic.png",
+      "instrument": "/demo/performers/indie-guitar.png",
+      "mic": "/demo/performers/indie-mic.png",
+      "promo": "/demo/performers/indie-mic.png",
+      "vip": "/demo/performers/indie-mic.png",
+      "arenaBanner": "/demo/performers/indie-mic.png"
+    }
+  },
+  "merchCollection": [
+    {
+      "id": "june-paper-tee",
+      "name": "Paper Planes Tour Tee",
+      "price": 35,
+      "imagePath": "/assets/merch/june-paper/june-paper-tee.png"
+    },
+    {
+      "id": "june-paper-hoodie",
+      "name": "June Paper Glow Hoodie",
+      "price": 65,
+      "imagePath": "/assets/merch/june-paper/june-paper-hoodie.png"
+    },
+    {
+      "id": "june-paper-vinyl",
+      "name": "Folded Light Vinyl",
+      "price": 45,
+      "imagePath": "/assets/merch/june-paper/june-paper-vinyl.png"
+    }
+  ],
+  "followers": 350000,
+  "monthlyListeners": 780000,
+  "fanRating": 4.5,
+  "averageAttendance": 6200,
+  "ticketPrice": 45,
+  "vipPrice": 125,
+  "merchRevenue": 213840,
+  "tourRevenue": 364500,
+  "careerRevenue": 1458000,
+  "verified": true,
+  "featured": false,
+  "socialLinks": {
+    "livecircuit": "/june-paper",
+    "website": "https://livecircuit.demo/june-paper",
+    "instagram": "@junepaper"
+  },
+  "currentTour": {
+    "name": "Paper Planes",
+    "posterPath": "/assets/tours/june-paper-poster.png",
+    "upcomingShows": [
+      {
+        "city": "Boston",
+        "venue": "Boston Harbor Arena",
+        "date": "Sep 12",
+        "ticketPrice": 45,
+        "vipPrice": 125
+      },
+      {
+        "city": "Chicago",
+        "venue": "Windy City Stadium",
+        "date": "Sep 19",
+        "ticketPrice": 55,
+        "vipPrice": 151
+      },
+      {
+        "city": "Dallas",
+        "venue": "Lone Star Arena",
+        "date": "Sep 26",
+        "ticketPrice": 45,
+        "vipPrice": 125
+      },
+      {
+        "city": "Miami",
+        "venue": "Miami Pulse Arena",
+        "date": "Oct 3",
+        "ticketPrice": 50,
+        "vipPrice": 125
+      }
+    ]
+  },
+  "favoriteVenue": "Boston Harbor Arena",
+  "performance": {
+    "signatureMove": "Indie-pop confessionals",
+    "signatureLighting": "purple-magenta-cyan",
+    "signatureAnimation": "crowd-wave pulse",
+    "preferredArenaTheme": "premium-festival",
+    "preferredPyro": false,
+    "preferredConfetti": true,
+    "preferredLighting": [
+      "purple",
+      "cyan",
+      "magenta"
+    ],
+    "preferredCameraAngles": [
+      "vip",
+      "stage-left",
+      "default"
+    ],
+    "musicStyle": "Indie Pop",
+    "performanceStyle": "Soft indie fashion"
+  },
+  "personality": "Indie-pop confessionals",
+  "fanDemographics": "18–30, indie pop",
+  "targetAudience": "18–30, indie pop",
+  "catchPhrase": "Indie-pop confessionals",
+  "actType": "solo",
+  "liveStatus": "ON TOUR",
+  "poseCategory": "indie",
+  "liveAudience": 6200,
+  "revenueTonight": 8100,
+  "growthPct": 11,
+  "showsScheduled": 6,
+  "albumTitle": "Folded Light",
+  "singleTitle": "Crease",
+  "avatarInitials": "JP"
+}

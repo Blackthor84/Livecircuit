@@ -1,0 +1,173 @@
+{
+  "isDemoArtist": true,
+  "visibility": "demo-only",
+  "environment": "demo",
+  "id": "autumn-carter",
+  "stageName": "Autumn Carter",
+  "realName": "Autumn Carter",
+  "genre": "Country",
+  "subGenre": "Country",
+  "hometown": "Charlotte, NC",
+  "country": "United States",
+  "yearsActive": 4,
+  "label": "LiveCircuit Originals",
+  "management": "Marcus Lee",
+  "bio": "Autumn Carter is a country act from Charlotte, NC. Nashville crossover star. Known for country-pop stage glam, they've built a devoted global fanbase on LiveCircuit with 920,000 followers.",
+  "brand": {
+    "primaryColor": "#d946ef",
+    "secondaryColor": "#c026d3",
+    "accentColor": "#e879f9",
+    "gradientClass": "from-fuchsia-500 to-purple-600",
+    "typography": "Space Grotesk",
+    "logoPath": "/assets/logos/autumn-carter.png",
+    "brandIconPath": "/assets/logos/autumn-carter-icon.png",
+    "brandDescription": "Country-pop stage glam",
+    "brandVoice": "Confident, arena-ready, fan-first"
+  },
+  "appearance": {
+    "skinTone": "bronze sun-kissed",
+    "hairTexture": "voluminous curls",
+    "hairColor": "pastel pink tips",
+    "eyeColor": "amber brown",
+    "faceDescription": "Distinctive country performer with amber brown eyes and voluminous curls pastel pink tips hair",
+    "bodyType": "curvy strong",
+    "height": "5'4\"",
+    "fashionStyle": "Country-pop stage glam",
+    "accessories": [
+      "signature hat"
+    ],
+    "stageOutfit": "Country-pop stage glam — premium tour edition",
+    "streetOutfit": "Casual country-pop stage glam off-stage look",
+    "performanceOutfit": "Signature Country stage ensemble with LED accents"
+  },
+  "images": {
+    "heroImage": "/demo/performers/country-mic.png",
+    "portraitImage": "/demo/performers/country-mic.png",
+    "transparentPNG": "/demo/performers/country-mic.png",
+    "tourPoster": "/assets/tours/autumn-carter-poster.png",
+    "albumCover": "/assets/albums/autumn-carter.png",
+    "arenaBanner": "/assets/backgrounds/autumn-carter-arena.png",
+    "vipImage": "/demo/performers/country-mic.png",
+    "poses": {
+      "hero": "/demo/performers/country-mic.png",
+      "portrait": "/demo/performers/country-mic.png",
+      "transparent": "/demo/performers/country-mic.png",
+      "performance": "/demo/performers/country-guitar.png",
+      "walk": "/demo/performers/country-mic.png",
+      "crowd": "/demo/performers/country-mic.png",
+      "closeUp": "/demo/performers/country-mic.png",
+      "profile": "/demo/performers/country-mic.png",
+      "back": "/demo/performers/country-mic.png",
+      "instrument": "/demo/performers/country-guitar.png",
+      "mic": "/demo/performers/country-mic.png",
+      "promo": "/demo/performers/country-mic.png",
+      "vip": "/demo/performers/country-mic.png",
+      "arenaBanner": "/demo/performers/country-mic.png"
+    }
+  },
+  "merchCollection": [
+    {
+      "id": "autumn-carter-tee",
+      "name": "Autumn Leaves Tour Tour Tee",
+      "price": 35,
+      "imagePath": "/assets/merch/autumn-carter/autumn-carter-tee.png"
+    },
+    {
+      "id": "autumn-carter-hoodie",
+      "name": "Autumn Carter Glow Hoodie",
+      "price": 65,
+      "imagePath": "/assets/merch/autumn-carter/autumn-carter-hoodie.png"
+    },
+    {
+      "id": "autumn-carter-vinyl",
+      "name": "Golden Season Vinyl",
+      "price": 45,
+      "imagePath": "/assets/merch/autumn-carter/autumn-carter-vinyl.png"
+    }
+  ],
+  "followers": 920000,
+  "monthlyListeners": 2120000,
+  "fanRating": 4.6000000000000005,
+  "averageAttendance": 11600,
+  "ticketPrice": 45,
+  "vipPrice": 125,
+  "merchRevenue": 506880,
+  "tourRevenue": 864000,
+  "careerRevenue": 3456000,
+  "verified": true,
+  "featured": false,
+  "socialLinks": {
+    "livecircuit": "/autumn-carter",
+    "website": "https://livecircuit.demo/autumn-carter",
+    "instagram": "@autumncarter"
+  },
+  "currentTour": {
+    "name": "Autumn Leaves Tour",
+    "posterPath": "/assets/tours/autumn-carter-poster.png",
+    "upcomingShows": [
+      {
+        "city": "Boston",
+        "venue": "Boston Harbor Arena",
+        "date": "Sep 12",
+        "ticketPrice": 45,
+        "vipPrice": 125
+      },
+      {
+        "city": "Chicago",
+        "venue": "Windy City Stadium",
+        "date": "Sep 19",
+        "ticketPrice": 55,
+        "vipPrice": 151
+      },
+      {
+        "city": "Dallas",
+        "venue": "Lone Star Arena",
+        "date": "Sep 26",
+        "ticketPrice": 45,
+        "vipPrice": 125
+      },
+      {
+        "city": "Miami",
+        "venue": "Miami Pulse Arena",
+        "date": "Oct 3",
+        "ticketPrice": 50,
+        "vipPrice": 125
+      }
+    ]
+  },
+  "favoriteVenue": "Boston Harbor Arena",
+  "performance": {
+    "signatureMove": "Nashville crossover star",
+    "signatureLighting": "purple-magenta-cyan",
+    "signatureAnimation": "crowd-wave pulse",
+    "preferredArenaTheme": "premium-festival",
+    "preferredPyro": false,
+    "preferredConfetti": false,
+    "preferredLighting": [
+      "purple",
+      "cyan",
+      "magenta"
+    ],
+    "preferredCameraAngles": [
+      "vip",
+      "stage-left",
+      "default"
+    ],
+    "musicStyle": "Country",
+    "performanceStyle": "Country-pop stage glam"
+  },
+  "personality": "Nashville crossover star",
+  "fanDemographics": "17–34, country-pop",
+  "targetAudience": "17–34, country-pop",
+  "catchPhrase": "Nashville crossover star",
+  "actType": "solo",
+  "liveStatus": "LIVE",
+  "poseCategory": "country",
+  "liveAudience": 11600,
+  "revenueTonight": 19200,
+  "growthPct": 12,
+  "showsScheduled": 7,
+  "albumTitle": "Golden Season",
+  "singleTitle": "Harvest",
+  "avatarInitials": "AC"
+}

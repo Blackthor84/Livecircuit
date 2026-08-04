@@ -1,0 +1,173 @@
+{
+  "isDemoArtist": true,
+  "visibility": "demo-only",
+  "environment": "demo",
+  "id": "sunday-architect",
+  "stageName": "Sunday Architect",
+  "realName": "Sunday Architect",
+  "genre": "Indie Rock",
+  "subGenre": "Indie Rock",
+  "hometown": "Philadelphia, PA",
+  "country": "United States",
+  "yearsActive": 7,
+  "label": "LiveCircuit Originals",
+  "management": "Marcus Lee",
+  "bio": "Sunday Architect is a indie rock act from Philadelphia, PA. Slow-build anthem writer. Known for philly indie earnest, they've built a devoted global fanbase on LiveCircuit with 170,000 followers.",
+  "brand": {
+    "primaryColor": "#10b981",
+    "secondaryColor": "#059669",
+    "accentColor": "#34d399",
+    "gradientClass": "from-emerald-500 to-teal-600",
+    "typography": "Space Grotesk",
+    "logoPath": "/assets/logos/sunday-architect.png",
+    "brandIconPath": "/assets/logos/sunday-architect-icon.png",
+    "brandDescription": "Philly indie earnest",
+    "brandVoice": "Confident, arena-ready, fan-first"
+  },
+  "appearance": {
+    "skinTone": "copper brown",
+    "hairTexture": "natural afro puff",
+    "hairColor": "white blonde",
+    "eyeColor": "deep brown",
+    "faceDescription": "Distinctive indie rock performer with deep brown eyes and natural afro puff white blonde hair",
+    "bodyType": "long-limbed",
+    "height": "6'0\"",
+    "fashionStyle": "Philly indie earnest",
+    "accessories": [
+      "wrist cuffs"
+    ],
+    "stageOutfit": "Philly indie earnest — premium tour edition",
+    "streetOutfit": "Casual philly indie earnest off-stage look",
+    "performanceOutfit": "Signature Indie Rock stage ensemble with LED accents"
+  },
+  "images": {
+    "heroImage": "/demo/performers/indie-mic.png",
+    "portraitImage": "/demo/performers/indie-mic.png",
+    "transparentPNG": "/demo/performers/indie-mic.png",
+    "tourPoster": "/assets/tours/sunday-architect-poster.png",
+    "albumCover": "/assets/albums/sunday-architect.png",
+    "arenaBanner": "/assets/backgrounds/sunday-architect-arena.png",
+    "vipImage": "/demo/performers/indie-mic.png",
+    "poses": {
+      "hero": "/demo/performers/indie-mic.png",
+      "portrait": "/demo/performers/indie-mic.png",
+      "transparent": "/demo/performers/indie-mic.png",
+      "performance": "/demo/performers/indie-guitar.png",
+      "walk": "/demo/performers/indie-mic.png",
+      "crowd": "/demo/performers/indie-mic.png",
+      "closeUp": "/demo/performers/indie-mic.png",
+      "profile": "/demo/performers/indie-mic.png",
+      "back": "/demo/performers/indie-mic.png",
+      "instrument": "/demo/performers/indie-guitar.png",
+      "mic": "/demo/performers/indie-mic.png",
+      "promo": "/demo/performers/indie-mic.png",
+      "vip": "/demo/performers/indie-mic.png",
+      "arenaBanner": "/demo/performers/indie-mic.png"
+    }
+  },
+  "merchCollection": [
+    {
+      "id": "sunday-architect-tee",
+      "name": "Architect Live Tour Tee",
+      "price": 35,
+      "imagePath": "/assets/merch/sunday-architect/sunday-architect-tee.png"
+    },
+    {
+      "id": "sunday-architect-hoodie",
+      "name": "Sunday Architect Glow Hoodie",
+      "price": 65,
+      "imagePath": "/assets/merch/sunday-architect/sunday-architect-hoodie.png"
+    },
+    {
+      "id": "sunday-architect-vinyl",
+      "name": "Blueprint Vinyl",
+      "price": 45,
+      "imagePath": "/assets/merch/sunday-architect/sunday-architect-vinyl.png"
+    }
+  ],
+  "followers": 170000,
+  "monthlyListeners": 380000,
+  "fanRating": 4.2,
+  "averageAttendance": 13600,
+  "ticketPrice": 45,
+  "vipPrice": 125,
+  "merchRevenue": 116160,
+  "tourRevenue": 198000,
+  "careerRevenue": 792000,
+  "verified": true,
+  "featured": false,
+  "socialLinks": {
+    "livecircuit": "/sunday-architect",
+    "website": "https://livecircuit.demo/sunday-architect",
+    "instagram": "@sundayarchitect"
+  },
+  "currentTour": {
+    "name": "Architect Live",
+    "posterPath": "/assets/tours/sunday-architect-poster.png",
+    "upcomingShows": [
+      {
+        "city": "Boston",
+        "venue": "Boston Harbor Arena",
+        "date": "Sep 12",
+        "ticketPrice": 45,
+        "vipPrice": 125
+      },
+      {
+        "city": "Chicago",
+        "venue": "Windy City Stadium",
+        "date": "Sep 19",
+        "ticketPrice": 55,
+        "vipPrice": 151
+      },
+      {
+        "city": "Dallas",
+        "venue": "Lone Star Arena",
+        "date": "Sep 26",
+        "ticketPrice": 45,
+        "vipPrice": 125
+      },
+      {
+        "city": "Miami",
+        "venue": "Miami Pulse Arena",
+        "date": "Oct 3",
+        "ticketPrice": 50,
+        "vipPrice": 125
+      }
+    ]
+  },
+  "favoriteVenue": "Boston Harbor Arena",
+  "performance": {
+    "signatureMove": "Slow-build anthem writer",
+    "signatureLighting": "purple-magenta-cyan",
+    "signatureAnimation": "crowd-wave pulse",
+    "preferredArenaTheme": "premium-festival",
+    "preferredPyro": true,
+    "preferredConfetti": false,
+    "preferredLighting": [
+      "purple",
+      "cyan",
+      "magenta"
+    ],
+    "preferredCameraAngles": [
+      "vip",
+      "stage-left",
+      "default"
+    ],
+    "musicStyle": "Indie Rock",
+    "performanceStyle": "Philly indie earnest"
+  },
+  "personality": "Slow-build anthem writer",
+  "fanDemographics": "21–38, indie rock",
+  "targetAudience": "21–38, indie rock",
+  "catchPhrase": "Slow-build anthem writer",
+  "actType": "solo",
+  "liveStatus": "IDLE",
+  "poseCategory": "indie",
+  "liveAudience": 0,
+  "revenueTonight": 4400,
+  "growthPct": 16,
+  "showsScheduled": 11,
+  "albumTitle": "Blueprint",
+  "singleTitle": "Frame",
+  "avatarInitials": "SA"
+}

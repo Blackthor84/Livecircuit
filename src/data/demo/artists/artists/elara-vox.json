@@ -1,0 +1,173 @@
+{
+  "isDemoArtist": true,
+  "visibility": "demo-only",
+  "environment": "demo",
+  "id": "elara-vox",
+  "stageName": "Elara Vox",
+  "realName": "Elara Vox",
+  "genre": "Alternative Pop",
+  "subGenre": "Alternative Pop",
+  "hometown": "Berlin, DE",
+  "country": "Germany",
+  "yearsActive": 12,
+  "label": "LiveCircuit Originals",
+  "management": "James Park",
+  "bio": "Elara Vox is a alternative pop act from Berlin, DE. European electro-pop pulse. Known for industrial glam, they've built a devoted global fanbase on LiveCircuit with 590,000 followers.",
+  "brand": {
+    "primaryColor": "#64748b",
+    "secondaryColor": "#475569",
+    "accentColor": "#94a3b8",
+    "gradientClass": "from-slate-500 to-zinc-600",
+    "typography": "Space Grotesk",
+    "logoPath": "/assets/logos/elara-vox.png",
+    "brandIconPath": "/assets/logos/elara-vox-icon.png",
+    "brandDescription": "Industrial glam",
+    "brandVoice": "Confident, arena-ready, fan-first"
+  },
+  "appearance": {
+    "skinTone": "warm caramel",
+    "hairTexture": "wavy",
+    "hairColor": "platinum blonde",
+    "eyeColor": "dark brown",
+    "faceDescription": "Distinctive alternative pop performer with dark brown eyes and wavy platinum blonde hair",
+    "bodyType": "slim tall",
+    "height": "5'2\"",
+    "fashionStyle": "Industrial glam",
+    "accessories": [
+      "wrist cuffs"
+    ],
+    "stageOutfit": "Industrial glam — premium tour edition",
+    "streetOutfit": "Casual industrial glam off-stage look",
+    "performanceOutfit": "Signature Alternative Pop stage ensemble with LED accents"
+  },
+  "images": {
+    "heroImage": "/demo/performers/female-pop-mic.png",
+    "portraitImage": "/demo/performers/female-pop-mic.png",
+    "transparentPNG": "/demo/performers/female-pop-mic.png",
+    "tourPoster": "/assets/tours/elara-vox-poster.png",
+    "albumCover": "/assets/albums/elara-vox.png",
+    "arenaBanner": "/assets/backgrounds/elara-vox-arena.png",
+    "vipImage": "/demo/performers/female-pop-mic.png",
+    "poses": {
+      "hero": "/demo/performers/female-pop-mic.png",
+      "portrait": "/demo/performers/female-pop-mic.png",
+      "transparent": "/demo/performers/female-pop-mic.png",
+      "performance": "/demo/performers/female-pop-mic.png",
+      "walk": "/demo/performers/female-pop-point.png",
+      "crowd": "/demo/performers/female-pop-point.png",
+      "closeUp": "/demo/performers/female-pop-closeup.png",
+      "profile": "/demo/performers/female-pop-closeup.png",
+      "back": "/demo/performers/female-pop-back.png",
+      "instrument": "/demo/performers/female-pop-mic.png",
+      "mic": "/demo/performers/female-pop-mic.png",
+      "promo": "/demo/performers/female-pop-mic.png",
+      "vip": "/demo/performers/female-pop-mic.png",
+      "arenaBanner": "/demo/performers/female-pop-mic.png"
+    }
+  },
+  "merchCollection": [
+    {
+      "id": "elara-vox-tee",
+      "name": "Voltage Bloom Tour Tee",
+      "price": 35,
+      "imagePath": "/assets/merch/elara-vox/elara-vox-tee.png"
+    },
+    {
+      "id": "elara-vox-hoodie",
+      "name": "Elara Vox Glow Hoodie",
+      "price": 65,
+      "imagePath": "/assets/merch/elara-vox/elara-vox-hoodie.png"
+    },
+    {
+      "id": "elara-vox-vinyl",
+      "name": "Neon Testament Vinyl",
+      "price": 45,
+      "imagePath": "/assets/merch/elara-vox/elara-vox-vinyl.png"
+    }
+  ],
+  "followers": 590000,
+  "monthlyListeners": 1340000,
+  "fanRating": 4.3,
+  "averageAttendance": 47200,
+  "ticketPrice": 45,
+  "vipPrice": 125,
+  "merchRevenue": 124080,
+  "tourRevenue": 211500,
+  "careerRevenue": 846000,
+  "verified": true,
+  "featured": false,
+  "socialLinks": {
+    "livecircuit": "/elara-vox",
+    "website": "https://livecircuit.demo/elara-vox",
+    "instagram": "@elaravox"
+  },
+  "currentTour": {
+    "name": "Voltage Bloom",
+    "posterPath": "/assets/tours/elara-vox-poster.png",
+    "upcomingShows": [
+      {
+        "city": "Boston",
+        "venue": "Boston Harbor Arena",
+        "date": "Sep 12",
+        "ticketPrice": 45,
+        "vipPrice": 125
+      },
+      {
+        "city": "Chicago",
+        "venue": "Windy City Stadium",
+        "date": "Sep 19",
+        "ticketPrice": 55,
+        "vipPrice": 151
+      },
+      {
+        "city": "Dallas",
+        "venue": "Lone Star Arena",
+        "date": "Sep 26",
+        "ticketPrice": 45,
+        "vipPrice": 125
+      },
+      {
+        "city": "Miami",
+        "venue": "Miami Pulse Arena",
+        "date": "Oct 3",
+        "ticketPrice": 50,
+        "vipPrice": 125
+      }
+    ]
+  },
+  "favoriteVenue": "Boston Harbor Arena",
+  "performance": {
+    "signatureMove": "European electro-pop pulse",
+    "signatureLighting": "purple-magenta-cyan",
+    "signatureAnimation": "crowd-wave pulse",
+    "preferredArenaTheme": "premium-festival",
+    "preferredPyro": false,
+    "preferredConfetti": true,
+    "preferredLighting": [
+      "purple",
+      "cyan",
+      "magenta"
+    ],
+    "preferredCameraAngles": [
+      "vip",
+      "stage-left",
+      "default"
+    ],
+    "musicStyle": "Alternative Pop",
+    "performanceStyle": "Industrial glam"
+  },
+  "personality": "European electro-pop pulse",
+  "fanDemographics": "20–35, EU electronic pop",
+  "targetAudience": "20–35, EU electronic pop",
+  "catchPhrase": "European electro-pop pulse",
+  "actType": "solo",
+  "liveStatus": "IDLE",
+  "poseCategory": "female-pop",
+  "liveAudience": 0,
+  "revenueTonight": 4700,
+  "growthPct": 17,
+  "showsScheduled": 12,
+  "albumTitle": "Neon Testament",
+  "singleTitle": "Wire Heart",
+  "avatarInitials": "EV"
+}

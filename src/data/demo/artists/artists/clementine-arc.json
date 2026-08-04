@@ -1,0 +1,173 @@
+{
+  "isDemoArtist": true,
+  "visibility": "demo-only",
+  "environment": "demo",
+  "id": "clementine-arc",
+  "stageName": "Clementine Arc",
+  "realName": "Clementine Arc",
+  "genre": "Indie Rock",
+  "subGenre": "Indie Rock",
+  "hometown": "Austin, TX",
+  "country": "United States",
+  "yearsActive": 5,
+  "label": "LiveCircuit Originals",
+  "management": "Marcus Lee",
+  "bio": "Clementine Arc is a indie rock act from Austin, TX. Cult following breakout. Known for texas indie grit, they've built a devoted global fanbase on LiveCircuit with 230,000 followers.",
+  "brand": {
+    "primaryColor": "#f59e0b",
+    "secondaryColor": "#d97706",
+    "accentColor": "#fbbf24",
+    "gradientClass": "from-amber-500 to-orange-600",
+    "typography": "Space Grotesk",
+    "logoPath": "/assets/logos/clementine-arc.png",
+    "brandIconPath": "/assets/logos/clementine-arc-icon.png",
+    "brandDescription": "Texas indie grit",
+    "brandVoice": "Confident, arena-ready, fan-first"
+  },
+  "appearance": {
+    "skinTone": "fair with warm undertones",
+    "hairTexture": "textured crop",
+    "hairColor": "purple ombre",
+    "eyeColor": "blue-grey",
+    "faceDescription": "Distinctive indie rock performer with blue-grey eyes and textured crop purple ombre hair",
+    "bodyType": "average build",
+    "height": "5'2\"",
+    "fashionStyle": "Texas indie grit",
+    "accessories": [
+      "ring stack"
+    ],
+    "stageOutfit": "Texas indie grit — premium tour edition",
+    "streetOutfit": "Casual texas indie grit off-stage look",
+    "performanceOutfit": "Signature Indie Rock stage ensemble with LED accents"
+  },
+  "images": {
+    "heroImage": "/demo/performers/indie-mic.png",
+    "portraitImage": "/demo/performers/indie-mic.png",
+    "transparentPNG": "/demo/performers/indie-mic.png",
+    "tourPoster": "/assets/tours/clementine-arc-poster.png",
+    "albumCover": "/assets/albums/clementine-arc.png",
+    "arenaBanner": "/assets/backgrounds/clementine-arc-arena.png",
+    "vipImage": "/demo/performers/indie-mic.png",
+    "poses": {
+      "hero": "/demo/performers/indie-mic.png",
+      "portrait": "/demo/performers/indie-mic.png",
+      "transparent": "/demo/performers/indie-mic.png",
+      "performance": "/demo/performers/indie-guitar.png",
+      "walk": "/demo/performers/indie-mic.png",
+      "crowd": "/demo/performers/indie-mic.png",
+      "closeUp": "/demo/performers/indie-mic.png",
+      "profile": "/demo/performers/indie-mic.png",
+      "back": "/demo/performers/indie-mic.png",
+      "instrument": "/demo/performers/indie-guitar.png",
+      "mic": "/demo/performers/indie-mic.png",
+      "promo": "/demo/performers/indie-mic.png",
+      "vip": "/demo/performers/indie-mic.png",
+      "arenaBanner": "/demo/performers/indie-mic.png"
+    }
+  },
+  "merchCollection": [
+    {
+      "id": "clementine-arc-tee",
+      "name": "Arc Live Tour Tee",
+      "price": 35,
+      "imagePath": "/assets/merch/clementine-arc/clementine-arc-tee.png"
+    },
+    {
+      "id": "clementine-arc-hoodie",
+      "name": "Clementine Arc Glow Hoodie",
+      "price": 65,
+      "imagePath": "/assets/merch/clementine-arc/clementine-arc-hoodie.png"
+    },
+    {
+      "id": "clementine-arc-vinyl",
+      "name": "Citrus Static Vinyl",
+      "price": 45,
+      "imagePath": "/assets/merch/clementine-arc/clementine-arc-vinyl.png"
+    }
+  ],
+  "followers": 230000,
+  "monthlyListeners": 520000,
+  "fanRating": 4.7,
+  "averageAttendance": 12500,
+  "ticketPrice": 45,
+  "vipPrice": 125,
+  "merchRevenue": 554400,
+  "tourRevenue": 945000,
+  "careerRevenue": 3780000,
+  "verified": true,
+  "featured": false,
+  "socialLinks": {
+    "livecircuit": "/clementine-arc",
+    "website": "https://livecircuit.demo/clementine-arc",
+    "instagram": "@clementinearc"
+  },
+  "currentTour": {
+    "name": "Arc Live",
+    "posterPath": "/assets/tours/clementine-arc-poster.png",
+    "upcomingShows": [
+      {
+        "city": "Boston",
+        "venue": "Boston Harbor Arena",
+        "date": "Sep 12",
+        "ticketPrice": 45,
+        "vipPrice": 125
+      },
+      {
+        "city": "Chicago",
+        "venue": "Windy City Stadium",
+        "date": "Sep 19",
+        "ticketPrice": 55,
+        "vipPrice": 151
+      },
+      {
+        "city": "Dallas",
+        "venue": "Lone Star Arena",
+        "date": "Sep 26",
+        "ticketPrice": 45,
+        "vipPrice": 125
+      },
+      {
+        "city": "Miami",
+        "venue": "Miami Pulse Arena",
+        "date": "Oct 3",
+        "ticketPrice": 50,
+        "vipPrice": 125
+      }
+    ]
+  },
+  "favoriteVenue": "Boston Harbor Arena",
+  "performance": {
+    "signatureMove": "Cult following breakout",
+    "signatureLighting": "purple-magenta-cyan",
+    "signatureAnimation": "crowd-wave pulse",
+    "preferredArenaTheme": "premium-festival",
+    "preferredPyro": true,
+    "preferredConfetti": false,
+    "preferredLighting": [
+      "purple",
+      "cyan",
+      "magenta"
+    ],
+    "preferredCameraAngles": [
+      "vip",
+      "stage-left",
+      "default"
+    ],
+    "musicStyle": "Indie Rock",
+    "performanceStyle": "Texas indie grit"
+  },
+  "personality": "Cult following breakout",
+  "fanDemographics": "20–35, indie rock",
+  "targetAudience": "20–35, indie rock",
+  "catchPhrase": "Cult following breakout",
+  "actType": "solo",
+  "liveStatus": "LIVE",
+  "poseCategory": "indie",
+  "liveAudience": 12500,
+  "revenueTonight": 21000,
+  "growthPct": 13,
+  "showsScheduled": 8,
+  "albumTitle": "Citrus Static",
+  "singleTitle": "Peel",
+  "avatarInitials": "CA"
+}

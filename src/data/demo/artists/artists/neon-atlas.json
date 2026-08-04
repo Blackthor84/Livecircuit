@@ -1,0 +1,173 @@
+{
+  "isDemoArtist": true,
+  "visibility": "demo-only",
+  "environment": "demo",
+  "id": "neon-atlas",
+  "stageName": "Neon Atlas",
+  "realName": "Neon Atlas (collective)",
+  "genre": "Electronic Duo",
+  "subGenre": "Electronic Duo",
+  "hometown": "Amsterdam, NL",
+  "country": "Netherlands",
+  "yearsActive": 13,
+  "label": "LiveCircuit Originals",
+  "management": "Marcus Lee",
+  "bio": "Neon Atlas is a electronic duo act from Amsterdam, NL. Festival EDM duo with visual sync. Known for neon minimal futurism, they've built a devoted global fanbase on LiveCircuit with 1,680,000 followers.",
+  "brand": {
+    "primaryColor": "#06b6d4",
+    "secondaryColor": "#0891b2",
+    "accentColor": "#22d3ee",
+    "gradientClass": "from-cyan-500 to-blue-600",
+    "typography": "Space Grotesk",
+    "logoPath": "/assets/logos/neon-atlas.png",
+    "brandIconPath": "/assets/logos/neon-atlas-icon.png",
+    "brandDescription": "Neon minimal futurism",
+    "brandVoice": "Confident, arena-ready, fan-first"
+  },
+  "appearance": {
+    "skinTone": "fair with warm undertones",
+    "hairTexture": "textured crop",
+    "hairColor": "purple ombre",
+    "eyeColor": "heterochromia green-brown",
+    "faceDescription": "Distinctive electronic duo performer with heterochromia green-brown eyes and textured crop purple ombre hair",
+    "bodyType": "athletic lean",
+    "height": "5'4\"",
+    "fashionStyle": "Neon minimal futurism",
+    "accessories": [
+      "ring stack"
+    ],
+    "stageOutfit": "Neon minimal futurism — premium tour edition",
+    "streetOutfit": "Casual neon minimal futurism off-stage look",
+    "performanceOutfit": "Signature Electronic Duo stage ensemble with LED accents"
+  },
+  "images": {
+    "heroImage": "/demo/performers/dj-table.png",
+    "portraitImage": "/demo/performers/dj-table.png",
+    "transparentPNG": "/demo/performers/dj-table.png",
+    "tourPoster": "/assets/tours/neon-atlas-poster.png",
+    "albumCover": "/assets/albums/neon-atlas.png",
+    "arenaBanner": "/assets/backgrounds/neon-atlas-arena.png",
+    "vipImage": "/demo/performers/dj-table.png",
+    "poses": {
+      "hero": "/demo/performers/dj-table.png",
+      "portrait": "/demo/performers/dj-table.png",
+      "transparent": "/demo/performers/dj-table.png",
+      "performance": "/demo/performers/dj-arms-up.png",
+      "walk": "/demo/performers/dj-table.png",
+      "crowd": "/demo/performers/dj-table.png",
+      "closeUp": "/demo/performers/dj-table.png",
+      "profile": "/demo/performers/dj-table.png",
+      "back": "/demo/performers/dj-table.png",
+      "instrument": "/demo/performers/dj-table.png",
+      "mic": "/demo/performers/dj-table.png",
+      "promo": "/demo/performers/dj-table.png",
+      "vip": "/demo/performers/dj-table.png",
+      "arenaBanner": "/demo/performers/dj-table.png"
+    }
+  },
+  "merchCollection": [
+    {
+      "id": "neon-atlas-tee",
+      "name": "Atlas World Tour Tee",
+      "price": 35,
+      "imagePath": "/assets/merch/neon-atlas/neon-atlas-tee.png"
+    },
+    {
+      "id": "neon-atlas-hoodie",
+      "name": "Neon Atlas Glow Hoodie",
+      "price": 65,
+      "imagePath": "/assets/merch/neon-atlas/neon-atlas-hoodie.png"
+    },
+    {
+      "id": "neon-atlas-vinyl",
+      "name": "Grid Maps Vinyl",
+      "price": 45,
+      "imagePath": "/assets/merch/neon-atlas/neon-atlas-vinyl.png"
+    }
+  ],
+  "followers": 1680000,
+  "monthlyListeners": 3640000,
+  "fanRating": 4.6000000000000005,
+  "averageAttendance": 8000,
+  "ticketPrice": 45,
+  "vipPrice": 125,
+  "merchRevenue": 316800,
+  "tourRevenue": 540000,
+  "careerRevenue": 2160000,
+  "verified": true,
+  "featured": true,
+  "socialLinks": {
+    "livecircuit": "/neon-atlas",
+    "website": "https://livecircuit.demo/neon-atlas",
+    "instagram": "@neonatlas"
+  },
+  "currentTour": {
+    "name": "Atlas World",
+    "posterPath": "/assets/tours/neon-atlas-poster.png",
+    "upcomingShows": [
+      {
+        "city": "Boston",
+        "venue": "Boston Harbor Arena",
+        "date": "Sep 12",
+        "ticketPrice": 45,
+        "vipPrice": 125
+      },
+      {
+        "city": "Chicago",
+        "venue": "Windy City Stadium",
+        "date": "Sep 19",
+        "ticketPrice": 55,
+        "vipPrice": 151
+      },
+      {
+        "city": "Dallas",
+        "venue": "Lone Star Arena",
+        "date": "Sep 26",
+        "ticketPrice": 45,
+        "vipPrice": 125
+      },
+      {
+        "city": "Miami",
+        "venue": "Miami Pulse Arena",
+        "date": "Oct 3",
+        "ticketPrice": 50,
+        "vipPrice": 125
+      }
+    ]
+  },
+  "favoriteVenue": "Boston Harbor Arena",
+  "performance": {
+    "signatureMove": "Festival EDM duo with visual sync",
+    "signatureLighting": "purple-magenta-cyan",
+    "signatureAnimation": "crowd-wave pulse",
+    "preferredArenaTheme": "premium-festival",
+    "preferredPyro": false,
+    "preferredConfetti": false,
+    "preferredLighting": [
+      "purple",
+      "cyan",
+      "magenta"
+    ],
+    "preferredCameraAngles": [
+      "vip",
+      "stage-left",
+      "default"
+    ],
+    "musicStyle": "Electronic Duo",
+    "performanceStyle": "Neon minimal futurism"
+  },
+  "personality": "Festival EDM duo with visual sync",
+  "fanDemographics": "18–32, festival EDM",
+  "targetAudience": "18–32, festival EDM",
+  "catchPhrase": "Festival EDM duo with visual sync",
+  "actType": "duo",
+  "liveStatus": "LIVE",
+  "poseCategory": "dj",
+  "liveAudience": 8000,
+  "revenueTonight": 12000,
+  "growthPct": 12,
+  "showsScheduled": 3,
+  "albumTitle": "Grid Maps",
+  "singleTitle": "Pulse",
+  "avatarInitials": "NA"
+}

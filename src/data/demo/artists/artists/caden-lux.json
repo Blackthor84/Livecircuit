@@ -1,0 +1,173 @@
+{
+  "isDemoArtist": true,
+  "visibility": "demo-only",
+  "environment": "demo",
+  "id": "caden-lux",
+  "stageName": "Caden Lux",
+  "realName": "Caden Lux",
+  "genre": "Pop",
+  "subGenre": "Modern Pop",
+  "hometown": "Nashville, TN",
+  "country": "United States",
+  "yearsActive": 12,
+  "label": "LiveCircuit Originals",
+  "management": "Marcus Lee",
+  "bio": "Caden Lux is a modern pop act from Nashville, TN. Pop with southern warmth. Known for denim and gold chains, they've built a devoted global fanbase on LiveCircuit with 780,000 followers.",
+  "brand": {
+    "primaryColor": "#f59e0b",
+    "secondaryColor": "#d97706",
+    "accentColor": "#fbbf24",
+    "gradientClass": "from-amber-500 to-orange-600",
+    "typography": "Space Grotesk",
+    "logoPath": "/assets/logos/caden-lux.png",
+    "brandIconPath": "/assets/logos/caden-lux-icon.png",
+    "brandDescription": "Denim and gold chains",
+    "brandVoice": "Confident, arena-ready, fan-first"
+  },
+  "appearance": {
+    "skinTone": "light brown",
+    "hairTexture": "afro natural",
+    "hairColor": "silver grey",
+    "eyeColor": "blue",
+    "faceDescription": "Distinctive modern pop performer with blue eyes and afro natural silver grey hair",
+    "bodyType": "dancer-fit",
+    "height": "6'2\"",
+    "fashionStyle": "Denim and gold chains",
+    "accessories": [
+      "stud earrings"
+    ],
+    "stageOutfit": "Denim and gold chains — premium tour edition",
+    "streetOutfit": "Casual denim and gold chains off-stage look",
+    "performanceOutfit": "Signature Modern Pop stage ensemble with LED accents"
+  },
+  "images": {
+    "heroImage": "/demo/performers/male-pop-mic.png",
+    "portraitImage": "/demo/performers/male-pop-mic.png",
+    "transparentPNG": "/demo/performers/male-pop-mic.png",
+    "tourPoster": "/assets/tours/caden-lux-poster.png",
+    "albumCover": "/assets/albums/caden-lux.png",
+    "arenaBanner": "/assets/backgrounds/caden-lux-arena.png",
+    "vipImage": "/demo/performers/male-pop-mic.png",
+    "poses": {
+      "hero": "/demo/performers/male-pop-mic.png",
+      "portrait": "/demo/performers/male-pop-mic.png",
+      "transparent": "/demo/performers/male-pop-mic.png",
+      "performance": "/demo/performers/male-pop-arms-up.png",
+      "walk": "/demo/performers/male-pop-walk.png",
+      "crowd": "/demo/performers/male-pop-over-audience.png",
+      "closeUp": "/demo/performers/male-pop-mic.png",
+      "profile": "/demo/performers/male-pop-mic.png",
+      "back": "/demo/performers/male-pop-mic.png",
+      "instrument": "/demo/performers/male-pop-mic.png",
+      "mic": "/demo/performers/male-pop-mic.png",
+      "promo": "/demo/performers/male-pop-mic.png",
+      "vip": "/demo/performers/male-pop-mic.png",
+      "arenaBanner": "/demo/performers/male-pop-mic.png"
+    }
+  },
+  "merchCollection": [
+    {
+      "id": "caden-lux-tee",
+      "name": "Southern Lights Tour Tee",
+      "price": 35,
+      "imagePath": "/assets/merch/caden-lux/caden-lux-tee.png"
+    },
+    {
+      "id": "caden-lux-hoodie",
+      "name": "Caden Lux Glow Hoodie",
+      "price": 65,
+      "imagePath": "/assets/merch/caden-lux/caden-lux-hoodie.png"
+    },
+    {
+      "id": "caden-lux-vinyl",
+      "name": "Highway Halo Vinyl",
+      "price": 45,
+      "imagePath": "/assets/merch/caden-lux/caden-lux-vinyl.png"
+    }
+  ],
+  "followers": 780000,
+  "monthlyListeners": 1760000,
+  "fanRating": 4.2,
+  "averageAttendance": 8200,
+  "ticketPrice": 45,
+  "vipPrice": 125,
+  "merchRevenue": 306240,
+  "tourRevenue": 522000,
+  "careerRevenue": 2088000,
+  "verified": true,
+  "featured": false,
+  "socialLinks": {
+    "livecircuit": "/caden-lux",
+    "website": "https://livecircuit.demo/caden-lux",
+    "instagram": "@cadenlux"
+  },
+  "currentTour": {
+    "name": "Southern Lights",
+    "posterPath": "/assets/tours/caden-lux-poster.png",
+    "upcomingShows": [
+      {
+        "city": "Boston",
+        "venue": "Boston Harbor Arena",
+        "date": "Sep 12",
+        "ticketPrice": 45,
+        "vipPrice": 125
+      },
+      {
+        "city": "Chicago",
+        "venue": "Windy City Stadium",
+        "date": "Sep 19",
+        "ticketPrice": 55,
+        "vipPrice": 151
+      },
+      {
+        "city": "Dallas",
+        "venue": "Lone Star Arena",
+        "date": "Sep 26",
+        "ticketPrice": 45,
+        "vipPrice": 125
+      },
+      {
+        "city": "Miami",
+        "venue": "Miami Pulse Arena",
+        "date": "Oct 3",
+        "ticketPrice": 50,
+        "vipPrice": 125
+      }
+    ]
+  },
+  "favoriteVenue": "Boston Harbor Arena",
+  "performance": {
+    "signatureMove": "Pop with southern warmth",
+    "signatureLighting": "purple-magenta-cyan",
+    "signatureAnimation": "crowd-wave pulse",
+    "preferredArenaTheme": "premium-festival",
+    "preferredPyro": false,
+    "preferredConfetti": true,
+    "preferredLighting": [
+      "purple",
+      "cyan",
+      "magenta"
+    ],
+    "preferredCameraAngles": [
+      "vip",
+      "stage-left",
+      "default"
+    ],
+    "musicStyle": "Modern Pop",
+    "performanceStyle": "Denim and gold chains"
+  },
+  "personality": "Pop with southern warmth",
+  "fanDemographics": "18–36, pop/country crossover",
+  "targetAudience": "18–36, pop/country crossover",
+  "catchPhrase": "Pop with southern warmth",
+  "actType": "solo",
+  "liveStatus": "ON TOUR",
+  "poseCategory": "male-pop",
+  "liveAudience": 8200,
+  "revenueTonight": 11600,
+  "growthPct": 16,
+  "showsScheduled": 11,
+  "albumTitle": "Highway Halo",
+  "singleTitle": "Stay Golden",
+  "avatarInitials": "CL"
+}

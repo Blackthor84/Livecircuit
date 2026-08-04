@@ -1,0 +1,173 @@
+{
+  "isDemoArtist": true,
+  "visibility": "demo-only",
+  "environment": "demo",
+  "id": "copper-canyon",
+  "stageName": "Copper Canyon",
+  "realName": "Copper Canyon",
+  "genre": "Americana",
+  "subGenre": "Americana",
+  "hometown": "Flagstaff, AZ",
+  "country": "United States",
+  "yearsActive": 4,
+  "label": "LiveCircuit Originals",
+  "management": "Sarah Chen",
+  "bio": "Copper Canyon is a americana act from Flagstaff, AZ. Canyon echo americana. Known for southwest copper tones, they've built a devoted global fanbase on LiveCircuit with 150,000 followers.",
+  "brand": {
+    "primaryColor": "#f59e0b",
+    "secondaryColor": "#d97706",
+    "accentColor": "#fbbf24",
+    "gradientClass": "from-amber-500 to-orange-600",
+    "typography": "Space Grotesk",
+    "logoPath": "/assets/logos/copper-canyon.png",
+    "brandIconPath": "/assets/logos/copper-canyon-icon.png",
+    "brandDescription": "Southwest copper tones",
+    "brandVoice": "Confident, arena-ready, fan-first"
+  },
+  "appearance": {
+    "skinTone": "deep ebony",
+    "hairTexture": "tight curls",
+    "hairColor": "chestnut",
+    "eyeColor": "green",
+    "faceDescription": "Distinctive americana performer with green eyes and tight curls chestnut hair",
+    "bodyType": "petite compact",
+    "height": "5'4\"",
+    "fashionStyle": "Southwest copper tones",
+    "accessories": [
+      "stud earrings"
+    ],
+    "stageOutfit": "Southwest copper tones — premium tour edition",
+    "streetOutfit": "Casual southwest copper tones off-stage look",
+    "performanceOutfit": "Signature Americana stage ensemble with LED accents"
+  },
+  "images": {
+    "heroImage": "/demo/performers/acoustic-mic.png",
+    "portraitImage": "/demo/performers/acoustic-mic.png",
+    "transparentPNG": "/demo/performers/acoustic-mic.png",
+    "tourPoster": "/assets/tours/copper-canyon-poster.png",
+    "albumCover": "/assets/albums/copper-canyon.png",
+    "arenaBanner": "/assets/backgrounds/copper-canyon-arena.png",
+    "vipImage": "/demo/performers/acoustic-mic.png",
+    "poses": {
+      "hero": "/demo/performers/acoustic-mic.png",
+      "portrait": "/demo/performers/acoustic-mic.png",
+      "transparent": "/demo/performers/acoustic-mic.png",
+      "performance": "/demo/performers/acoustic-piano.png",
+      "walk": "/demo/performers/acoustic-mic.png",
+      "crowd": "/demo/performers/acoustic-mic.png",
+      "closeUp": "/demo/performers/acoustic-mic.png",
+      "profile": "/demo/performers/acoustic-mic.png",
+      "back": "/demo/performers/acoustic-mic.png",
+      "instrument": "/demo/performers/acoustic-piano.png",
+      "mic": "/demo/performers/acoustic-mic.png",
+      "promo": "/demo/performers/acoustic-mic.png",
+      "vip": "/demo/performers/acoustic-mic.png",
+      "arenaBanner": "/demo/performers/acoustic-mic.png"
+    }
+  },
+  "merchCollection": [
+    {
+      "id": "copper-canyon-tee",
+      "name": "Canyon Circuit Tour Tee",
+      "price": 35,
+      "imagePath": "/assets/merch/copper-canyon/copper-canyon-tee.png"
+    },
+    {
+      "id": "copper-canyon-hoodie",
+      "name": "Copper Canyon Glow Hoodie",
+      "price": 65,
+      "imagePath": "/assets/merch/copper-canyon/copper-canyon-hoodie.png"
+    },
+    {
+      "id": "copper-canyon-vinyl",
+      "name": "Red Rock Vinyl",
+      "price": 45,
+      "imagePath": "/assets/merch/copper-canyon/copper-canyon-vinyl.png"
+    }
+  ],
+  "followers": 150000,
+  "monthlyListeners": 340000,
+  "fanRating": 4.9,
+  "averageAttendance": 12000,
+  "ticketPrice": 45,
+  "vipPrice": 125,
+  "merchRevenue": 108240,
+  "tourRevenue": 184500,
+  "careerRevenue": 738000,
+  "verified": true,
+  "featured": false,
+  "socialLinks": {
+    "livecircuit": "/copper-canyon",
+    "website": "https://livecircuit.demo/copper-canyon",
+    "instagram": "@coppercanyon"
+  },
+  "currentTour": {
+    "name": "Canyon Circuit",
+    "posterPath": "/assets/tours/copper-canyon-poster.png",
+    "upcomingShows": [
+      {
+        "city": "Boston",
+        "venue": "Boston Harbor Arena",
+        "date": "Sep 12",
+        "ticketPrice": 45,
+        "vipPrice": 125
+      },
+      {
+        "city": "Chicago",
+        "venue": "Windy City Stadium",
+        "date": "Sep 19",
+        "ticketPrice": 55,
+        "vipPrice": 151
+      },
+      {
+        "city": "Dallas",
+        "venue": "Lone Star Arena",
+        "date": "Sep 26",
+        "ticketPrice": 45,
+        "vipPrice": 125
+      },
+      {
+        "city": "Miami",
+        "venue": "Miami Pulse Arena",
+        "date": "Oct 3",
+        "ticketPrice": 50,
+        "vipPrice": 125
+      }
+    ]
+  },
+  "favoriteVenue": "Boston Harbor Arena",
+  "performance": {
+    "signatureMove": "Canyon echo americana",
+    "signatureLighting": "purple-magenta-cyan",
+    "signatureAnimation": "crowd-wave pulse",
+    "preferredArenaTheme": "premium-festival",
+    "preferredPyro": false,
+    "preferredConfetti": false,
+    "preferredLighting": [
+      "purple",
+      "cyan",
+      "magenta"
+    ],
+    "preferredCameraAngles": [
+      "vip",
+      "stage-left",
+      "default"
+    ],
+    "musicStyle": "Americana",
+    "performanceStyle": "Southwest copper tones"
+  },
+  "personality": "Canyon echo americana",
+  "fanDemographics": "28–50, desert americana",
+  "targetAudience": "28–50, desert americana",
+  "catchPhrase": "Canyon echo americana",
+  "actType": "solo",
+  "liveStatus": "IDLE",
+  "poseCategory": "acoustic",
+  "liveAudience": 0,
+  "revenueTonight": 4100,
+  "growthPct": 15,
+  "showsScheduled": 10,
+  "albumTitle": "Red Rock",
+  "singleTitle": "Echo",
+  "avatarInitials": "CC"
+}

@@ -1,0 +1,173 @@
+{
+  "isDemoArtist": true,
+  "visibility": "demo-only",
+  "environment": "demo",
+  "id": "hollow-frequency",
+  "stageName": "Hollow Frequency",
+  "realName": "Hollow Frequency (collective)",
+  "genre": "Alternative Rock",
+  "subGenre": "Alternative Rock",
+  "hometown": "Vancouver, BC",
+  "country": "Canada",
+  "yearsActive": 7,
+  "label": "LiveCircuit Originals",
+  "management": "James Park",
+  "bio": "Hollow Frequency is a alternative rock act from Vancouver, BC. Pacific alt-rock haze. Known for shoegaze arena scale, they've built a devoted global fanbase on LiveCircuit with 320,000 followers.",
+  "brand": {
+    "primaryColor": "#a855f7",
+    "secondaryColor": "#7c3aed",
+    "accentColor": "#c084fc",
+    "gradientClass": "from-violet-500 to-purple-600",
+    "typography": "Space Grotesk",
+    "logoPath": "/assets/logos/hollow-frequency.png",
+    "brandIconPath": "/assets/logos/hollow-frequency-icon.png",
+    "brandDescription": "Shoegaze arena scale",
+    "brandVoice": "Confident, arena-ready, fan-first"
+  },
+  "appearance": {
+    "skinTone": "deep mahogany",
+    "hairTexture": "dreadlocks",
+    "hairColor": "natural black",
+    "eyeColor": "grey",
+    "faceDescription": "Distinctive alternative rock performer with grey eyes and dreadlocks natural black hair",
+    "bodyType": "willowy",
+    "height": "6'4\"",
+    "fashionStyle": "Shoegaze arena scale",
+    "accessories": [
+      "chain necklace"
+    ],
+    "stageOutfit": "Shoegaze arena scale — premium tour edition",
+    "streetOutfit": "Casual shoegaze arena scale off-stage look",
+    "performanceOutfit": "Signature Alternative Rock stage ensemble with LED accents"
+  },
+  "images": {
+    "heroImage": "/demo/performers/indie-mic.png",
+    "portraitImage": "/demo/performers/indie-mic.png",
+    "transparentPNG": "/demo/performers/indie-mic.png",
+    "tourPoster": "/assets/tours/hollow-frequency-poster.png",
+    "albumCover": "/assets/albums/hollow-frequency.png",
+    "arenaBanner": "/assets/backgrounds/hollow-frequency-arena.png",
+    "vipImage": "/demo/performers/indie-mic.png",
+    "poses": {
+      "hero": "/demo/performers/indie-mic.png",
+      "portrait": "/demo/performers/indie-mic.png",
+      "transparent": "/demo/performers/indie-mic.png",
+      "performance": "/demo/performers/indie-guitar.png",
+      "walk": "/demo/performers/indie-mic.png",
+      "crowd": "/demo/performers/indie-mic.png",
+      "closeUp": "/demo/performers/indie-mic.png",
+      "profile": "/demo/performers/indie-mic.png",
+      "back": "/demo/performers/indie-mic.png",
+      "instrument": "/demo/performers/indie-guitar.png",
+      "mic": "/demo/performers/indie-mic.png",
+      "promo": "/demo/performers/indie-mic.png",
+      "vip": "/demo/performers/indie-mic.png",
+      "arenaBanner": "/demo/performers/indie-mic.png"
+    }
+  },
+  "merchCollection": [
+    {
+      "id": "hollow-frequency-tee",
+      "name": "Frequency Tour Tour Tee",
+      "price": 35,
+      "imagePath": "/assets/merch/hollow-frequency/hollow-frequency-tee.png"
+    },
+    {
+      "id": "hollow-frequency-hoodie",
+      "name": "Hollow Frequency Glow Hoodie",
+      "price": 65,
+      "imagePath": "/assets/merch/hollow-frequency/hollow-frequency-hoodie.png"
+    },
+    {
+      "id": "hollow-frequency-vinyl",
+      "name": "Empty Signal Vinyl",
+      "price": 45,
+      "imagePath": "/assets/merch/hollow-frequency/hollow-frequency-vinyl.png"
+    }
+  ],
+  "followers": 320000,
+  "monthlyListeners": 720000,
+  "fanRating": 4.2,
+  "averageAttendance": 25600,
+  "ticketPrice": 45,
+  "vipPrice": 125,
+  "merchRevenue": 116160,
+  "tourRevenue": 198000,
+  "careerRevenue": 792000,
+  "verified": true,
+  "featured": false,
+  "socialLinks": {
+    "livecircuit": "/hollow-frequency",
+    "website": "https://livecircuit.demo/hollow-frequency",
+    "instagram": "@hollowfrequency"
+  },
+  "currentTour": {
+    "name": "Frequency Tour",
+    "posterPath": "/assets/tours/hollow-frequency-poster.png",
+    "upcomingShows": [
+      {
+        "city": "Boston",
+        "venue": "Boston Harbor Arena",
+        "date": "Sep 12",
+        "ticketPrice": 45,
+        "vipPrice": 125
+      },
+      {
+        "city": "Chicago",
+        "venue": "Windy City Stadium",
+        "date": "Sep 19",
+        "ticketPrice": 55,
+        "vipPrice": 151
+      },
+      {
+        "city": "Dallas",
+        "venue": "Lone Star Arena",
+        "date": "Sep 26",
+        "ticketPrice": 45,
+        "vipPrice": 125
+      },
+      {
+        "city": "Miami",
+        "venue": "Miami Pulse Arena",
+        "date": "Oct 3",
+        "ticketPrice": 50,
+        "vipPrice": 125
+      }
+    ]
+  },
+  "favoriteVenue": "Boston Harbor Arena",
+  "performance": {
+    "signatureMove": "Pacific alt-rock haze",
+    "signatureLighting": "purple-magenta-cyan",
+    "signatureAnimation": "crowd-wave pulse",
+    "preferredArenaTheme": "premium-festival",
+    "preferredPyro": true,
+    "preferredConfetti": false,
+    "preferredLighting": [
+      "purple",
+      "cyan",
+      "magenta"
+    ],
+    "preferredCameraAngles": [
+      "vip",
+      "stage-left",
+      "default"
+    ],
+    "musicStyle": "Alternative Rock",
+    "performanceStyle": "Shoegaze arena scale"
+  },
+  "personality": "Pacific alt-rock haze",
+  "fanDemographics": "20–36, shoegaze/alt",
+  "targetAudience": "20–36, shoegaze/alt",
+  "catchPhrase": "Pacific alt-rock haze",
+  "actType": "band",
+  "liveStatus": "IDLE",
+  "poseCategory": "indie",
+  "liveAudience": 0,
+  "revenueTonight": 4400,
+  "growthPct": 16,
+  "showsScheduled": 11,
+  "albumTitle": "Empty Signal",
+  "singleTitle": "Hum",
+  "avatarInitials": "HF"
+}

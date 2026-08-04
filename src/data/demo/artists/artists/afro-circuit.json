@@ -1,0 +1,173 @@
+{
+  "isDemoArtist": true,
+  "visibility": "demo-only",
+  "environment": "demo",
+  "id": "afro-circuit",
+  "stageName": "Afro Circuit",
+  "realName": "Afro Circuit",
+  "genre": "Afrobeats",
+  "subGenre": "Afrobeats",
+  "hometown": "Lagos, NG",
+  "country": "Nigeria",
+  "yearsActive": 3,
+  "label": "LiveCircuit Originals",
+  "management": "Marcus Lee",
+  "bio": "Afro Circuit is a afrobeats act from Lagos, NG. Afrobeats arena pioneer. Known for afro-futurist stage, they've built a devoted global fanbase on LiveCircuit with 1,890,000 followers.",
+  "brand": {
+    "primaryColor": "#f59e0b",
+    "secondaryColor": "#d97706",
+    "accentColor": "#fbbf24",
+    "gradientClass": "from-amber-500 to-orange-600",
+    "typography": "Space Grotesk",
+    "logoPath": "/assets/logos/afro-circuit.png",
+    "brandIconPath": "/assets/logos/afro-circuit-icon.png",
+    "brandDescription": "Afro-futurist stage",
+    "brandVoice": "Confident, arena-ready, fan-first"
+  },
+  "appearance": {
+    "skinTone": "fair with warm undertones",
+    "hairTexture": "textured crop",
+    "hairColor": "purple ombre",
+    "eyeColor": "heterochromia green-brown",
+    "faceDescription": "Distinctive afrobeats performer with heterochromia green-brown eyes and textured crop purple ombre hair",
+    "bodyType": "athletic lean",
+    "height": "6'4\"",
+    "fashionStyle": "Afro-futurist stage",
+    "accessories": [
+      "ring stack"
+    ],
+    "stageOutfit": "Afro-futurist stage — premium tour edition",
+    "streetOutfit": "Casual afro-futurist stage off-stage look",
+    "performanceOutfit": "Signature Afrobeats stage ensemble with LED accents"
+  },
+  "images": {
+    "heroImage": "/demo/performers/hiphop-mic.png",
+    "portraitImage": "/demo/performers/hiphop-mic.png",
+    "transparentPNG": "/demo/performers/hiphop-mic.png",
+    "tourPoster": "/assets/tours/afro-circuit-poster.png",
+    "albumCover": "/assets/albums/afro-circuit.png",
+    "arenaBanner": "/assets/backgrounds/afro-circuit-arena.png",
+    "vipImage": "/demo/performers/hiphop-mic.png",
+    "poses": {
+      "hero": "/demo/performers/hiphop-mic.png",
+      "portrait": "/demo/performers/hiphop-mic.png",
+      "transparent": "/demo/performers/hiphop-mic.png",
+      "performance": "/demo/performers/hiphop-point.png",
+      "walk": "/demo/performers/hiphop-mic.png",
+      "crowd": "/demo/performers/hiphop-point.png",
+      "closeUp": "/demo/performers/hiphop-mic.png",
+      "profile": "/demo/performers/hiphop-mic.png",
+      "back": "/demo/performers/hiphop-mic.png",
+      "instrument": "/demo/performers/hiphop-mic.png",
+      "mic": "/demo/performers/hiphop-mic.png",
+      "promo": "/demo/performers/hiphop-mic.png",
+      "vip": "/demo/performers/hiphop-mic.png",
+      "arenaBanner": "/demo/performers/hiphop-mic.png"
+    }
+  },
+  "merchCollection": [
+    {
+      "id": "afro-circuit-tee",
+      "name": "Circuit Africa Tour Tee",
+      "price": 35,
+      "imagePath": "/assets/merch/afro-circuit/afro-circuit-tee.png"
+    },
+    {
+      "id": "afro-circuit-hoodie",
+      "name": "Afro Circuit Glow Hoodie",
+      "price": 65,
+      "imagePath": "/assets/merch/afro-circuit/afro-circuit-hoodie.png"
+    },
+    {
+      "id": "afro-circuit-vinyl",
+      "name": "Pulse Lagos Vinyl",
+      "price": 45,
+      "imagePath": "/assets/merch/afro-circuit/afro-circuit-vinyl.png"
+    }
+  ],
+  "followers": 1890000,
+  "monthlyListeners": 4120000,
+  "fanRating": 4.2,
+  "averageAttendance": 8000,
+  "ticketPrice": 45,
+  "vipPrice": 125,
+  "merchRevenue": 316800,
+  "tourRevenue": 540000,
+  "careerRevenue": 2160000,
+  "verified": true,
+  "featured": false,
+  "socialLinks": {
+    "livecircuit": "/afro-circuit",
+    "website": "https://livecircuit.demo/afro-circuit",
+    "instagram": "@afrocircuit"
+  },
+  "currentTour": {
+    "name": "Circuit Africa",
+    "posterPath": "/assets/tours/afro-circuit-poster.png",
+    "upcomingShows": [
+      {
+        "city": "Boston",
+        "venue": "Boston Harbor Arena",
+        "date": "Sep 12",
+        "ticketPrice": 45,
+        "vipPrice": 125
+      },
+      {
+        "city": "Chicago",
+        "venue": "Windy City Stadium",
+        "date": "Sep 19",
+        "ticketPrice": 55,
+        "vipPrice": 151
+      },
+      {
+        "city": "Dallas",
+        "venue": "Lone Star Arena",
+        "date": "Sep 26",
+        "ticketPrice": 45,
+        "vipPrice": 125
+      },
+      {
+        "city": "Miami",
+        "venue": "Miami Pulse Arena",
+        "date": "Oct 3",
+        "ticketPrice": 50,
+        "vipPrice": 125
+      }
+    ]
+  },
+  "favoriteVenue": "Boston Harbor Arena",
+  "performance": {
+    "signatureMove": "Afrobeats arena pioneer",
+    "signatureLighting": "purple-magenta-cyan",
+    "signatureAnimation": "crowd-wave pulse",
+    "preferredArenaTheme": "premium-festival",
+    "preferredPyro": false,
+    "preferredConfetti": false,
+    "preferredLighting": [
+      "purple",
+      "cyan",
+      "magenta"
+    ],
+    "preferredCameraAngles": [
+      "vip",
+      "stage-left",
+      "default"
+    ],
+    "musicStyle": "Afrobeats",
+    "performanceStyle": "Afro-futurist stage"
+  },
+  "personality": "Afrobeats arena pioneer",
+  "fanDemographics": "16–34, Afrobeats global",
+  "targetAudience": "16–34, Afrobeats global",
+  "catchPhrase": "Afrobeats arena pioneer",
+  "actType": "solo",
+  "liveStatus": "LIVE",
+  "poseCategory": "hip-hop",
+  "liveAudience": 8000,
+  "revenueTonight": 12000,
+  "growthPct": 8,
+  "showsScheduled": 3,
+  "albumTitle": "Pulse Lagos",
+  "singleTitle": "Jollof",
+  "avatarInitials": "AC"
+}

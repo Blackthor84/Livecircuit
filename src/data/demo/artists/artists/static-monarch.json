@@ -1,0 +1,173 @@
+{
+  "isDemoArtist": true,
+  "visibility": "demo-only",
+  "environment": "demo",
+  "id": "static-monarch",
+  "stageName": "Static Monarch",
+  "realName": "Static Monarch (collective)",
+  "genre": "Rock",
+  "subGenre": "Rock",
+  "hometown": "Austin, TX",
+  "country": "United States",
+  "yearsActive": 5,
+  "label": "LiveCircuit Originals",
+  "management": "Sarah Chen",
+  "bio": "Static Monarch is a rock act from Austin, TX. Alternative rock royalty. Known for texas rock stage wear, they've built a devoted global fanbase on LiveCircuit with 590,000 followers.",
+  "brand": {
+    "primaryColor": "#f59e0b",
+    "secondaryColor": "#d97706",
+    "accentColor": "#fbbf24",
+    "gradientClass": "from-amber-500 to-orange-600",
+    "typography": "Space Grotesk",
+    "logoPath": "/assets/logos/static-monarch.png",
+    "brandIconPath": "/assets/logos/static-monarch-icon.png",
+    "brandDescription": "Texas rock stage wear",
+    "brandVoice": "Confident, arena-ready, fan-first"
+  },
+  "appearance": {
+    "skinTone": "fair with warm undertones",
+    "hairTexture": "textured crop",
+    "hairColor": "purple ombre",
+    "eyeColor": "blue-grey",
+    "faceDescription": "Distinctive rock performer with blue-grey eyes and textured crop purple ombre hair",
+    "bodyType": "average build",
+    "height": "5'2\"",
+    "fashionStyle": "Texas rock stage wear",
+    "accessories": [
+      "ring stack"
+    ],
+    "stageOutfit": "Texas rock stage wear — premium tour edition",
+    "streetOutfit": "Casual texas rock stage wear off-stage look",
+    "performanceOutfit": "Signature Rock stage ensemble with LED accents"
+  },
+  "images": {
+    "heroImage": "/demo/performers/rock-mic.png",
+    "portraitImage": "/demo/performers/rock-mic.png",
+    "transparentPNG": "/demo/performers/rock-mic.png",
+    "tourPoster": "/assets/tours/static-monarch-poster.png",
+    "albumCover": "/assets/albums/static-monarch.png",
+    "arenaBanner": "/assets/backgrounds/static-monarch-arena.png",
+    "vipImage": "/demo/performers/rock-mic.png",
+    "poses": {
+      "hero": "/demo/performers/rock-mic.png",
+      "portrait": "/demo/performers/rock-mic.png",
+      "transparent": "/demo/performers/rock-mic.png",
+      "performance": "/demo/performers/rock-guitar.png",
+      "walk": "/demo/performers/rock-full-body.png",
+      "crowd": "/demo/performers/rock-mic.png",
+      "closeUp": "/demo/performers/rock-mic.png",
+      "profile": "/demo/performers/rock-profile.png",
+      "back": "/demo/performers/rock-mic.png",
+      "instrument": "/demo/performers/rock-guitar.png",
+      "mic": "/demo/performers/rock-mic.png",
+      "promo": "/demo/performers/rock-mic.png",
+      "vip": "/demo/performers/rock-mic.png",
+      "arenaBanner": "/demo/performers/rock-mic.png"
+    }
+  },
+  "merchCollection": [
+    {
+      "id": "static-monarch-tee",
+      "name": "Monarch Reign Tour Tee",
+      "price": 35,
+      "imagePath": "/assets/merch/static-monarch/static-monarch-tee.png"
+    },
+    {
+      "id": "static-monarch-hoodie",
+      "name": "Static Monarch Glow Hoodie",
+      "price": 65,
+      "imagePath": "/assets/merch/static-monarch/static-monarch-hoodie.png"
+    },
+    {
+      "id": "static-monarch-vinyl",
+      "name": "Crown Static Vinyl",
+      "price": 45,
+      "imagePath": "/assets/merch/static-monarch/static-monarch-vinyl.png"
+    }
+  ],
+  "followers": 590000,
+  "monthlyListeners": 1340000,
+  "fanRating": 4.5,
+  "averageAttendance": 6200,
+  "ticketPrice": 45,
+  "vipPrice": 125,
+  "merchRevenue": 213840,
+  "tourRevenue": 364500,
+  "careerRevenue": 1458000,
+  "verified": true,
+  "featured": false,
+  "socialLinks": {
+    "livecircuit": "/static-monarch",
+    "website": "https://livecircuit.demo/static-monarch",
+    "instagram": "@staticmonarch"
+  },
+  "currentTour": {
+    "name": "Monarch Reign",
+    "posterPath": "/assets/tours/static-monarch-poster.png",
+    "upcomingShows": [
+      {
+        "city": "Boston",
+        "venue": "Boston Harbor Arena",
+        "date": "Sep 12",
+        "ticketPrice": 45,
+        "vipPrice": 125
+      },
+      {
+        "city": "Chicago",
+        "venue": "Windy City Stadium",
+        "date": "Sep 19",
+        "ticketPrice": 55,
+        "vipPrice": 151
+      },
+      {
+        "city": "Dallas",
+        "venue": "Lone Star Arena",
+        "date": "Sep 26",
+        "ticketPrice": 45,
+        "vipPrice": 125
+      },
+      {
+        "city": "Miami",
+        "venue": "Miami Pulse Arena",
+        "date": "Oct 3",
+        "ticketPrice": 50,
+        "vipPrice": 125
+      }
+    ]
+  },
+  "favoriteVenue": "Boston Harbor Arena",
+  "performance": {
+    "signatureMove": "Alternative rock royalty",
+    "signatureLighting": "purple-magenta-cyan",
+    "signatureAnimation": "crowd-wave pulse",
+    "preferredArenaTheme": "premium-festival",
+    "preferredPyro": true,
+    "preferredConfetti": false,
+    "preferredLighting": [
+      "purple",
+      "cyan",
+      "magenta"
+    ],
+    "preferredCameraAngles": [
+      "vip",
+      "stage-left",
+      "default"
+    ],
+    "musicStyle": "Rock",
+    "performanceStyle": "Texas rock stage wear"
+  },
+  "personality": "Alternative rock royalty",
+  "fanDemographics": "20–38, alt-rock",
+  "targetAudience": "20–38, alt-rock",
+  "catchPhrase": "Alternative rock royalty",
+  "actType": "band",
+  "liveStatus": "ON TOUR",
+  "poseCategory": "rock-band",
+  "liveAudience": 6200,
+  "revenueTonight": 8100,
+  "growthPct": 11,
+  "showsScheduled": 6,
+  "albumTitle": "Crown Static",
+  "singleTitle": "Throne",
+  "avatarInitials": "SM"
+}

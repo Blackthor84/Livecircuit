@@ -1,0 +1,173 @@
+{
+  "isDemoArtist": true,
+  "visibility": "demo-only",
+  "environment": "demo",
+  "id": "noah-bridge",
+  "stageName": "Noah Bridge",
+  "realName": "Noah Bridge",
+  "genre": "Singer Songwriter",
+  "subGenre": "Singer Songwriter",
+  "hometown": "Portland, OR",
+  "country": "United States",
+  "yearsActive": 14,
+  "label": "LiveCircuit Originals",
+  "management": "Marcus Lee",
+  "bio": "Noah Bridge is a singer songwriter act from Portland, OR. Campfire-to-stadium arc. Known for pacific northwest acoustic, they've built a devoted global fanbase on LiveCircuit with 410,000 followers.",
+  "brand": {
+    "primaryColor": "#06b6d4",
+    "secondaryColor": "#0891b2",
+    "accentColor": "#22d3ee",
+    "gradientClass": "from-cyan-500 to-blue-600",
+    "typography": "Space Grotesk",
+    "logoPath": "/assets/logos/noah-bridge.png",
+    "brandIconPath": "/assets/logos/noah-bridge-icon.png",
+    "brandDescription": "Pacific northwest acoustic",
+    "brandVoice": "Confident, arena-ready, fan-first"
+  },
+  "appearance": {
+    "skinTone": "medium wheat",
+    "hairTexture": "box braids",
+    "hairColor": "golden highlights",
+    "eyeColor": "green",
+    "faceDescription": "Distinctive singer songwriter performer with green eyes and box braids golden highlights hair",
+    "bodyType": "petite compact",
+    "height": "5'8\"",
+    "fashionStyle": "Pacific northwest acoustic",
+    "accessories": [
+      "stud earrings"
+    ],
+    "stageOutfit": "Pacific northwest acoustic — premium tour edition",
+    "streetOutfit": "Casual pacific northwest acoustic off-stage look",
+    "performanceOutfit": "Signature Singer Songwriter stage ensemble with LED accents"
+  },
+  "images": {
+    "heroImage": "/demo/performers/acoustic-mic.png",
+    "portraitImage": "/demo/performers/acoustic-mic.png",
+    "transparentPNG": "/demo/performers/acoustic-mic.png",
+    "tourPoster": "/assets/tours/noah-bridge-poster.png",
+    "albumCover": "/assets/albums/noah-bridge.png",
+    "arenaBanner": "/assets/backgrounds/noah-bridge-arena.png",
+    "vipImage": "/demo/performers/acoustic-mic.png",
+    "poses": {
+      "hero": "/demo/performers/acoustic-mic.png",
+      "portrait": "/demo/performers/acoustic-mic.png",
+      "transparent": "/demo/performers/acoustic-mic.png",
+      "performance": "/demo/performers/acoustic-piano.png",
+      "walk": "/demo/performers/acoustic-mic.png",
+      "crowd": "/demo/performers/acoustic-mic.png",
+      "closeUp": "/demo/performers/acoustic-mic.png",
+      "profile": "/demo/performers/acoustic-mic.png",
+      "back": "/demo/performers/acoustic-mic.png",
+      "instrument": "/demo/performers/acoustic-piano.png",
+      "mic": "/demo/performers/acoustic-mic.png",
+      "promo": "/demo/performers/acoustic-mic.png",
+      "vip": "/demo/performers/acoustic-mic.png",
+      "arenaBanner": "/demo/performers/acoustic-mic.png"
+    }
+  },
+  "merchCollection": [
+    {
+      "id": "noah-bridge-tee",
+      "name": "Bridge Tour Tour Tee",
+      "price": 35,
+      "imagePath": "/assets/merch/noah-bridge/noah-bridge-tee.png"
+    },
+    {
+      "id": "noah-bridge-hoodie",
+      "name": "Noah Bridge Glow Hoodie",
+      "price": 65,
+      "imagePath": "/assets/merch/noah-bridge/noah-bridge-hoodie.png"
+    },
+    {
+      "id": "noah-bridge-vinyl",
+      "name": "Span Vinyl",
+      "price": 45,
+      "imagePath": "/assets/merch/noah-bridge/noah-bridge-vinyl.png"
+    }
+  ],
+  "followers": 410000,
+  "monthlyListeners": 920000,
+  "fanRating": 4.4,
+  "averageAttendance": 5800,
+  "ticketPrice": 45,
+  "vipPrice": 125,
+  "merchRevenue": 195360,
+  "tourRevenue": 333000,
+  "careerRevenue": 1332000,
+  "verified": true,
+  "featured": false,
+  "socialLinks": {
+    "livecircuit": "/noah-bridge",
+    "website": "https://livecircuit.demo/noah-bridge",
+    "instagram": "@noahbridge"
+  },
+  "currentTour": {
+    "name": "Bridge Tour",
+    "posterPath": "/assets/tours/noah-bridge-poster.png",
+    "upcomingShows": [
+      {
+        "city": "Boston",
+        "venue": "Boston Harbor Arena",
+        "date": "Sep 12",
+        "ticketPrice": 45,
+        "vipPrice": 125
+      },
+      {
+        "city": "Chicago",
+        "venue": "Windy City Stadium",
+        "date": "Sep 19",
+        "ticketPrice": 55,
+        "vipPrice": 151
+      },
+      {
+        "city": "Dallas",
+        "venue": "Lone Star Arena",
+        "date": "Sep 26",
+        "ticketPrice": 45,
+        "vipPrice": 125
+      },
+      {
+        "city": "Miami",
+        "venue": "Miami Pulse Arena",
+        "date": "Oct 3",
+        "ticketPrice": 50,
+        "vipPrice": 125
+      }
+    ]
+  },
+  "favoriteVenue": "Boston Harbor Arena",
+  "performance": {
+    "signatureMove": "Campfire-to-stadium arc",
+    "signatureLighting": "purple-magenta-cyan",
+    "signatureAnimation": "crowd-wave pulse",
+    "preferredArenaTheme": "premium-festival",
+    "preferredPyro": false,
+    "preferredConfetti": false,
+    "preferredLighting": [
+      "purple",
+      "cyan",
+      "magenta"
+    ],
+    "preferredCameraAngles": [
+      "vip",
+      "stage-left",
+      "default"
+    ],
+    "musicStyle": "Singer Songwriter",
+    "performanceStyle": "Pacific northwest acoustic"
+  },
+  "personality": "Campfire-to-stadium arc",
+  "fanDemographics": "20–40, acoustic pop",
+  "targetAudience": "20–40, acoustic pop",
+  "catchPhrase": "Campfire-to-stadium arc",
+  "actType": "solo",
+  "liveStatus": "ON TOUR",
+  "poseCategory": "acoustic",
+  "liveAudience": 5800,
+  "revenueTonight": 7400,
+  "growthPct": 10,
+  "showsScheduled": 5,
+  "albumTitle": "Span",
+  "singleTitle": "Cross",
+  "avatarInitials": "NB"
+}

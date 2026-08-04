@@ -1,0 +1,173 @@
+{
+  "isDemoArtist": true,
+  "visibility": "demo-only",
+  "environment": "demo",
+  "id": "elias-finch",
+  "stageName": "Elias Finch",
+  "realName": "Elias Finch",
+  "genre": "Singer Songwriter",
+  "subGenre": "Singer Songwriter",
+  "hometown": "Nashville, TN",
+  "country": "United States",
+  "yearsActive": 14,
+  "label": "LiveCircuit Originals",
+  "management": "Sarah Chen",
+  "bio": "Elias Finch is a singer songwriter act from Nashville, TN. Intimate-to-arena storyteller. Known for acoustic elegance, they've built a devoted global fanbase on LiveCircuit with 540,000 followers.",
+  "brand": {
+    "primaryColor": "#f59e0b",
+    "secondaryColor": "#d97706",
+    "accentColor": "#fbbf24",
+    "gradientClass": "from-amber-500 to-orange-600",
+    "typography": "Space Grotesk",
+    "logoPath": "/assets/logos/elias-finch.png",
+    "brandIconPath": "/assets/logos/elias-finch-icon.png",
+    "brandDescription": "Acoustic elegance",
+    "brandVoice": "Confident, arena-ready, fan-first"
+  },
+  "appearance": {
+    "skinTone": "sand neutral",
+    "hairTexture": "coily 4C",
+    "hairColor": "dark brown",
+    "eyeColor": "hazel",
+    "faceDescription": "Distinctive singer songwriter performer with hazel eyes and coily 4C dark brown hair",
+    "bodyType": "muscular broad",
+    "height": "5'10\"",
+    "fashionStyle": "Acoustic elegance",
+    "accessories": [
+      "chain necklace"
+    ],
+    "stageOutfit": "Acoustic elegance — premium tour edition",
+    "streetOutfit": "Casual acoustic elegance off-stage look",
+    "performanceOutfit": "Signature Singer Songwriter stage ensemble with LED accents"
+  },
+  "images": {
+    "heroImage": "/demo/performers/acoustic-mic.png",
+    "portraitImage": "/demo/performers/acoustic-mic.png",
+    "transparentPNG": "/demo/performers/acoustic-mic.png",
+    "tourPoster": "/assets/tours/elias-finch-poster.png",
+    "albumCover": "/assets/albums/elias-finch.png",
+    "arenaBanner": "/assets/backgrounds/elias-finch-arena.png",
+    "vipImage": "/demo/performers/acoustic-mic.png",
+    "poses": {
+      "hero": "/demo/performers/acoustic-mic.png",
+      "portrait": "/demo/performers/acoustic-mic.png",
+      "transparent": "/demo/performers/acoustic-mic.png",
+      "performance": "/demo/performers/acoustic-piano.png",
+      "walk": "/demo/performers/acoustic-mic.png",
+      "crowd": "/demo/performers/acoustic-mic.png",
+      "closeUp": "/demo/performers/acoustic-mic.png",
+      "profile": "/demo/performers/acoustic-mic.png",
+      "back": "/demo/performers/acoustic-mic.png",
+      "instrument": "/demo/performers/acoustic-piano.png",
+      "mic": "/demo/performers/acoustic-mic.png",
+      "promo": "/demo/performers/acoustic-mic.png",
+      "vip": "/demo/performers/acoustic-mic.png",
+      "arenaBanner": "/demo/performers/acoustic-mic.png"
+    }
+  },
+  "merchCollection": [
+    {
+      "id": "elias-finch-tee",
+      "name": "Finch Sessions Tour Tee",
+      "price": 35,
+      "imagePath": "/assets/merch/elias-finch/elias-finch-tee.png"
+    },
+    {
+      "id": "elias-finch-hoodie",
+      "name": "Elias Finch Glow Hoodie",
+      "price": 65,
+      "imagePath": "/assets/merch/elias-finch/elias-finch-hoodie.png"
+    },
+    {
+      "id": "elias-finch-vinyl",
+      "name": "Quiet Roads Vinyl",
+      "price": 45,
+      "imagePath": "/assets/merch/elias-finch/elias-finch-vinyl.png"
+    }
+  ],
+  "followers": 540000,
+  "monthlyListeners": 1240000,
+  "fanRating": 4.2,
+  "averageAttendance": 5000,
+  "ticketPrice": 45,
+  "vipPrice": 125,
+  "merchRevenue": 158400,
+  "tourRevenue": 270000,
+  "careerRevenue": 1080000,
+  "verified": true,
+  "featured": false,
+  "socialLinks": {
+    "livecircuit": "/elias-finch",
+    "website": "https://livecircuit.demo/elias-finch",
+    "instagram": "@eliasfinch"
+  },
+  "currentTour": {
+    "name": "Finch Sessions",
+    "posterPath": "/assets/tours/elias-finch-poster.png",
+    "upcomingShows": [
+      {
+        "city": "Boston",
+        "venue": "Boston Harbor Arena",
+        "date": "Sep 12",
+        "ticketPrice": 45,
+        "vipPrice": 125
+      },
+      {
+        "city": "Chicago",
+        "venue": "Windy City Stadium",
+        "date": "Sep 19",
+        "ticketPrice": 55,
+        "vipPrice": 151
+      },
+      {
+        "city": "Dallas",
+        "venue": "Lone Star Arena",
+        "date": "Sep 26",
+        "ticketPrice": 45,
+        "vipPrice": 125
+      },
+      {
+        "city": "Miami",
+        "venue": "Miami Pulse Arena",
+        "date": "Oct 3",
+        "ticketPrice": 50,
+        "vipPrice": 125
+      }
+    ]
+  },
+  "favoriteVenue": "Boston Harbor Arena",
+  "performance": {
+    "signatureMove": "Intimate-to-arena storyteller",
+    "signatureLighting": "purple-magenta-cyan",
+    "signatureAnimation": "crowd-wave pulse",
+    "preferredArenaTheme": "premium-festival",
+    "preferredPyro": false,
+    "preferredConfetti": false,
+    "preferredLighting": [
+      "purple",
+      "cyan",
+      "magenta"
+    ],
+    "preferredCameraAngles": [
+      "vip",
+      "stage-left",
+      "default"
+    ],
+    "musicStyle": "Singer Songwriter",
+    "performanceStyle": "Acoustic elegance"
+  },
+  "personality": "Intimate-to-arena storyteller",
+  "fanDemographics": "22–44, singer-songwriter",
+  "targetAudience": "22–44, singer-songwriter",
+  "catchPhrase": "Intimate-to-arena storyteller",
+  "actType": "solo",
+  "liveStatus": "ON TOUR",
+  "poseCategory": "acoustic",
+  "liveAudience": 5000,
+  "revenueTonight": 6000,
+  "growthPct": 8,
+  "showsScheduled": 3,
+  "albumTitle": "Quiet Roads",
+  "singleTitle": "Home",
+  "avatarInitials": "EF"
+}

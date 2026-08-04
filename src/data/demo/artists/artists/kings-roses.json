@@ -1,0 +1,173 @@
+{
+  "isDemoArtist": true,
+  "visibility": "demo-only",
+  "environment": "demo",
+  "id": "kings-roses",
+  "stageName": "Kings & Roses",
+  "realName": "Kings & Roses (collective)",
+  "genre": "R&B",
+  "subGenre": "R&B",
+  "hometown": "Atlanta, GA",
+  "country": "United States",
+  "yearsActive": 14,
+  "label": "LiveCircuit Originals",
+  "management": "Sarah Chen",
+  "bio": "Kings & Roses is a r&b act from Atlanta, GA. Harmony-heavy R&B collective. Known for coordinated stage couture, they've built a devoted global fanbase on LiveCircuit with 1,180,000 followers.",
+  "brand": {
+    "primaryColor": "#f43f5e",
+    "secondaryColor": "#e11d48",
+    "accentColor": "#fb7185",
+    "gradientClass": "from-rose-500 to-pink-600",
+    "typography": "Space Grotesk",
+    "logoPath": "/assets/logos/kings-roses.png",
+    "brandIconPath": "/assets/logos/kings-roses-icon.png",
+    "brandDescription": "Coordinated stage couture",
+    "brandVoice": "Confident, arena-ready, fan-first"
+  },
+  "appearance": {
+    "skinTone": "espresso",
+    "hairTexture": "layered waves",
+    "hairColor": "jet black",
+    "eyeColor": "light brown",
+    "faceDescription": "Distinctive r&b performer with light brown eyes and layered waves jet black hair",
+    "bodyType": "stocky powerful",
+    "height": "5'2\"",
+    "fashionStyle": "Coordinated stage couture",
+    "accessories": [
+      "signature hat"
+    ],
+    "stageOutfit": "Coordinated stage couture — premium tour edition",
+    "streetOutfit": "Casual coordinated stage couture off-stage look",
+    "performanceOutfit": "Signature R&B stage ensemble with LED accents"
+  },
+  "images": {
+    "heroImage": "/demo/performers/rnb-mic.png",
+    "portraitImage": "/demo/performers/rnb-mic.png",
+    "transparentPNG": "/demo/performers/rnb-mic.png",
+    "tourPoster": "/assets/tours/kings-roses-poster.png",
+    "albumCover": "/assets/albums/kings-roses.png",
+    "arenaBanner": "/assets/backgrounds/kings-roses-arena.png",
+    "vipImage": "/demo/performers/rnb-mic.png",
+    "poses": {
+      "hero": "/demo/performers/rnb-mic.png",
+      "portrait": "/demo/performers/rnb-mic.png",
+      "transparent": "/demo/performers/rnb-mic.png",
+      "performance": "/demo/performers/rnb-mic.png",
+      "walk": "/demo/performers/rnb-mic.png",
+      "crowd": "/demo/performers/rnb-mic.png",
+      "closeUp": "/demo/performers/rnb-profile.png",
+      "profile": "/demo/performers/rnb-profile.png",
+      "back": "/demo/performers/rnb-mic.png",
+      "instrument": "/demo/performers/rnb-mic.png",
+      "mic": "/demo/performers/rnb-mic.png",
+      "promo": "/demo/performers/rnb-mic.png",
+      "vip": "/demo/performers/rnb-mic.png",
+      "arenaBanner": "/demo/performers/rnb-mic.png"
+    }
+  },
+  "merchCollection": [
+    {
+      "id": "kings-roses-tee",
+      "name": "Thorns & Crowns Tour Tee",
+      "price": 35,
+      "imagePath": "/assets/merch/kings-roses/kings-roses-tee.png"
+    },
+    {
+      "id": "kings-roses-hoodie",
+      "name": "Kings & Roses Glow Hoodie",
+      "price": 65,
+      "imagePath": "/assets/merch/kings-roses/kings-roses-hoodie.png"
+    },
+    {
+      "id": "kings-roses-vinyl",
+      "name": "Royal Bloom Vinyl",
+      "price": 45,
+      "imagePath": "/assets/merch/kings-roses/kings-roses-vinyl.png"
+    }
+  ],
+  "followers": 1180000,
+  "monthlyListeners": 2680000,
+  "fanRating": 4.6000000000000005,
+  "averageAttendance": 8000,
+  "ticketPrice": 45,
+  "vipPrice": 125,
+  "merchRevenue": 316800,
+  "tourRevenue": 540000,
+  "careerRevenue": 2160000,
+  "verified": true,
+  "featured": true,
+  "socialLinks": {
+    "livecircuit": "/kings-roses",
+    "website": "https://livecircuit.demo/kings-roses",
+    "instagram": "@kingsroses"
+  },
+  "currentTour": {
+    "name": "Thorns & Crowns",
+    "posterPath": "/assets/tours/kings-roses-poster.png",
+    "upcomingShows": [
+      {
+        "city": "Boston",
+        "venue": "Boston Harbor Arena",
+        "date": "Sep 12",
+        "ticketPrice": 45,
+        "vipPrice": 125
+      },
+      {
+        "city": "Chicago",
+        "venue": "Windy City Stadium",
+        "date": "Sep 19",
+        "ticketPrice": 55,
+        "vipPrice": 151
+      },
+      {
+        "city": "Dallas",
+        "venue": "Lone Star Arena",
+        "date": "Sep 26",
+        "ticketPrice": 45,
+        "vipPrice": 125
+      },
+      {
+        "city": "Miami",
+        "venue": "Miami Pulse Arena",
+        "date": "Oct 3",
+        "ticketPrice": 50,
+        "vipPrice": 125
+      }
+    ]
+  },
+  "favoriteVenue": "Boston Harbor Arena",
+  "performance": {
+    "signatureMove": "Harmony-heavy R&B collective",
+    "signatureLighting": "purple-magenta-cyan",
+    "signatureAnimation": "crowd-wave pulse",
+    "preferredArenaTheme": "premium-festival",
+    "preferredPyro": false,
+    "preferredConfetti": false,
+    "preferredLighting": [
+      "purple",
+      "cyan",
+      "magenta"
+    ],
+    "preferredCameraAngles": [
+      "vip",
+      "stage-left",
+      "default"
+    ],
+    "musicStyle": "R&B",
+    "performanceStyle": "Coordinated stage couture"
+  },
+  "personality": "Harmony-heavy R&B collective",
+  "fanDemographics": "17–32, R&B group fans",
+  "targetAudience": "17–32, R&B group fans",
+  "catchPhrase": "Harmony-heavy R&B collective",
+  "actType": "group",
+  "liveStatus": "LIVE",
+  "poseCategory": "rnb",
+  "liveAudience": 8000,
+  "revenueTonight": 12000,
+  "growthPct": 12,
+  "showsScheduled": 3,
+  "albumTitle": "Royal Bloom",
+  "singleTitle": "Together",
+  "avatarInitials": "K&"
+}

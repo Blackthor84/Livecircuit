@@ -1,0 +1,173 @@
+{
+  "isDemoArtist": true,
+  "visibility": "demo-only",
+  "environment": "demo",
+  "id": "orion-kite",
+  "stageName": "Orion Kite",
+  "realName": "Orion Kite",
+  "genre": "Hip Hop",
+  "subGenre": "Hip-Hop",
+  "hometown": "Atlanta, GA",
+  "country": "United States",
+  "yearsActive": 13,
+  "label": "LiveCircuit Originals",
+  "management": "Marcus Lee",
+  "bio": "Orion Kite is a hip-hop act from Atlanta, GA. Melodic trap visionary. Known for future street luxury, they've built a devoted global fanbase on LiveCircuit with 1,280,000 followers.",
+  "brand": {
+    "primaryColor": "#a855f7",
+    "secondaryColor": "#7c3aed",
+    "accentColor": "#c084fc",
+    "gradientClass": "from-violet-500 to-purple-600",
+    "typography": "Space Grotesk",
+    "logoPath": "/assets/logos/orion-kite.png",
+    "brandIconPath": "/assets/logos/orion-kite-icon.png",
+    "brandDescription": "Future street luxury",
+    "brandVoice": "Confident, arena-ready, fan-first"
+  },
+  "appearance": {
+    "skinTone": "medium wheat",
+    "hairTexture": "box braids",
+    "hairColor": "golden highlights",
+    "eyeColor": "blue",
+    "faceDescription": "Distinctive hip-hop performer with blue eyes and box braids golden highlights hair",
+    "bodyType": "dancer-fit",
+    "height": "5'10\"",
+    "fashionStyle": "Future street luxury",
+    "accessories": [
+      "stud earrings"
+    ],
+    "stageOutfit": "Future street luxury — premium tour edition",
+    "streetOutfit": "Casual future street luxury off-stage look",
+    "performanceOutfit": "Signature Hip-Hop stage ensemble with LED accents"
+  },
+  "images": {
+    "heroImage": "/demo/performers/hiphop-mic.png",
+    "portraitImage": "/demo/performers/hiphop-mic.png",
+    "transparentPNG": "/demo/performers/hiphop-mic.png",
+    "tourPoster": "/assets/tours/orion-kite-poster.png",
+    "albumCover": "/assets/albums/orion-kite.png",
+    "arenaBanner": "/assets/backgrounds/orion-kite-arena.png",
+    "vipImage": "/demo/performers/hiphop-mic.png",
+    "poses": {
+      "hero": "/demo/performers/hiphop-mic.png",
+      "portrait": "/demo/performers/hiphop-mic.png",
+      "transparent": "/demo/performers/hiphop-mic.png",
+      "performance": "/demo/performers/hiphop-point.png",
+      "walk": "/demo/performers/hiphop-mic.png",
+      "crowd": "/demo/performers/hiphop-point.png",
+      "closeUp": "/demo/performers/hiphop-mic.png",
+      "profile": "/demo/performers/hiphop-mic.png",
+      "back": "/demo/performers/hiphop-mic.png",
+      "instrument": "/demo/performers/hiphop-mic.png",
+      "mic": "/demo/performers/hiphop-mic.png",
+      "promo": "/demo/performers/hiphop-mic.png",
+      "vip": "/demo/performers/hiphop-mic.png",
+      "arenaBanner": "/demo/performers/hiphop-mic.png"
+    }
+  },
+  "merchCollection": [
+    {
+      "id": "orion-kite-tee",
+      "name": "Kite Season Tour Tee",
+      "price": 35,
+      "imagePath": "/assets/merch/orion-kite/orion-kite-tee.png"
+    },
+    {
+      "id": "orion-kite-hoodie",
+      "name": "Orion Kite Glow Hoodie",
+      "price": 65,
+      "imagePath": "/assets/merch/orion-kite/orion-kite-hoodie.png"
+    },
+    {
+      "id": "orion-kite-vinyl",
+      "name": "Sky Tax Vinyl",
+      "price": 45,
+      "imagePath": "/assets/merch/orion-kite/orion-kite-vinyl.png"
+    }
+  ],
+  "followers": 1280000,
+  "monthlyListeners": 2890000,
+  "fanRating": 4.3,
+  "averageAttendance": 8900,
+  "ticketPrice": 45,
+  "vipPrice": 125,
+  "merchRevenue": 364320,
+  "tourRevenue": 621000,
+  "careerRevenue": 2484000,
+  "verified": true,
+  "featured": false,
+  "socialLinks": {
+    "livecircuit": "/orion-kite",
+    "website": "https://livecircuit.demo/orion-kite",
+    "instagram": "@orionkite"
+  },
+  "currentTour": {
+    "name": "Kite Season",
+    "posterPath": "/assets/tours/orion-kite-poster.png",
+    "upcomingShows": [
+      {
+        "city": "Boston",
+        "venue": "Boston Harbor Arena",
+        "date": "Sep 12",
+        "ticketPrice": 45,
+        "vipPrice": 125
+      },
+      {
+        "city": "Chicago",
+        "venue": "Windy City Stadium",
+        "date": "Sep 19",
+        "ticketPrice": 55,
+        "vipPrice": 151
+      },
+      {
+        "city": "Dallas",
+        "venue": "Lone Star Arena",
+        "date": "Sep 26",
+        "ticketPrice": 45,
+        "vipPrice": 125
+      },
+      {
+        "city": "Miami",
+        "venue": "Miami Pulse Arena",
+        "date": "Oct 3",
+        "ticketPrice": 50,
+        "vipPrice": 125
+      }
+    ]
+  },
+  "favoriteVenue": "Boston Harbor Arena",
+  "performance": {
+    "signatureMove": "Melodic trap visionary",
+    "signatureLighting": "purple-magenta-cyan",
+    "signatureAnimation": "crowd-wave pulse",
+    "preferredArenaTheme": "premium-festival",
+    "preferredPyro": false,
+    "preferredConfetti": false,
+    "preferredLighting": [
+      "purple",
+      "cyan",
+      "magenta"
+    ],
+    "preferredCameraAngles": [
+      "vip",
+      "stage-left",
+      "default"
+    ],
+    "musicStyle": "Hip-Hop",
+    "performanceStyle": "Future street luxury"
+  },
+  "personality": "Melodic trap visionary",
+  "fanDemographics": "15–28, trap/melodic rap",
+  "targetAudience": "15–28, trap/melodic rap",
+  "catchPhrase": "Melodic trap visionary",
+  "actType": "solo",
+  "liveStatus": "LIVE",
+  "poseCategory": "hip-hop",
+  "liveAudience": 8900,
+  "revenueTonight": 13800,
+  "growthPct": 9,
+  "showsScheduled": 4,
+  "albumTitle": "Sky Tax",
+  "singleTitle": "Orbit",
+  "avatarInitials": "OK"
+}

@@ -1,0 +1,173 @@
+{
+  "isDemoArtist": true,
+  "visibility": "demo-only",
+  "environment": "demo",
+  "id": "dj-phantom-grid",
+  "stageName": "DJ Phantom Grid",
+  "realName": "DJ Phantom Grid",
+  "genre": "Electronic",
+  "subGenre": "Electronic",
+  "hometown": "Tokyo, JP",
+  "country": "Japan",
+  "yearsActive": 6,
+  "label": "LiveCircuit Originals",
+  "management": "James Park",
+  "bio": "DJ Phantom Grid is a electronic act from Tokyo, JP. Visual-sound hybrid act. Known for cyber j-pop electronic, they've built a devoted global fanbase on LiveCircuit with 680,000 followers.",
+  "brand": {
+    "primaryColor": "#6366f1",
+    "secondaryColor": "#4f46e5",
+    "accentColor": "#818cf8",
+    "gradientClass": "from-indigo-500 to-violet-600",
+    "typography": "Space Grotesk",
+    "logoPath": "/assets/logos/dj-phantom-grid.png",
+    "brandIconPath": "/assets/logos/dj-phantom-grid-icon.png",
+    "brandDescription": "Cyber J-pop electronic",
+    "brandVoice": "Confident, arena-ready, fan-first"
+  },
+  "appearance": {
+    "skinTone": "light brown",
+    "hairTexture": "afro natural",
+    "hairColor": "silver grey",
+    "eyeColor": "blue",
+    "faceDescription": "Distinctive electronic performer with blue eyes and afro natural silver grey hair",
+    "bodyType": "dancer-fit",
+    "height": "5'6\"",
+    "fashionStyle": "Cyber J-pop electronic",
+    "accessories": [
+      "stud earrings"
+    ],
+    "stageOutfit": "Cyber J-pop electronic — premium tour edition",
+    "streetOutfit": "Casual cyber j-pop electronic off-stage look",
+    "performanceOutfit": "Signature Electronic stage ensemble with LED accents"
+  },
+  "images": {
+    "heroImage": "/demo/performers/dj-table.png",
+    "portraitImage": "/demo/performers/dj-table.png",
+    "transparentPNG": "/demo/performers/dj-table.png",
+    "tourPoster": "/assets/tours/dj-phantom-grid-poster.png",
+    "albumCover": "/assets/albums/dj-phantom-grid.png",
+    "arenaBanner": "/assets/backgrounds/dj-phantom-grid-arena.png",
+    "vipImage": "/demo/performers/dj-table.png",
+    "poses": {
+      "hero": "/demo/performers/dj-table.png",
+      "portrait": "/demo/performers/dj-table.png",
+      "transparent": "/demo/performers/dj-table.png",
+      "performance": "/demo/performers/dj-arms-up.png",
+      "walk": "/demo/performers/dj-table.png",
+      "crowd": "/demo/performers/dj-table.png",
+      "closeUp": "/demo/performers/dj-table.png",
+      "profile": "/demo/performers/dj-table.png",
+      "back": "/demo/performers/dj-table.png",
+      "instrument": "/demo/performers/dj-table.png",
+      "mic": "/demo/performers/dj-table.png",
+      "promo": "/demo/performers/dj-table.png",
+      "vip": "/demo/performers/dj-table.png",
+      "arenaBanner": "/demo/performers/dj-table.png"
+    }
+  },
+  "merchCollection": [
+    {
+      "id": "dj-phantom-grid-tee",
+      "name": "Phantom World Tour Tee",
+      "price": 35,
+      "imagePath": "/assets/merch/dj-phantom-grid/dj-phantom-grid-tee.png"
+    },
+    {
+      "id": "dj-phantom-grid-hoodie",
+      "name": "DJ Phantom Grid Glow Hoodie",
+      "price": 65,
+      "imagePath": "/assets/merch/dj-phantom-grid/dj-phantom-grid-hoodie.png"
+    },
+    {
+      "id": "dj-phantom-grid-vinyl",
+      "name": "Grid Ghost Vinyl",
+      "price": 45,
+      "imagePath": "/assets/merch/dj-phantom-grid/dj-phantom-grid-vinyl.png"
+    }
+  ],
+  "followers": 680000,
+  "monthlyListeners": 1560000,
+  "fanRating": 4.3,
+  "averageAttendance": 16100,
+  "ticketPrice": 45,
+  "vipPrice": 125,
+  "merchRevenue": 744480,
+  "tourRevenue": 1269000,
+  "careerRevenue": 5076000,
+  "verified": true,
+  "featured": false,
+  "socialLinks": {
+    "livecircuit": "/dj-phantom-grid",
+    "website": "https://livecircuit.demo/dj-phantom-grid",
+    "instagram": "@djphantomgrid"
+  },
+  "currentTour": {
+    "name": "Phantom World",
+    "posterPath": "/assets/tours/dj-phantom-grid-poster.png",
+    "upcomingShows": [
+      {
+        "city": "Boston",
+        "venue": "Boston Harbor Arena",
+        "date": "Sep 12",
+        "ticketPrice": 45,
+        "vipPrice": 125
+      },
+      {
+        "city": "Chicago",
+        "venue": "Windy City Stadium",
+        "date": "Sep 19",
+        "ticketPrice": 55,
+        "vipPrice": 151
+      },
+      {
+        "city": "Dallas",
+        "venue": "Lone Star Arena",
+        "date": "Sep 26",
+        "ticketPrice": 45,
+        "vipPrice": 125
+      },
+      {
+        "city": "Miami",
+        "venue": "Miami Pulse Arena",
+        "date": "Oct 3",
+        "ticketPrice": 50,
+        "vipPrice": 125
+      }
+    ]
+  },
+  "favoriteVenue": "Boston Harbor Arena",
+  "performance": {
+    "signatureMove": "Visual-sound hybrid act",
+    "signatureLighting": "purple-magenta-cyan",
+    "signatureAnimation": "crowd-wave pulse",
+    "preferredArenaTheme": "premium-festival",
+    "preferredPyro": false,
+    "preferredConfetti": false,
+    "preferredLighting": [
+      "purple",
+      "cyan",
+      "magenta"
+    ],
+    "preferredCameraAngles": [
+      "vip",
+      "stage-left",
+      "default"
+    ],
+    "musicStyle": "Electronic",
+    "performanceStyle": "Cyber J-pop electronic"
+  },
+  "personality": "Visual-sound hybrid act",
+  "fanDemographics": "17–30, JP electronic",
+  "targetAudience": "17–30, JP electronic",
+  "catchPhrase": "Visual-sound hybrid act",
+  "actType": "solo",
+  "liveStatus": "LIVE",
+  "poseCategory": "dj",
+  "liveAudience": 16100,
+  "revenueTonight": 28200,
+  "growthPct": 17,
+  "showsScheduled": 12,
+  "albumTitle": "Grid Ghost",
+  "singleTitle": "Phase",
+  "avatarInitials": "DP"
+}

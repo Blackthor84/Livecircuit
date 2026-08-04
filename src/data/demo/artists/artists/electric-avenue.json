@@ -1,0 +1,173 @@
+{
+  "isDemoArtist": true,
+  "visibility": "demo-only",
+  "environment": "demo",
+  "id": "electric-avenue",
+  "stageName": "Electric Avenue",
+  "realName": "Electric Avenue (collective)",
+  "genre": "Pop/R&B",
+  "subGenre": "Pop/R&B",
+  "hometown": "Los Angeles, CA",
+  "country": "United States",
+  "yearsActive": 6,
+  "label": "LiveCircuit Originals",
+  "management": "Sarah Chen",
+  "bio": "Electric Avenue is a pop/r&b act from Los Angeles, CA. Pop/R&B crossover duo. Known for matching neon streetwear, they've built a devoted global fanbase on LiveCircuit with 820,000 followers.",
+  "brand": {
+    "primaryColor": "#d946ef",
+    "secondaryColor": "#c026d3",
+    "accentColor": "#e879f9",
+    "gradientClass": "from-fuchsia-500 to-purple-600",
+    "typography": "Space Grotesk",
+    "logoPath": "/assets/logos/electric-avenue.png",
+    "brandIconPath": "/assets/logos/electric-avenue-icon.png",
+    "brandDescription": "Matching neon streetwear",
+    "brandVoice": "Confident, arena-ready, fan-first"
+  },
+  "appearance": {
+    "skinTone": "porcelain cool",
+    "hairTexture": "finger waves",
+    "hairColor": "blue-black",
+    "eyeColor": "deep brown",
+    "faceDescription": "Distinctive pop/r&b performer with deep brown eyes and finger waves blue-black hair",
+    "bodyType": "long-limbed",
+    "height": "5'8\"",
+    "fashionStyle": "Matching neon streetwear",
+    "accessories": [
+      "wrist cuffs"
+    ],
+    "stageOutfit": "Matching neon streetwear — premium tour edition",
+    "streetOutfit": "Casual matching neon streetwear off-stage look",
+    "performanceOutfit": "Signature Pop/R&B stage ensemble with LED accents"
+  },
+  "images": {
+    "heroImage": "/demo/performers/rnb-mic.png",
+    "portraitImage": "/demo/performers/rnb-mic.png",
+    "transparentPNG": "/demo/performers/rnb-mic.png",
+    "tourPoster": "/assets/tours/electric-avenue-poster.png",
+    "albumCover": "/assets/albums/electric-avenue.png",
+    "arenaBanner": "/assets/backgrounds/electric-avenue-arena.png",
+    "vipImage": "/demo/performers/rnb-mic.png",
+    "poses": {
+      "hero": "/demo/performers/rnb-mic.png",
+      "portrait": "/demo/performers/rnb-mic.png",
+      "transparent": "/demo/performers/rnb-mic.png",
+      "performance": "/demo/performers/rnb-mic.png",
+      "walk": "/demo/performers/rnb-mic.png",
+      "crowd": "/demo/performers/rnb-mic.png",
+      "closeUp": "/demo/performers/rnb-profile.png",
+      "profile": "/demo/performers/rnb-profile.png",
+      "back": "/demo/performers/rnb-mic.png",
+      "instrument": "/demo/performers/rnb-mic.png",
+      "mic": "/demo/performers/rnb-mic.png",
+      "promo": "/demo/performers/rnb-mic.png",
+      "vip": "/demo/performers/rnb-mic.png",
+      "arenaBanner": "/demo/performers/rnb-mic.png"
+    }
+  },
+  "merchCollection": [
+    {
+      "id": "electric-avenue-tee",
+      "name": "Avenue Lights Tour Tee",
+      "price": 35,
+      "imagePath": "/assets/merch/electric-avenue/electric-avenue-tee.png"
+    },
+    {
+      "id": "electric-avenue-hoodie",
+      "name": "Electric Avenue Glow Hoodie",
+      "price": 65,
+      "imagePath": "/assets/merch/electric-avenue/electric-avenue-hoodie.png"
+    },
+    {
+      "id": "electric-avenue-vinyl",
+      "name": "Crosswalk Vinyl",
+      "price": 45,
+      "imagePath": "/assets/merch/electric-avenue/electric-avenue-vinyl.png"
+    }
+  ],
+  "followers": 820000,
+  "monthlyListeners": 1890000,
+  "fanRating": 4.8,
+  "averageAttendance": 9800,
+  "ticketPrice": 45,
+  "vipPrice": 125,
+  "merchRevenue": 411840,
+  "tourRevenue": 702000,
+  "careerRevenue": 2808000,
+  "verified": true,
+  "featured": true,
+  "socialLinks": {
+    "livecircuit": "/electric-avenue",
+    "website": "https://livecircuit.demo/electric-avenue",
+    "instagram": "@electricavenue"
+  },
+  "currentTour": {
+    "name": "Avenue Lights",
+    "posterPath": "/assets/tours/electric-avenue-poster.png",
+    "upcomingShows": [
+      {
+        "city": "Boston",
+        "venue": "Boston Harbor Arena",
+        "date": "Sep 12",
+        "ticketPrice": 45,
+        "vipPrice": 125
+      },
+      {
+        "city": "Chicago",
+        "venue": "Windy City Stadium",
+        "date": "Sep 19",
+        "ticketPrice": 55,
+        "vipPrice": 151
+      },
+      {
+        "city": "Dallas",
+        "venue": "Lone Star Arena",
+        "date": "Sep 26",
+        "ticketPrice": 45,
+        "vipPrice": 125
+      },
+      {
+        "city": "Miami",
+        "venue": "Miami Pulse Arena",
+        "date": "Oct 3",
+        "ticketPrice": 50,
+        "vipPrice": 125
+      }
+    ]
+  },
+  "favoriteVenue": "Boston Harbor Arena",
+  "performance": {
+    "signatureMove": "Pop/R&B crossover duo",
+    "signatureLighting": "purple-magenta-cyan",
+    "signatureAnimation": "crowd-wave pulse",
+    "preferredArenaTheme": "premium-festival",
+    "preferredPyro": false,
+    "preferredConfetti": true,
+    "preferredLighting": [
+      "purple",
+      "cyan",
+      "magenta"
+    ],
+    "preferredCameraAngles": [
+      "vip",
+      "stage-left",
+      "default"
+    ],
+    "musicStyle": "Pop/R&B",
+    "performanceStyle": "Matching neon streetwear"
+  },
+  "personality": "Pop/R&B crossover duo",
+  "fanDemographics": "16–30, pop-R&B hybrid",
+  "targetAudience": "16–30, pop-R&B hybrid",
+  "catchPhrase": "Pop/R&B crossover duo",
+  "actType": "duo",
+  "liveStatus": "LIVE",
+  "poseCategory": "rnb",
+  "liveAudience": 9800,
+  "revenueTonight": 15600,
+  "growthPct": 14,
+  "showsScheduled": 5,
+  "albumTitle": "Crosswalk",
+  "singleTitle": "Electric Love",
+  "avatarInitials": "EA"
+}

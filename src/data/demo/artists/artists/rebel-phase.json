@@ -1,0 +1,173 @@
+{
+  "isDemoArtist": true,
+  "visibility": "demo-only",
+  "environment": "demo",
+  "id": "rebel-phase",
+  "stageName": "Rebel Phase",
+  "realName": "Rebel Phase",
+  "genre": "Hip Hop",
+  "subGenre": "Hip-Hop",
+  "hometown": "Bronx, NY",
+  "country": "United States",
+  "yearsActive": 14,
+  "label": "LiveCircuit Originals",
+  "management": "Marcus Lee",
+  "bio": "Rebel Phase is a hip-hop act from Bronx, NY. Bars built for stadiums. Known for designer streetwear and chains, they've built a devoted global fanbase on LiveCircuit with 1,560,000 followers.",
+  "brand": {
+    "primaryColor": "#f59e0b",
+    "secondaryColor": "#d97706",
+    "accentColor": "#fbbf24",
+    "gradientClass": "from-amber-500 to-orange-600",
+    "typography": "Space Grotesk",
+    "logoPath": "/assets/logos/rebel-phase.png",
+    "brandIconPath": "/assets/logos/rebel-phase-icon.png",
+    "brandDescription": "Designer streetwear and chains",
+    "brandVoice": "Confident, arena-ready, fan-first"
+  },
+  "appearance": {
+    "skinTone": "warm caramel",
+    "hairTexture": "wavy",
+    "hairColor": "platinum blonde",
+    "eyeColor": "deep brown",
+    "faceDescription": "Distinctive hip-hop performer with deep brown eyes and wavy platinum blonde hair",
+    "bodyType": "long-limbed",
+    "height": "5'4\"",
+    "fashionStyle": "Designer streetwear and chains",
+    "accessories": [
+      "wrist cuffs"
+    ],
+    "stageOutfit": "Designer streetwear and chains — premium tour edition",
+    "streetOutfit": "Casual designer streetwear and chains off-stage look",
+    "performanceOutfit": "Signature Hip-Hop stage ensemble with LED accents"
+  },
+  "images": {
+    "heroImage": "/demo/performers/hiphop-mic.png",
+    "portraitImage": "/demo/performers/hiphop-mic.png",
+    "transparentPNG": "/demo/performers/hiphop-mic.png",
+    "tourPoster": "/assets/tours/rebel-phase-poster.png",
+    "albumCover": "/assets/albums/rebel-phase.png",
+    "arenaBanner": "/assets/backgrounds/rebel-phase-arena.png",
+    "vipImage": "/demo/performers/hiphop-mic.png",
+    "poses": {
+      "hero": "/demo/performers/hiphop-mic.png",
+      "portrait": "/demo/performers/hiphop-mic.png",
+      "transparent": "/demo/performers/hiphop-mic.png",
+      "performance": "/demo/performers/hiphop-point.png",
+      "walk": "/demo/performers/hiphop-mic.png",
+      "crowd": "/demo/performers/hiphop-point.png",
+      "closeUp": "/demo/performers/hiphop-mic.png",
+      "profile": "/demo/performers/hiphop-mic.png",
+      "back": "/demo/performers/hiphop-mic.png",
+      "instrument": "/demo/performers/hiphop-mic.png",
+      "mic": "/demo/performers/hiphop-mic.png",
+      "promo": "/demo/performers/hiphop-mic.png",
+      "vip": "/demo/performers/hiphop-mic.png",
+      "arenaBanner": "/demo/performers/hiphop-mic.png"
+    }
+  },
+  "merchCollection": [
+    {
+      "id": "rebel-phase-tee",
+      "name": "Rebel Circuit Tour Tee",
+      "price": 35,
+      "imagePath": "/assets/merch/rebel-phase/rebel-phase-tee.png"
+    },
+    {
+      "id": "rebel-phase-hoodie",
+      "name": "Rebel Phase Glow Hoodie",
+      "price": 65,
+      "imagePath": "/assets/merch/rebel-phase/rebel-phase-hoodie.png"
+    },
+    {
+      "id": "rebel-phase-vinyl",
+      "name": "Phase Shift Vinyl",
+      "price": 45,
+      "imagePath": "/assets/merch/rebel-phase/rebel-phase-vinyl.png"
+    }
+  ],
+  "followers": 1560000,
+  "monthlyListeners": 3420000,
+  "fanRating": 4.6000000000000005,
+  "averageAttendance": 8000,
+  "ticketPrice": 45,
+  "vipPrice": 125,
+  "merchRevenue": 316800,
+  "tourRevenue": 540000,
+  "careerRevenue": 2160000,
+  "verified": true,
+  "featured": true,
+  "socialLinks": {
+    "livecircuit": "/rebel-phase",
+    "website": "https://livecircuit.demo/rebel-phase",
+    "instagram": "@rebelphase"
+  },
+  "currentTour": {
+    "name": "Rebel Circuit",
+    "posterPath": "/assets/tours/rebel-phase-poster.png",
+    "upcomingShows": [
+      {
+        "city": "Boston",
+        "venue": "Boston Harbor Arena",
+        "date": "Sep 12",
+        "ticketPrice": 45,
+        "vipPrice": 125
+      },
+      {
+        "city": "Chicago",
+        "venue": "Windy City Stadium",
+        "date": "Sep 19",
+        "ticketPrice": 55,
+        "vipPrice": 151
+      },
+      {
+        "city": "Dallas",
+        "venue": "Lone Star Arena",
+        "date": "Sep 26",
+        "ticketPrice": 45,
+        "vipPrice": 125
+      },
+      {
+        "city": "Miami",
+        "venue": "Miami Pulse Arena",
+        "date": "Oct 3",
+        "ticketPrice": 50,
+        "vipPrice": 125
+      }
+    ]
+  },
+  "favoriteVenue": "Boston Harbor Arena",
+  "performance": {
+    "signatureMove": "Bars built for stadiums",
+    "signatureLighting": "purple-magenta-cyan",
+    "signatureAnimation": "crowd-wave pulse",
+    "preferredArenaTheme": "premium-festival",
+    "preferredPyro": false,
+    "preferredConfetti": false,
+    "preferredLighting": [
+      "purple",
+      "cyan",
+      "magenta"
+    ],
+    "preferredCameraAngles": [
+      "vip",
+      "stage-left",
+      "default"
+    ],
+    "musicStyle": "Hip-Hop",
+    "performanceStyle": "Designer streetwear and chains"
+  },
+  "personality": "Bars built for stadiums",
+  "fanDemographics": "16–32, hip-hop core",
+  "targetAudience": "16–32, hip-hop core",
+  "catchPhrase": "Bars built for stadiums",
+  "actType": "solo",
+  "liveStatus": "LIVE",
+  "poseCategory": "hip-hop",
+  "liveAudience": 8000,
+  "revenueTonight": 12000,
+  "growthPct": 12,
+  "showsScheduled": 3,
+  "albumTitle": "Phase Shift",
+  "singleTitle": "No Limit",
+  "avatarInitials": "RP"
+}

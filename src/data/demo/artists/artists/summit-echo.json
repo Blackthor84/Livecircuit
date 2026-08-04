@@ -1,0 +1,173 @@
+{
+  "isDemoArtist": true,
+  "visibility": "demo-only",
+  "environment": "demo",
+  "id": "summit-echo",
+  "stageName": "Summit Echo",
+  "realName": "Summit Echo (collective)",
+  "genre": "Hard Rock",
+  "subGenre": "Hard Rock",
+  "hometown": "Salt Lake City, UT",
+  "country": "United States",
+  "yearsActive": 14,
+  "label": "LiveCircuit Originals",
+  "management": "Marcus Lee",
+  "bio": "Summit Echo is a hard rock act from Salt Lake City, UT. Arena rock echo chambers. Known for desert rock leather, they've built a devoted global fanbase on LiveCircuit with 290,000 followers.",
+  "brand": {
+    "primaryColor": "#f59e0b",
+    "secondaryColor": "#d97706",
+    "accentColor": "#fbbf24",
+    "gradientClass": "from-amber-500 to-orange-600",
+    "typography": "Space Grotesk",
+    "logoPath": "/assets/logos/summit-echo.png",
+    "brandIconPath": "/assets/logos/summit-echo-icon.png",
+    "brandDescription": "Desert rock leather",
+    "brandVoice": "Confident, arena-ready, fan-first"
+  },
+  "appearance": {
+    "skinTone": "copper brown",
+    "hairTexture": "natural afro puff",
+    "hairColor": "white blonde",
+    "eyeColor": "dark brown",
+    "faceDescription": "Distinctive hard rock performer with dark brown eyes and natural afro puff white blonde hair",
+    "bodyType": "slim tall",
+    "height": "5'6\"",
+    "fashionStyle": "Desert rock leather",
+    "accessories": [
+      "wrist cuffs"
+    ],
+    "stageOutfit": "Desert rock leather — premium tour edition",
+    "streetOutfit": "Casual desert rock leather off-stage look",
+    "performanceOutfit": "Signature Hard Rock stage ensemble with LED accents"
+  },
+  "images": {
+    "heroImage": "/demo/performers/rock-mic.png",
+    "portraitImage": "/demo/performers/rock-mic.png",
+    "transparentPNG": "/demo/performers/rock-mic.png",
+    "tourPoster": "/assets/tours/summit-echo-poster.png",
+    "albumCover": "/assets/albums/summit-echo.png",
+    "arenaBanner": "/assets/backgrounds/summit-echo-arena.png",
+    "vipImage": "/demo/performers/rock-mic.png",
+    "poses": {
+      "hero": "/demo/performers/rock-mic.png",
+      "portrait": "/demo/performers/rock-mic.png",
+      "transparent": "/demo/performers/rock-mic.png",
+      "performance": "/demo/performers/rock-guitar.png",
+      "walk": "/demo/performers/rock-full-body.png",
+      "crowd": "/demo/performers/rock-mic.png",
+      "closeUp": "/demo/performers/rock-mic.png",
+      "profile": "/demo/performers/rock-profile.png",
+      "back": "/demo/performers/rock-mic.png",
+      "instrument": "/demo/performers/rock-guitar.png",
+      "mic": "/demo/performers/rock-mic.png",
+      "promo": "/demo/performers/rock-mic.png",
+      "vip": "/demo/performers/rock-mic.png",
+      "arenaBanner": "/demo/performers/rock-mic.png"
+    }
+  },
+  "merchCollection": [
+    {
+      "id": "summit-echo-tee",
+      "name": "Echo Peak Tour Tee",
+      "price": 35,
+      "imagePath": "/assets/merch/summit-echo/summit-echo-tee.png"
+    },
+    {
+      "id": "summit-echo-hoodie",
+      "name": "Summit Echo Glow Hoodie",
+      "price": 65,
+      "imagePath": "/assets/merch/summit-echo/summit-echo-hoodie.png"
+    },
+    {
+      "id": "summit-echo-vinyl",
+      "name": "Altitude Vinyl",
+      "price": 45,
+      "imagePath": "/assets/merch/summit-echo/summit-echo-vinyl.png"
+    }
+  ],
+  "followers": 290000,
+  "monthlyListeners": 640000,
+  "fanRating": 4.9,
+  "averageAttendance": 7800,
+  "ticketPrice": 45,
+  "vipPrice": 125,
+  "merchRevenue": 287760,
+  "tourRevenue": 490500,
+  "careerRevenue": 1962000,
+  "verified": true,
+  "featured": false,
+  "socialLinks": {
+    "livecircuit": "/summit-echo",
+    "website": "https://livecircuit.demo/summit-echo",
+    "instagram": "@summitecho"
+  },
+  "currentTour": {
+    "name": "Echo Peak",
+    "posterPath": "/assets/tours/summit-echo-poster.png",
+    "upcomingShows": [
+      {
+        "city": "Boston",
+        "venue": "Boston Harbor Arena",
+        "date": "Sep 12",
+        "ticketPrice": 45,
+        "vipPrice": 125
+      },
+      {
+        "city": "Chicago",
+        "venue": "Windy City Stadium",
+        "date": "Sep 19",
+        "ticketPrice": 55,
+        "vipPrice": 151
+      },
+      {
+        "city": "Dallas",
+        "venue": "Lone Star Arena",
+        "date": "Sep 26",
+        "ticketPrice": 45,
+        "vipPrice": 125
+      },
+      {
+        "city": "Miami",
+        "venue": "Miami Pulse Arena",
+        "date": "Oct 3",
+        "ticketPrice": 50,
+        "vipPrice": 125
+      }
+    ]
+  },
+  "favoriteVenue": "Boston Harbor Arena",
+  "performance": {
+    "signatureMove": "Arena rock echo chambers",
+    "signatureLighting": "purple-magenta-cyan",
+    "signatureAnimation": "crowd-wave pulse",
+    "preferredArenaTheme": "premium-festival",
+    "preferredPyro": true,
+    "preferredConfetti": false,
+    "preferredLighting": [
+      "purple",
+      "cyan",
+      "magenta"
+    ],
+    "preferredCameraAngles": [
+      "vip",
+      "stage-left",
+      "default"
+    ],
+    "musicStyle": "Hard Rock",
+    "performanceStyle": "Desert rock leather"
+  },
+  "personality": "Arena rock echo chambers",
+  "fanDemographics": "24–46, hard rock",
+  "targetAudience": "24–46, hard rock",
+  "catchPhrase": "Arena rock echo chambers",
+  "actType": "band",
+  "liveStatus": "ON TOUR",
+  "poseCategory": "rock-band",
+  "liveAudience": 7800,
+  "revenueTonight": 10900,
+  "growthPct": 15,
+  "showsScheduled": 10,
+  "albumTitle": "Altitude",
+  "singleTitle": "Climb",
+  "avatarInitials": "SE"
+}

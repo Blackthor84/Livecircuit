@@ -4,8 +4,10 @@ import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { Crown, MessageCircle, ShoppingBag, Sparkles } from "lucide-react";
 import { CHAT_MESSAGES } from "@/lib/demo/interactive/data";
+import { getPrimaryDemoArtist } from "@/lib/demo/originals";
 
 export function DigitalArenaExperience() {
+  const headliner = getPrimaryDemoArtist();
   const [chatIndex, setChatIndex] = useState(0);
   const [pan, setPan] = useState(0);
 
@@ -53,7 +55,7 @@ export function DigitalArenaExperience() {
         </div>
 
         {/* LED screens */}
-        <div className="absolute left-[5%] top-[15%] rounded-lg border border-white/20 bg-black/60 px-3 py-2 text-[10px] font-bold text-cyan-400">NOVA RAY LIVE</div>
+        <div className="absolute left-[5%] top-[15%] rounded-lg border border-white/20 bg-black/60 px-3 py-2 text-[10px] font-bold text-cyan-400">{headliner.stageName.toUpperCase()} LIVE</div>
         <div className="absolute right-[5%] top-[15%] rounded-lg border border-amber-500/30 bg-black/60 px-3 py-2 text-[10px] font-bold text-amber-400">SPONSOR</div>
 
         {/* Crowd */}

@@ -1,0 +1,173 @@
+{
+  "isDemoArtist": true,
+  "visibility": "demo-only",
+  "environment": "demo",
+  "id": "volt-circuit",
+  "stageName": "Volt Circuit",
+  "realName": "Volt Circuit (collective)",
+  "genre": "Rock",
+  "subGenre": "Rock",
+  "hometown": "Seattle, WA",
+  "country": "United States",
+  "yearsActive": 3,
+  "label": "LiveCircuit Originals",
+  "management": "Marcus Lee",
+  "bio": "Volt Circuit is a rock act from Seattle, WA. Thunder riff collective. Known for grunge-meets-arena polish, they've built a devoted global fanbase on LiveCircuit with 740,000 followers.",
+  "brand": {
+    "primaryColor": "#a855f7",
+    "secondaryColor": "#7c3aed",
+    "accentColor": "#c084fc",
+    "gradientClass": "from-violet-500 to-purple-600",
+    "typography": "Space Grotesk",
+    "logoPath": "/assets/logos/volt-circuit.png",
+    "brandIconPath": "/assets/logos/volt-circuit-icon.png",
+    "brandDescription": "Grunge-meets-arena polish",
+    "brandVoice": "Confident, arena-ready, fan-first"
+  },
+  "appearance": {
+    "skinTone": "espresso",
+    "hairTexture": "layered waves",
+    "hairColor": "jet black",
+    "eyeColor": "light brown",
+    "faceDescription": "Distinctive rock performer with light brown eyes and layered waves jet black hair",
+    "bodyType": "stocky powerful",
+    "height": "5'2\"",
+    "fashionStyle": "Grunge-meets-arena polish",
+    "accessories": [
+      "signature hat"
+    ],
+    "stageOutfit": "Grunge-meets-arena polish — premium tour edition",
+    "streetOutfit": "Casual grunge-meets-arena polish off-stage look",
+    "performanceOutfit": "Signature Rock stage ensemble with LED accents"
+  },
+  "images": {
+    "heroImage": "/demo/performers/rock-mic.png",
+    "portraitImage": "/demo/performers/rock-mic.png",
+    "transparentPNG": "/demo/performers/rock-mic.png",
+    "tourPoster": "/assets/tours/volt-circuit-poster.png",
+    "albumCover": "/assets/albums/volt-circuit.png",
+    "arenaBanner": "/assets/backgrounds/volt-circuit-arena.png",
+    "vipImage": "/demo/performers/rock-mic.png",
+    "poses": {
+      "hero": "/demo/performers/rock-mic.png",
+      "portrait": "/demo/performers/rock-mic.png",
+      "transparent": "/demo/performers/rock-mic.png",
+      "performance": "/demo/performers/rock-guitar.png",
+      "walk": "/demo/performers/rock-full-body.png",
+      "crowd": "/demo/performers/rock-mic.png",
+      "closeUp": "/demo/performers/rock-mic.png",
+      "profile": "/demo/performers/rock-profile.png",
+      "back": "/demo/performers/rock-mic.png",
+      "instrument": "/demo/performers/rock-guitar.png",
+      "mic": "/demo/performers/rock-mic.png",
+      "promo": "/demo/performers/rock-mic.png",
+      "vip": "/demo/performers/rock-mic.png",
+      "arenaBanner": "/demo/performers/rock-mic.png"
+    }
+  },
+  "merchCollection": [
+    {
+      "id": "volt-circuit-tee",
+      "name": "Voltage Live Tour Tee",
+      "price": 35,
+      "imagePath": "/assets/merch/volt-circuit/volt-circuit-tee.png"
+    },
+    {
+      "id": "volt-circuit-hoodie",
+      "name": "Volt Circuit Glow Hoodie",
+      "price": 65,
+      "imagePath": "/assets/merch/volt-circuit/volt-circuit-hoodie.png"
+    },
+    {
+      "id": "volt-circuit-vinyl",
+      "name": "Live Wire Vinyl",
+      "price": 45,
+      "imagePath": "/assets/merch/volt-circuit/volt-circuit-vinyl.png"
+    }
+  ],
+  "followers": 740000,
+  "monthlyListeners": 1680000,
+  "fanRating": 4.3,
+  "averageAttendance": 5400,
+  "ticketPrice": 45,
+  "vipPrice": 125,
+  "merchRevenue": 176880,
+  "tourRevenue": 301500,
+  "careerRevenue": 1206000,
+  "verified": true,
+  "featured": false,
+  "socialLinks": {
+    "livecircuit": "/volt-circuit",
+    "website": "https://livecircuit.demo/volt-circuit",
+    "instagram": "@voltcircuit"
+  },
+  "currentTour": {
+    "name": "Voltage Live",
+    "posterPath": "/assets/tours/volt-circuit-poster.png",
+    "upcomingShows": [
+      {
+        "city": "Boston",
+        "venue": "Boston Harbor Arena",
+        "date": "Sep 12",
+        "ticketPrice": 45,
+        "vipPrice": 125
+      },
+      {
+        "city": "Chicago",
+        "venue": "Windy City Stadium",
+        "date": "Sep 19",
+        "ticketPrice": 55,
+        "vipPrice": 151
+      },
+      {
+        "city": "Dallas",
+        "venue": "Lone Star Arena",
+        "date": "Sep 26",
+        "ticketPrice": 45,
+        "vipPrice": 125
+      },
+      {
+        "city": "Miami",
+        "venue": "Miami Pulse Arena",
+        "date": "Oct 3",
+        "ticketPrice": 50,
+        "vipPrice": 125
+      }
+    ]
+  },
+  "favoriteVenue": "Boston Harbor Arena",
+  "performance": {
+    "signatureMove": "Thunder riff collective",
+    "signatureLighting": "purple-magenta-cyan",
+    "signatureAnimation": "crowd-wave pulse",
+    "preferredArenaTheme": "premium-festival",
+    "preferredPyro": true,
+    "preferredConfetti": false,
+    "preferredLighting": [
+      "purple",
+      "cyan",
+      "magenta"
+    ],
+    "preferredCameraAngles": [
+      "vip",
+      "stage-left",
+      "default"
+    ],
+    "musicStyle": "Rock",
+    "performanceStyle": "Grunge-meets-arena polish"
+  },
+  "personality": "Thunder riff collective",
+  "fanDemographics": "22–40, rock radio",
+  "targetAudience": "22–40, rock radio",
+  "catchPhrase": "Thunder riff collective",
+  "actType": "band",
+  "liveStatus": "ON TOUR",
+  "poseCategory": "rock-band",
+  "liveAudience": 5400,
+  "revenueTonight": 6700,
+  "growthPct": 9,
+  "showsScheduled": 4,
+  "albumTitle": "Live Wire",
+  "singleTitle": "Overload",
+  "avatarInitials": "VC"
+}

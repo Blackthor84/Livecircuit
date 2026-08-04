@@ -1,0 +1,173 @@
+{
+  "isDemoArtist": true,
+  "visibility": "demo-only",
+  "environment": "demo",
+  "id": "fault-lines",
+  "stageName": "Fault Lines",
+  "realName": "Fault Lines (collective)",
+  "genre": "Punk",
+  "subGenre": "Punk",
+  "hometown": "London, UK",
+  "country": "United Kingdom",
+  "yearsActive": 14,
+  "label": "LiveCircuit Originals",
+  "management": "Sarah Chen",
+  "bio": "Fault Lines is a punk act from London, UK. Punk energy, arena scale. Known for diy punk polished, they've built a devoted global fanbase on LiveCircuit with 290,000 followers.",
+  "brand": {
+    "primaryColor": "#f43f5e",
+    "secondaryColor": "#e11d48",
+    "accentColor": "#fb7185",
+    "gradientClass": "from-rose-500 to-pink-600",
+    "typography": "Space Grotesk",
+    "logoPath": "/assets/logos/fault-lines.png",
+    "brandIconPath": "/assets/logos/fault-lines-icon.png",
+    "brandDescription": "DIY punk polished",
+    "brandVoice": "Confident, arena-ready, fan-first"
+  },
+  "appearance": {
+    "skinTone": "fair with warm undertones",
+    "hairTexture": "textured crop",
+    "hairColor": "purple ombre",
+    "eyeColor": "heterochromia green-brown",
+    "faceDescription": "Distinctive punk performer with heterochromia green-brown eyes and textured crop purple ombre hair",
+    "bodyType": "athletic lean",
+    "height": "5'4\"",
+    "fashionStyle": "DIY punk polished",
+    "accessories": [
+      "ring stack"
+    ],
+    "stageOutfit": "DIY punk polished — premium tour edition",
+    "streetOutfit": "Casual diy punk polished off-stage look",
+    "performanceOutfit": "Signature Punk stage ensemble with LED accents"
+  },
+  "images": {
+    "heroImage": "/demo/performers/rock-mic.png",
+    "portraitImage": "/demo/performers/rock-mic.png",
+    "transparentPNG": "/demo/performers/rock-mic.png",
+    "tourPoster": "/assets/tours/fault-lines-poster.png",
+    "albumCover": "/assets/albums/fault-lines.png",
+    "arenaBanner": "/assets/backgrounds/fault-lines-arena.png",
+    "vipImage": "/demo/performers/rock-mic.png",
+    "poses": {
+      "hero": "/demo/performers/rock-mic.png",
+      "portrait": "/demo/performers/rock-mic.png",
+      "transparent": "/demo/performers/rock-mic.png",
+      "performance": "/demo/performers/rock-guitar.png",
+      "walk": "/demo/performers/rock-full-body.png",
+      "crowd": "/demo/performers/rock-mic.png",
+      "closeUp": "/demo/performers/rock-mic.png",
+      "profile": "/demo/performers/rock-profile.png",
+      "back": "/demo/performers/rock-mic.png",
+      "instrument": "/demo/performers/rock-guitar.png",
+      "mic": "/demo/performers/rock-mic.png",
+      "promo": "/demo/performers/rock-mic.png",
+      "vip": "/demo/performers/rock-mic.png",
+      "arenaBanner": "/demo/performers/rock-mic.png"
+    }
+  },
+  "merchCollection": [
+    {
+      "id": "fault-lines-tee",
+      "name": "Fault Live Tour Tee",
+      "price": 35,
+      "imagePath": "/assets/merch/fault-lines/fault-lines-tee.png"
+    },
+    {
+      "id": "fault-lines-hoodie",
+      "name": "Fault Lines Glow Hoodie",
+      "price": 65,
+      "imagePath": "/assets/merch/fault-lines/fault-lines-hoodie.png"
+    },
+    {
+      "id": "fault-lines-vinyl",
+      "name": "Crack Theory Vinyl",
+      "price": 45,
+      "imagePath": "/assets/merch/fault-lines/fault-lines-vinyl.png"
+    }
+  ],
+  "followers": 290000,
+  "monthlyListeners": 640000,
+  "fanRating": 4.8,
+  "averageAttendance": 7400,
+  "ticketPrice": 45,
+  "vipPrice": 125,
+  "merchRevenue": 269280,
+  "tourRevenue": 459000,
+  "careerRevenue": 1836000,
+  "verified": true,
+  "featured": false,
+  "socialLinks": {
+    "livecircuit": "/fault-lines",
+    "website": "https://livecircuit.demo/fault-lines",
+    "instagram": "@faultlines"
+  },
+  "currentTour": {
+    "name": "Fault Live",
+    "posterPath": "/assets/tours/fault-lines-poster.png",
+    "upcomingShows": [
+      {
+        "city": "Boston",
+        "venue": "Boston Harbor Arena",
+        "date": "Sep 12",
+        "ticketPrice": 45,
+        "vipPrice": 125
+      },
+      {
+        "city": "Chicago",
+        "venue": "Windy City Stadium",
+        "date": "Sep 19",
+        "ticketPrice": 55,
+        "vipPrice": 151
+      },
+      {
+        "city": "Dallas",
+        "venue": "Lone Star Arena",
+        "date": "Sep 26",
+        "ticketPrice": 45,
+        "vipPrice": 125
+      },
+      {
+        "city": "Miami",
+        "venue": "Miami Pulse Arena",
+        "date": "Oct 3",
+        "ticketPrice": 50,
+        "vipPrice": 125
+      }
+    ]
+  },
+  "favoriteVenue": "Boston Harbor Arena",
+  "performance": {
+    "signatureMove": "Punk energy, arena scale",
+    "signatureLighting": "purple-magenta-cyan",
+    "signatureAnimation": "crowd-wave pulse",
+    "preferredArenaTheme": "premium-festival",
+    "preferredPyro": false,
+    "preferredConfetti": false,
+    "preferredLighting": [
+      "purple",
+      "cyan",
+      "magenta"
+    ],
+    "preferredCameraAngles": [
+      "vip",
+      "stage-left",
+      "default"
+    ],
+    "musicStyle": "Punk",
+    "performanceStyle": "DIY punk polished"
+  },
+  "personality": "Punk energy, arena scale",
+  "fanDemographics": "18–30, punk",
+  "targetAudience": "18–30, punk",
+  "catchPhrase": "Punk energy, arena scale",
+  "actType": "band",
+  "liveStatus": "ON TOUR",
+  "poseCategory": "rock-band",
+  "liveAudience": 7400,
+  "revenueTonight": 10200,
+  "growthPct": 14,
+  "showsScheduled": 9,
+  "albumTitle": "Crack Theory",
+  "singleTitle": "Shift",
+  "avatarInitials": "FL"
+}

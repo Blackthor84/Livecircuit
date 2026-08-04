@@ -1,0 +1,173 @@
+{
+  "isDemoArtist": true,
+  "visibility": "demo-only",
+  "environment": "demo",
+  "id": "voltage-youth",
+  "stageName": "Voltage Youth",
+  "realName": "Voltage Youth (collective)",
+  "genre": "Punk",
+  "subGenre": "Punk",
+  "hometown": "Los Angeles, CA",
+  "country": "United States",
+  "yearsActive": 4,
+  "label": "LiveCircuit Originals",
+  "management": "James Park",
+  "bio": "Voltage Youth is a punk act from Los Angeles, CA. Gen-Z punk breakout. Known for neon punk diy, they've built a devoted global fanbase on LiveCircuit with 290,000 followers.",
+  "brand": {
+    "primaryColor": "#f43f5e",
+    "secondaryColor": "#e11d48",
+    "accentColor": "#fb7185",
+    "gradientClass": "from-rose-500 to-pink-600",
+    "typography": "Space Grotesk",
+    "logoPath": "/assets/logos/voltage-youth.png",
+    "brandIconPath": "/assets/logos/voltage-youth-icon.png",
+    "brandDescription": "Neon punk DIY",
+    "brandVoice": "Confident, arena-ready, fan-first"
+  },
+  "appearance": {
+    "skinTone": "copper brown",
+    "hairTexture": "natural afro puff",
+    "hairColor": "white blonde",
+    "eyeColor": "deep brown",
+    "faceDescription": "Distinctive punk performer with deep brown eyes and natural afro puff white blonde hair",
+    "bodyType": "long-limbed",
+    "height": "5'4\"",
+    "fashionStyle": "Neon punk DIY",
+    "accessories": [
+      "wrist cuffs"
+    ],
+    "stageOutfit": "Neon punk DIY — premium tour edition",
+    "streetOutfit": "Casual neon punk diy off-stage look",
+    "performanceOutfit": "Signature Punk stage ensemble with LED accents"
+  },
+  "images": {
+    "heroImage": "/demo/performers/rock-mic.png",
+    "portraitImage": "/demo/performers/rock-mic.png",
+    "transparentPNG": "/demo/performers/rock-mic.png",
+    "tourPoster": "/assets/tours/voltage-youth-poster.png",
+    "albumCover": "/assets/albums/voltage-youth.png",
+    "arenaBanner": "/assets/backgrounds/voltage-youth-arena.png",
+    "vipImage": "/demo/performers/rock-mic.png",
+    "poses": {
+      "hero": "/demo/performers/rock-mic.png",
+      "portrait": "/demo/performers/rock-mic.png",
+      "transparent": "/demo/performers/rock-mic.png",
+      "performance": "/demo/performers/rock-guitar.png",
+      "walk": "/demo/performers/rock-full-body.png",
+      "crowd": "/demo/performers/rock-mic.png",
+      "closeUp": "/demo/performers/rock-mic.png",
+      "profile": "/demo/performers/rock-profile.png",
+      "back": "/demo/performers/rock-mic.png",
+      "instrument": "/demo/performers/rock-guitar.png",
+      "mic": "/demo/performers/rock-mic.png",
+      "promo": "/demo/performers/rock-mic.png",
+      "vip": "/demo/performers/rock-mic.png",
+      "arenaBanner": "/demo/performers/rock-mic.png"
+    }
+  },
+  "merchCollection": [
+    {
+      "id": "voltage-youth-tee",
+      "name": "Youth Voltage Tour Tee",
+      "price": 35,
+      "imagePath": "/assets/merch/voltage-youth/voltage-youth-tee.png"
+    },
+    {
+      "id": "voltage-youth-hoodie",
+      "name": "Voltage Youth Glow Hoodie",
+      "price": 65,
+      "imagePath": "/assets/merch/voltage-youth/voltage-youth-hoodie.png"
+    },
+    {
+      "id": "voltage-youth-vinyl",
+      "name": "Static Age Vinyl",
+      "price": 45,
+      "imagePath": "/assets/merch/voltage-youth/voltage-youth-vinyl.png"
+    }
+  ],
+  "followers": 290000,
+  "monthlyListeners": 640000,
+  "fanRating": 4.6000000000000005,
+  "averageAttendance": 6600,
+  "ticketPrice": 45,
+  "vipPrice": 125,
+  "merchRevenue": 232320,
+  "tourRevenue": 396000,
+  "careerRevenue": 1584000,
+  "verified": true,
+  "featured": false,
+  "socialLinks": {
+    "livecircuit": "/voltage-youth",
+    "website": "https://livecircuit.demo/voltage-youth",
+    "instagram": "@voltageyouth"
+  },
+  "currentTour": {
+    "name": "Youth Voltage",
+    "posterPath": "/assets/tours/voltage-youth-poster.png",
+    "upcomingShows": [
+      {
+        "city": "Boston",
+        "venue": "Boston Harbor Arena",
+        "date": "Sep 12",
+        "ticketPrice": 45,
+        "vipPrice": 125
+      },
+      {
+        "city": "Chicago",
+        "venue": "Windy City Stadium",
+        "date": "Sep 19",
+        "ticketPrice": 55,
+        "vipPrice": 151
+      },
+      {
+        "city": "Dallas",
+        "venue": "Lone Star Arena",
+        "date": "Sep 26",
+        "ticketPrice": 45,
+        "vipPrice": 125
+      },
+      {
+        "city": "Miami",
+        "venue": "Miami Pulse Arena",
+        "date": "Oct 3",
+        "ticketPrice": 50,
+        "vipPrice": 125
+      }
+    ]
+  },
+  "favoriteVenue": "Boston Harbor Arena",
+  "performance": {
+    "signatureMove": "Gen-Z punk breakout",
+    "signatureLighting": "purple-magenta-cyan",
+    "signatureAnimation": "crowd-wave pulse",
+    "preferredArenaTheme": "premium-festival",
+    "preferredPyro": false,
+    "preferredConfetti": false,
+    "preferredLighting": [
+      "purple",
+      "cyan",
+      "magenta"
+    ],
+    "preferredCameraAngles": [
+      "vip",
+      "stage-left",
+      "default"
+    ],
+    "musicStyle": "Punk",
+    "performanceStyle": "Neon punk DIY"
+  },
+  "personality": "Gen-Z punk breakout",
+  "fanDemographics": "16–26, punk",
+  "targetAudience": "16–26, punk",
+  "catchPhrase": "Gen-Z punk breakout",
+  "actType": "band",
+  "liveStatus": "ON TOUR",
+  "poseCategory": "rock-band",
+  "liveAudience": 6600,
+  "revenueTonight": 8800,
+  "growthPct": 12,
+  "showsScheduled": 7,
+  "albumTitle": "Static Age",
+  "singleTitle": "Riot",
+  "avatarInitials": "VY"
+}

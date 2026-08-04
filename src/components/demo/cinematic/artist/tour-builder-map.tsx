@@ -5,11 +5,13 @@ import { motion, AnimatePresence } from "framer-motion";
 import { ArrowLeft, Check, GripVertical, Loader2, Plus } from "lucide-react";
 import { useDemoSound } from "@/components/demo/cinematic/shared/demo-sound-provider";
 import { PUBLISH_STEPS, TOUR_MAP_NODES } from "@/lib/demo/cinematic/constants";
+import { getPrimaryDemoArtist } from "@/lib/demo/originals";
 import { cn } from "@/lib/utils";
 
 type TourCity = (typeof TOUR_MAP_NODES)[number];
 
 export function TourBuilderMap({ onBack }: { onBack: () => void }) {
+  const demoArtist = getPrimaryDemoArtist();
   const [selected, setSelected] = useState<TourCity | null>(null);
   const [route, setRoute] = useState<TourCity[]>([]);
   const [dragIdx, setDragIdx] = useState<number | null>(null);
@@ -54,7 +56,7 @@ export function TourBuilderMap({ onBack }: { onBack: () => void }) {
     <div className="flex h-full flex-col px-4 pb-6 sm:px-8">
       <div className="mb-4 flex items-center justify-between">
         <button type="button" onClick={onBack} className="flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground"><ArrowLeft className="size-4" /> Back</button>
-        <div className="text-center"><p className="text-xs uppercase tracking-widest text-primary">Tour Builder</p><h2 className="text-lg font-bold">Build Your Route</h2></div>
+        <div className="text-center"><p className="text-xs uppercase tracking-widest text-primary">Tour Builder · {demoArtist.stageName}</p><h2 className="text-lg font-bold">{demoArtist.currentTour.name}</h2></div>
         <div className="w-16" />
       </div>
 

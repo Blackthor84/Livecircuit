@@ -1,0 +1,173 @@
+{
+  "isDemoArtist": true,
+  "visibility": "demo-only",
+  "environment": "demo",
+  "id": "tommy-reverie",
+  "stageName": "Tommy Reverie",
+  "realName": "Tommy Reverie",
+  "genre": "Acoustic",
+  "subGenre": "Acoustic",
+  "hometown": "Dublin, IE",
+  "country": "Ireland",
+  "yearsActive": 4,
+  "label": "LiveCircuit Originals",
+  "management": "Sarah Chen",
+  "bio": "Tommy Reverie is a acoustic act from Dublin, IE. Stadium unplugged specialist. Known for irish acoustic arena, they've built a devoted global fanbase on LiveCircuit with 290,000 followers.",
+  "brand": {
+    "primaryColor": "#6366f1",
+    "secondaryColor": "#4f46e5",
+    "accentColor": "#818cf8",
+    "gradientClass": "from-indigo-500 to-violet-600",
+    "typography": "Space Grotesk",
+    "logoPath": "/assets/logos/tommy-reverie.png",
+    "brandIconPath": "/assets/logos/tommy-reverie-icon.png",
+    "brandDescription": "Irish acoustic arena",
+    "brandVoice": "Confident, arena-ready, fan-first"
+  },
+  "appearance": {
+    "skinTone": "fair with warm undertones",
+    "hairTexture": "textured crop",
+    "hairColor": "purple ombre",
+    "eyeColor": "blue-grey",
+    "faceDescription": "Distinctive acoustic performer with blue-grey eyes and textured crop purple ombre hair",
+    "bodyType": "average build",
+    "height": "5'6\"",
+    "fashionStyle": "Irish acoustic arena",
+    "accessories": [
+      "ring stack"
+    ],
+    "stageOutfit": "Irish acoustic arena — premium tour edition",
+    "streetOutfit": "Casual irish acoustic arena off-stage look",
+    "performanceOutfit": "Signature Acoustic stage ensemble with LED accents"
+  },
+  "images": {
+    "heroImage": "/demo/performers/acoustic-mic.png",
+    "portraitImage": "/demo/performers/acoustic-mic.png",
+    "transparentPNG": "/demo/performers/acoustic-mic.png",
+    "tourPoster": "/assets/tours/tommy-reverie-poster.png",
+    "albumCover": "/assets/albums/tommy-reverie.png",
+    "arenaBanner": "/assets/backgrounds/tommy-reverie-arena.png",
+    "vipImage": "/demo/performers/acoustic-mic.png",
+    "poses": {
+      "hero": "/demo/performers/acoustic-mic.png",
+      "portrait": "/demo/performers/acoustic-mic.png",
+      "transparent": "/demo/performers/acoustic-mic.png",
+      "performance": "/demo/performers/acoustic-piano.png",
+      "walk": "/demo/performers/acoustic-mic.png",
+      "crowd": "/demo/performers/acoustic-mic.png",
+      "closeUp": "/demo/performers/acoustic-mic.png",
+      "profile": "/demo/performers/acoustic-mic.png",
+      "back": "/demo/performers/acoustic-mic.png",
+      "instrument": "/demo/performers/acoustic-piano.png",
+      "mic": "/demo/performers/acoustic-mic.png",
+      "promo": "/demo/performers/acoustic-mic.png",
+      "vip": "/demo/performers/acoustic-mic.png",
+      "arenaBanner": "/demo/performers/acoustic-mic.png"
+    }
+  },
+  "merchCollection": [
+    {
+      "id": "tommy-reverie-tee",
+      "name": "Reverie Unplugged Tour Tee",
+      "price": 35,
+      "imagePath": "/assets/merch/tommy-reverie/tommy-reverie-tee.png"
+    },
+    {
+      "id": "tommy-reverie-hoodie",
+      "name": "Tommy Reverie Glow Hoodie",
+      "price": 65,
+      "imagePath": "/assets/merch/tommy-reverie/tommy-reverie-hoodie.png"
+    },
+    {
+      "id": "tommy-reverie-vinyl",
+      "name": "Quiet Storm Vinyl",
+      "price": 45,
+      "imagePath": "/assets/merch/tommy-reverie/tommy-reverie-vinyl.png"
+    }
+  ],
+  "followers": 290000,
+  "monthlyListeners": 640000,
+  "fanRating": 4.3,
+  "averageAttendance": 23200,
+  "ticketPrice": 45,
+  "vipPrice": 125,
+  "merchRevenue": 124080,
+  "tourRevenue": 211500,
+  "careerRevenue": 846000,
+  "verified": true,
+  "featured": false,
+  "socialLinks": {
+    "livecircuit": "/tommy-reverie",
+    "website": "https://livecircuit.demo/tommy-reverie",
+    "instagram": "@tommyreverie"
+  },
+  "currentTour": {
+    "name": "Reverie Unplugged",
+    "posterPath": "/assets/tours/tommy-reverie-poster.png",
+    "upcomingShows": [
+      {
+        "city": "Boston",
+        "venue": "Boston Harbor Arena",
+        "date": "Sep 12",
+        "ticketPrice": 45,
+        "vipPrice": 125
+      },
+      {
+        "city": "Chicago",
+        "venue": "Windy City Stadium",
+        "date": "Sep 19",
+        "ticketPrice": 55,
+        "vipPrice": 151
+      },
+      {
+        "city": "Dallas",
+        "venue": "Lone Star Arena",
+        "date": "Sep 26",
+        "ticketPrice": 45,
+        "vipPrice": 125
+      },
+      {
+        "city": "Miami",
+        "venue": "Miami Pulse Arena",
+        "date": "Oct 3",
+        "ticketPrice": 50,
+        "vipPrice": 125
+      }
+    ]
+  },
+  "favoriteVenue": "Boston Harbor Arena",
+  "performance": {
+    "signatureMove": "Stadium unplugged specialist",
+    "signatureLighting": "purple-magenta-cyan",
+    "signatureAnimation": "crowd-wave pulse",
+    "preferredArenaTheme": "premium-festival",
+    "preferredPyro": false,
+    "preferredConfetti": false,
+    "preferredLighting": [
+      "purple",
+      "cyan",
+      "magenta"
+    ],
+    "preferredCameraAngles": [
+      "vip",
+      "stage-left",
+      "default"
+    ],
+    "musicStyle": "Acoustic",
+    "performanceStyle": "Irish acoustic arena"
+  },
+  "personality": "Stadium unplugged specialist",
+  "fanDemographics": "22–44, Irish acoustic",
+  "targetAudience": "22–44, Irish acoustic",
+  "catchPhrase": "Stadium unplugged specialist",
+  "actType": "solo",
+  "liveStatus": "IDLE",
+  "poseCategory": "acoustic",
+  "liveAudience": 0,
+  "revenueTonight": 4700,
+  "growthPct": 17,
+  "showsScheduled": 12,
+  "albumTitle": "Quiet Storm",
+  "singleTitle": "Lull",
+  "avatarInitials": "TR"
+}

@@ -1,0 +1,173 @@
+{
+  "isDemoArtist": true,
+  "visibility": "demo-only",
+  "environment": "demo",
+  "id": "kira-bloom",
+  "stageName": "Kira Bloom",
+  "realName": "Kira Bloom",
+  "genre": "Alternative Pop",
+  "subGenre": "Alternative Pop",
+  "hometown": "Toronto, ON",
+  "country": "Canada",
+  "yearsActive": 13,
+  "label": "LiveCircuit Originals",
+  "management": "Marcus Lee",
+  "bio": "Kira Bloom is a alternative pop act from Toronto, ON. Pop precision with alt edge. Known for minimal chrome and soft punk, they've built a devoted global fanbase on LiveCircuit with 620,000 followers.",
+  "brand": {
+    "primaryColor": "#f43f5e",
+    "secondaryColor": "#e11d48",
+    "accentColor": "#fb7185",
+    "gradientClass": "from-rose-500 to-pink-600",
+    "typography": "Space Grotesk",
+    "logoPath": "/assets/logos/kira-bloom.png",
+    "brandIconPath": "/assets/logos/kira-bloom-icon.png",
+    "brandDescription": "Minimal chrome and soft punk",
+    "brandVoice": "Confident, arena-ready, fan-first"
+  },
+  "appearance": {
+    "skinTone": "deep mahogany",
+    "hairTexture": "dreadlocks",
+    "hairColor": "natural black",
+    "eyeColor": "hazel",
+    "faceDescription": "Distinctive alternative pop performer with hazel eyes and dreadlocks natural black hair",
+    "bodyType": "muscular broad",
+    "height": "5'6\"",
+    "fashionStyle": "Minimal chrome and soft punk",
+    "accessories": [
+      "chain necklace"
+    ],
+    "stageOutfit": "Minimal chrome and soft punk — premium tour edition",
+    "streetOutfit": "Casual minimal chrome and soft punk off-stage look",
+    "performanceOutfit": "Signature Alternative Pop stage ensemble with LED accents"
+  },
+  "images": {
+    "heroImage": "/demo/performers/female-pop-mic.png",
+    "portraitImage": "/demo/performers/female-pop-mic.png",
+    "transparentPNG": "/demo/performers/female-pop-mic.png",
+    "tourPoster": "/assets/tours/kira-bloom-poster.png",
+    "albumCover": "/assets/albums/kira-bloom.png",
+    "arenaBanner": "/assets/backgrounds/kira-bloom-arena.png",
+    "vipImage": "/demo/performers/female-pop-mic.png",
+    "poses": {
+      "hero": "/demo/performers/female-pop-mic.png",
+      "portrait": "/demo/performers/female-pop-mic.png",
+      "transparent": "/demo/performers/female-pop-mic.png",
+      "performance": "/demo/performers/female-pop-mic.png",
+      "walk": "/demo/performers/female-pop-point.png",
+      "crowd": "/demo/performers/female-pop-point.png",
+      "closeUp": "/demo/performers/female-pop-closeup.png",
+      "profile": "/demo/performers/female-pop-closeup.png",
+      "back": "/demo/performers/female-pop-back.png",
+      "instrument": "/demo/performers/female-pop-mic.png",
+      "mic": "/demo/performers/female-pop-mic.png",
+      "promo": "/demo/performers/female-pop-mic.png",
+      "vip": "/demo/performers/female-pop-mic.png",
+      "arenaBanner": "/demo/performers/female-pop-mic.png"
+    }
+  },
+  "merchCollection": [
+    {
+      "id": "kira-bloom-tee",
+      "name": "Chrome Petals Tour Tee",
+      "price": 35,
+      "imagePath": "/assets/merch/kira-bloom/kira-bloom-tee.png"
+    },
+    {
+      "id": "kira-bloom-hoodie",
+      "name": "Kira Bloom Glow Hoodie",
+      "price": 65,
+      "imagePath": "/assets/merch/kira-bloom/kira-bloom-hoodie.png"
+    },
+    {
+      "id": "kira-bloom-vinyl",
+      "name": "Static Bloom Vinyl",
+      "price": 45,
+      "imagePath": "/assets/merch/kira-bloom/kira-bloom-vinyl.png"
+    }
+  ],
+  "followers": 620000,
+  "monthlyListeners": 1480000,
+  "fanRating": 4.5,
+  "averageAttendance": 6200,
+  "ticketPrice": 45,
+  "vipPrice": 125,
+  "merchRevenue": 213840,
+  "tourRevenue": 364500,
+  "careerRevenue": 1458000,
+  "verified": true,
+  "featured": false,
+  "socialLinks": {
+    "livecircuit": "/kira-bloom",
+    "website": "https://livecircuit.demo/kira-bloom",
+    "instagram": "@kirabloom"
+  },
+  "currentTour": {
+    "name": "Chrome Petals",
+    "posterPath": "/assets/tours/kira-bloom-poster.png",
+    "upcomingShows": [
+      {
+        "city": "Boston",
+        "venue": "Boston Harbor Arena",
+        "date": "Sep 12",
+        "ticketPrice": 45,
+        "vipPrice": 125
+      },
+      {
+        "city": "Chicago",
+        "venue": "Windy City Stadium",
+        "date": "Sep 19",
+        "ticketPrice": 55,
+        "vipPrice": 151
+      },
+      {
+        "city": "Dallas",
+        "venue": "Lone Star Arena",
+        "date": "Sep 26",
+        "ticketPrice": 45,
+        "vipPrice": 125
+      },
+      {
+        "city": "Miami",
+        "venue": "Miami Pulse Arena",
+        "date": "Oct 3",
+        "ticketPrice": 50,
+        "vipPrice": 125
+      }
+    ]
+  },
+  "favoriteVenue": "Boston Harbor Arena",
+  "performance": {
+    "signatureMove": "Pop precision with alt edge",
+    "signatureLighting": "purple-magenta-cyan",
+    "signatureAnimation": "crowd-wave pulse",
+    "preferredArenaTheme": "premium-festival",
+    "preferredPyro": false,
+    "preferredConfetti": true,
+    "preferredLighting": [
+      "purple",
+      "cyan",
+      "magenta"
+    ],
+    "preferredCameraAngles": [
+      "vip",
+      "stage-left",
+      "default"
+    ],
+    "musicStyle": "Alternative Pop",
+    "performanceStyle": "Minimal chrome and soft punk"
+  },
+  "personality": "Pop precision with alt edge",
+  "fanDemographics": "17–32, alt-pop crossover",
+  "targetAudience": "17–32, alt-pop crossover",
+  "catchPhrase": "Pop precision with alt edge",
+  "actType": "solo",
+  "liveStatus": "ON TOUR",
+  "poseCategory": "female-pop",
+  "liveAudience": 6200,
+  "revenueTonight": 8100,
+  "growthPct": 11,
+  "showsScheduled": 6,
+  "albumTitle": "Static Bloom",
+  "singleTitle": "Velvet Signal",
+  "avatarInitials": "KB"
+}

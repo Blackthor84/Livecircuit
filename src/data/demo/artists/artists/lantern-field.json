@@ -1,0 +1,173 @@
+{
+  "isDemoArtist": true,
+  "visibility": "demo-only",
+  "environment": "demo",
+  "id": "lantern-field",
+  "stageName": "Lantern Field",
+  "realName": "Lantern Field (collective)",
+  "genre": "Folk",
+  "subGenre": "Folk",
+  "hometown": "Madison, WI",
+  "country": "United States",
+  "yearsActive": 4,
+  "label": "LiveCircuit Originals",
+  "management": "Marcus Lee",
+  "bio": "Lantern Field is a folk act from Madison, WI. Midwest folk luminaries. Known for campfire-to-arena folk, they've built a devoted global fanbase on LiveCircuit with 130,000 followers.",
+  "brand": {
+    "primaryColor": "#10b981",
+    "secondaryColor": "#059669",
+    "accentColor": "#34d399",
+    "gradientClass": "from-emerald-500 to-teal-600",
+    "typography": "Space Grotesk",
+    "logoPath": "/assets/logos/lantern-field.png",
+    "brandIconPath": "/assets/logos/lantern-field-icon.png",
+    "brandDescription": "Campfire-to-arena folk",
+    "brandVoice": "Confident, arena-ready, fan-first"
+  },
+  "appearance": {
+    "skinTone": "olive medium",
+    "hairTexture": "braided locs",
+    "hairColor": "copper red",
+    "eyeColor": "hazel",
+    "faceDescription": "Distinctive folk performer with hazel eyes and braided locs copper red hair",
+    "bodyType": "muscular broad",
+    "height": "5'2\"",
+    "fashionStyle": "Campfire-to-arena folk",
+    "accessories": [
+      "chain necklace"
+    ],
+    "stageOutfit": "Campfire-to-arena folk — premium tour edition",
+    "streetOutfit": "Casual campfire-to-arena folk off-stage look",
+    "performanceOutfit": "Signature Folk stage ensemble with LED accents"
+  },
+  "images": {
+    "heroImage": "/demo/performers/acoustic-mic.png",
+    "portraitImage": "/demo/performers/acoustic-mic.png",
+    "transparentPNG": "/demo/performers/acoustic-mic.png",
+    "tourPoster": "/assets/tours/lantern-field-poster.png",
+    "albumCover": "/assets/albums/lantern-field.png",
+    "arenaBanner": "/assets/backgrounds/lantern-field-arena.png",
+    "vipImage": "/demo/performers/acoustic-mic.png",
+    "poses": {
+      "hero": "/demo/performers/acoustic-mic.png",
+      "portrait": "/demo/performers/acoustic-mic.png",
+      "transparent": "/demo/performers/acoustic-mic.png",
+      "performance": "/demo/performers/acoustic-piano.png",
+      "walk": "/demo/performers/acoustic-mic.png",
+      "crowd": "/demo/performers/acoustic-mic.png",
+      "closeUp": "/demo/performers/acoustic-mic.png",
+      "profile": "/demo/performers/acoustic-mic.png",
+      "back": "/demo/performers/acoustic-mic.png",
+      "instrument": "/demo/performers/acoustic-piano.png",
+      "mic": "/demo/performers/acoustic-mic.png",
+      "promo": "/demo/performers/acoustic-mic.png",
+      "vip": "/demo/performers/acoustic-mic.png",
+      "arenaBanner": "/demo/performers/acoustic-mic.png"
+    }
+  },
+  "merchCollection": [
+    {
+      "id": "lantern-field-tee",
+      "name": "Lantern Live Tour Tee",
+      "price": 35,
+      "imagePath": "/assets/merch/lantern-field/lantern-field-tee.png"
+    },
+    {
+      "id": "lantern-field-hoodie",
+      "name": "Lantern Field Glow Hoodie",
+      "price": 65,
+      "imagePath": "/assets/merch/lantern-field/lantern-field-hoodie.png"
+    },
+    {
+      "id": "lantern-field-vinyl",
+      "name": "Field Light Vinyl",
+      "price": 45,
+      "imagePath": "/assets/merch/lantern-field/lantern-field-vinyl.png"
+    }
+  ],
+  "followers": 130000,
+  "monthlyListeners": 290000,
+  "fanRating": 4.2,
+  "averageAttendance": 8200,
+  "ticketPrice": 45,
+  "vipPrice": 125,
+  "merchRevenue": 306240,
+  "tourRevenue": 522000,
+  "careerRevenue": 2088000,
+  "verified": true,
+  "featured": false,
+  "socialLinks": {
+    "livecircuit": "/lantern-field",
+    "website": "https://livecircuit.demo/lantern-field",
+    "instagram": "@lanternfield"
+  },
+  "currentTour": {
+    "name": "Lantern Live",
+    "posterPath": "/assets/tours/lantern-field-poster.png",
+    "upcomingShows": [
+      {
+        "city": "Boston",
+        "venue": "Boston Harbor Arena",
+        "date": "Sep 12",
+        "ticketPrice": 45,
+        "vipPrice": 125
+      },
+      {
+        "city": "Chicago",
+        "venue": "Windy City Stadium",
+        "date": "Sep 19",
+        "ticketPrice": 55,
+        "vipPrice": 151
+      },
+      {
+        "city": "Dallas",
+        "venue": "Lone Star Arena",
+        "date": "Sep 26",
+        "ticketPrice": 45,
+        "vipPrice": 125
+      },
+      {
+        "city": "Miami",
+        "venue": "Miami Pulse Arena",
+        "date": "Oct 3",
+        "ticketPrice": 50,
+        "vipPrice": 125
+      }
+    ]
+  },
+  "favoriteVenue": "Boston Harbor Arena",
+  "performance": {
+    "signatureMove": "Midwest folk luminaries",
+    "signatureLighting": "purple-magenta-cyan",
+    "signatureAnimation": "crowd-wave pulse",
+    "preferredArenaTheme": "premium-festival",
+    "preferredPyro": false,
+    "preferredConfetti": false,
+    "preferredLighting": [
+      "purple",
+      "cyan",
+      "magenta"
+    ],
+    "preferredCameraAngles": [
+      "vip",
+      "stage-left",
+      "default"
+    ],
+    "musicStyle": "Folk",
+    "performanceStyle": "Campfire-to-arena folk"
+  },
+  "personality": "Midwest folk luminaries",
+  "fanDemographics": "26–48, Midwest folk",
+  "targetAudience": "26–48, Midwest folk",
+  "catchPhrase": "Midwest folk luminaries",
+  "actType": "band",
+  "liveStatus": "ON TOUR",
+  "poseCategory": "acoustic",
+  "liveAudience": 8200,
+  "revenueTonight": 11600,
+  "growthPct": 16,
+  "showsScheduled": 11,
+  "albumTitle": "Field Light",
+  "singleTitle": "Glow",
+  "avatarInitials": "LF"
+}

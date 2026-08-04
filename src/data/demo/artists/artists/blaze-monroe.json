@@ -1,0 +1,173 @@
+{
+  "isDemoArtist": true,
+  "visibility": "demo-only",
+  "environment": "demo",
+  "id": "blaze-monroe",
+  "stageName": "Blaze Monroe",
+  "realName": "Blaze Monroe",
+  "genre": "Hip Hop",
+  "subGenre": "Hip-Hop",
+  "hometown": "Miami, FL",
+  "country": "United States",
+  "yearsActive": 3,
+  "label": "LiveCircuit Originals",
+  "management": "Sarah Chen",
+  "bio": "Blaze Monroe is a hip-hop act from Miami, FL. Party rap arena specialist. Known for festival hip-hop fashion, they've built a devoted global fanbase on LiveCircuit with 780,000 followers.",
+  "brand": {
+    "primaryColor": "#d946ef",
+    "secondaryColor": "#c026d3",
+    "accentColor": "#e879f9",
+    "gradientClass": "from-fuchsia-500 to-purple-600",
+    "typography": "Space Grotesk",
+    "logoPath": "/assets/logos/blaze-monroe.png",
+    "brandIconPath": "/assets/logos/blaze-monroe-icon.png",
+    "brandDescription": "Festival hip-hop fashion",
+    "brandVoice": "Confident, arena-ready, fan-first"
+  },
+  "appearance": {
+    "skinTone": "porcelain cool",
+    "hairTexture": "finger waves",
+    "hairColor": "blue-black",
+    "eyeColor": "dark brown",
+    "faceDescription": "Distinctive hip-hop performer with dark brown eyes and finger waves blue-black hair",
+    "bodyType": "slim tall",
+    "height": "5'10\"",
+    "fashionStyle": "Festival hip-hop fashion",
+    "accessories": [
+      "wrist cuffs"
+    ],
+    "stageOutfit": "Festival hip-hop fashion — premium tour edition",
+    "streetOutfit": "Casual festival hip-hop fashion off-stage look",
+    "performanceOutfit": "Signature Hip-Hop stage ensemble with LED accents"
+  },
+  "images": {
+    "heroImage": "/demo/performers/hiphop-mic.png",
+    "portraitImage": "/demo/performers/hiphop-mic.png",
+    "transparentPNG": "/demo/performers/hiphop-mic.png",
+    "tourPoster": "/assets/tours/blaze-monroe-poster.png",
+    "albumCover": "/assets/albums/blaze-monroe.png",
+    "arenaBanner": "/assets/backgrounds/blaze-monroe-arena.png",
+    "vipImage": "/demo/performers/hiphop-mic.png",
+    "poses": {
+      "hero": "/demo/performers/hiphop-mic.png",
+      "portrait": "/demo/performers/hiphop-mic.png",
+      "transparent": "/demo/performers/hiphop-mic.png",
+      "performance": "/demo/performers/hiphop-point.png",
+      "walk": "/demo/performers/hiphop-mic.png",
+      "crowd": "/demo/performers/hiphop-point.png",
+      "closeUp": "/demo/performers/hiphop-mic.png",
+      "profile": "/demo/performers/hiphop-mic.png",
+      "back": "/demo/performers/hiphop-mic.png",
+      "instrument": "/demo/performers/hiphop-mic.png",
+      "mic": "/demo/performers/hiphop-mic.png",
+      "promo": "/demo/performers/hiphop-mic.png",
+      "vip": "/demo/performers/hiphop-mic.png",
+      "arenaBanner": "/demo/performers/hiphop-mic.png"
+    }
+  },
+  "merchCollection": [
+    {
+      "id": "blaze-monroe-tee",
+      "name": "Blaze Out Tour Tee",
+      "price": 35,
+      "imagePath": "/assets/merch/blaze-monroe/blaze-monroe-tee.png"
+    },
+    {
+      "id": "blaze-monroe-hoodie",
+      "name": "Blaze Monroe Glow Hoodie",
+      "price": 65,
+      "imagePath": "/assets/merch/blaze-monroe/blaze-monroe-hoodie.png"
+    },
+    {
+      "id": "blaze-monroe-vinyl",
+      "name": "Heat Check Vinyl",
+      "price": 45,
+      "imagePath": "/assets/merch/blaze-monroe/blaze-monroe-vinyl.png"
+    }
+  ],
+  "followers": 780000,
+  "monthlyListeners": 1780000,
+  "fanRating": 4.8,
+  "averageAttendance": 13400,
+  "ticketPrice": 45,
+  "vipPrice": 125,
+  "merchRevenue": 601920,
+  "tourRevenue": 1026000,
+  "careerRevenue": 4104000,
+  "verified": true,
+  "featured": false,
+  "socialLinks": {
+    "livecircuit": "/blaze-monroe",
+    "website": "https://livecircuit.demo/blaze-monroe",
+    "instagram": "@blazemonroe"
+  },
+  "currentTour": {
+    "name": "Blaze Out",
+    "posterPath": "/assets/tours/blaze-monroe-poster.png",
+    "upcomingShows": [
+      {
+        "city": "Boston",
+        "venue": "Boston Harbor Arena",
+        "date": "Sep 12",
+        "ticketPrice": 45,
+        "vipPrice": 125
+      },
+      {
+        "city": "Chicago",
+        "venue": "Windy City Stadium",
+        "date": "Sep 19",
+        "ticketPrice": 55,
+        "vipPrice": 151
+      },
+      {
+        "city": "Dallas",
+        "venue": "Lone Star Arena",
+        "date": "Sep 26",
+        "ticketPrice": 45,
+        "vipPrice": 125
+      },
+      {
+        "city": "Miami",
+        "venue": "Miami Pulse Arena",
+        "date": "Oct 3",
+        "ticketPrice": 50,
+        "vipPrice": 125
+      }
+    ]
+  },
+  "favoriteVenue": "Boston Harbor Arena",
+  "performance": {
+    "signatureMove": "Party rap arena specialist",
+    "signatureLighting": "purple-magenta-cyan",
+    "signatureAnimation": "crowd-wave pulse",
+    "preferredArenaTheme": "premium-festival",
+    "preferredPyro": false,
+    "preferredConfetti": false,
+    "preferredLighting": [
+      "purple",
+      "cyan",
+      "magenta"
+    ],
+    "preferredCameraAngles": [
+      "vip",
+      "stage-left",
+      "default"
+    ],
+    "musicStyle": "Hip-Hop",
+    "performanceStyle": "Festival hip-hop fashion"
+  },
+  "personality": "Party rap arena specialist",
+  "fanDemographics": "18–29, party rap",
+  "targetAudience": "18–29, party rap",
+  "catchPhrase": "Party rap arena specialist",
+  "actType": "solo",
+  "liveStatus": "LIVE",
+  "poseCategory": "hip-hop",
+  "liveAudience": 13400,
+  "revenueTonight": 22800,
+  "growthPct": 14,
+  "showsScheduled": 9,
+  "albumTitle": "Heat Check",
+  "singleTitle": "Turn Up",
+  "avatarInitials": "BM"
+}

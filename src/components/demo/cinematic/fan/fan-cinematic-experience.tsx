@@ -26,10 +26,9 @@ import { VirtualArena } from "@/components/demo/cinematic/shared/virtual-arena";
 import {
   ARENA_VENUES,
   DEMO_META,
-  FAN_CHAT_MESSAGES,
-  FAN_MERCH,
   REACTION_EMOJIS,
 } from "@/lib/demo/cinematic/constants";
+import { getFanChatMessages, getFanMerch, getOriginalById } from "@/lib/demo/originals";
 import type { CameraAngle } from "@/lib/demo/cinematic/constants";
 import { cn } from "@/lib/utils";
 
@@ -50,6 +49,9 @@ function FanCinematicExperienceInner() {
   const [tunnelProgress, setTunnelProgress] = useState(0);
   const [venueIndex, setVenueIndex] = useState(0);
   const venue = ARENA_VENUES[venueIndex]!;
+  const headliner = getOriginalById(venue.headlinerId)!;
+  const fanChat = getFanChatMessages(headliner);
+  const fanMerch = getFanMerch(headliner);
   const { effects, patch, addHeart, addEmoji } = useArenaEffects({
     fog: true,
     curtainsOpen: false,
@@ -59,7 +61,7 @@ function FanCinematicExperienceInner() {
   });
   const [viewers, setViewers] = useState(11847);
   const [encore, setEncore] = useState(18);
-  const [chat, setChat] = useState<typeof FAN_CHAT_MESSAGES>([]);
+  const [chat, setChat] = useState<typeof fanChat>([]);
   const [toast, setToast] = useState<string | null>(null);
   const [vipActive, setVipActive] = useState(false);
   const [merchOpen, setMerchOpen] = useState(false);
@@ -98,12 +100,12 @@ function FanCinematicExperienceInner() {
     if (scene !== "live") return;
     let i = 0;
     const interval = setInterval(() => {
-      setChat((prev) => [...prev.slice(-6), FAN_CHAT_MESSAGES[i % FAN_CHAT_MESSAGES.length]!]);
+      setChat((prev) => [...prev.slice(-6), fanChat[i % fanChat.length]!]);
       setViewers((v) => v + Math.floor(Math.random() * 12));
       i++;
     }, 2000);
     return () => clearInterval(interval);
-  }, [scene]);
+  }, [scene, fanChat]);
 
   const setCamera = (camera: CameraAngle) => { sound.playClick(); patch({ camera }); };
 
@@ -129,7 +131,7 @@ function FanCinematicExperienceInner() {
         )}
         {(scene === "curtains" || scene === "live") && (
           <motion.div key="arena" initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="relative h-full pt-16">
-            <VirtualArena effects={effects} className="absolute inset-0 top-14" />
+            <VirtualArena effects={effects} performerArtistId={headliner.id} className="absolute inset-0 top-14" />
 
             {scene === "live" && (
               <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.6, duration: 1 }} className="pointer-events-none absolute inset-0 top-14 z-10 p-3 sm:p-5">
@@ -157,7 +159,7 @@ function FanCinematicExperienceInner() {
                   {merchOpen && (
                     <motion.div initial={{ x: "100%" }} animate={{ x: 0 }} exit={{ x: "100%" }} className="pointer-events-auto absolute right-0 top-32 w-48 border-l border-white/10 bg-black/85 p-4 backdrop-blur-2xl sm:w-56">
                       <p className="flex items-center gap-2 text-sm font-bold"><ShoppingBag className="size-4 text-primary" /> Merch Booth</p>
-                      {FAN_MERCH.map((item) => (
+                      {fanMerch.map((item) => (
                         <button key={item.id} type="button" onClick={() => { sound.playTip(); notify(`Purchased ${item.name}`); patch({ confetti: true }); setTimeout(() => patch({ confetti: false }), 2000); }} className="mt-3 flex w-full items-center justify-between rounded-lg border border-white/10 p-2 text-xs hover:border-primary/30">
                           <span>{item.name}</span><span className="font-bold">${item.price}</span>
                         </button>

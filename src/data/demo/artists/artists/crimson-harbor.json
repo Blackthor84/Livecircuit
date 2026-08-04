@@ -1,0 +1,173 @@
+{
+  "isDemoArtist": true,
+  "visibility": "demo-only",
+  "environment": "demo",
+  "id": "crimson-harbor",
+  "stageName": "Crimson Harbor",
+  "realName": "Crimson Harbor (collective)",
+  "genre": "Hard Rock",
+  "subGenre": "Hard Rock",
+  "hometown": "Boston, MA",
+  "country": "United States",
+  "yearsActive": 5,
+  "label": "LiveCircuit Originals",
+  "management": "Sarah Chen",
+  "bio": "Crimson Harbor is a hard rock act from Boston, MA. Harbor-born hard rock storm. Known for leather and maritime grit, they've built a devoted global fanbase on LiveCircuit with 940,000 followers.",
+  "brand": {
+    "primaryColor": "#f43f5e",
+    "secondaryColor": "#e11d48",
+    "accentColor": "#fb7185",
+    "gradientClass": "from-rose-500 to-pink-600",
+    "typography": "Space Grotesk",
+    "logoPath": "/assets/logos/crimson-harbor.png",
+    "brandIconPath": "/assets/logos/crimson-harbor-icon.png",
+    "brandDescription": "Leather and maritime grit",
+    "brandVoice": "Confident, arena-ready, fan-first"
+  },
+  "appearance": {
+    "skinTone": "deep ebony",
+    "hairTexture": "tight curls",
+    "hairColor": "chestnut",
+    "eyeColor": "green",
+    "faceDescription": "Distinctive hard rock performer with green eyes and tight curls chestnut hair",
+    "bodyType": "petite compact",
+    "height": "5'8\"",
+    "fashionStyle": "Leather and maritime grit",
+    "accessories": [
+      "stud earrings"
+    ],
+    "stageOutfit": "Leather and maritime grit — premium tour edition",
+    "streetOutfit": "Casual leather and maritime grit off-stage look",
+    "performanceOutfit": "Signature Hard Rock stage ensemble with LED accents"
+  },
+  "images": {
+    "heroImage": "/demo/performers/rock-mic.png",
+    "portraitImage": "/demo/performers/rock-mic.png",
+    "transparentPNG": "/demo/performers/rock-mic.png",
+    "tourPoster": "/assets/tours/crimson-harbor-poster.png",
+    "albumCover": "/assets/albums/crimson-harbor.png",
+    "arenaBanner": "/assets/backgrounds/crimson-harbor-arena.png",
+    "vipImage": "/demo/performers/rock-mic.png",
+    "poses": {
+      "hero": "/demo/performers/rock-mic.png",
+      "portrait": "/demo/performers/rock-mic.png",
+      "transparent": "/demo/performers/rock-mic.png",
+      "performance": "/demo/performers/rock-guitar.png",
+      "walk": "/demo/performers/rock-full-body.png",
+      "crowd": "/demo/performers/rock-mic.png",
+      "closeUp": "/demo/performers/rock-mic.png",
+      "profile": "/demo/performers/rock-profile.png",
+      "back": "/demo/performers/rock-mic.png",
+      "instrument": "/demo/performers/rock-guitar.png",
+      "mic": "/demo/performers/rock-mic.png",
+      "promo": "/demo/performers/rock-mic.png",
+      "vip": "/demo/performers/rock-mic.png",
+      "arenaBanner": "/demo/performers/rock-mic.png"
+    }
+  },
+  "merchCollection": [
+    {
+      "id": "crimson-harbor-tee",
+      "name": "Harbor Storm Tour Tee",
+      "price": 35,
+      "imagePath": "/assets/merch/crimson-harbor/crimson-harbor-tee.png"
+    },
+    {
+      "id": "crimson-harbor-hoodie",
+      "name": "Crimson Harbor Glow Hoodie",
+      "price": 65,
+      "imagePath": "/assets/merch/crimson-harbor/crimson-harbor-hoodie.png"
+    },
+    {
+      "id": "crimson-harbor-vinyl",
+      "name": "Red Tide Vinyl",
+      "price": 45,
+      "imagePath": "/assets/merch/crimson-harbor/crimson-harbor-vinyl.png"
+    }
+  ],
+  "followers": 940000,
+  "monthlyListeners": 2120000,
+  "fanRating": 4.6000000000000005,
+  "averageAttendance": 8000,
+  "ticketPrice": 45,
+  "vipPrice": 125,
+  "merchRevenue": 316800,
+  "tourRevenue": 540000,
+  "careerRevenue": 2160000,
+  "verified": true,
+  "featured": true,
+  "socialLinks": {
+    "livecircuit": "/crimson-harbor",
+    "website": "https://livecircuit.demo/crimson-harbor",
+    "instagram": "@crimsonharbor"
+  },
+  "currentTour": {
+    "name": "Harbor Storm",
+    "posterPath": "/assets/tours/crimson-harbor-poster.png",
+    "upcomingShows": [
+      {
+        "city": "Boston",
+        "venue": "Boston Harbor Arena",
+        "date": "Sep 12",
+        "ticketPrice": 45,
+        "vipPrice": 125
+      },
+      {
+        "city": "Chicago",
+        "venue": "Windy City Stadium",
+        "date": "Sep 19",
+        "ticketPrice": 55,
+        "vipPrice": 151
+      },
+      {
+        "city": "Dallas",
+        "venue": "Lone Star Arena",
+        "date": "Sep 26",
+        "ticketPrice": 45,
+        "vipPrice": 125
+      },
+      {
+        "city": "Miami",
+        "venue": "Miami Pulse Arena",
+        "date": "Oct 3",
+        "ticketPrice": 50,
+        "vipPrice": 125
+      }
+    ]
+  },
+  "favoriteVenue": "Boston Harbor Arena",
+  "performance": {
+    "signatureMove": "Harbor-born hard rock storm",
+    "signatureLighting": "purple-magenta-cyan",
+    "signatureAnimation": "crowd-wave pulse",
+    "preferredArenaTheme": "premium-festival",
+    "preferredPyro": true,
+    "preferredConfetti": false,
+    "preferredLighting": [
+      "purple",
+      "cyan",
+      "magenta"
+    ],
+    "preferredCameraAngles": [
+      "vip",
+      "stage-left",
+      "default"
+    ],
+    "musicStyle": "Hard Rock",
+    "performanceStyle": "Leather and maritime grit"
+  },
+  "personality": "Harbor-born hard rock storm",
+  "fanDemographics": "20–42, hard rock",
+  "targetAudience": "20–42, hard rock",
+  "catchPhrase": "Harbor-born hard rock storm",
+  "actType": "band",
+  "liveStatus": "LIVE",
+  "poseCategory": "rock-band",
+  "liveAudience": 8000,
+  "revenueTonight": 12000,
+  "growthPct": 12,
+  "showsScheduled": 3,
+  "albumTitle": "Red Tide",
+  "singleTitle": "Breakwater",
+  "avatarInitials": "CH"
+}

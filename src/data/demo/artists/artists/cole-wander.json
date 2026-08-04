@@ -1,0 +1,173 @@
+{
+  "isDemoArtist": true,
+  "visibility": "demo-only",
+  "environment": "demo",
+  "id": "cole-wander",
+  "stageName": "Cole Wander",
+  "realName": "Cole Wander",
+  "genre": "Singer Songwriter",
+  "subGenre": "Singer Songwriter",
+  "hometown": "Austin, TX",
+  "country": "United States",
+  "yearsActive": 14,
+  "label": "LiveCircuit Originals",
+  "management": "James Park",
+  "bio": "Cole Wander is a singer songwriter act from Austin, TX. Road-worn troubadour. Known for texas troubadour, they've built a devoted global fanbase on LiveCircuit with 210,000 followers.",
+  "brand": {
+    "primaryColor": "#f59e0b",
+    "secondaryColor": "#d97706",
+    "accentColor": "#fbbf24",
+    "gradientClass": "from-amber-500 to-orange-600",
+    "typography": "Space Grotesk",
+    "logoPath": "/assets/logos/cole-wander.png",
+    "brandIconPath": "/assets/logos/cole-wander-icon.png",
+    "brandDescription": "Texas troubadour",
+    "brandVoice": "Confident, arena-ready, fan-first"
+  },
+  "appearance": {
+    "skinTone": "copper brown",
+    "hairTexture": "natural afro puff",
+    "hairColor": "white blonde",
+    "eyeColor": "dark brown",
+    "faceDescription": "Distinctive singer songwriter performer with dark brown eyes and natural afro puff white blonde hair",
+    "bodyType": "slim tall",
+    "height": "5'6\"",
+    "fashionStyle": "Texas troubadour",
+    "accessories": [
+      "wrist cuffs"
+    ],
+    "stageOutfit": "Texas troubadour — premium tour edition",
+    "streetOutfit": "Casual texas troubadour off-stage look",
+    "performanceOutfit": "Signature Singer Songwriter stage ensemble with LED accents"
+  },
+  "images": {
+    "heroImage": "/demo/performers/acoustic-mic.png",
+    "portraitImage": "/demo/performers/acoustic-mic.png",
+    "transparentPNG": "/demo/performers/acoustic-mic.png",
+    "tourPoster": "/assets/tours/cole-wander-poster.png",
+    "albumCover": "/assets/albums/cole-wander.png",
+    "arenaBanner": "/assets/backgrounds/cole-wander-arena.png",
+    "vipImage": "/demo/performers/acoustic-mic.png",
+    "poses": {
+      "hero": "/demo/performers/acoustic-mic.png",
+      "portrait": "/demo/performers/acoustic-mic.png",
+      "transparent": "/demo/performers/acoustic-mic.png",
+      "performance": "/demo/performers/acoustic-piano.png",
+      "walk": "/demo/performers/acoustic-mic.png",
+      "crowd": "/demo/performers/acoustic-mic.png",
+      "closeUp": "/demo/performers/acoustic-mic.png",
+      "profile": "/demo/performers/acoustic-mic.png",
+      "back": "/demo/performers/acoustic-mic.png",
+      "instrument": "/demo/performers/acoustic-piano.png",
+      "mic": "/demo/performers/acoustic-mic.png",
+      "promo": "/demo/performers/acoustic-mic.png",
+      "vip": "/demo/performers/acoustic-mic.png",
+      "arenaBanner": "/demo/performers/acoustic-mic.png"
+    }
+  },
+  "merchCollection": [
+    {
+      "id": "cole-wander-tee",
+      "name": "Wander Road Tour Tee",
+      "price": 35,
+      "imagePath": "/assets/merch/cole-wander/cole-wander-tee.png"
+    },
+    {
+      "id": "cole-wander-hoodie",
+      "name": "Cole Wander Glow Hoodie",
+      "price": 65,
+      "imagePath": "/assets/merch/cole-wander/cole-wander-hoodie.png"
+    },
+    {
+      "id": "cole-wander-vinyl",
+      "name": "Mile Songs Vinyl",
+      "price": 45,
+      "imagePath": "/assets/merch/cole-wander/cole-wander-vinyl.png"
+    }
+  ],
+  "followers": 210000,
+  "monthlyListeners": 460000,
+  "fanRating": 4.6000000000000005,
+  "averageAttendance": 16800,
+  "ticketPrice": 45,
+  "vipPrice": 125,
+  "merchRevenue": 84480,
+  "tourRevenue": 144000,
+  "careerRevenue": 576000,
+  "verified": true,
+  "featured": false,
+  "socialLinks": {
+    "livecircuit": "/cole-wander",
+    "website": "https://livecircuit.demo/cole-wander",
+    "instagram": "@colewander"
+  },
+  "currentTour": {
+    "name": "Wander Road",
+    "posterPath": "/assets/tours/cole-wander-poster.png",
+    "upcomingShows": [
+      {
+        "city": "Boston",
+        "venue": "Boston Harbor Arena",
+        "date": "Sep 12",
+        "ticketPrice": 45,
+        "vipPrice": 125
+      },
+      {
+        "city": "Chicago",
+        "venue": "Windy City Stadium",
+        "date": "Sep 19",
+        "ticketPrice": 55,
+        "vipPrice": 151
+      },
+      {
+        "city": "Dallas",
+        "venue": "Lone Star Arena",
+        "date": "Sep 26",
+        "ticketPrice": 45,
+        "vipPrice": 125
+      },
+      {
+        "city": "Miami",
+        "venue": "Miami Pulse Arena",
+        "date": "Oct 3",
+        "ticketPrice": 50,
+        "vipPrice": 125
+      }
+    ]
+  },
+  "favoriteVenue": "Boston Harbor Arena",
+  "performance": {
+    "signatureMove": "Road-worn troubadour",
+    "signatureLighting": "purple-magenta-cyan",
+    "signatureAnimation": "crowd-wave pulse",
+    "preferredArenaTheme": "premium-festival",
+    "preferredPyro": false,
+    "preferredConfetti": false,
+    "preferredLighting": [
+      "purple",
+      "cyan",
+      "magenta"
+    ],
+    "preferredCameraAngles": [
+      "vip",
+      "stage-left",
+      "default"
+    ],
+    "musicStyle": "Singer Songwriter",
+    "performanceStyle": "Texas troubadour"
+  },
+  "personality": "Road-worn troubadour",
+  "fanDemographics": "25–50, troubadour",
+  "targetAudience": "25–50, troubadour",
+  "catchPhrase": "Road-worn troubadour",
+  "actType": "solo",
+  "liveStatus": "REHEARSAL",
+  "poseCategory": "acoustic",
+  "liveAudience": 0,
+  "revenueTonight": 3200,
+  "growthPct": 12,
+  "showsScheduled": 7,
+  "albumTitle": "Mile Songs",
+  "singleTitle": "Dust",
+  "avatarInitials": "CW"
+}

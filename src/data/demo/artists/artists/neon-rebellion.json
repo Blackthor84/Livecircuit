@@ -1,0 +1,173 @@
+{
+  "isDemoArtist": true,
+  "visibility": "demo-only",
+  "environment": "demo",
+  "id": "neon-rebellion",
+  "stageName": "Neon Rebellion",
+  "realName": "Neon Rebellion (collective)",
+  "genre": "Alternative Rock",
+  "subGenre": "Alternative Rock",
+  "hometown": "Brooklyn, NY",
+  "country": "United States",
+  "yearsActive": 5,
+  "label": "LiveCircuit Originals",
+  "management": "Marcus Lee",
+  "bio": "Neon Rebellion is a alternative rock act from Brooklyn, NY. Garage-to-stadium legends. Known for neon punk aesthetic, they've built a devoted global fanbase on LiveCircuit with 840,000 followers.",
+  "brand": {
+    "primaryColor": "#d946ef",
+    "secondaryColor": "#c026d3",
+    "accentColor": "#e879f9",
+    "gradientClass": "from-fuchsia-500 to-purple-600",
+    "typography": "Space Grotesk",
+    "logoPath": "/assets/logos/neon-rebellion.png",
+    "brandIconPath": "/assets/logos/neon-rebellion-icon.png",
+    "brandDescription": "Neon punk aesthetic",
+    "brandVoice": "Confident, arena-ready, fan-first"
+  },
+  "appearance": {
+    "skinTone": "copper brown",
+    "hairTexture": "natural afro puff",
+    "hairColor": "white blonde",
+    "eyeColor": "dark brown",
+    "faceDescription": "Distinctive alternative rock performer with dark brown eyes and natural afro puff white blonde hair",
+    "bodyType": "slim tall",
+    "height": "5'2\"",
+    "fashionStyle": "Neon punk aesthetic",
+    "accessories": [
+      "wrist cuffs"
+    ],
+    "stageOutfit": "Neon punk aesthetic — premium tour edition",
+    "streetOutfit": "Casual neon punk aesthetic off-stage look",
+    "performanceOutfit": "Signature Alternative Rock stage ensemble with LED accents"
+  },
+  "images": {
+    "heroImage": "/demo/performers/rock-mic.png",
+    "portraitImage": "/demo/performers/rock-mic.png",
+    "transparentPNG": "/demo/performers/rock-mic.png",
+    "tourPoster": "/assets/tours/neon-rebellion-poster.png",
+    "albumCover": "/assets/albums/neon-rebellion.png",
+    "arenaBanner": "/assets/backgrounds/neon-rebellion-arena.png",
+    "vipImage": "/demo/performers/rock-mic.png",
+    "poses": {
+      "hero": "/demo/performers/rock-mic.png",
+      "portrait": "/demo/performers/rock-mic.png",
+      "transparent": "/demo/performers/rock-mic.png",
+      "performance": "/demo/performers/rock-guitar.png",
+      "walk": "/demo/performers/rock-full-body.png",
+      "crowd": "/demo/performers/rock-mic.png",
+      "closeUp": "/demo/performers/rock-mic.png",
+      "profile": "/demo/performers/rock-profile.png",
+      "back": "/demo/performers/rock-mic.png",
+      "instrument": "/demo/performers/rock-guitar.png",
+      "mic": "/demo/performers/rock-mic.png",
+      "promo": "/demo/performers/rock-mic.png",
+      "vip": "/demo/performers/rock-mic.png",
+      "arenaBanner": "/demo/performers/rock-mic.png"
+    }
+  },
+  "merchCollection": [
+    {
+      "id": "neon-rebellion-tee",
+      "name": "Rebellion Tour Tour Tee",
+      "price": 35,
+      "imagePath": "/assets/merch/neon-rebellion/neon-rebellion-tee.png"
+    },
+    {
+      "id": "neon-rebellion-hoodie",
+      "name": "Neon Rebellion Glow Hoodie",
+      "price": 65,
+      "imagePath": "/assets/merch/neon-rebellion/neon-rebellion-hoodie.png"
+    },
+    {
+      "id": "neon-rebellion-vinyl",
+      "name": "City Static Vinyl",
+      "price": 45,
+      "imagePath": "/assets/merch/neon-rebellion/neon-rebellion-vinyl.png"
+    }
+  ],
+  "followers": 840000,
+  "monthlyListeners": 1920000,
+  "fanRating": 4.3,
+  "averageAttendance": 5400,
+  "ticketPrice": 45,
+  "vipPrice": 125,
+  "merchRevenue": 176880,
+  "tourRevenue": 301500,
+  "careerRevenue": 1206000,
+  "verified": true,
+  "featured": false,
+  "socialLinks": {
+    "livecircuit": "/neon-rebellion",
+    "website": "https://livecircuit.demo/neon-rebellion",
+    "instagram": "@neonrebellion"
+  },
+  "currentTour": {
+    "name": "Rebellion Tour",
+    "posterPath": "/assets/tours/neon-rebellion-poster.png",
+    "upcomingShows": [
+      {
+        "city": "Boston",
+        "venue": "Boston Harbor Arena",
+        "date": "Sep 12",
+        "ticketPrice": 45,
+        "vipPrice": 125
+      },
+      {
+        "city": "Chicago",
+        "venue": "Windy City Stadium",
+        "date": "Sep 19",
+        "ticketPrice": 55,
+        "vipPrice": 151
+      },
+      {
+        "city": "Dallas",
+        "venue": "Lone Star Arena",
+        "date": "Sep 26",
+        "ticketPrice": 45,
+        "vipPrice": 125
+      },
+      {
+        "city": "Miami",
+        "venue": "Miami Pulse Arena",
+        "date": "Oct 3",
+        "ticketPrice": 50,
+        "vipPrice": 125
+      }
+    ]
+  },
+  "favoriteVenue": "Boston Harbor Arena",
+  "performance": {
+    "signatureMove": "Garage-to-stadium legends",
+    "signatureLighting": "purple-magenta-cyan",
+    "signatureAnimation": "crowd-wave pulse",
+    "preferredArenaTheme": "premium-festival",
+    "preferredPyro": true,
+    "preferredConfetti": false,
+    "preferredLighting": [
+      "purple",
+      "cyan",
+      "magenta"
+    ],
+    "preferredCameraAngles": [
+      "vip",
+      "stage-left",
+      "default"
+    ],
+    "musicStyle": "Alternative Rock",
+    "performanceStyle": "Neon punk aesthetic"
+  },
+  "personality": "Garage-to-stadium legends",
+  "fanDemographics": "17–32, alt/punk crossover",
+  "targetAudience": "17–32, alt/punk crossover",
+  "catchPhrase": "Garage-to-stadium legends",
+  "actType": "band",
+  "liveStatus": "ON TOUR",
+  "poseCategory": "rock-band",
+  "liveAudience": 5400,
+  "revenueTonight": 6700,
+  "growthPct": 9,
+  "showsScheduled": 4,
+  "albumTitle": "City Static",
+  "singleTitle": "Revolt",
+  "avatarInitials": "NR"
+}

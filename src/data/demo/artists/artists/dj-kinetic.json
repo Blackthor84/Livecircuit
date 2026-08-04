@@ -1,0 +1,173 @@
+{
+  "isDemoArtist": true,
+  "visibility": "demo-only",
+  "environment": "demo",
+  "id": "dj-kinetic",
+  "stageName": "DJ Kinetic",
+  "realName": "DJ Kinetic",
+  "genre": "EDM",
+  "subGenre": "EDM",
+  "hometown": "Los Angeles, CA",
+  "country": "United States",
+  "yearsActive": 13,
+  "label": "LiveCircuit Originals",
+  "management": "Sarah Chen",
+  "bio": "DJ Kinetic is a edm act from Los Angeles, CA. Peak-hour architect. Known for festival mainstage gear, they've built a devoted global fanbase on LiveCircuit with 920,000 followers.",
+  "brand": {
+    "primaryColor": "#d946ef",
+    "secondaryColor": "#c026d3",
+    "accentColor": "#e879f9",
+    "gradientClass": "from-fuchsia-500 to-purple-600",
+    "typography": "Space Grotesk",
+    "logoPath": "/assets/logos/dj-kinetic.png",
+    "brandIconPath": "/assets/logos/dj-kinetic-icon.png",
+    "brandDescription": "Festival mainstage gear",
+    "brandVoice": "Confident, arena-ready, fan-first"
+  },
+  "appearance": {
+    "skinTone": "porcelain cool",
+    "hairTexture": "finger waves",
+    "hairColor": "blue-black",
+    "eyeColor": "deep brown",
+    "faceDescription": "Distinctive edm performer with deep brown eyes and finger waves blue-black hair",
+    "bodyType": "long-limbed",
+    "height": "5'8\"",
+    "fashionStyle": "Festival mainstage gear",
+    "accessories": [
+      "wrist cuffs"
+    ],
+    "stageOutfit": "Festival mainstage gear — premium tour edition",
+    "streetOutfit": "Casual festival mainstage gear off-stage look",
+    "performanceOutfit": "Signature EDM stage ensemble with LED accents"
+  },
+  "images": {
+    "heroImage": "/demo/performers/dj-table.png",
+    "portraitImage": "/demo/performers/dj-table.png",
+    "transparentPNG": "/demo/performers/dj-table.png",
+    "tourPoster": "/assets/tours/dj-kinetic-poster.png",
+    "albumCover": "/assets/albums/dj-kinetic.png",
+    "arenaBanner": "/assets/backgrounds/dj-kinetic-arena.png",
+    "vipImage": "/demo/performers/dj-table.png",
+    "poses": {
+      "hero": "/demo/performers/dj-table.png",
+      "portrait": "/demo/performers/dj-table.png",
+      "transparent": "/demo/performers/dj-table.png",
+      "performance": "/demo/performers/dj-arms-up.png",
+      "walk": "/demo/performers/dj-table.png",
+      "crowd": "/demo/performers/dj-table.png",
+      "closeUp": "/demo/performers/dj-table.png",
+      "profile": "/demo/performers/dj-table.png",
+      "back": "/demo/performers/dj-table.png",
+      "instrument": "/demo/performers/dj-table.png",
+      "mic": "/demo/performers/dj-table.png",
+      "promo": "/demo/performers/dj-table.png",
+      "vip": "/demo/performers/dj-table.png",
+      "arenaBanner": "/demo/performers/dj-table.png"
+    }
+  },
+  "merchCollection": [
+    {
+      "id": "dj-kinetic-tee",
+      "name": "Kinetic World Tour Tee",
+      "price": 35,
+      "imagePath": "/assets/merch/dj-kinetic/dj-kinetic-tee.png"
+    },
+    {
+      "id": "dj-kinetic-hoodie",
+      "name": "DJ Kinetic Glow Hoodie",
+      "price": 65,
+      "imagePath": "/assets/merch/dj-kinetic/dj-kinetic-hoodie.png"
+    },
+    {
+      "id": "dj-kinetic-vinyl",
+      "name": "Motion Vinyl",
+      "price": 45,
+      "imagePath": "/assets/merch/dj-kinetic/dj-kinetic-vinyl.png"
+    }
+  ],
+  "followers": 920000,
+  "monthlyListeners": 2120000,
+  "fanRating": 4.6000000000000005,
+  "averageAttendance": 11600,
+  "ticketPrice": 45,
+  "vipPrice": 125,
+  "merchRevenue": 506880,
+  "tourRevenue": 864000,
+  "careerRevenue": 3456000,
+  "verified": true,
+  "featured": false,
+  "socialLinks": {
+    "livecircuit": "/dj-kinetic",
+    "website": "https://livecircuit.demo/dj-kinetic",
+    "instagram": "@djkinetic"
+  },
+  "currentTour": {
+    "name": "Kinetic World",
+    "posterPath": "/assets/tours/dj-kinetic-poster.png",
+    "upcomingShows": [
+      {
+        "city": "Boston",
+        "venue": "Boston Harbor Arena",
+        "date": "Sep 12",
+        "ticketPrice": 45,
+        "vipPrice": 125
+      },
+      {
+        "city": "Chicago",
+        "venue": "Windy City Stadium",
+        "date": "Sep 19",
+        "ticketPrice": 55,
+        "vipPrice": 151
+      },
+      {
+        "city": "Dallas",
+        "venue": "Lone Star Arena",
+        "date": "Sep 26",
+        "ticketPrice": 45,
+        "vipPrice": 125
+      },
+      {
+        "city": "Miami",
+        "venue": "Miami Pulse Arena",
+        "date": "Oct 3",
+        "ticketPrice": 50,
+        "vipPrice": 125
+      }
+    ]
+  },
+  "favoriteVenue": "Boston Harbor Arena",
+  "performance": {
+    "signatureMove": "Peak-hour architect",
+    "signatureLighting": "purple-magenta-cyan",
+    "signatureAnimation": "crowd-wave pulse",
+    "preferredArenaTheme": "premium-festival",
+    "preferredPyro": true,
+    "preferredConfetti": true,
+    "preferredLighting": [
+      "purple",
+      "cyan",
+      "magenta"
+    ],
+    "preferredCameraAngles": [
+      "vip",
+      "stage-left",
+      "default"
+    ],
+    "musicStyle": "EDM",
+    "performanceStyle": "Festival mainstage gear"
+  },
+  "personality": "Peak-hour architect",
+  "fanDemographics": "18–32, mainstage EDM",
+  "targetAudience": "18–32, mainstage EDM",
+  "catchPhrase": "Peak-hour architect",
+  "actType": "solo",
+  "liveStatus": "LIVE",
+  "poseCategory": "dj",
+  "liveAudience": 11600,
+  "revenueTonight": 19200,
+  "growthPct": 12,
+  "showsScheduled": 7,
+  "albumTitle": "Motion",
+  "singleTitle": "Velocity",
+  "avatarInitials": "DK"
+}

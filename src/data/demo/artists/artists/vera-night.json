@@ -1,0 +1,173 @@
+{
+  "isDemoArtist": true,
+  "visibility": "demo-only",
+  "environment": "demo",
+  "id": "vera-night",
+  "stageName": "Vera Night",
+  "realName": "Vera Night",
+  "genre": "Pop",
+  "subGenre": "Modern Pop",
+  "hometown": "Seoul, KR",
+  "country": "South Korea",
+  "yearsActive": 13,
+  "label": "LiveCircuit Originals",
+  "management": "Sarah Chen",
+  "bio": "Vera Night is a modern pop act from Seoul, KR. K-influenced global pop. Known for futurist stage couture, they've built a devoted global fanbase on LiveCircuit with 2,800,000 followers.",
+  "brand": {
+    "primaryColor": "#a855f7",
+    "secondaryColor": "#7c3aed",
+    "accentColor": "#c084fc",
+    "gradientClass": "from-violet-500 to-purple-600",
+    "typography": "Space Grotesk",
+    "logoPath": "/assets/logos/vera-night.png",
+    "brandIconPath": "/assets/logos/vera-night-icon.png",
+    "brandDescription": "Futurist stage couture",
+    "brandVoice": "Confident, arena-ready, fan-first"
+  },
+  "appearance": {
+    "skinTone": "porcelain cool",
+    "hairTexture": "finger waves",
+    "hairColor": "blue-black",
+    "eyeColor": "dark brown",
+    "faceDescription": "Distinctive modern pop performer with dark brown eyes and finger waves blue-black hair",
+    "bodyType": "slim tall",
+    "height": "5'10\"",
+    "fashionStyle": "Futurist stage couture",
+    "accessories": [
+      "wrist cuffs"
+    ],
+    "stageOutfit": "Futurist stage couture — premium tour edition",
+    "streetOutfit": "Casual futurist stage couture off-stage look",
+    "performanceOutfit": "Signature Modern Pop stage ensemble with LED accents"
+  },
+  "images": {
+    "heroImage": "/demo/performers/female-pop-mic.png",
+    "portraitImage": "/demo/performers/female-pop-mic.png",
+    "transparentPNG": "/demo/performers/female-pop-mic.png",
+    "tourPoster": "/assets/tours/vera-night-poster.png",
+    "albumCover": "/assets/albums/vera-night.png",
+    "arenaBanner": "/assets/backgrounds/vera-night-arena.png",
+    "vipImage": "/demo/performers/female-pop-mic.png",
+    "poses": {
+      "hero": "/demo/performers/female-pop-mic.png",
+      "portrait": "/demo/performers/female-pop-mic.png",
+      "transparent": "/demo/performers/female-pop-mic.png",
+      "performance": "/demo/performers/female-pop-mic.png",
+      "walk": "/demo/performers/female-pop-point.png",
+      "crowd": "/demo/performers/female-pop-point.png",
+      "closeUp": "/demo/performers/female-pop-closeup.png",
+      "profile": "/demo/performers/female-pop-closeup.png",
+      "back": "/demo/performers/female-pop-back.png",
+      "instrument": "/demo/performers/female-pop-mic.png",
+      "mic": "/demo/performers/female-pop-mic.png",
+      "promo": "/demo/performers/female-pop-mic.png",
+      "vip": "/demo/performers/female-pop-mic.png",
+      "arenaBanner": "/demo/performers/female-pop-mic.png"
+    }
+  },
+  "merchCollection": [
+    {
+      "id": "vera-night-tee",
+      "name": "Neon Dynasty Tour Tee",
+      "price": 35,
+      "imagePath": "/assets/merch/vera-night/vera-night-tee.png"
+    },
+    {
+      "id": "vera-night-hoodie",
+      "name": "Vera Night Glow Hoodie",
+      "price": 65,
+      "imagePath": "/assets/merch/vera-night/vera-night-hoodie.png"
+    },
+    {
+      "id": "vera-night-vinyl",
+      "name": "City of Glass Vinyl",
+      "price": 45,
+      "imagePath": "/assets/merch/vera-night/vera-night-vinyl.png"
+    }
+  ],
+  "followers": 2800000,
+  "monthlyListeners": 5200000,
+  "fanRating": 4.9,
+  "averageAttendance": 14300,
+  "ticketPrice": 45,
+  "vipPrice": 125,
+  "merchRevenue": 649440,
+  "tourRevenue": 1107000,
+  "careerRevenue": 4428000,
+  "verified": true,
+  "featured": false,
+  "socialLinks": {
+    "livecircuit": "/vera-night",
+    "website": "https://livecircuit.demo/vera-night",
+    "instagram": "@veranight"
+  },
+  "currentTour": {
+    "name": "Neon Dynasty",
+    "posterPath": "/assets/tours/vera-night-poster.png",
+    "upcomingShows": [
+      {
+        "city": "Boston",
+        "venue": "Boston Harbor Arena",
+        "date": "Sep 12",
+        "ticketPrice": 45,
+        "vipPrice": 125
+      },
+      {
+        "city": "Chicago",
+        "venue": "Windy City Stadium",
+        "date": "Sep 19",
+        "ticketPrice": 55,
+        "vipPrice": 151
+      },
+      {
+        "city": "Dallas",
+        "venue": "Lone Star Arena",
+        "date": "Sep 26",
+        "ticketPrice": 45,
+        "vipPrice": 125
+      },
+      {
+        "city": "Miami",
+        "venue": "Miami Pulse Arena",
+        "date": "Oct 3",
+        "ticketPrice": 50,
+        "vipPrice": 125
+      }
+    ]
+  },
+  "favoriteVenue": "Boston Harbor Arena",
+  "performance": {
+    "signatureMove": "K-influenced global pop",
+    "signatureLighting": "purple-magenta-cyan",
+    "signatureAnimation": "crowd-wave pulse",
+    "preferredArenaTheme": "premium-festival",
+    "preferredPyro": false,
+    "preferredConfetti": true,
+    "preferredLighting": [
+      "purple",
+      "cyan",
+      "magenta"
+    ],
+    "preferredCameraAngles": [
+      "vip",
+      "stage-left",
+      "default"
+    ],
+    "musicStyle": "Modern Pop",
+    "performanceStyle": "Futurist stage couture"
+  },
+  "personality": "K-influenced global pop",
+  "fanDemographics": "14–28, global K-pop/adjacent",
+  "targetAudience": "14–28, global K-pop/adjacent",
+  "catchPhrase": "K-influenced global pop",
+  "actType": "solo",
+  "liveStatus": "LIVE",
+  "poseCategory": "female-pop",
+  "liveAudience": 14300,
+  "revenueTonight": 24600,
+  "growthPct": 15,
+  "showsScheduled": 10,
+  "albumTitle": "City of Glass",
+  "singleTitle": "Starfall",
+  "avatarInitials": "VN"
+}

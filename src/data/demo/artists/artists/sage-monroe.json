@@ -1,0 +1,173 @@
+{
+  "isDemoArtist": true,
+  "visibility": "demo-only",
+  "environment": "demo",
+  "id": "sage-monroe",
+  "stageName": "Sage Monroe",
+  "realName": "Sage Monroe",
+  "genre": "Acoustic",
+  "subGenre": "Acoustic",
+  "hometown": "Seattle, WA",
+  "country": "United States",
+  "yearsActive": 14,
+  "label": "LiveCircuit Originals",
+  "management": "Marcus Lee",
+  "bio": "Sage Monroe is a acoustic act from Seattle, WA. Unplugged arena favorite. Known for pnw acoustic polish, they've built a devoted global fanbase on LiveCircuit with 350,000 followers.",
+  "brand": {
+    "primaryColor": "#10b981",
+    "secondaryColor": "#059669",
+    "accentColor": "#34d399",
+    "gradientClass": "from-emerald-500 to-teal-600",
+    "typography": "Space Grotesk",
+    "logoPath": "/assets/logos/sage-monroe.png",
+    "brandIconPath": "/assets/logos/sage-monroe-icon.png",
+    "brandDescription": "PNW acoustic polish",
+    "brandVoice": "Confident, arena-ready, fan-first"
+  },
+  "appearance": {
+    "skinTone": "porcelain cool",
+    "hairTexture": "finger waves",
+    "hairColor": "blue-black",
+    "eyeColor": "dark brown",
+    "faceDescription": "Distinctive acoustic performer with dark brown eyes and finger waves blue-black hair",
+    "bodyType": "slim tall",
+    "height": "5'6\"",
+    "fashionStyle": "PNW acoustic polish",
+    "accessories": [
+      "wrist cuffs"
+    ],
+    "stageOutfit": "PNW acoustic polish — premium tour edition",
+    "streetOutfit": "Casual pnw acoustic polish off-stage look",
+    "performanceOutfit": "Signature Acoustic stage ensemble with LED accents"
+  },
+  "images": {
+    "heroImage": "/demo/performers/acoustic-mic.png",
+    "portraitImage": "/demo/performers/acoustic-mic.png",
+    "transparentPNG": "/demo/performers/acoustic-mic.png",
+    "tourPoster": "/assets/tours/sage-monroe-poster.png",
+    "albumCover": "/assets/albums/sage-monroe.png",
+    "arenaBanner": "/assets/backgrounds/sage-monroe-arena.png",
+    "vipImage": "/demo/performers/acoustic-mic.png",
+    "poses": {
+      "hero": "/demo/performers/acoustic-mic.png",
+      "portrait": "/demo/performers/acoustic-mic.png",
+      "transparent": "/demo/performers/acoustic-mic.png",
+      "performance": "/demo/performers/acoustic-piano.png",
+      "walk": "/demo/performers/acoustic-mic.png",
+      "crowd": "/demo/performers/acoustic-mic.png",
+      "closeUp": "/demo/performers/acoustic-mic.png",
+      "profile": "/demo/performers/acoustic-mic.png",
+      "back": "/demo/performers/acoustic-mic.png",
+      "instrument": "/demo/performers/acoustic-piano.png",
+      "mic": "/demo/performers/acoustic-mic.png",
+      "promo": "/demo/performers/acoustic-mic.png",
+      "vip": "/demo/performers/acoustic-mic.png",
+      "arenaBanner": "/demo/performers/acoustic-mic.png"
+    }
+  },
+  "merchCollection": [
+    {
+      "id": "sage-monroe-tee",
+      "name": "Monroe Unplugged Tour Tee",
+      "price": 35,
+      "imagePath": "/assets/merch/sage-monroe/sage-monroe-tee.png"
+    },
+    {
+      "id": "sage-monroe-hoodie",
+      "name": "Sage Monroe Glow Hoodie",
+      "price": 65,
+      "imagePath": "/assets/merch/sage-monroe/sage-monroe-hoodie.png"
+    },
+    {
+      "id": "sage-monroe-vinyl",
+      "name": "Soft Power Vinyl",
+      "price": 45,
+      "imagePath": "/assets/merch/sage-monroe/sage-monroe-vinyl.png"
+    }
+  ],
+  "followers": 350000,
+  "monthlyListeners": 780000,
+  "fanRating": 4.7,
+  "averageAttendance": 7000,
+  "ticketPrice": 45,
+  "vipPrice": 125,
+  "merchRevenue": 250800,
+  "tourRevenue": 427500,
+  "careerRevenue": 1710000,
+  "verified": true,
+  "featured": false,
+  "socialLinks": {
+    "livecircuit": "/sage-monroe",
+    "website": "https://livecircuit.demo/sage-monroe",
+    "instagram": "@sagemonroe"
+  },
+  "currentTour": {
+    "name": "Monroe Unplugged",
+    "posterPath": "/assets/tours/sage-monroe-poster.png",
+    "upcomingShows": [
+      {
+        "city": "Boston",
+        "venue": "Boston Harbor Arena",
+        "date": "Sep 12",
+        "ticketPrice": 45,
+        "vipPrice": 125
+      },
+      {
+        "city": "Chicago",
+        "venue": "Windy City Stadium",
+        "date": "Sep 19",
+        "ticketPrice": 55,
+        "vipPrice": 151
+      },
+      {
+        "city": "Dallas",
+        "venue": "Lone Star Arena",
+        "date": "Sep 26",
+        "ticketPrice": 45,
+        "vipPrice": 125
+      },
+      {
+        "city": "Miami",
+        "venue": "Miami Pulse Arena",
+        "date": "Oct 3",
+        "ticketPrice": 50,
+        "vipPrice": 125
+      }
+    ]
+  },
+  "favoriteVenue": "Boston Harbor Arena",
+  "performance": {
+    "signatureMove": "Unplugged arena favorite",
+    "signatureLighting": "purple-magenta-cyan",
+    "signatureAnimation": "crowd-wave pulse",
+    "preferredArenaTheme": "premium-festival",
+    "preferredPyro": false,
+    "preferredConfetti": false,
+    "preferredLighting": [
+      "purple",
+      "cyan",
+      "magenta"
+    ],
+    "preferredCameraAngles": [
+      "vip",
+      "stage-left",
+      "default"
+    ],
+    "musicStyle": "Acoustic",
+    "performanceStyle": "PNW acoustic polish"
+  },
+  "personality": "Unplugged arena favorite",
+  "fanDemographics": "22–42, unplugged",
+  "targetAudience": "22–42, unplugged",
+  "catchPhrase": "Unplugged arena favorite",
+  "actType": "solo",
+  "liveStatus": "ON TOUR",
+  "poseCategory": "acoustic",
+  "liveAudience": 7000,
+  "revenueTonight": 9500,
+  "growthPct": 13,
+  "showsScheduled": 8,
+  "albumTitle": "Soft Power",
+  "singleTitle": "Still",
+  "avatarInitials": "SM"
+}

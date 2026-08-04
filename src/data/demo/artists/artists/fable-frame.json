@@ -1,0 +1,173 @@
+{
+  "isDemoArtist": true,
+  "visibility": "demo-only",
+  "environment": "demo",
+  "id": "fable-frame",
+  "stageName": "Fable & Frame",
+  "realName": "Fable & Frame (collective)",
+  "genre": "Folk",
+  "subGenre": "Folk",
+  "hometown": "Edinburgh, UK",
+  "country": "United Kingdom",
+  "yearsActive": 14,
+  "label": "LiveCircuit Originals",
+  "management": "James Park",
+  "bio": "Fable & Frame is a folk act from Edinburgh, UK. Celtic folk modernized. Known for tartan folk fusion, they've built a devoted global fanbase on LiveCircuit with 210,000 followers.",
+  "brand": {
+    "primaryColor": "#6366f1",
+    "secondaryColor": "#4f46e5",
+    "accentColor": "#818cf8",
+    "gradientClass": "from-indigo-500 to-violet-600",
+    "typography": "Space Grotesk",
+    "logoPath": "/assets/logos/fable-frame.png",
+    "brandIconPath": "/assets/logos/fable-frame-icon.png",
+    "brandDescription": "Tartan folk fusion",
+    "brandVoice": "Confident, arena-ready, fan-first"
+  },
+  "appearance": {
+    "skinTone": "deep ebony",
+    "hairTexture": "tight curls",
+    "hairColor": "chestnut",
+    "eyeColor": "green",
+    "faceDescription": "Distinctive folk performer with green eyes and tight curls chestnut hair",
+    "bodyType": "petite compact",
+    "height": "6'0\"",
+    "fashionStyle": "Tartan folk fusion",
+    "accessories": [
+      "stud earrings"
+    ],
+    "stageOutfit": "Tartan folk fusion — premium tour edition",
+    "streetOutfit": "Casual tartan folk fusion off-stage look",
+    "performanceOutfit": "Signature Folk stage ensemble with LED accents"
+  },
+  "images": {
+    "heroImage": "/demo/performers/acoustic-mic.png",
+    "portraitImage": "/demo/performers/acoustic-mic.png",
+    "transparentPNG": "/demo/performers/acoustic-mic.png",
+    "tourPoster": "/assets/tours/fable-frame-poster.png",
+    "albumCover": "/assets/albums/fable-frame.png",
+    "arenaBanner": "/assets/backgrounds/fable-frame-arena.png",
+    "vipImage": "/demo/performers/acoustic-mic.png",
+    "poses": {
+      "hero": "/demo/performers/acoustic-mic.png",
+      "portrait": "/demo/performers/acoustic-mic.png",
+      "transparent": "/demo/performers/acoustic-mic.png",
+      "performance": "/demo/performers/acoustic-piano.png",
+      "walk": "/demo/performers/acoustic-mic.png",
+      "crowd": "/demo/performers/acoustic-mic.png",
+      "closeUp": "/demo/performers/acoustic-mic.png",
+      "profile": "/demo/performers/acoustic-mic.png",
+      "back": "/demo/performers/acoustic-mic.png",
+      "instrument": "/demo/performers/acoustic-piano.png",
+      "mic": "/demo/performers/acoustic-mic.png",
+      "promo": "/demo/performers/acoustic-mic.png",
+      "vip": "/demo/performers/acoustic-mic.png",
+      "arenaBanner": "/demo/performers/acoustic-mic.png"
+    }
+  },
+  "merchCollection": [
+    {
+      "id": "fable-frame-tee",
+      "name": "Fable Tour Tour Tee",
+      "price": 35,
+      "imagePath": "/assets/merch/fable-frame/fable-frame-tee.png"
+    },
+    {
+      "id": "fable-frame-hoodie",
+      "name": "Fable & Frame Glow Hoodie",
+      "price": 65,
+      "imagePath": "/assets/merch/fable-frame/fable-frame-hoodie.png"
+    },
+    {
+      "id": "fable-frame-vinyl",
+      "name": "Story Arc Vinyl",
+      "price": 45,
+      "imagePath": "/assets/merch/fable-frame/fable-frame-vinyl.png"
+    }
+  ],
+  "followers": 210000,
+  "monthlyListeners": 460000,
+  "fanRating": 4.8,
+  "averageAttendance": 7400,
+  "ticketPrice": 45,
+  "vipPrice": 125,
+  "merchRevenue": 269280,
+  "tourRevenue": 459000,
+  "careerRevenue": 1836000,
+  "verified": true,
+  "featured": false,
+  "socialLinks": {
+    "livecircuit": "/fable-frame",
+    "website": "https://livecircuit.demo/fable-frame",
+    "instagram": "@fableframe"
+  },
+  "currentTour": {
+    "name": "Fable Tour",
+    "posterPath": "/assets/tours/fable-frame-poster.png",
+    "upcomingShows": [
+      {
+        "city": "Boston",
+        "venue": "Boston Harbor Arena",
+        "date": "Sep 12",
+        "ticketPrice": 45,
+        "vipPrice": 125
+      },
+      {
+        "city": "Chicago",
+        "venue": "Windy City Stadium",
+        "date": "Sep 19",
+        "ticketPrice": 55,
+        "vipPrice": 151
+      },
+      {
+        "city": "Dallas",
+        "venue": "Lone Star Arena",
+        "date": "Sep 26",
+        "ticketPrice": 45,
+        "vipPrice": 125
+      },
+      {
+        "city": "Miami",
+        "venue": "Miami Pulse Arena",
+        "date": "Oct 3",
+        "ticketPrice": 50,
+        "vipPrice": 125
+      }
+    ]
+  },
+  "favoriteVenue": "Boston Harbor Arena",
+  "performance": {
+    "signatureMove": "Celtic folk modernized",
+    "signatureLighting": "purple-magenta-cyan",
+    "signatureAnimation": "crowd-wave pulse",
+    "preferredArenaTheme": "premium-festival",
+    "preferredPyro": false,
+    "preferredConfetti": false,
+    "preferredLighting": [
+      "purple",
+      "cyan",
+      "magenta"
+    ],
+    "preferredCameraAngles": [
+      "vip",
+      "stage-left",
+      "default"
+    ],
+    "musicStyle": "Folk",
+    "performanceStyle": "Tartan folk fusion"
+  },
+  "personality": "Celtic folk modernized",
+  "fanDemographics": "24–44, Celtic folk",
+  "targetAudience": "24–44, Celtic folk",
+  "catchPhrase": "Celtic folk modernized",
+  "actType": "duo",
+  "liveStatus": "ON TOUR",
+  "poseCategory": "acoustic",
+  "liveAudience": 7400,
+  "revenueTonight": 10200,
+  "growthPct": 14,
+  "showsScheduled": 9,
+  "albumTitle": "Story Arc",
+  "singleTitle": "Tale",
+  "avatarInitials": "F&"
+}

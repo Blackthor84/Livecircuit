@@ -1,0 +1,173 @@
+{
+  "isDemoArtist": true,
+  "visibility": "demo-only",
+  "environment": "demo",
+  "id": "iris-haven",
+  "stageName": "Iris Haven",
+  "realName": "Iris Haven",
+  "genre": "Acoustic",
+  "subGenre": "Acoustic",
+  "hometown": "Savannah, GA",
+  "country": "United States",
+  "yearsActive": 13,
+  "label": "LiveCircuit Originals",
+  "management": "Sarah Chen",
+  "bio": "Iris Haven is a acoustic act from Savannah, GA. Soulful acoustic balladeer. Known for southern acoustic grace, they've built a devoted global fanbase on LiveCircuit with 230,000 followers.",
+  "brand": {
+    "primaryColor": "#f43f5e",
+    "secondaryColor": "#e11d48",
+    "accentColor": "#fb7185",
+    "gradientClass": "from-rose-500 to-pink-600",
+    "typography": "Space Grotesk",
+    "logoPath": "/assets/logos/iris-haven.png",
+    "brandIconPath": "/assets/logos/iris-haven-icon.png",
+    "brandDescription": "Southern acoustic grace",
+    "brandVoice": "Confident, arena-ready, fan-first"
+  },
+  "appearance": {
+    "skinTone": "honey beige",
+    "hairTexture": "shaved sides",
+    "hairColor": "burgundy",
+    "eyeColor": "heterochromia green-brown",
+    "faceDescription": "Distinctive acoustic performer with heterochromia green-brown eyes and shaved sides burgundy hair",
+    "bodyType": "athletic lean",
+    "height": "5'4\"",
+    "fashionStyle": "Southern acoustic grace",
+    "accessories": [
+      "ring stack"
+    ],
+    "stageOutfit": "Southern acoustic grace — premium tour edition",
+    "streetOutfit": "Casual southern acoustic grace off-stage look",
+    "performanceOutfit": "Signature Acoustic stage ensemble with LED accents"
+  },
+  "images": {
+    "heroImage": "/demo/performers/acoustic-mic.png",
+    "portraitImage": "/demo/performers/acoustic-mic.png",
+    "transparentPNG": "/demo/performers/acoustic-mic.png",
+    "tourPoster": "/assets/tours/iris-haven-poster.png",
+    "albumCover": "/assets/albums/iris-haven.png",
+    "arenaBanner": "/assets/backgrounds/iris-haven-arena.png",
+    "vipImage": "/demo/performers/acoustic-mic.png",
+    "poses": {
+      "hero": "/demo/performers/acoustic-mic.png",
+      "portrait": "/demo/performers/acoustic-mic.png",
+      "transparent": "/demo/performers/acoustic-mic.png",
+      "performance": "/demo/performers/acoustic-piano.png",
+      "walk": "/demo/performers/acoustic-mic.png",
+      "crowd": "/demo/performers/acoustic-mic.png",
+      "closeUp": "/demo/performers/acoustic-mic.png",
+      "profile": "/demo/performers/acoustic-mic.png",
+      "back": "/demo/performers/acoustic-mic.png",
+      "instrument": "/demo/performers/acoustic-piano.png",
+      "mic": "/demo/performers/acoustic-mic.png",
+      "promo": "/demo/performers/acoustic-mic.png",
+      "vip": "/demo/performers/acoustic-mic.png",
+      "arenaBanner": "/demo/performers/acoustic-mic.png"
+    }
+  },
+  "merchCollection": [
+    {
+      "id": "iris-haven-tee",
+      "name": "Haven Live Tour Tee",
+      "price": 35,
+      "imagePath": "/assets/merch/iris-haven/iris-haven-tee.png"
+    },
+    {
+      "id": "iris-haven-hoodie",
+      "name": "Iris Haven Glow Hoodie",
+      "price": 65,
+      "imagePath": "/assets/merch/iris-haven/iris-haven-hoodie.png"
+    },
+    {
+      "id": "iris-haven-vinyl",
+      "name": "Safe Harbor Vinyl",
+      "price": 45,
+      "imagePath": "/assets/merch/iris-haven/iris-haven-vinyl.png"
+    }
+  ],
+  "followers": 230000,
+  "monthlyListeners": 520000,
+  "fanRating": 4.5,
+  "averageAttendance": 10700,
+  "ticketPrice": 45,
+  "vipPrice": 125,
+  "merchRevenue": 459360,
+  "tourRevenue": 783000,
+  "careerRevenue": 3132000,
+  "verified": true,
+  "featured": false,
+  "socialLinks": {
+    "livecircuit": "/iris-haven",
+    "website": "https://livecircuit.demo/iris-haven",
+    "instagram": "@irishaven"
+  },
+  "currentTour": {
+    "name": "Haven Live",
+    "posterPath": "/assets/tours/iris-haven-poster.png",
+    "upcomingShows": [
+      {
+        "city": "Boston",
+        "venue": "Boston Harbor Arena",
+        "date": "Sep 12",
+        "ticketPrice": 45,
+        "vipPrice": 125
+      },
+      {
+        "city": "Chicago",
+        "venue": "Windy City Stadium",
+        "date": "Sep 19",
+        "ticketPrice": 55,
+        "vipPrice": 151
+      },
+      {
+        "city": "Dallas",
+        "venue": "Lone Star Arena",
+        "date": "Sep 26",
+        "ticketPrice": 45,
+        "vipPrice": 125
+      },
+      {
+        "city": "Miami",
+        "venue": "Miami Pulse Arena",
+        "date": "Oct 3",
+        "ticketPrice": 50,
+        "vipPrice": 125
+      }
+    ]
+  },
+  "favoriteVenue": "Boston Harbor Arena",
+  "performance": {
+    "signatureMove": "Soulful acoustic balladeer",
+    "signatureLighting": "purple-magenta-cyan",
+    "signatureAnimation": "crowd-wave pulse",
+    "preferredArenaTheme": "premium-festival",
+    "preferredPyro": false,
+    "preferredConfetti": false,
+    "preferredLighting": [
+      "purple",
+      "cyan",
+      "magenta"
+    ],
+    "preferredCameraAngles": [
+      "vip",
+      "stage-left",
+      "default"
+    ],
+    "musicStyle": "Acoustic",
+    "performanceStyle": "Southern acoustic grace"
+  },
+  "personality": "Soulful acoustic balladeer",
+  "fanDemographics": "23–46, acoustic soul",
+  "targetAudience": "23–46, acoustic soul",
+  "catchPhrase": "Soulful acoustic balladeer",
+  "actType": "solo",
+  "liveStatus": "LIVE",
+  "poseCategory": "acoustic",
+  "liveAudience": 10700,
+  "revenueTonight": 17400,
+  "growthPct": 11,
+  "showsScheduled": 6,
+  "albumTitle": "Safe Harbor",
+  "singleTitle": "Anchor",
+  "avatarInitials": "IH"
+}

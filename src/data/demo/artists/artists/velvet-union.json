@@ -1,0 +1,173 @@
+{
+  "isDemoArtist": true,
+  "visibility": "demo-only",
+  "environment": "demo",
+  "id": "velvet-union",
+  "stageName": "Velvet Union",
+  "realName": "Velvet Union (collective)",
+  "genre": "Contemporary R&B",
+  "subGenre": "Contemporary R&B",
+  "hometown": "Toronto, ON",
+  "country": "Canada",
+  "yearsActive": 3,
+  "label": "LiveCircuit Originals",
+  "management": "James Park",
+  "bio": "Velvet Union is a contemporary r&b act from Toronto, ON. Four-part R&B precision. Known for monochrome velvet suits, they've built a devoted global fanbase on LiveCircuit with 490,000 followers.",
+  "brand": {
+    "primaryColor": "#a855f7",
+    "secondaryColor": "#7c3aed",
+    "accentColor": "#c084fc",
+    "gradientClass": "from-violet-500 to-purple-600",
+    "typography": "Space Grotesk",
+    "logoPath": "/assets/logos/velvet-union.png",
+    "brandIconPath": "/assets/logos/velvet-union-icon.png",
+    "brandDescription": "Monochrome velvet suits",
+    "brandVoice": "Confident, arena-ready, fan-first"
+  },
+  "appearance": {
+    "skinTone": "sand neutral",
+    "hairTexture": "coily 4C",
+    "hairColor": "dark brown",
+    "eyeColor": "grey",
+    "faceDescription": "Distinctive contemporary r&b performer with grey eyes and coily 4C dark brown hair",
+    "bodyType": "willowy",
+    "height": "5'8\"",
+    "fashionStyle": "Monochrome velvet suits",
+    "accessories": [
+      "chain necklace"
+    ],
+    "stageOutfit": "Monochrome velvet suits — premium tour edition",
+    "streetOutfit": "Casual monochrome velvet suits off-stage look",
+    "performanceOutfit": "Signature Contemporary R&B stage ensemble with LED accents"
+  },
+  "images": {
+    "heroImage": "/demo/performers/rnb-mic.png",
+    "portraitImage": "/demo/performers/rnb-mic.png",
+    "transparentPNG": "/demo/performers/rnb-mic.png",
+    "tourPoster": "/assets/tours/velvet-union-poster.png",
+    "albumCover": "/assets/albums/velvet-union.png",
+    "arenaBanner": "/assets/backgrounds/velvet-union-arena.png",
+    "vipImage": "/demo/performers/rnb-mic.png",
+    "poses": {
+      "hero": "/demo/performers/rnb-mic.png",
+      "portrait": "/demo/performers/rnb-mic.png",
+      "transparent": "/demo/performers/rnb-mic.png",
+      "performance": "/demo/performers/rnb-mic.png",
+      "walk": "/demo/performers/rnb-mic.png",
+      "crowd": "/demo/performers/rnb-mic.png",
+      "closeUp": "/demo/performers/rnb-profile.png",
+      "profile": "/demo/performers/rnb-profile.png",
+      "back": "/demo/performers/rnb-mic.png",
+      "instrument": "/demo/performers/rnb-mic.png",
+      "mic": "/demo/performers/rnb-mic.png",
+      "promo": "/demo/performers/rnb-mic.png",
+      "vip": "/demo/performers/rnb-mic.png",
+      "arenaBanner": "/demo/performers/rnb-mic.png"
+    }
+  },
+  "merchCollection": [
+    {
+      "id": "velvet-union-tee",
+      "name": "Union Tour Tour Tee",
+      "price": 35,
+      "imagePath": "/assets/merch/velvet-union/velvet-union-tee.png"
+    },
+    {
+      "id": "velvet-union-hoodie",
+      "name": "Velvet Union Glow Hoodie",
+      "price": 65,
+      "imagePath": "/assets/merch/velvet-union/velvet-union-hoodie.png"
+    },
+    {
+      "id": "velvet-union-vinyl",
+      "name": "Four Corners Vinyl",
+      "price": 45,
+      "imagePath": "/assets/merch/velvet-union/velvet-union-vinyl.png"
+    }
+  ],
+  "followers": 490000,
+  "monthlyListeners": 1120000,
+  "fanRating": 4.5,
+  "averageAttendance": 6200,
+  "ticketPrice": 45,
+  "vipPrice": 125,
+  "merchRevenue": 213840,
+  "tourRevenue": 364500,
+  "careerRevenue": 1458000,
+  "verified": true,
+  "featured": false,
+  "socialLinks": {
+    "livecircuit": "/velvet-union",
+    "website": "https://livecircuit.demo/velvet-union",
+    "instagram": "@velvetunion"
+  },
+  "currentTour": {
+    "name": "Union Tour",
+    "posterPath": "/assets/tours/velvet-union-poster.png",
+    "upcomingShows": [
+      {
+        "city": "Boston",
+        "venue": "Boston Harbor Arena",
+        "date": "Sep 12",
+        "ticketPrice": 45,
+        "vipPrice": 125
+      },
+      {
+        "city": "Chicago",
+        "venue": "Windy City Stadium",
+        "date": "Sep 19",
+        "ticketPrice": 55,
+        "vipPrice": 151
+      },
+      {
+        "city": "Dallas",
+        "venue": "Lone Star Arena",
+        "date": "Sep 26",
+        "ticketPrice": 45,
+        "vipPrice": 125
+      },
+      {
+        "city": "Miami",
+        "venue": "Miami Pulse Arena",
+        "date": "Oct 3",
+        "ticketPrice": 50,
+        "vipPrice": 125
+      }
+    ]
+  },
+  "favoriteVenue": "Boston Harbor Arena",
+  "performance": {
+    "signatureMove": "Four-part R&B precision",
+    "signatureLighting": "purple-magenta-cyan",
+    "signatureAnimation": "crowd-wave pulse",
+    "preferredArenaTheme": "premium-festival",
+    "preferredPyro": false,
+    "preferredConfetti": false,
+    "preferredLighting": [
+      "purple",
+      "cyan",
+      "magenta"
+    ],
+    "preferredCameraAngles": [
+      "vip",
+      "stage-left",
+      "default"
+    ],
+    "musicStyle": "Contemporary R&B",
+    "performanceStyle": "Monochrome velvet suits"
+  },
+  "personality": "Four-part R&B precision",
+  "fanDemographics": "18–34, vocal group fans",
+  "targetAudience": "18–34, vocal group fans",
+  "catchPhrase": "Four-part R&B precision",
+  "actType": "group",
+  "liveStatus": "ON TOUR",
+  "poseCategory": "rnb",
+  "liveAudience": 6200,
+  "revenueTonight": 8100,
+  "growthPct": 11,
+  "showsScheduled": 6,
+  "albumTitle": "Four Corners",
+  "singleTitle": "Align",
+  "avatarInitials": "VU"
+}

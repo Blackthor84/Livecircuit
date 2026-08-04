@@ -1,0 +1,173 @@
+{
+  "isDemoArtist": true,
+  "visibility": "demo-only",
+  "environment": "demo",
+  "id": "pulse-collective",
+  "stageName": "Pulse Collective",
+  "realName": "Pulse Collective (collective)",
+  "genre": "Pop/R&B",
+  "subGenre": "Pop/R&B",
+  "hometown": "Toronto, ON",
+  "country": "Canada",
+  "yearsActive": 7,
+  "label": "LiveCircuit Originals",
+  "management": "Marcus Lee",
+  "bio": "Pulse Collective is a pop/r&b act from Toronto, ON. Global pop-R&B hybrid. Known for matching urban couture, they've built a devoted global fanbase on LiveCircuit with 740,000 followers.",
+  "brand": {
+    "primaryColor": "#d946ef",
+    "secondaryColor": "#c026d3",
+    "accentColor": "#e879f9",
+    "gradientClass": "from-fuchsia-500 to-purple-600",
+    "typography": "Space Grotesk",
+    "logoPath": "/assets/logos/pulse-collective.png",
+    "brandIconPath": "/assets/logos/pulse-collective-icon.png",
+    "brandDescription": "Matching urban couture",
+    "brandVoice": "Confident, arena-ready, fan-first"
+  },
+  "appearance": {
+    "skinTone": "olive medium",
+    "hairTexture": "braided locs",
+    "hairColor": "copper red",
+    "eyeColor": "grey",
+    "faceDescription": "Distinctive pop/r&b performer with grey eyes and braided locs copper red hair",
+    "bodyType": "willowy",
+    "height": "5'8\"",
+    "fashionStyle": "Matching urban couture",
+    "accessories": [
+      "chain necklace"
+    ],
+    "stageOutfit": "Matching urban couture — premium tour edition",
+    "streetOutfit": "Casual matching urban couture off-stage look",
+    "performanceOutfit": "Signature Pop/R&B stage ensemble with LED accents"
+  },
+  "images": {
+    "heroImage": "/demo/performers/rnb-mic.png",
+    "portraitImage": "/demo/performers/rnb-mic.png",
+    "transparentPNG": "/demo/performers/rnb-mic.png",
+    "tourPoster": "/assets/tours/pulse-collective-poster.png",
+    "albumCover": "/assets/albums/pulse-collective.png",
+    "arenaBanner": "/assets/backgrounds/pulse-collective-arena.png",
+    "vipImage": "/demo/performers/rnb-mic.png",
+    "poses": {
+      "hero": "/demo/performers/rnb-mic.png",
+      "portrait": "/demo/performers/rnb-mic.png",
+      "transparent": "/demo/performers/rnb-mic.png",
+      "performance": "/demo/performers/rnb-mic.png",
+      "walk": "/demo/performers/rnb-mic.png",
+      "crowd": "/demo/performers/rnb-mic.png",
+      "closeUp": "/demo/performers/rnb-profile.png",
+      "profile": "/demo/performers/rnb-profile.png",
+      "back": "/demo/performers/rnb-mic.png",
+      "instrument": "/demo/performers/rnb-mic.png",
+      "mic": "/demo/performers/rnb-mic.png",
+      "promo": "/demo/performers/rnb-mic.png",
+      "vip": "/demo/performers/rnb-mic.png",
+      "arenaBanner": "/demo/performers/rnb-mic.png"
+    }
+  },
+  "merchCollection": [
+    {
+      "id": "pulse-collective-tee",
+      "name": "Pulse World Tour Tee",
+      "price": 35,
+      "imagePath": "/assets/merch/pulse-collective/pulse-collective-tee.png"
+    },
+    {
+      "id": "pulse-collective-hoodie",
+      "name": "Pulse Collective Glow Hoodie",
+      "price": 65,
+      "imagePath": "/assets/merch/pulse-collective/pulse-collective-hoodie.png"
+    },
+    {
+      "id": "pulse-collective-vinyl",
+      "name": "Sync Vinyl",
+      "price": 45,
+      "imagePath": "/assets/merch/pulse-collective/pulse-collective-vinyl.png"
+    }
+  ],
+  "followers": 740000,
+  "monthlyListeners": 1680000,
+  "fanRating": 4.5,
+  "averageAttendance": 10700,
+  "ticketPrice": 45,
+  "vipPrice": 125,
+  "merchRevenue": 459360,
+  "tourRevenue": 783000,
+  "careerRevenue": 3132000,
+  "verified": true,
+  "featured": false,
+  "socialLinks": {
+    "livecircuit": "/pulse-collective",
+    "website": "https://livecircuit.demo/pulse-collective",
+    "instagram": "@pulsecollective"
+  },
+  "currentTour": {
+    "name": "Pulse World",
+    "posterPath": "/assets/tours/pulse-collective-poster.png",
+    "upcomingShows": [
+      {
+        "city": "Boston",
+        "venue": "Boston Harbor Arena",
+        "date": "Sep 12",
+        "ticketPrice": 45,
+        "vipPrice": 125
+      },
+      {
+        "city": "Chicago",
+        "venue": "Windy City Stadium",
+        "date": "Sep 19",
+        "ticketPrice": 55,
+        "vipPrice": 151
+      },
+      {
+        "city": "Dallas",
+        "venue": "Lone Star Arena",
+        "date": "Sep 26",
+        "ticketPrice": 45,
+        "vipPrice": 125
+      },
+      {
+        "city": "Miami",
+        "venue": "Miami Pulse Arena",
+        "date": "Oct 3",
+        "ticketPrice": 50,
+        "vipPrice": 125
+      }
+    ]
+  },
+  "favoriteVenue": "Boston Harbor Arena",
+  "performance": {
+    "signatureMove": "Global pop-R&B hybrid",
+    "signatureLighting": "purple-magenta-cyan",
+    "signatureAnimation": "crowd-wave pulse",
+    "preferredArenaTheme": "premium-festival",
+    "preferredPyro": false,
+    "preferredConfetti": true,
+    "preferredLighting": [
+      "purple",
+      "cyan",
+      "magenta"
+    ],
+    "preferredCameraAngles": [
+      "vip",
+      "stage-left",
+      "default"
+    ],
+    "musicStyle": "Pop/R&B",
+    "performanceStyle": "Matching urban couture"
+  },
+  "personality": "Global pop-R&B hybrid",
+  "fanDemographics": "16–30, pop-R&B global",
+  "targetAudience": "16–30, pop-R&B global",
+  "catchPhrase": "Global pop-R&B hybrid",
+  "actType": "group",
+  "liveStatus": "LIVE",
+  "poseCategory": "rnb",
+  "liveAudience": 10700,
+  "revenueTonight": 17400,
+  "growthPct": 11,
+  "showsScheduled": 6,
+  "albumTitle": "Sync",
+  "singleTitle": "Beat",
+  "avatarInitials": "PC"
+}

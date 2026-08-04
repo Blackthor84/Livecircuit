@@ -1,0 +1,173 @@
+{
+  "isDemoArtist": true,
+  "visibility": "demo-only",
+  "environment": "demo",
+  "id": "titan-circuit",
+  "stageName": "Titan Circuit",
+  "realName": "Titan Circuit",
+  "genre": "Hip Hop",
+  "subGenre": "Hip-Hop",
+  "hometown": "Houston, TX",
+  "country": "United States",
+  "yearsActive": 4,
+  "label": "LiveCircuit Originals",
+  "management": "Marcus Lee",
+  "bio": "Titan Circuit is a hip-hop act from Houston, TX. 808 earthquake performer. Known for southern rap maximalism, they've built a devoted global fanbase on LiveCircuit with 1,120,000 followers.",
+  "brand": {
+    "primaryColor": "#f59e0b",
+    "secondaryColor": "#d97706",
+    "accentColor": "#fbbf24",
+    "gradientClass": "from-amber-500 to-orange-600",
+    "typography": "Space Grotesk",
+    "logoPath": "/assets/logos/titan-circuit.png",
+    "brandIconPath": "/assets/logos/titan-circuit-icon.png",
+    "brandDescription": "Southern rap maximalism",
+    "brandVoice": "Confident, arena-ready, fan-first"
+  },
+  "appearance": {
+    "skinTone": "olive medium",
+    "hairTexture": "braided locs",
+    "hairColor": "copper red",
+    "eyeColor": "grey",
+    "faceDescription": "Distinctive hip-hop performer with grey eyes and braided locs copper red hair",
+    "bodyType": "willowy",
+    "height": "6'0\"",
+    "fashionStyle": "Southern rap maximalism",
+    "accessories": [
+      "chain necklace"
+    ],
+    "stageOutfit": "Southern rap maximalism — premium tour edition",
+    "streetOutfit": "Casual southern rap maximalism off-stage look",
+    "performanceOutfit": "Signature Hip-Hop stage ensemble with LED accents"
+  },
+  "images": {
+    "heroImage": "/demo/performers/hiphop-mic.png",
+    "portraitImage": "/demo/performers/hiphop-mic.png",
+    "transparentPNG": "/demo/performers/hiphop-mic.png",
+    "tourPoster": "/assets/tours/titan-circuit-poster.png",
+    "albumCover": "/assets/albums/titan-circuit.png",
+    "arenaBanner": "/assets/backgrounds/titan-circuit-arena.png",
+    "vipImage": "/demo/performers/hiphop-mic.png",
+    "poses": {
+      "hero": "/demo/performers/hiphop-mic.png",
+      "portrait": "/demo/performers/hiphop-mic.png",
+      "transparent": "/demo/performers/hiphop-mic.png",
+      "performance": "/demo/performers/hiphop-point.png",
+      "walk": "/demo/performers/hiphop-mic.png",
+      "crowd": "/demo/performers/hiphop-point.png",
+      "closeUp": "/demo/performers/hiphop-mic.png",
+      "profile": "/demo/performers/hiphop-mic.png",
+      "back": "/demo/performers/hiphop-mic.png",
+      "instrument": "/demo/performers/hiphop-mic.png",
+      "mic": "/demo/performers/hiphop-mic.png",
+      "promo": "/demo/performers/hiphop-mic.png",
+      "vip": "/demo/performers/hiphop-mic.png",
+      "arenaBanner": "/demo/performers/hiphop-mic.png"
+    }
+  },
+  "merchCollection": [
+    {
+      "id": "titan-circuit-tee",
+      "name": "Circuit Breaker Tour Tee",
+      "price": 35,
+      "imagePath": "/assets/merch/titan-circuit/titan-circuit-tee.png"
+    },
+    {
+      "id": "titan-circuit-hoodie",
+      "name": "Titan Circuit Glow Hoodie",
+      "price": 65,
+      "imagePath": "/assets/merch/titan-circuit/titan-circuit-hoodie.png"
+    },
+    {
+      "id": "titan-circuit-vinyl",
+      "name": "Heavy Current Vinyl",
+      "price": 45,
+      "imagePath": "/assets/merch/titan-circuit/titan-circuit-vinyl.png"
+    }
+  ],
+  "followers": 1120000,
+  "monthlyListeners": 2560000,
+  "fanRating": 4.6000000000000005,
+  "averageAttendance": 6600,
+  "ticketPrice": 45,
+  "vipPrice": 125,
+  "merchRevenue": 232320,
+  "tourRevenue": 396000,
+  "careerRevenue": 1584000,
+  "verified": true,
+  "featured": false,
+  "socialLinks": {
+    "livecircuit": "/titan-circuit",
+    "website": "https://livecircuit.demo/titan-circuit",
+    "instagram": "@titancircuit"
+  },
+  "currentTour": {
+    "name": "Circuit Breaker",
+    "posterPath": "/assets/tours/titan-circuit-poster.png",
+    "upcomingShows": [
+      {
+        "city": "Boston",
+        "venue": "Boston Harbor Arena",
+        "date": "Sep 12",
+        "ticketPrice": 45,
+        "vipPrice": 125
+      },
+      {
+        "city": "Chicago",
+        "venue": "Windy City Stadium",
+        "date": "Sep 19",
+        "ticketPrice": 55,
+        "vipPrice": 151
+      },
+      {
+        "city": "Dallas",
+        "venue": "Lone Star Arena",
+        "date": "Sep 26",
+        "ticketPrice": 45,
+        "vipPrice": 125
+      },
+      {
+        "city": "Miami",
+        "venue": "Miami Pulse Arena",
+        "date": "Oct 3",
+        "ticketPrice": 50,
+        "vipPrice": 125
+      }
+    ]
+  },
+  "favoriteVenue": "Boston Harbor Arena",
+  "performance": {
+    "signatureMove": "808 earthquake performer",
+    "signatureLighting": "purple-magenta-cyan",
+    "signatureAnimation": "crowd-wave pulse",
+    "preferredArenaTheme": "premium-festival",
+    "preferredPyro": false,
+    "preferredConfetti": false,
+    "preferredLighting": [
+      "purple",
+      "cyan",
+      "magenta"
+    ],
+    "preferredCameraAngles": [
+      "vip",
+      "stage-left",
+      "default"
+    ],
+    "musicStyle": "Hip-Hop",
+    "performanceStyle": "Southern rap maximalism"
+  },
+  "personality": "808 earthquake performer",
+  "fanDemographics": "16–30, Southern hip-hop",
+  "targetAudience": "16–30, Southern hip-hop",
+  "catchPhrase": "808 earthquake performer",
+  "actType": "solo",
+  "liveStatus": "ON TOUR",
+  "poseCategory": "hip-hop",
+  "liveAudience": 6600,
+  "revenueTonight": 8800,
+  "growthPct": 12,
+  "showsScheduled": 7,
+  "albumTitle": "Heavy Current",
+  "singleTitle": "Quake",
+  "avatarInitials": "TC"
+}

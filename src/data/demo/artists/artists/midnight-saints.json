@@ -1,0 +1,173 @@
+{
+  "isDemoArtist": true,
+  "visibility": "demo-only",
+  "environment": "demo",
+  "id": "midnight-saints",
+  "stageName": "Midnight Saints",
+  "realName": "Midnight Saints (collective)",
+  "genre": "Americana",
+  "subGenre": "Americana",
+  "hometown": "Tucson, AZ",
+  "country": "United States",
+  "yearsActive": 6,
+  "label": "LiveCircuit Originals",
+  "management": "James Park",
+  "bio": "Midnight Saints is a americana act from Tucson, AZ. Desert americana for big stages. Known for southwest stage wear, they've built a devoted global fanbase on LiveCircuit with 590,000 followers.",
+  "brand": {
+    "primaryColor": "#f59e0b",
+    "secondaryColor": "#d97706",
+    "accentColor": "#fbbf24",
+    "gradientClass": "from-amber-500 to-orange-600",
+    "typography": "Space Grotesk",
+    "logoPath": "/assets/logos/midnight-saints.png",
+    "brandIconPath": "/assets/logos/midnight-saints-icon.png",
+    "brandDescription": "Southwest stage wear",
+    "brandVoice": "Confident, arena-ready, fan-first"
+  },
+  "appearance": {
+    "skinTone": "deep ebony",
+    "hairTexture": "tight curls",
+    "hairColor": "chestnut",
+    "eyeColor": "blue",
+    "faceDescription": "Distinctive americana performer with blue eyes and tight curls chestnut hair",
+    "bodyType": "dancer-fit",
+    "height": "5'10\"",
+    "fashionStyle": "Southwest stage wear",
+    "accessories": [
+      "stud earrings"
+    ],
+    "stageOutfit": "Southwest stage wear — premium tour edition",
+    "streetOutfit": "Casual southwest stage wear off-stage look",
+    "performanceOutfit": "Signature Americana stage ensemble with LED accents"
+  },
+  "images": {
+    "heroImage": "/demo/performers/country-mic.png",
+    "portraitImage": "/demo/performers/country-mic.png",
+    "transparentPNG": "/demo/performers/country-mic.png",
+    "tourPoster": "/assets/tours/midnight-saints-poster.png",
+    "albumCover": "/assets/albums/midnight-saints.png",
+    "arenaBanner": "/assets/backgrounds/midnight-saints-arena.png",
+    "vipImage": "/demo/performers/country-mic.png",
+    "poses": {
+      "hero": "/demo/performers/country-mic.png",
+      "portrait": "/demo/performers/country-mic.png",
+      "transparent": "/demo/performers/country-mic.png",
+      "performance": "/demo/performers/country-guitar.png",
+      "walk": "/demo/performers/country-mic.png",
+      "crowd": "/demo/performers/country-mic.png",
+      "closeUp": "/demo/performers/country-mic.png",
+      "profile": "/demo/performers/country-mic.png",
+      "back": "/demo/performers/country-mic.png",
+      "instrument": "/demo/performers/country-guitar.png",
+      "mic": "/demo/performers/country-mic.png",
+      "promo": "/demo/performers/country-mic.png",
+      "vip": "/demo/performers/country-mic.png",
+      "arenaBanner": "/demo/performers/country-mic.png"
+    }
+  },
+  "merchCollection": [
+    {
+      "id": "midnight-saints-tee",
+      "name": "Saints Circuit Tour Tee",
+      "price": 35,
+      "imagePath": "/assets/merch/midnight-saints/midnight-saints-tee.png"
+    },
+    {
+      "id": "midnight-saints-hoodie",
+      "name": "Midnight Saints Glow Hoodie",
+      "price": 65,
+      "imagePath": "/assets/merch/midnight-saints/midnight-saints-hoodie.png"
+    },
+    {
+      "id": "midnight-saints-vinyl",
+      "name": "Desert Prayer Vinyl",
+      "price": 45,
+      "imagePath": "/assets/merch/midnight-saints/midnight-saints-vinyl.png"
+    }
+  ],
+  "followers": 590000,
+  "monthlyListeners": 1340000,
+  "fanRating": 4.6000000000000005,
+  "averageAttendance": 5000,
+  "ticketPrice": 45,
+  "vipPrice": 125,
+  "merchRevenue": 158400,
+  "tourRevenue": 270000,
+  "careerRevenue": 1080000,
+  "verified": true,
+  "featured": true,
+  "socialLinks": {
+    "livecircuit": "/midnight-saints",
+    "website": "https://livecircuit.demo/midnight-saints",
+    "instagram": "@midnightsaints"
+  },
+  "currentTour": {
+    "name": "Saints Circuit",
+    "posterPath": "/assets/tours/midnight-saints-poster.png",
+    "upcomingShows": [
+      {
+        "city": "Boston",
+        "venue": "Boston Harbor Arena",
+        "date": "Sep 12",
+        "ticketPrice": 45,
+        "vipPrice": 125
+      },
+      {
+        "city": "Chicago",
+        "venue": "Windy City Stadium",
+        "date": "Sep 19",
+        "ticketPrice": 55,
+        "vipPrice": 151
+      },
+      {
+        "city": "Dallas",
+        "venue": "Lone Star Arena",
+        "date": "Sep 26",
+        "ticketPrice": 45,
+        "vipPrice": 125
+      },
+      {
+        "city": "Miami",
+        "venue": "Miami Pulse Arena",
+        "date": "Oct 3",
+        "ticketPrice": 50,
+        "vipPrice": 125
+      }
+    ]
+  },
+  "favoriteVenue": "Boston Harbor Arena",
+  "performance": {
+    "signatureMove": "Desert americana for big stages",
+    "signatureLighting": "purple-magenta-cyan",
+    "signatureAnimation": "crowd-wave pulse",
+    "preferredArenaTheme": "premium-festival",
+    "preferredPyro": false,
+    "preferredConfetti": false,
+    "preferredLighting": [
+      "purple",
+      "cyan",
+      "magenta"
+    ],
+    "preferredCameraAngles": [
+      "vip",
+      "stage-left",
+      "default"
+    ],
+    "musicStyle": "Americana",
+    "performanceStyle": "Southwest stage wear"
+  },
+  "personality": "Desert americana for big stages",
+  "fanDemographics": "24–48, americana",
+  "targetAudience": "24–48, americana",
+  "catchPhrase": "Desert americana for big stages",
+  "actType": "band",
+  "liveStatus": "ON TOUR",
+  "poseCategory": "country",
+  "liveAudience": 5000,
+  "revenueTonight": 6000,
+  "growthPct": 12,
+  "showsScheduled": 3,
+  "albumTitle": "Desert Prayer",
+  "singleTitle": "Mirage",
+  "avatarInitials": "MS"
+}

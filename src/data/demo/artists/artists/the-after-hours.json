@@ -1,0 +1,173 @@
+{
+  "isDemoArtist": true,
+  "visibility": "demo-only",
+  "environment": "demo",
+  "id": "the-after-hours",
+  "stageName": "The After Hours",
+  "realName": "The After Hours (collective)",
+  "genre": "Soul",
+  "subGenre": "Soul",
+  "hometown": "Detroit, MI",
+  "country": "United States",
+  "yearsActive": 6,
+  "label": "LiveCircuit Originals",
+  "management": "Marcus Lee",
+  "bio": "The After Hours is a soul act from Detroit, MI. Live soul band for the arena age. Known for vintage instruments, modern lights, they've built a devoted global fanbase on LiveCircuit with 690,000 followers.",
+  "brand": {
+    "primaryColor": "#f59e0b",
+    "secondaryColor": "#d97706",
+    "accentColor": "#fbbf24",
+    "gradientClass": "from-amber-500 to-orange-600",
+    "typography": "Space Grotesk",
+    "logoPath": "/assets/logos/the-after-hours.png",
+    "brandIconPath": "/assets/logos/the-after-hours-icon.png",
+    "brandDescription": "Vintage instruments, modern lights",
+    "brandVoice": "Confident, arena-ready, fan-first"
+  },
+  "appearance": {
+    "skinTone": "espresso",
+    "hairTexture": "layered waves",
+    "hairColor": "jet black",
+    "eyeColor": "amber brown",
+    "faceDescription": "Distinctive soul performer with amber brown eyes and layered waves jet black hair",
+    "bodyType": "curvy strong",
+    "height": "5'8\"",
+    "fashionStyle": "Vintage instruments, modern lights",
+    "accessories": [
+      "signature hat"
+    ],
+    "stageOutfit": "Vintage instruments, modern lights — premium tour edition",
+    "streetOutfit": "Casual vintage instruments, modern lights off-stage look",
+    "performanceOutfit": "Signature Soul stage ensemble with LED accents"
+  },
+  "images": {
+    "heroImage": "/demo/performers/rnb-mic.png",
+    "portraitImage": "/demo/performers/rnb-mic.png",
+    "transparentPNG": "/demo/performers/rnb-mic.png",
+    "tourPoster": "/assets/tours/the-after-hours-poster.png",
+    "albumCover": "/assets/albums/the-after-hours.png",
+    "arenaBanner": "/assets/backgrounds/the-after-hours-arena.png",
+    "vipImage": "/demo/performers/rnb-mic.png",
+    "poses": {
+      "hero": "/demo/performers/rnb-mic.png",
+      "portrait": "/demo/performers/rnb-mic.png",
+      "transparent": "/demo/performers/rnb-mic.png",
+      "performance": "/demo/performers/rnb-mic.png",
+      "walk": "/demo/performers/rnb-mic.png",
+      "crowd": "/demo/performers/rnb-mic.png",
+      "closeUp": "/demo/performers/rnb-profile.png",
+      "profile": "/demo/performers/rnb-profile.png",
+      "back": "/demo/performers/rnb-mic.png",
+      "instrument": "/demo/performers/rnb-mic.png",
+      "mic": "/demo/performers/rnb-mic.png",
+      "promo": "/demo/performers/rnb-mic.png",
+      "vip": "/demo/performers/rnb-mic.png",
+      "arenaBanner": "/demo/performers/rnb-mic.png"
+    }
+  },
+  "merchCollection": [
+    {
+      "id": "the-after-hours-tee",
+      "name": "After Hours Live Tour Tee",
+      "price": 35,
+      "imagePath": "/assets/merch/the-after-hours/the-after-hours-tee.png"
+    },
+    {
+      "id": "the-after-hours-hoodie",
+      "name": "The After Hours Glow Hoodie",
+      "price": 65,
+      "imagePath": "/assets/merch/the-after-hours/the-after-hours-hoodie.png"
+    },
+    {
+      "id": "the-after-hours-vinyl",
+      "name": "Clockwork Soul Vinyl",
+      "price": 45,
+      "imagePath": "/assets/merch/the-after-hours/the-after-hours-vinyl.png"
+    }
+  ],
+  "followers": 690000,
+  "monthlyListeners": 1540000,
+  "fanRating": 4.7,
+  "averageAttendance": 5400,
+  "ticketPrice": 45,
+  "vipPrice": 125,
+  "merchRevenue": 176880,
+  "tourRevenue": 301500,
+  "careerRevenue": 1206000,
+  "verified": true,
+  "featured": true,
+  "socialLinks": {
+    "livecircuit": "/the-after-hours",
+    "website": "https://livecircuit.demo/the-after-hours",
+    "instagram": "@theafterhours"
+  },
+  "currentTour": {
+    "name": "After Hours Live",
+    "posterPath": "/assets/tours/the-after-hours-poster.png",
+    "upcomingShows": [
+      {
+        "city": "Boston",
+        "venue": "Boston Harbor Arena",
+        "date": "Sep 12",
+        "ticketPrice": 45,
+        "vipPrice": 125
+      },
+      {
+        "city": "Chicago",
+        "venue": "Windy City Stadium",
+        "date": "Sep 19",
+        "ticketPrice": 55,
+        "vipPrice": 151
+      },
+      {
+        "city": "Dallas",
+        "venue": "Lone Star Arena",
+        "date": "Sep 26",
+        "ticketPrice": 45,
+        "vipPrice": 125
+      },
+      {
+        "city": "Miami",
+        "venue": "Miami Pulse Arena",
+        "date": "Oct 3",
+        "ticketPrice": 50,
+        "vipPrice": 125
+      }
+    ]
+  },
+  "favoriteVenue": "Boston Harbor Arena",
+  "performance": {
+    "signatureMove": "Live soul band for the arena age",
+    "signatureLighting": "purple-magenta-cyan",
+    "signatureAnimation": "crowd-wave pulse",
+    "preferredArenaTheme": "premium-festival",
+    "preferredPyro": false,
+    "preferredConfetti": false,
+    "preferredLighting": [
+      "purple",
+      "cyan",
+      "magenta"
+    ],
+    "preferredCameraAngles": [
+      "vip",
+      "stage-left",
+      "default"
+    ],
+    "musicStyle": "Soul",
+    "performanceStyle": "Vintage instruments, modern lights"
+  },
+  "personality": "Live soul band for the arena age",
+  "fanDemographics": "22–42, live soul",
+  "targetAudience": "22–42, live soul",
+  "catchPhrase": "Live soul band for the arena age",
+  "actType": "band",
+  "liveStatus": "ON TOUR",
+  "poseCategory": "rnb",
+  "liveAudience": 5400,
+  "revenueTonight": 6700,
+  "growthPct": 13,
+  "showsScheduled": 4,
+  "albumTitle": "Clockwork Soul",
+  "singleTitle": "2AM",
+  "avatarInitials": "TA"
+}

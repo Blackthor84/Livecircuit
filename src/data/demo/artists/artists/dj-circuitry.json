@@ -1,0 +1,173 @@
+{
+  "isDemoArtist": true,
+  "visibility": "demo-only",
+  "environment": "demo",
+  "id": "dj-circuitry",
+  "stageName": "DJ Circuitry",
+  "realName": "DJ Circuitry",
+  "genre": "Electronic",
+  "subGenre": "Electronic",
+  "hometown": "Detroit, MI",
+  "country": "United States",
+  "yearsActive": 3,
+  "label": "LiveCircuit Originals",
+  "management": "Marcus Lee",
+  "bio": "DJ Circuitry is a electronic act from Detroit, MI. Techno tunnel master. Known for industrial techno, they've built a devoted global fanbase on LiveCircuit with 430,000 followers.",
+  "brand": {
+    "primaryColor": "#64748b",
+    "secondaryColor": "#475569",
+    "accentColor": "#94a3b8",
+    "gradientClass": "from-slate-500 to-zinc-600",
+    "typography": "Space Grotesk",
+    "logoPath": "/assets/logos/dj-circuitry.png",
+    "brandIconPath": "/assets/logos/dj-circuitry-icon.png",
+    "brandDescription": "Industrial techno",
+    "brandVoice": "Confident, arena-ready, fan-first"
+  },
+  "appearance": {
+    "skinTone": "porcelain cool",
+    "hairTexture": "finger waves",
+    "hairColor": "blue-black",
+    "eyeColor": "dark brown",
+    "faceDescription": "Distinctive electronic performer with dark brown eyes and finger waves blue-black hair",
+    "bodyType": "slim tall",
+    "height": "5'10\"",
+    "fashionStyle": "Industrial techno",
+    "accessories": [
+      "wrist cuffs"
+    ],
+    "stageOutfit": "Industrial techno — premium tour edition",
+    "streetOutfit": "Casual industrial techno off-stage look",
+    "performanceOutfit": "Signature Electronic stage ensemble with LED accents"
+  },
+  "images": {
+    "heroImage": "/demo/performers/dj-table.png",
+    "portraitImage": "/demo/performers/dj-table.png",
+    "transparentPNG": "/demo/performers/dj-table.png",
+    "tourPoster": "/assets/tours/dj-circuitry-poster.png",
+    "albumCover": "/assets/albums/dj-circuitry.png",
+    "arenaBanner": "/assets/backgrounds/dj-circuitry-arena.png",
+    "vipImage": "/demo/performers/dj-table.png",
+    "poses": {
+      "hero": "/demo/performers/dj-table.png",
+      "portrait": "/demo/performers/dj-table.png",
+      "transparent": "/demo/performers/dj-table.png",
+      "performance": "/demo/performers/dj-arms-up.png",
+      "walk": "/demo/performers/dj-table.png",
+      "crowd": "/demo/performers/dj-table.png",
+      "closeUp": "/demo/performers/dj-table.png",
+      "profile": "/demo/performers/dj-table.png",
+      "back": "/demo/performers/dj-table.png",
+      "instrument": "/demo/performers/dj-table.png",
+      "mic": "/demo/performers/dj-table.png",
+      "promo": "/demo/performers/dj-table.png",
+      "vip": "/demo/performers/dj-table.png",
+      "arenaBanner": "/demo/performers/dj-table.png"
+    }
+  },
+  "merchCollection": [
+    {
+      "id": "dj-circuitry-tee",
+      "name": "Circuit Live Tour Tee",
+      "price": 35,
+      "imagePath": "/assets/merch/dj-circuitry/dj-circuitry-tee.png"
+    },
+    {
+      "id": "dj-circuitry-hoodie",
+      "name": "DJ Circuitry Glow Hoodie",
+      "price": 65,
+      "imagePath": "/assets/merch/dj-circuitry/dj-circuitry-hoodie.png"
+    },
+    {
+      "id": "dj-circuitry-vinyl",
+      "name": "Wire Frame Vinyl",
+      "price": 45,
+      "imagePath": "/assets/merch/dj-circuitry/dj-circuitry-vinyl.png"
+    }
+  ],
+  "followers": 430000,
+  "monthlyListeners": 980000,
+  "fanRating": 4.7,
+  "averageAttendance": 7000,
+  "ticketPrice": 45,
+  "vipPrice": 125,
+  "merchRevenue": 250800,
+  "tourRevenue": 427500,
+  "careerRevenue": 1710000,
+  "verified": true,
+  "featured": false,
+  "socialLinks": {
+    "livecircuit": "/dj-circuitry",
+    "website": "https://livecircuit.demo/dj-circuitry",
+    "instagram": "@djcircuitry"
+  },
+  "currentTour": {
+    "name": "Circuit Live",
+    "posterPath": "/assets/tours/dj-circuitry-poster.png",
+    "upcomingShows": [
+      {
+        "city": "Boston",
+        "venue": "Boston Harbor Arena",
+        "date": "Sep 12",
+        "ticketPrice": 45,
+        "vipPrice": 125
+      },
+      {
+        "city": "Chicago",
+        "venue": "Windy City Stadium",
+        "date": "Sep 19",
+        "ticketPrice": 55,
+        "vipPrice": 151
+      },
+      {
+        "city": "Dallas",
+        "venue": "Lone Star Arena",
+        "date": "Sep 26",
+        "ticketPrice": 45,
+        "vipPrice": 125
+      },
+      {
+        "city": "Miami",
+        "venue": "Miami Pulse Arena",
+        "date": "Oct 3",
+        "ticketPrice": 50,
+        "vipPrice": 125
+      }
+    ]
+  },
+  "favoriteVenue": "Boston Harbor Arena",
+  "performance": {
+    "signatureMove": "Techno tunnel master",
+    "signatureLighting": "purple-magenta-cyan",
+    "signatureAnimation": "crowd-wave pulse",
+    "preferredArenaTheme": "premium-festival",
+    "preferredPyro": false,
+    "preferredConfetti": false,
+    "preferredLighting": [
+      "purple",
+      "cyan",
+      "magenta"
+    ],
+    "preferredCameraAngles": [
+      "vip",
+      "stage-left",
+      "default"
+    ],
+    "musicStyle": "Electronic",
+    "performanceStyle": "Industrial techno"
+  },
+  "personality": "Techno tunnel master",
+  "fanDemographics": "22–40, techno",
+  "targetAudience": "22–40, techno",
+  "catchPhrase": "Techno tunnel master",
+  "actType": "solo",
+  "liveStatus": "ON TOUR",
+  "poseCategory": "dj",
+  "liveAudience": 7000,
+  "revenueTonight": 9500,
+  "growthPct": 13,
+  "showsScheduled": 8,
+  "albumTitle": "Wire Frame",
+  "singleTitle": "Node",
+  "avatarInitials": "DC"
+}

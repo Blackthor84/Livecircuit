@@ -3,6 +3,7 @@
 import { motion, AnimatePresence } from "framer-motion";
 import type { LightingPreset } from "@/lib/demo/cinematic/constants";
 import type { ArenaEffects } from "@/lib/demo/cinematic/arena-types";
+import { StagePerformer } from "@/components/demo/cinematic/shared/stage-performer";
 import { cn } from "@/lib/utils";
 
 export type { ArenaEffects } from "@/lib/demo/cinematic/arena-types";
@@ -46,30 +47,11 @@ function CrowdSection({ rows, intensity, dim }: { rows: number; intensity: numbe
   );
 }
 
-function ArtistSilhouette({ pulsing, visible }: { pulsing?: boolean; visible?: boolean }) {
-  return (
-    <motion.div
-      animate={pulsing ? { scale: [1, 1.02, 1] } : {}}
-      transition={{ duration: 2, repeat: Infinity }}
-      className="relative mx-auto h-32 w-16 sm:h-40 sm:w-20"
-      style={{ opacity: visible ? 1 : 0.3 }}
-    >
-      <svg viewBox="0 0 80 160" className="h-full w-full drop-shadow-[0_0_30px_rgba(168,85,247,0.5)]">
-        <ellipse cx="40" cy="18" rx="14" ry="16" fill="black" />
-        <path d="M20 45 Q40 35 60 45 L55 130 Q40 140 25 130 Z" fill="black" />
-        <path d="M15 50 L5 90 L18 92 L22 55 Z" fill="black" />
-        <path d="M65 50 L75 90 L62 92 L58 55 Z" fill="black" />
-        <rect x="30" y="130" width="8" height="30" rx="2" fill="black" />
-        <rect x="42" y="130" width="8" height="30" rx="2" fill="black" />
-      </svg>
-      {visible && (
-        <motion.div className="absolute -inset-4 rounded-full bg-primary/20 blur-2xl" animate={{ opacity: [0.3, 0.7, 0.3], scale: [0.9, 1.1, 0.9] }} transition={{ duration: 2, repeat: Infinity }} />
-      )}
-    </motion.div>
-  );
+function StagePerformerSlot({ pulsing, visible, artistId }: { pulsing?: boolean; visible?: boolean; artistId: string }) {
+  return <StagePerformer artistId={artistId} pulsing={pulsing} visible={visible} animatePoses />;
 }
 
-export function VirtualArena({ effects, showArtist = true, className }: { effects: ArenaEffects; showArtist?: boolean; className?: string }) {
+export function VirtualArena({ effects, showArtist = true, performerArtistId, className }: { effects: ArenaEffects; showArtist?: boolean; performerArtistId: string; className?: string }) {
   const { camera, lighting, fog, confetti, pyro, glowSticks, clapping, cheering, curtainsOpen, lightsOn, crowdEnergy, venueName, hearts, emojis } = effects;
   const crowdRows = clapping || cheering ? 88 : 64;
 
@@ -137,7 +119,7 @@ export function VirtualArena({ effects, showArtist = true, className }: { effect
 
         {showArtist && curtainsOpen && (
           <div className="absolute inset-x-0 bottom-[30%] flex justify-center">
-            <ArtistSilhouette pulsing={lightsOn} visible={lightsOn} />
+            <StagePerformerSlot pulsing={lightsOn} visible={lightsOn} artistId={performerArtistId} />
           </div>
         )}
 

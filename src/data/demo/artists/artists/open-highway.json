@@ -1,0 +1,173 @@
+{
+  "isDemoArtist": true,
+  "visibility": "demo-only",
+  "environment": "demo",
+  "id": "open-highway",
+  "stageName": "Open Highway",
+  "realName": "Open Highway (collective)",
+  "genre": "Americana",
+  "subGenre": "Americana",
+  "hometown": "Kansas City, MO",
+  "country": "United States",
+  "yearsActive": 3,
+  "label": "LiveCircuit Originals",
+  "management": "Marcus Lee",
+  "bio": "Open Highway is a americana act from Kansas City, MO. Heartland highway anthems. Known for road-worn americana, they've built a devoted global fanbase on LiveCircuit with 290,000 followers.",
+  "brand": {
+    "primaryColor": "#f59e0b",
+    "secondaryColor": "#d97706",
+    "accentColor": "#fbbf24",
+    "gradientClass": "from-amber-500 to-orange-600",
+    "typography": "Space Grotesk",
+    "logoPath": "/assets/logos/open-highway.png",
+    "brandIconPath": "/assets/logos/open-highway-icon.png",
+    "brandDescription": "Road-worn americana",
+    "brandVoice": "Confident, arena-ready, fan-first"
+  },
+  "appearance": {
+    "skinTone": "espresso",
+    "hairTexture": "layered waves",
+    "hairColor": "jet black",
+    "eyeColor": "amber brown",
+    "faceDescription": "Distinctive americana performer with amber brown eyes and layered waves jet black hair",
+    "bodyType": "curvy strong",
+    "height": "6'4\"",
+    "fashionStyle": "Road-worn americana",
+    "accessories": [
+      "signature hat"
+    ],
+    "stageOutfit": "Road-worn americana — premium tour edition",
+    "streetOutfit": "Casual road-worn americana off-stage look",
+    "performanceOutfit": "Signature Americana stage ensemble with LED accents"
+  },
+  "images": {
+    "heroImage": "/demo/performers/country-mic.png",
+    "portraitImage": "/demo/performers/country-mic.png",
+    "transparentPNG": "/demo/performers/country-mic.png",
+    "tourPoster": "/assets/tours/open-highway-poster.png",
+    "albumCover": "/assets/albums/open-highway.png",
+    "arenaBanner": "/assets/backgrounds/open-highway-arena.png",
+    "vipImage": "/demo/performers/country-mic.png",
+    "poses": {
+      "hero": "/demo/performers/country-mic.png",
+      "portrait": "/demo/performers/country-mic.png",
+      "transparent": "/demo/performers/country-mic.png",
+      "performance": "/demo/performers/country-guitar.png",
+      "walk": "/demo/performers/country-mic.png",
+      "crowd": "/demo/performers/country-mic.png",
+      "closeUp": "/demo/performers/country-mic.png",
+      "profile": "/demo/performers/country-mic.png",
+      "back": "/demo/performers/country-mic.png",
+      "instrument": "/demo/performers/country-guitar.png",
+      "mic": "/demo/performers/country-mic.png",
+      "promo": "/demo/performers/country-mic.png",
+      "vip": "/demo/performers/country-mic.png",
+      "arenaBanner": "/demo/performers/country-mic.png"
+    }
+  },
+  "merchCollection": [
+    {
+      "id": "open-highway-tee",
+      "name": "Highway Live Tour Tee",
+      "price": 35,
+      "imagePath": "/assets/merch/open-highway/open-highway-tee.png"
+    },
+    {
+      "id": "open-highway-hoodie",
+      "name": "Open Highway Glow Hoodie",
+      "price": 65,
+      "imagePath": "/assets/merch/open-highway/open-highway-hoodie.png"
+    },
+    {
+      "id": "open-highway-vinyl",
+      "name": "Mile Markers Vinyl",
+      "price": 45,
+      "imagePath": "/assets/merch/open-highway/open-highway-vinyl.png"
+    }
+  ],
+  "followers": 290000,
+  "monthlyListeners": 640000,
+  "fanRating": 4.7,
+  "averageAttendance": 12500,
+  "ticketPrice": 45,
+  "vipPrice": 125,
+  "merchRevenue": 554400,
+  "tourRevenue": 945000,
+  "careerRevenue": 3780000,
+  "verified": true,
+  "featured": false,
+  "socialLinks": {
+    "livecircuit": "/open-highway",
+    "website": "https://livecircuit.demo/open-highway",
+    "instagram": "@openhighway"
+  },
+  "currentTour": {
+    "name": "Highway Live",
+    "posterPath": "/assets/tours/open-highway-poster.png",
+    "upcomingShows": [
+      {
+        "city": "Boston",
+        "venue": "Boston Harbor Arena",
+        "date": "Sep 12",
+        "ticketPrice": 45,
+        "vipPrice": 125
+      },
+      {
+        "city": "Chicago",
+        "venue": "Windy City Stadium",
+        "date": "Sep 19",
+        "ticketPrice": 55,
+        "vipPrice": 151
+      },
+      {
+        "city": "Dallas",
+        "venue": "Lone Star Arena",
+        "date": "Sep 26",
+        "ticketPrice": 45,
+        "vipPrice": 125
+      },
+      {
+        "city": "Miami",
+        "venue": "Miami Pulse Arena",
+        "date": "Oct 3",
+        "ticketPrice": 50,
+        "vipPrice": 125
+      }
+    ]
+  },
+  "favoriteVenue": "Boston Harbor Arena",
+  "performance": {
+    "signatureMove": "Heartland highway anthems",
+    "signatureLighting": "purple-magenta-cyan",
+    "signatureAnimation": "crowd-wave pulse",
+    "preferredArenaTheme": "premium-festival",
+    "preferredPyro": false,
+    "preferredConfetti": false,
+    "preferredLighting": [
+      "purple",
+      "cyan",
+      "magenta"
+    ],
+    "preferredCameraAngles": [
+      "vip",
+      "stage-left",
+      "default"
+    ],
+    "musicStyle": "Americana",
+    "performanceStyle": "Road-worn americana"
+  },
+  "personality": "Heartland highway anthems",
+  "fanDemographics": "25–46, heartland",
+  "targetAudience": "25–46, heartland",
+  "catchPhrase": "Heartland highway anthems",
+  "actType": "band",
+  "liveStatus": "LIVE",
+  "poseCategory": "country",
+  "liveAudience": 12500,
+  "revenueTonight": 21000,
+  "growthPct": 13,
+  "showsScheduled": 8,
+  "albumTitle": "Mile Markers",
+  "singleTitle": "Drive",
+  "avatarInitials": "OH"
+}

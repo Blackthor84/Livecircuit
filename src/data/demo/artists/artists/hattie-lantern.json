@@ -1,0 +1,173 @@
+{
+  "isDemoArtist": true,
+  "visibility": "demo-only",
+  "environment": "demo",
+  "id": "hattie-lantern",
+  "stageName": "Hattie Lantern",
+  "realName": "Hattie Lantern",
+  "genre": "Country",
+  "subGenre": "Country",
+  "hometown": "Asheville, NC",
+  "country": "United States",
+  "yearsActive": 5,
+  "label": "LiveCircuit Originals",
+  "management": "Sarah Chen",
+  "bio": "Hattie Lantern is a country act from Asheville, NC. Appalachian country glow. Known for lantern-lit folk country, they've built a devoted global fanbase on LiveCircuit with 230,000 followers.",
+  "brand": {
+    "primaryColor": "#f59e0b",
+    "secondaryColor": "#d97706",
+    "accentColor": "#fbbf24",
+    "gradientClass": "from-amber-500 to-orange-600",
+    "typography": "Space Grotesk",
+    "logoPath": "/assets/logos/hattie-lantern.png",
+    "brandIconPath": "/assets/logos/hattie-lantern-icon.png",
+    "brandDescription": "Lantern-lit folk country",
+    "brandVoice": "Confident, arena-ready, fan-first"
+  },
+  "appearance": {
+    "skinTone": "deep mahogany",
+    "hairTexture": "dreadlocks",
+    "hairColor": "natural black",
+    "eyeColor": "grey",
+    "faceDescription": "Distinctive country performer with grey eyes and dreadlocks natural black hair",
+    "bodyType": "willowy",
+    "height": "5'8\"",
+    "fashionStyle": "Lantern-lit folk country",
+    "accessories": [
+      "chain necklace"
+    ],
+    "stageOutfit": "Lantern-lit folk country — premium tour edition",
+    "streetOutfit": "Casual lantern-lit folk country off-stage look",
+    "performanceOutfit": "Signature Country stage ensemble with LED accents"
+  },
+  "images": {
+    "heroImage": "/demo/performers/country-mic.png",
+    "portraitImage": "/demo/performers/country-mic.png",
+    "transparentPNG": "/demo/performers/country-mic.png",
+    "tourPoster": "/assets/tours/hattie-lantern-poster.png",
+    "albumCover": "/assets/albums/hattie-lantern.png",
+    "arenaBanner": "/assets/backgrounds/hattie-lantern-arena.png",
+    "vipImage": "/demo/performers/country-mic.png",
+    "poses": {
+      "hero": "/demo/performers/country-mic.png",
+      "portrait": "/demo/performers/country-mic.png",
+      "transparent": "/demo/performers/country-mic.png",
+      "performance": "/demo/performers/country-guitar.png",
+      "walk": "/demo/performers/country-mic.png",
+      "crowd": "/demo/performers/country-mic.png",
+      "closeUp": "/demo/performers/country-mic.png",
+      "profile": "/demo/performers/country-mic.png",
+      "back": "/demo/performers/country-mic.png",
+      "instrument": "/demo/performers/country-guitar.png",
+      "mic": "/demo/performers/country-mic.png",
+      "promo": "/demo/performers/country-mic.png",
+      "vip": "/demo/performers/country-mic.png",
+      "arenaBanner": "/demo/performers/country-mic.png"
+    }
+  },
+  "merchCollection": [
+    {
+      "id": "hattie-lantern-tee",
+      "name": "Lantern Trail Tour Tee",
+      "price": 35,
+      "imagePath": "/assets/merch/hattie-lantern/hattie-lantern-tee.png"
+    },
+    {
+      "id": "hattie-lantern-hoodie",
+      "name": "Hattie Lantern Glow Hoodie",
+      "price": 65,
+      "imagePath": "/assets/merch/hattie-lantern/hattie-lantern-hoodie.png"
+    },
+    {
+      "id": "hattie-lantern-vinyl",
+      "name": "Mountain Light Vinyl",
+      "price": 45,
+      "imagePath": "/assets/merch/hattie-lantern/hattie-lantern-vinyl.png"
+    }
+  ],
+  "followers": 230000,
+  "monthlyListeners": 520000,
+  "fanRating": 4.8,
+  "averageAttendance": 7400,
+  "ticketPrice": 45,
+  "vipPrice": 125,
+  "merchRevenue": 269280,
+  "tourRevenue": 459000,
+  "careerRevenue": 1836000,
+  "verified": true,
+  "featured": false,
+  "socialLinks": {
+    "livecircuit": "/hattie-lantern",
+    "website": "https://livecircuit.demo/hattie-lantern",
+    "instagram": "@hattielantern"
+  },
+  "currentTour": {
+    "name": "Lantern Trail",
+    "posterPath": "/assets/tours/hattie-lantern-poster.png",
+    "upcomingShows": [
+      {
+        "city": "Boston",
+        "venue": "Boston Harbor Arena",
+        "date": "Sep 12",
+        "ticketPrice": 45,
+        "vipPrice": 125
+      },
+      {
+        "city": "Chicago",
+        "venue": "Windy City Stadium",
+        "date": "Sep 19",
+        "ticketPrice": 55,
+        "vipPrice": 151
+      },
+      {
+        "city": "Dallas",
+        "venue": "Lone Star Arena",
+        "date": "Sep 26",
+        "ticketPrice": 45,
+        "vipPrice": 125
+      },
+      {
+        "city": "Miami",
+        "venue": "Miami Pulse Arena",
+        "date": "Oct 3",
+        "ticketPrice": 50,
+        "vipPrice": 125
+      }
+    ]
+  },
+  "favoriteVenue": "Boston Harbor Arena",
+  "performance": {
+    "signatureMove": "Appalachian country glow",
+    "signatureLighting": "purple-magenta-cyan",
+    "signatureAnimation": "crowd-wave pulse",
+    "preferredArenaTheme": "premium-festival",
+    "preferredPyro": false,
+    "preferredConfetti": false,
+    "preferredLighting": [
+      "purple",
+      "cyan",
+      "magenta"
+    ],
+    "preferredCameraAngles": [
+      "vip",
+      "stage-left",
+      "default"
+    ],
+    "musicStyle": "Country",
+    "performanceStyle": "Lantern-lit folk country"
+  },
+  "personality": "Appalachian country glow",
+  "fanDemographics": "24–46, folk country",
+  "targetAudience": "24–46, folk country",
+  "catchPhrase": "Appalachian country glow",
+  "actType": "solo",
+  "liveStatus": "ON TOUR",
+  "poseCategory": "country",
+  "liveAudience": 7400,
+  "revenueTonight": 10200,
+  "growthPct": 14,
+  "showsScheduled": 9,
+  "albumTitle": "Mountain Light",
+  "singleTitle": "Glow",
+  "avatarInitials": "HL"
+}

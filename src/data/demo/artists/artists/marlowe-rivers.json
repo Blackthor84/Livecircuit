@@ -1,0 +1,173 @@
+{
+  "isDemoArtist": true,
+  "visibility": "demo-only",
+  "environment": "demo",
+  "id": "marlowe-rivers",
+  "stageName": "Marlowe Rivers",
+  "realName": "Marlowe Rivers",
+  "genre": "Country",
+  "subGenre": "Country",
+  "hometown": "Memphis, TN",
+  "country": "United States",
+  "yearsActive": 5,
+  "label": "LiveCircuit Originals",
+  "management": "Sarah Chen",
+  "bio": "Marlowe Rivers is a country act from Memphis, TN. River-country soul blend. Known for southern river aesthetic, they've built a devoted global fanbase on LiveCircuit with 340,000 followers.",
+  "brand": {
+    "primaryColor": "#f43f5e",
+    "secondaryColor": "#e11d48",
+    "accentColor": "#fb7185",
+    "gradientClass": "from-rose-500 to-pink-600",
+    "typography": "Space Grotesk",
+    "logoPath": "/assets/logos/marlowe-rivers.png",
+    "brandIconPath": "/assets/logos/marlowe-rivers-icon.png",
+    "brandDescription": "Southern river aesthetic",
+    "brandVoice": "Confident, arena-ready, fan-first"
+  },
+  "appearance": {
+    "skinTone": "medium wheat",
+    "hairTexture": "box braids",
+    "hairColor": "golden highlights",
+    "eyeColor": "blue",
+    "faceDescription": "Distinctive country performer with blue eyes and box braids golden highlights hair",
+    "bodyType": "dancer-fit",
+    "height": "5'2\"",
+    "fashionStyle": "Southern river aesthetic",
+    "accessories": [
+      "stud earrings"
+    ],
+    "stageOutfit": "Southern river aesthetic — premium tour edition",
+    "streetOutfit": "Casual southern river aesthetic off-stage look",
+    "performanceOutfit": "Signature Country stage ensemble with LED accents"
+  },
+  "images": {
+    "heroImage": "/demo/performers/country-mic.png",
+    "portraitImage": "/demo/performers/country-mic.png",
+    "transparentPNG": "/demo/performers/country-mic.png",
+    "tourPoster": "/assets/tours/marlowe-rivers-poster.png",
+    "albumCover": "/assets/albums/marlowe-rivers.png",
+    "arenaBanner": "/assets/backgrounds/marlowe-rivers-arena.png",
+    "vipImage": "/demo/performers/country-mic.png",
+    "poses": {
+      "hero": "/demo/performers/country-mic.png",
+      "portrait": "/demo/performers/country-mic.png",
+      "transparent": "/demo/performers/country-mic.png",
+      "performance": "/demo/performers/country-guitar.png",
+      "walk": "/demo/performers/country-mic.png",
+      "crowd": "/demo/performers/country-mic.png",
+      "closeUp": "/demo/performers/country-mic.png",
+      "profile": "/demo/performers/country-mic.png",
+      "back": "/demo/performers/country-mic.png",
+      "instrument": "/demo/performers/country-guitar.png",
+      "mic": "/demo/performers/country-mic.png",
+      "promo": "/demo/performers/country-mic.png",
+      "vip": "/demo/performers/country-mic.png",
+      "arenaBanner": "/demo/performers/country-mic.png"
+    }
+  },
+  "merchCollection": [
+    {
+      "id": "marlowe-rivers-tee",
+      "name": "Rivers Run Tour Tee",
+      "price": 35,
+      "imagePath": "/assets/merch/marlowe-rivers/marlowe-rivers-tee.png"
+    },
+    {
+      "id": "marlowe-rivers-hoodie",
+      "name": "Marlowe Rivers Glow Hoodie",
+      "price": 65,
+      "imagePath": "/assets/merch/marlowe-rivers/marlowe-rivers-hoodie.png"
+    },
+    {
+      "id": "marlowe-rivers-vinyl",
+      "name": "Current Vinyl",
+      "price": 45,
+      "imagePath": "/assets/merch/marlowe-rivers/marlowe-rivers-vinyl.png"
+    }
+  ],
+  "followers": 340000,
+  "monthlyListeners": 760000,
+  "fanRating": 4.3,
+  "averageAttendance": 8600,
+  "ticketPrice": 45,
+  "vipPrice": 125,
+  "merchRevenue": 324720,
+  "tourRevenue": 553500,
+  "careerRevenue": 2214000,
+  "verified": true,
+  "featured": false,
+  "socialLinks": {
+    "livecircuit": "/marlowe-rivers",
+    "website": "https://livecircuit.demo/marlowe-rivers",
+    "instagram": "@marlowerivers"
+  },
+  "currentTour": {
+    "name": "Rivers Run",
+    "posterPath": "/assets/tours/marlowe-rivers-poster.png",
+    "upcomingShows": [
+      {
+        "city": "Boston",
+        "venue": "Boston Harbor Arena",
+        "date": "Sep 12",
+        "ticketPrice": 45,
+        "vipPrice": 125
+      },
+      {
+        "city": "Chicago",
+        "venue": "Windy City Stadium",
+        "date": "Sep 19",
+        "ticketPrice": 55,
+        "vipPrice": 151
+      },
+      {
+        "city": "Dallas",
+        "venue": "Lone Star Arena",
+        "date": "Sep 26",
+        "ticketPrice": 45,
+        "vipPrice": 125
+      },
+      {
+        "city": "Miami",
+        "venue": "Miami Pulse Arena",
+        "date": "Oct 3",
+        "ticketPrice": 50,
+        "vipPrice": 125
+      }
+    ]
+  },
+  "favoriteVenue": "Boston Harbor Arena",
+  "performance": {
+    "signatureMove": "River-country soul blend",
+    "signatureLighting": "purple-magenta-cyan",
+    "signatureAnimation": "crowd-wave pulse",
+    "preferredArenaTheme": "premium-festival",
+    "preferredPyro": false,
+    "preferredConfetti": false,
+    "preferredLighting": [
+      "purple",
+      "cyan",
+      "magenta"
+    ],
+    "preferredCameraAngles": [
+      "vip",
+      "stage-left",
+      "default"
+    ],
+    "musicStyle": "Country",
+    "performanceStyle": "Southern river aesthetic"
+  },
+  "personality": "River-country soul blend",
+  "fanDemographics": "23–45, country-soul",
+  "targetAudience": "23–45, country-soul",
+  "catchPhrase": "River-country soul blend",
+  "actType": "solo",
+  "liveStatus": "ON TOUR",
+  "poseCategory": "country",
+  "liveAudience": 8600,
+  "revenueTonight": 12300,
+  "growthPct": 17,
+  "showsScheduled": 12,
+  "albumTitle": "Current",
+  "singleTitle": "Flow",
+  "avatarInitials": "MR"
+}

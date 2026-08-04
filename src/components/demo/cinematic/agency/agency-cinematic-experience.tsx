@@ -207,7 +207,7 @@ function AgencyCinematicExperienceInner() {
 
         {view === "arena" && (
           <motion.div key="arena" initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="relative h-full pt-16">
-            <VirtualArena effects={{ ...effects, venueName: selected.show }} className="absolute inset-0 top-14" />
+            <VirtualArena effects={{ ...effects, venueName: selected.show }} performerArtistId={selected.id} className="absolute inset-0 top-14" />
             <button type="button" onClick={() => { sound.playClick(); setView("mission"); }} className="absolute left-4 top-20 z-20 flex items-center gap-2 rounded-full border border-white/10 bg-black/70 px-4 py-2 text-xs font-medium backdrop-blur-xl">
               <ArrowLeft className="size-3.5" /> Mission Control
             </button>

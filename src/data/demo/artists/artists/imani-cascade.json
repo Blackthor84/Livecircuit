@@ -1,0 +1,173 @@
+{
+  "isDemoArtist": true,
+  "visibility": "demo-only",
+  "environment": "demo",
+  "id": "imani-cascade",
+  "stageName": "Imani Cascade",
+  "realName": "Imani Cascade",
+  "genre": "Alternative R&B",
+  "subGenre": "Alternative R&B",
+  "hometown": "Brooklyn, NY",
+  "country": "United States",
+  "yearsActive": 4,
+  "label": "LiveCircuit Originals",
+  "management": "Sarah Chen",
+  "bio": "Imani Cascade is a alternative r&b act from Brooklyn, NY. Harmony-stack virtuoso. Known for studio-to-stage elegance, they've built a devoted global fanbase on LiveCircuit with 580,000 followers.",
+  "brand": {
+    "primaryColor": "#a855f7",
+    "secondaryColor": "#7c3aed",
+    "accentColor": "#c084fc",
+    "gradientClass": "from-violet-500 to-purple-600",
+    "typography": "Space Grotesk",
+    "logoPath": "/assets/logos/imani-cascade.png",
+    "brandIconPath": "/assets/logos/imani-cascade-icon.png",
+    "brandDescription": "Studio-to-stage elegance",
+    "brandVoice": "Confident, arena-ready, fan-first"
+  },
+  "appearance": {
+    "skinTone": "light brown",
+    "hairTexture": "afro natural",
+    "hairColor": "silver grey",
+    "eyeColor": "blue",
+    "faceDescription": "Distinctive alternative r&b performer with blue eyes and afro natural silver grey hair",
+    "bodyType": "dancer-fit",
+    "height": "6'2\"",
+    "fashionStyle": "Studio-to-stage elegance",
+    "accessories": [
+      "stud earrings"
+    ],
+    "stageOutfit": "Studio-to-stage elegance — premium tour edition",
+    "streetOutfit": "Casual studio-to-stage elegance off-stage look",
+    "performanceOutfit": "Signature Alternative R&B stage ensemble with LED accents"
+  },
+  "images": {
+    "heroImage": "/demo/performers/rnb-mic.png",
+    "portraitImage": "/demo/performers/rnb-mic.png",
+    "transparentPNG": "/demo/performers/rnb-mic.png",
+    "tourPoster": "/assets/tours/imani-cascade-poster.png",
+    "albumCover": "/assets/albums/imani-cascade.png",
+    "arenaBanner": "/assets/backgrounds/imani-cascade-arena.png",
+    "vipImage": "/demo/performers/rnb-mic.png",
+    "poses": {
+      "hero": "/demo/performers/rnb-mic.png",
+      "portrait": "/demo/performers/rnb-mic.png",
+      "transparent": "/demo/performers/rnb-mic.png",
+      "performance": "/demo/performers/rnb-mic.png",
+      "walk": "/demo/performers/rnb-mic.png",
+      "crowd": "/demo/performers/rnb-mic.png",
+      "closeUp": "/demo/performers/rnb-profile.png",
+      "profile": "/demo/performers/rnb-profile.png",
+      "back": "/demo/performers/rnb-mic.png",
+      "instrument": "/demo/performers/rnb-mic.png",
+      "mic": "/demo/performers/rnb-mic.png",
+      "promo": "/demo/performers/rnb-mic.png",
+      "vip": "/demo/performers/rnb-mic.png",
+      "arenaBanner": "/demo/performers/rnb-mic.png"
+    }
+  },
+  "merchCollection": [
+    {
+      "id": "imani-cascade-tee",
+      "name": "Cascade Sessions Tour Tee",
+      "price": 35,
+      "imagePath": "/assets/merch/imani-cascade/imani-cascade-tee.png"
+    },
+    {
+      "id": "imani-cascade-hoodie",
+      "name": "Imani Cascade Glow Hoodie",
+      "price": 65,
+      "imagePath": "/assets/merch/imani-cascade/imani-cascade-hoodie.png"
+    },
+    {
+      "id": "imani-cascade-vinyl",
+      "name": "Layered Light Vinyl",
+      "price": 45,
+      "imagePath": "/assets/merch/imani-cascade/imani-cascade-vinyl.png"
+    }
+  ],
+  "followers": 580000,
+  "monthlyListeners": 1320000,
+  "fanRating": 4.2,
+  "averageAttendance": 15200,
+  "ticketPrice": 45,
+  "vipPrice": 125,
+  "merchRevenue": 696960,
+  "tourRevenue": 1188000,
+  "careerRevenue": 4752000,
+  "verified": true,
+  "featured": false,
+  "socialLinks": {
+    "livecircuit": "/imani-cascade",
+    "website": "https://livecircuit.demo/imani-cascade",
+    "instagram": "@imanicascade"
+  },
+  "currentTour": {
+    "name": "Cascade Sessions",
+    "posterPath": "/assets/tours/imani-cascade-poster.png",
+    "upcomingShows": [
+      {
+        "city": "Boston",
+        "venue": "Boston Harbor Arena",
+        "date": "Sep 12",
+        "ticketPrice": 45,
+        "vipPrice": 125
+      },
+      {
+        "city": "Chicago",
+        "venue": "Windy City Stadium",
+        "date": "Sep 19",
+        "ticketPrice": 55,
+        "vipPrice": 151
+      },
+      {
+        "city": "Dallas",
+        "venue": "Lone Star Arena",
+        "date": "Sep 26",
+        "ticketPrice": 45,
+        "vipPrice": 125
+      },
+      {
+        "city": "Miami",
+        "venue": "Miami Pulse Arena",
+        "date": "Oct 3",
+        "ticketPrice": 50,
+        "vipPrice": 125
+      }
+    ]
+  },
+  "favoriteVenue": "Boston Harbor Arena",
+  "performance": {
+    "signatureMove": "Harmony-stack virtuoso",
+    "signatureLighting": "purple-magenta-cyan",
+    "signatureAnimation": "crowd-wave pulse",
+    "preferredArenaTheme": "premium-festival",
+    "preferredPyro": false,
+    "preferredConfetti": false,
+    "preferredLighting": [
+      "purple",
+      "cyan",
+      "magenta"
+    ],
+    "preferredCameraAngles": [
+      "vip",
+      "stage-left",
+      "default"
+    ],
+    "musicStyle": "Alternative R&B",
+    "performanceStyle": "Studio-to-stage elegance"
+  },
+  "personality": "Harmony-stack virtuoso",
+  "fanDemographics": "20–35, NYC alt-R&B",
+  "targetAudience": "20–35, NYC alt-R&B",
+  "catchPhrase": "Harmony-stack virtuoso",
+  "actType": "solo",
+  "liveStatus": "LIVE",
+  "poseCategory": "rnb",
+  "liveAudience": 15200,
+  "revenueTonight": 26400,
+  "growthPct": 16,
+  "showsScheduled": 11,
+  "albumTitle": "Layered Light",
+  "singleTitle": "Freefall",
+  "avatarInitials": "IC"
+}

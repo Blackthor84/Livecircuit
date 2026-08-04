@@ -1,0 +1,173 @@
+{
+  "isDemoArtist": true,
+  "visibility": "demo-only",
+  "environment": "demo",
+  "id": "dj-lumenwave",
+  "stageName": "DJ Lumenwave",
+  "realName": "DJ Lumenwave",
+  "genre": "House",
+  "subGenre": "House",
+  "hometown": "Chicago, IL",
+  "country": "United States",
+  "yearsActive": 3,
+  "label": "LiveCircuit Originals",
+  "management": "James Park",
+  "bio": "DJ Lumenwave is a house act from Chicago, IL. Sunrise set legend. Known for house music classic, they've built a devoted global fanbase on LiveCircuit with 740,000 followers.",
+  "brand": {
+    "primaryColor": "#06b6d4",
+    "secondaryColor": "#0891b2",
+    "accentColor": "#22d3ee",
+    "gradientClass": "from-cyan-500 to-blue-600",
+    "typography": "Space Grotesk",
+    "logoPath": "/assets/logos/dj-lumenwave.png",
+    "brandIconPath": "/assets/logos/dj-lumenwave-icon.png",
+    "brandDescription": "House music classic",
+    "brandVoice": "Confident, arena-ready, fan-first"
+  },
+  "appearance": {
+    "skinTone": "light brown",
+    "hairTexture": "afro natural",
+    "hairColor": "silver grey",
+    "eyeColor": "blue",
+    "faceDescription": "Distinctive house performer with blue eyes and afro natural silver grey hair",
+    "bodyType": "dancer-fit",
+    "height": "6'2\"",
+    "fashionStyle": "House music classic",
+    "accessories": [
+      "stud earrings"
+    ],
+    "stageOutfit": "House music classic — premium tour edition",
+    "streetOutfit": "Casual house music classic off-stage look",
+    "performanceOutfit": "Signature House stage ensemble with LED accents"
+  },
+  "images": {
+    "heroImage": "/demo/performers/dj-table.png",
+    "portraitImage": "/demo/performers/dj-table.png",
+    "transparentPNG": "/demo/performers/dj-table.png",
+    "tourPoster": "/assets/tours/dj-lumenwave-poster.png",
+    "albumCover": "/assets/albums/dj-lumenwave.png",
+    "arenaBanner": "/assets/backgrounds/dj-lumenwave-arena.png",
+    "vipImage": "/demo/performers/dj-table.png",
+    "poses": {
+      "hero": "/demo/performers/dj-table.png",
+      "portrait": "/demo/performers/dj-table.png",
+      "transparent": "/demo/performers/dj-table.png",
+      "performance": "/demo/performers/dj-arms-up.png",
+      "walk": "/demo/performers/dj-table.png",
+      "crowd": "/demo/performers/dj-table.png",
+      "closeUp": "/demo/performers/dj-table.png",
+      "profile": "/demo/performers/dj-table.png",
+      "back": "/demo/performers/dj-table.png",
+      "instrument": "/demo/performers/dj-table.png",
+      "mic": "/demo/performers/dj-table.png",
+      "promo": "/demo/performers/dj-table.png",
+      "vip": "/demo/performers/dj-table.png",
+      "arenaBanner": "/demo/performers/dj-table.png"
+    }
+  },
+  "merchCollection": [
+    {
+      "id": "dj-lumenwave-tee",
+      "name": "Lumen Sessions Tour Tee",
+      "price": 35,
+      "imagePath": "/assets/merch/dj-lumenwave/dj-lumenwave-tee.png"
+    },
+    {
+      "id": "dj-lumenwave-hoodie",
+      "name": "DJ Lumenwave Glow Hoodie",
+      "price": 65,
+      "imagePath": "/assets/merch/dj-lumenwave/dj-lumenwave-hoodie.png"
+    },
+    {
+      "id": "dj-lumenwave-vinyl",
+      "name": "Wave Form Vinyl",
+      "price": 45,
+      "imagePath": "/assets/merch/dj-lumenwave/dj-lumenwave-vinyl.png"
+    }
+  ],
+  "followers": 740000,
+  "monthlyListeners": 1680000,
+  "fanRating": 4.5,
+  "averageAttendance": 6200,
+  "ticketPrice": 45,
+  "vipPrice": 125,
+  "merchRevenue": 213840,
+  "tourRevenue": 364500,
+  "careerRevenue": 1458000,
+  "verified": true,
+  "featured": false,
+  "socialLinks": {
+    "livecircuit": "/dj-lumenwave",
+    "website": "https://livecircuit.demo/dj-lumenwave",
+    "instagram": "@djlumenwave"
+  },
+  "currentTour": {
+    "name": "Lumen Sessions",
+    "posterPath": "/assets/tours/dj-lumenwave-poster.png",
+    "upcomingShows": [
+      {
+        "city": "Boston",
+        "venue": "Boston Harbor Arena",
+        "date": "Sep 12",
+        "ticketPrice": 45,
+        "vipPrice": 125
+      },
+      {
+        "city": "Chicago",
+        "venue": "Windy City Stadium",
+        "date": "Sep 19",
+        "ticketPrice": 55,
+        "vipPrice": 151
+      },
+      {
+        "city": "Dallas",
+        "venue": "Lone Star Arena",
+        "date": "Sep 26",
+        "ticketPrice": 45,
+        "vipPrice": 125
+      },
+      {
+        "city": "Miami",
+        "venue": "Miami Pulse Arena",
+        "date": "Oct 3",
+        "ticketPrice": 50,
+        "vipPrice": 125
+      }
+    ]
+  },
+  "favoriteVenue": "Boston Harbor Arena",
+  "performance": {
+    "signatureMove": "Sunrise set legend",
+    "signatureLighting": "purple-magenta-cyan",
+    "signatureAnimation": "crowd-wave pulse",
+    "preferredArenaTheme": "premium-festival",
+    "preferredPyro": false,
+    "preferredConfetti": false,
+    "preferredLighting": [
+      "purple",
+      "cyan",
+      "magenta"
+    ],
+    "preferredCameraAngles": [
+      "vip",
+      "stage-left",
+      "default"
+    ],
+    "musicStyle": "House",
+    "performanceStyle": "House music classic"
+  },
+  "personality": "Sunrise set legend",
+  "fanDemographics": "21–38, house",
+  "targetAudience": "21–38, house",
+  "catchPhrase": "Sunrise set legend",
+  "actType": "solo",
+  "liveStatus": "ON TOUR",
+  "poseCategory": "dj",
+  "liveAudience": 6200,
+  "revenueTonight": 8100,
+  "growthPct": 11,
+  "showsScheduled": 6,
+  "albumTitle": "Wave Form",
+  "singleTitle": "Glow",
+  "avatarInitials": "DL"
+}

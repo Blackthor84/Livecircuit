@@ -1,0 +1,173 @@
+{
+  "isDemoArtist": true,
+  "visibility": "demo-only",
+  "environment": "demo",
+  "id": "golden-standard",
+  "stageName": "Golden Standard",
+  "realName": "Golden Standard (collective)",
+  "genre": "Neo Soul",
+  "subGenre": "Neo Soul",
+  "hometown": "Nashville, TN",
+  "country": "United States",
+  "yearsActive": 6,
+  "label": "LiveCircuit Originals",
+  "management": "Marcus Lee",
+  "bio": "Golden Standard is a neo soul act from Nashville, TN. Neo-soul with country warmth. Known for southern soul formal, they've built a devoted global fanbase on LiveCircuit with 250,000 followers.",
+  "brand": {
+    "primaryColor": "#f59e0b",
+    "secondaryColor": "#d97706",
+    "accentColor": "#fbbf24",
+    "gradientClass": "from-amber-500 to-orange-600",
+    "typography": "Space Grotesk",
+    "logoPath": "/assets/logos/golden-standard.png",
+    "brandIconPath": "/assets/logos/golden-standard-icon.png",
+    "brandDescription": "Southern soul formal",
+    "brandVoice": "Confident, arena-ready, fan-first"
+  },
+  "appearance": {
+    "skinTone": "espresso",
+    "hairTexture": "layered waves",
+    "hairColor": "jet black",
+    "eyeColor": "light brown",
+    "faceDescription": "Distinctive neo soul performer with light brown eyes and layered waves jet black hair",
+    "bodyType": "stocky powerful",
+    "height": "5'10\"",
+    "fashionStyle": "Southern soul formal",
+    "accessories": [
+      "signature hat"
+    ],
+    "stageOutfit": "Southern soul formal — premium tour edition",
+    "streetOutfit": "Casual southern soul formal off-stage look",
+    "performanceOutfit": "Signature Neo Soul stage ensemble with LED accents"
+  },
+  "images": {
+    "heroImage": "/demo/performers/rnb-mic.png",
+    "portraitImage": "/demo/performers/rnb-mic.png",
+    "transparentPNG": "/demo/performers/rnb-mic.png",
+    "tourPoster": "/assets/tours/golden-standard-poster.png",
+    "albumCover": "/assets/albums/golden-standard.png",
+    "arenaBanner": "/assets/backgrounds/golden-standard-arena.png",
+    "vipImage": "/demo/performers/rnb-mic.png",
+    "poses": {
+      "hero": "/demo/performers/rnb-mic.png",
+      "portrait": "/demo/performers/rnb-mic.png",
+      "transparent": "/demo/performers/rnb-mic.png",
+      "performance": "/demo/performers/rnb-mic.png",
+      "walk": "/demo/performers/rnb-mic.png",
+      "crowd": "/demo/performers/rnb-mic.png",
+      "closeUp": "/demo/performers/rnb-profile.png",
+      "profile": "/demo/performers/rnb-profile.png",
+      "back": "/demo/performers/rnb-mic.png",
+      "instrument": "/demo/performers/rnb-mic.png",
+      "mic": "/demo/performers/rnb-mic.png",
+      "promo": "/demo/performers/rnb-mic.png",
+      "vip": "/demo/performers/rnb-mic.png",
+      "arenaBanner": "/demo/performers/rnb-mic.png"
+    }
+  },
+  "merchCollection": [
+    {
+      "id": "golden-standard-tee",
+      "name": "Standard Live Tour Tee",
+      "price": 35,
+      "imagePath": "/assets/merch/golden-standard/golden-standard-tee.png"
+    },
+    {
+      "id": "golden-standard-hoodie",
+      "name": "Golden Standard Glow Hoodie",
+      "price": 65,
+      "imagePath": "/assets/merch/golden-standard/golden-standard-hoodie.png"
+    },
+    {
+      "id": "golden-standard-vinyl",
+      "name": "Gold Leaf Vinyl",
+      "price": 45,
+      "imagePath": "/assets/merch/golden-standard/golden-standard-vinyl.png"
+    }
+  ],
+  "followers": 250000,
+  "monthlyListeners": 560000,
+  "fanRating": 4.9,
+  "averageAttendance": 20000,
+  "ticketPrice": 45,
+  "vipPrice": 125,
+  "merchRevenue": 108240,
+  "tourRevenue": 184500,
+  "careerRevenue": 738000,
+  "verified": true,
+  "featured": false,
+  "socialLinks": {
+    "livecircuit": "/golden-standard",
+    "website": "https://livecircuit.demo/golden-standard",
+    "instagram": "@goldenstandard"
+  },
+  "currentTour": {
+    "name": "Standard Live",
+    "posterPath": "/assets/tours/golden-standard-poster.png",
+    "upcomingShows": [
+      {
+        "city": "Boston",
+        "venue": "Boston Harbor Arena",
+        "date": "Sep 12",
+        "ticketPrice": 45,
+        "vipPrice": 125
+      },
+      {
+        "city": "Chicago",
+        "venue": "Windy City Stadium",
+        "date": "Sep 19",
+        "ticketPrice": 55,
+        "vipPrice": 151
+      },
+      {
+        "city": "Dallas",
+        "venue": "Lone Star Arena",
+        "date": "Sep 26",
+        "ticketPrice": 45,
+        "vipPrice": 125
+      },
+      {
+        "city": "Miami",
+        "venue": "Miami Pulse Arena",
+        "date": "Oct 3",
+        "ticketPrice": 50,
+        "vipPrice": 125
+      }
+    ]
+  },
+  "favoriteVenue": "Boston Harbor Arena",
+  "performance": {
+    "signatureMove": "Neo-soul with country warmth",
+    "signatureLighting": "purple-magenta-cyan",
+    "signatureAnimation": "crowd-wave pulse",
+    "preferredArenaTheme": "premium-festival",
+    "preferredPyro": false,
+    "preferredConfetti": false,
+    "preferredLighting": [
+      "purple",
+      "cyan",
+      "magenta"
+    ],
+    "preferredCameraAngles": [
+      "vip",
+      "stage-left",
+      "default"
+    ],
+    "musicStyle": "Neo Soul",
+    "performanceStyle": "Southern soul formal"
+  },
+  "personality": "Neo-soul with country warmth",
+  "fanDemographics": "24–44, neo-soul/country",
+  "targetAudience": "24–44, neo-soul/country",
+  "catchPhrase": "Neo-soul with country warmth",
+  "actType": "band",
+  "liveStatus": "IDLE",
+  "poseCategory": "rnb",
+  "liveAudience": 0,
+  "revenueTonight": 4100,
+  "growthPct": 15,
+  "showsScheduled": 10,
+  "albumTitle": "Gold Leaf",
+  "singleTitle": "Measure",
+  "avatarInitials": "GS"
+}

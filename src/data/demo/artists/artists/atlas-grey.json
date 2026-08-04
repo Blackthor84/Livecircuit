@@ -1,0 +1,173 @@
+{
+  "isDemoArtist": true,
+  "visibility": "demo-only",
+  "environment": "demo",
+  "id": "atlas-grey",
+  "stageName": "Atlas Grey",
+  "realName": "Atlas Grey",
+  "genre": "Indie Pop",
+  "subGenre": "Indie Pop",
+  "hometown": "Manchester, UK",
+  "country": "United Kingdom",
+  "yearsActive": 13,
+  "label": "LiveCircuit Originals",
+  "management": "James Park",
+  "bio": "Atlas Grey is a indie pop act from Manchester, UK. Lo-fi arena surprise. Known for uk indie bedroom-to-stage, they've built a devoted global fanbase on LiveCircuit with 320,000 followers.",
+  "brand": {
+    "primaryColor": "#a855f7",
+    "secondaryColor": "#7c3aed",
+    "accentColor": "#c084fc",
+    "gradientClass": "from-violet-500 to-purple-600",
+    "typography": "Space Grotesk",
+    "logoPath": "/assets/logos/atlas-grey.png",
+    "brandIconPath": "/assets/logos/atlas-grey-icon.png",
+    "brandDescription": "UK indie bedroom-to-stage",
+    "brandVoice": "Confident, arena-ready, fan-first"
+  },
+  "appearance": {
+    "skinTone": "warm caramel",
+    "hairTexture": "wavy",
+    "hairColor": "platinum blonde",
+    "eyeColor": "dark brown",
+    "faceDescription": "Distinctive indie pop performer with dark brown eyes and wavy platinum blonde hair",
+    "bodyType": "slim tall",
+    "height": "6'2\"",
+    "fashionStyle": "UK indie bedroom-to-stage",
+    "accessories": [
+      "wrist cuffs"
+    ],
+    "stageOutfit": "UK indie bedroom-to-stage — premium tour edition",
+    "streetOutfit": "Casual uk indie bedroom-to-stage off-stage look",
+    "performanceOutfit": "Signature Indie Pop stage ensemble with LED accents"
+  },
+  "images": {
+    "heroImage": "/demo/performers/indie-mic.png",
+    "portraitImage": "/demo/performers/indie-mic.png",
+    "transparentPNG": "/demo/performers/indie-mic.png",
+    "tourPoster": "/assets/tours/atlas-grey-poster.png",
+    "albumCover": "/assets/albums/atlas-grey.png",
+    "arenaBanner": "/assets/backgrounds/atlas-grey-arena.png",
+    "vipImage": "/demo/performers/indie-mic.png",
+    "poses": {
+      "hero": "/demo/performers/indie-mic.png",
+      "portrait": "/demo/performers/indie-mic.png",
+      "transparent": "/demo/performers/indie-mic.png",
+      "performance": "/demo/performers/indie-guitar.png",
+      "walk": "/demo/performers/indie-mic.png",
+      "crowd": "/demo/performers/indie-mic.png",
+      "closeUp": "/demo/performers/indie-mic.png",
+      "profile": "/demo/performers/indie-mic.png",
+      "back": "/demo/performers/indie-mic.png",
+      "instrument": "/demo/performers/indie-guitar.png",
+      "mic": "/demo/performers/indie-mic.png",
+      "promo": "/demo/performers/indie-mic.png",
+      "vip": "/demo/performers/indie-mic.png",
+      "arenaBanner": "/demo/performers/indie-mic.png"
+    }
+  },
+  "merchCollection": [
+    {
+      "id": "atlas-grey-tee",
+      "name": "Grey Atlas Tour Tee",
+      "price": 35,
+      "imagePath": "/assets/merch/atlas-grey/atlas-grey-tee.png"
+    },
+    {
+      "id": "atlas-grey-hoodie",
+      "name": "Atlas Grey Glow Hoodie",
+      "price": 65,
+      "imagePath": "/assets/merch/atlas-grey/atlas-grey-hoodie.png"
+    },
+    {
+      "id": "atlas-grey-vinyl",
+      "name": "Muted Maps Vinyl",
+      "price": 45,
+      "imagePath": "/assets/merch/atlas-grey/atlas-grey-vinyl.png"
+    }
+  ],
+  "followers": 320000,
+  "monthlyListeners": 720000,
+  "fanRating": 4.3,
+  "averageAttendance": 8600,
+  "ticketPrice": 45,
+  "vipPrice": 125,
+  "merchRevenue": 324720,
+  "tourRevenue": 553500,
+  "careerRevenue": 2214000,
+  "verified": true,
+  "featured": false,
+  "socialLinks": {
+    "livecircuit": "/atlas-grey",
+    "website": "https://livecircuit.demo/atlas-grey",
+    "instagram": "@atlasgrey"
+  },
+  "currentTour": {
+    "name": "Grey Atlas",
+    "posterPath": "/assets/tours/atlas-grey-poster.png",
+    "upcomingShows": [
+      {
+        "city": "Boston",
+        "venue": "Boston Harbor Arena",
+        "date": "Sep 12",
+        "ticketPrice": 45,
+        "vipPrice": 125
+      },
+      {
+        "city": "Chicago",
+        "venue": "Windy City Stadium",
+        "date": "Sep 19",
+        "ticketPrice": 55,
+        "vipPrice": 151
+      },
+      {
+        "city": "Dallas",
+        "venue": "Lone Star Arena",
+        "date": "Sep 26",
+        "ticketPrice": 45,
+        "vipPrice": 125
+      },
+      {
+        "city": "Miami",
+        "venue": "Miami Pulse Arena",
+        "date": "Oct 3",
+        "ticketPrice": 50,
+        "vipPrice": 125
+      }
+    ]
+  },
+  "favoriteVenue": "Boston Harbor Arena",
+  "performance": {
+    "signatureMove": "Lo-fi arena surprise",
+    "signatureLighting": "purple-magenta-cyan",
+    "signatureAnimation": "crowd-wave pulse",
+    "preferredArenaTheme": "premium-festival",
+    "preferredPyro": false,
+    "preferredConfetti": true,
+    "preferredLighting": [
+      "purple",
+      "cyan",
+      "magenta"
+    ],
+    "preferredCameraAngles": [
+      "vip",
+      "stage-left",
+      "default"
+    ],
+    "musicStyle": "Indie Pop",
+    "performanceStyle": "UK indie bedroom-to-stage"
+  },
+  "personality": "Lo-fi arena surprise",
+  "fanDemographics": "18–32, UK indie",
+  "targetAudience": "18–32, UK indie",
+  "catchPhrase": "Lo-fi arena surprise",
+  "actType": "solo",
+  "liveStatus": "ON TOUR",
+  "poseCategory": "indie",
+  "liveAudience": 8600,
+  "revenueTonight": 12300,
+  "growthPct": 17,
+  "showsScheduled": 12,
+  "albumTitle": "Muted Maps",
+  "singleTitle": "Chart",
+  "avatarInitials": "AG"
+}

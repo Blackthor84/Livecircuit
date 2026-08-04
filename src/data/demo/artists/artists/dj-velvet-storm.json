@@ -1,0 +1,173 @@
+{
+  "isDemoArtist": true,
+  "visibility": "demo-only",
+  "environment": "demo",
+  "id": "dj-velvet-storm",
+  "stageName": "DJ Velvet Storm",
+  "realName": "DJ Velvet Storm",
+  "genre": "House",
+  "subGenre": "House",
+  "hometown": "Miami, FL",
+  "country": "United States",
+  "yearsActive": 6,
+  "label": "LiveCircuit Originals",
+  "management": "James Park",
+  "bio": "DJ Velvet Storm is a house act from Miami, FL. Melodic drop curator. Known for tropical house glam, they've built a devoted global fanbase on LiveCircuit with 590,000 followers.",
+  "brand": {
+    "primaryColor": "#f43f5e",
+    "secondaryColor": "#e11d48",
+    "accentColor": "#fb7185",
+    "gradientClass": "from-rose-500 to-pink-600",
+    "typography": "Space Grotesk",
+    "logoPath": "/assets/logos/dj-velvet-storm.png",
+    "brandIconPath": "/assets/logos/dj-velvet-storm-icon.png",
+    "brandDescription": "Tropical house glam",
+    "brandVoice": "Confident, arena-ready, fan-first"
+  },
+  "appearance": {
+    "skinTone": "porcelain cool",
+    "hairTexture": "finger waves",
+    "hairColor": "blue-black",
+    "eyeColor": "dark brown",
+    "faceDescription": "Distinctive house performer with dark brown eyes and finger waves blue-black hair",
+    "bodyType": "slim tall",
+    "height": "5'6\"",
+    "fashionStyle": "Tropical house glam",
+    "accessories": [
+      "wrist cuffs"
+    ],
+    "stageOutfit": "Tropical house glam — premium tour edition",
+    "streetOutfit": "Casual tropical house glam off-stage look",
+    "performanceOutfit": "Signature House stage ensemble with LED accents"
+  },
+  "images": {
+    "heroImage": "/demo/performers/dj-table.png",
+    "portraitImage": "/demo/performers/dj-table.png",
+    "transparentPNG": "/demo/performers/dj-table.png",
+    "tourPoster": "/assets/tours/dj-velvet-storm-poster.png",
+    "albumCover": "/assets/albums/dj-velvet-storm.png",
+    "arenaBanner": "/assets/backgrounds/dj-velvet-storm-arena.png",
+    "vipImage": "/demo/performers/dj-table.png",
+    "poses": {
+      "hero": "/demo/performers/dj-table.png",
+      "portrait": "/demo/performers/dj-table.png",
+      "transparent": "/demo/performers/dj-table.png",
+      "performance": "/demo/performers/dj-arms-up.png",
+      "walk": "/demo/performers/dj-table.png",
+      "crowd": "/demo/performers/dj-table.png",
+      "closeUp": "/demo/performers/dj-table.png",
+      "profile": "/demo/performers/dj-table.png",
+      "back": "/demo/performers/dj-table.png",
+      "instrument": "/demo/performers/dj-table.png",
+      "mic": "/demo/performers/dj-table.png",
+      "promo": "/demo/performers/dj-table.png",
+      "vip": "/demo/performers/dj-table.png",
+      "arenaBanner": "/demo/performers/dj-table.png"
+    }
+  },
+  "merchCollection": [
+    {
+      "id": "dj-velvet-storm-tee",
+      "name": "Storm Season Tour Tee",
+      "price": 35,
+      "imagePath": "/assets/merch/dj-velvet-storm/dj-velvet-storm-tee.png"
+    },
+    {
+      "id": "dj-velvet-storm-hoodie",
+      "name": "DJ Velvet Storm Glow Hoodie",
+      "price": 65,
+      "imagePath": "/assets/merch/dj-velvet-storm/dj-velvet-storm-hoodie.png"
+    },
+    {
+      "id": "dj-velvet-storm-vinyl",
+      "name": "Velvet Bass Vinyl",
+      "price": 45,
+      "imagePath": "/assets/merch/dj-velvet-storm/dj-velvet-storm-vinyl.png"
+    }
+  ],
+  "followers": 590000,
+  "monthlyListeners": 1340000,
+  "fanRating": 4.8,
+  "averageAttendance": 13400,
+  "ticketPrice": 45,
+  "vipPrice": 125,
+  "merchRevenue": 601920,
+  "tourRevenue": 1026000,
+  "careerRevenue": 4104000,
+  "verified": true,
+  "featured": false,
+  "socialLinks": {
+    "livecircuit": "/dj-velvet-storm",
+    "website": "https://livecircuit.demo/dj-velvet-storm",
+    "instagram": "@djvelvetstorm"
+  },
+  "currentTour": {
+    "name": "Storm Season",
+    "posterPath": "/assets/tours/dj-velvet-storm-poster.png",
+    "upcomingShows": [
+      {
+        "city": "Boston",
+        "venue": "Boston Harbor Arena",
+        "date": "Sep 12",
+        "ticketPrice": 45,
+        "vipPrice": 125
+      },
+      {
+        "city": "Chicago",
+        "venue": "Windy City Stadium",
+        "date": "Sep 19",
+        "ticketPrice": 55,
+        "vipPrice": 151
+      },
+      {
+        "city": "Dallas",
+        "venue": "Lone Star Arena",
+        "date": "Sep 26",
+        "ticketPrice": 45,
+        "vipPrice": 125
+      },
+      {
+        "city": "Miami",
+        "venue": "Miami Pulse Arena",
+        "date": "Oct 3",
+        "ticketPrice": 50,
+        "vipPrice": 125
+      }
+    ]
+  },
+  "favoriteVenue": "Boston Harbor Arena",
+  "performance": {
+    "signatureMove": "Melodic drop curator",
+    "signatureLighting": "purple-magenta-cyan",
+    "signatureAnimation": "crowd-wave pulse",
+    "preferredArenaTheme": "premium-festival",
+    "preferredPyro": false,
+    "preferredConfetti": false,
+    "preferredLighting": [
+      "purple",
+      "cyan",
+      "magenta"
+    ],
+    "preferredCameraAngles": [
+      "vip",
+      "stage-left",
+      "default"
+    ],
+    "musicStyle": "House",
+    "performanceStyle": "Tropical house glam"
+  },
+  "personality": "Melodic drop curator",
+  "fanDemographics": "20–35, melodic house",
+  "targetAudience": "20–35, melodic house",
+  "catchPhrase": "Melodic drop curator",
+  "actType": "solo",
+  "liveStatus": "LIVE",
+  "poseCategory": "dj",
+  "liveAudience": 13400,
+  "revenueTonight": 22800,
+  "growthPct": 14,
+  "showsScheduled": 9,
+  "albumTitle": "Velvet Bass",
+  "singleTitle": "Surge",
+  "avatarInitials": "DV"
+}

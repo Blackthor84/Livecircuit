@@ -1,0 +1,173 @@
+{
+  "isDemoArtist": true,
+  "visibility": "demo-only",
+  "environment": "demo",
+  "id": "rose-avenue",
+  "stageName": "Rose Avenue",
+  "realName": "Rose Avenue (collective)",
+  "genre": "Pop/R&B",
+  "subGenre": "Pop/R&B",
+  "hometown": "New York, NY",
+  "country": "United States",
+  "yearsActive": 14,
+  "label": "LiveCircuit Originals",
+  "management": "Sarah Chen",
+  "bio": "Rose Avenue is a pop/r&b act from New York, NY. NYC pop-soul duo. Known for city chic matching sets, they've built a devoted global fanbase on LiveCircuit with 580,000 followers.",
+  "brand": {
+    "primaryColor": "#f43f5e",
+    "secondaryColor": "#e11d48",
+    "accentColor": "#fb7185",
+    "gradientClass": "from-rose-500 to-pink-600",
+    "typography": "Space Grotesk",
+    "logoPath": "/assets/logos/rose-avenue.png",
+    "brandIconPath": "/assets/logos/rose-avenue-icon.png",
+    "brandDescription": "City chic matching sets",
+    "brandVoice": "Confident, arena-ready, fan-first"
+  },
+  "appearance": {
+    "skinTone": "copper brown",
+    "hairTexture": "natural afro puff",
+    "hairColor": "white blonde",
+    "eyeColor": "deep brown",
+    "faceDescription": "Distinctive pop/r&b performer with deep brown eyes and natural afro puff white blonde hair",
+    "bodyType": "long-limbed",
+    "height": "5'4\"",
+    "fashionStyle": "City chic matching sets",
+    "accessories": [
+      "wrist cuffs"
+    ],
+    "stageOutfit": "City chic matching sets — premium tour edition",
+    "streetOutfit": "Casual city chic matching sets off-stage look",
+    "performanceOutfit": "Signature Pop/R&B stage ensemble with LED accents"
+  },
+  "images": {
+    "heroImage": "/demo/performers/rnb-mic.png",
+    "portraitImage": "/demo/performers/rnb-mic.png",
+    "transparentPNG": "/demo/performers/rnb-mic.png",
+    "tourPoster": "/assets/tours/rose-avenue-poster.png",
+    "albumCover": "/assets/albums/rose-avenue.png",
+    "arenaBanner": "/assets/backgrounds/rose-avenue-arena.png",
+    "vipImage": "/demo/performers/rnb-mic.png",
+    "poses": {
+      "hero": "/demo/performers/rnb-mic.png",
+      "portrait": "/demo/performers/rnb-mic.png",
+      "transparent": "/demo/performers/rnb-mic.png",
+      "performance": "/demo/performers/rnb-mic.png",
+      "walk": "/demo/performers/rnb-mic.png",
+      "crowd": "/demo/performers/rnb-mic.png",
+      "closeUp": "/demo/performers/rnb-profile.png",
+      "profile": "/demo/performers/rnb-profile.png",
+      "back": "/demo/performers/rnb-mic.png",
+      "instrument": "/demo/performers/rnb-mic.png",
+      "mic": "/demo/performers/rnb-mic.png",
+      "promo": "/demo/performers/rnb-mic.png",
+      "vip": "/demo/performers/rnb-mic.png",
+      "arenaBanner": "/demo/performers/rnb-mic.png"
+    }
+  },
+  "merchCollection": [
+    {
+      "id": "rose-avenue-tee",
+      "name": "Rose Circuit Tour Tee",
+      "price": 35,
+      "imagePath": "/assets/merch/rose-avenue/rose-avenue-tee.png"
+    },
+    {
+      "id": "rose-avenue-hoodie",
+      "name": "Rose Avenue Glow Hoodie",
+      "price": 65,
+      "imagePath": "/assets/merch/rose-avenue/rose-avenue-hoodie.png"
+    },
+    {
+      "id": "rose-avenue-vinyl",
+      "name": "Borough Bloom Vinyl",
+      "price": 45,
+      "imagePath": "/assets/merch/rose-avenue/rose-avenue-vinyl.png"
+    }
+  ],
+  "followers": 580000,
+  "monthlyListeners": 1340000,
+  "fanRating": 4.2,
+  "averageAttendance": 15200,
+  "ticketPrice": 45,
+  "vipPrice": 125,
+  "merchRevenue": 696960,
+  "tourRevenue": 1188000,
+  "careerRevenue": 4752000,
+  "verified": true,
+  "featured": false,
+  "socialLinks": {
+    "livecircuit": "/rose-avenue",
+    "website": "https://livecircuit.demo/rose-avenue",
+    "instagram": "@roseavenue"
+  },
+  "currentTour": {
+    "name": "Rose Circuit",
+    "posterPath": "/assets/tours/rose-avenue-poster.png",
+    "upcomingShows": [
+      {
+        "city": "Boston",
+        "venue": "Boston Harbor Arena",
+        "date": "Sep 12",
+        "ticketPrice": 45,
+        "vipPrice": 125
+      },
+      {
+        "city": "Chicago",
+        "venue": "Windy City Stadium",
+        "date": "Sep 19",
+        "ticketPrice": 55,
+        "vipPrice": 151
+      },
+      {
+        "city": "Dallas",
+        "venue": "Lone Star Arena",
+        "date": "Sep 26",
+        "ticketPrice": 45,
+        "vipPrice": 125
+      },
+      {
+        "city": "Miami",
+        "venue": "Miami Pulse Arena",
+        "date": "Oct 3",
+        "ticketPrice": 50,
+        "vipPrice": 125
+      }
+    ]
+  },
+  "favoriteVenue": "Boston Harbor Arena",
+  "performance": {
+    "signatureMove": "NYC pop-soul duo",
+    "signatureLighting": "purple-magenta-cyan",
+    "signatureAnimation": "crowd-wave pulse",
+    "preferredArenaTheme": "premium-festival",
+    "preferredPyro": false,
+    "preferredConfetti": true,
+    "preferredLighting": [
+      "purple",
+      "cyan",
+      "magenta"
+    ],
+    "preferredCameraAngles": [
+      "vip",
+      "stage-left",
+      "default"
+    ],
+    "musicStyle": "Pop/R&B",
+    "performanceStyle": "City chic matching sets"
+  },
+  "personality": "NYC pop-soul duo",
+  "fanDemographics": "17–31, NYC pop-R&B",
+  "targetAudience": "17–31, NYC pop-R&B",
+  "catchPhrase": "NYC pop-soul duo",
+  "actType": "duo",
+  "liveStatus": "LIVE",
+  "poseCategory": "rnb",
+  "liveAudience": 15200,
+  "revenueTonight": 26400,
+  "growthPct": 16,
+  "showsScheduled": 11,
+  "albumTitle": "Borough Bloom",
+  "singleTitle": "Uptown",
+  "avatarInitials": "RA"
+}

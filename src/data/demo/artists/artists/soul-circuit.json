@@ -1,0 +1,173 @@
+{
+  "isDemoArtist": true,
+  "visibility": "demo-only",
+  "environment": "demo",
+  "id": "soul-circuit",
+  "stageName": "Soul Circuit",
+  "realName": "Soul Circuit (collective)",
+  "genre": "Soul",
+  "subGenre": "Soul",
+  "hometown": "Memphis, TN",
+  "country": "United States",
+  "yearsActive": 3,
+  "label": "LiveCircuit Originals",
+  "management": "Marcus Lee",
+  "bio": "Soul Circuit is a soul act from Memphis, TN. Circuit-bending soul ensemble. Known for retro funk stage wear, they've built a devoted global fanbase on LiveCircuit with 350,000 followers.",
+  "brand": {
+    "primaryColor": "#10b981",
+    "secondaryColor": "#059669",
+    "accentColor": "#34d399",
+    "gradientClass": "from-emerald-500 to-teal-600",
+    "typography": "Space Grotesk",
+    "logoPath": "/assets/logos/soul-circuit.png",
+    "brandIconPath": "/assets/logos/soul-circuit-icon.png",
+    "brandDescription": "Retro funk stage wear",
+    "brandVoice": "Confident, arena-ready, fan-first"
+  },
+  "appearance": {
+    "skinTone": "olive medium",
+    "hairTexture": "braided locs",
+    "hairColor": "copper red",
+    "eyeColor": "hazel",
+    "faceDescription": "Distinctive soul performer with hazel eyes and braided locs copper red hair",
+    "bodyType": "muscular broad",
+    "height": "6'2\"",
+    "fashionStyle": "Retro funk stage wear",
+    "accessories": [
+      "chain necklace"
+    ],
+    "stageOutfit": "Retro funk stage wear — premium tour edition",
+    "streetOutfit": "Casual retro funk stage wear off-stage look",
+    "performanceOutfit": "Signature Soul stage ensemble with LED accents"
+  },
+  "images": {
+    "heroImage": "/demo/performers/rnb-mic.png",
+    "portraitImage": "/demo/performers/rnb-mic.png",
+    "transparentPNG": "/demo/performers/rnb-mic.png",
+    "tourPoster": "/assets/tours/soul-circuit-poster.png",
+    "albumCover": "/assets/albums/soul-circuit.png",
+    "arenaBanner": "/assets/backgrounds/soul-circuit-arena.png",
+    "vipImage": "/demo/performers/rnb-mic.png",
+    "poses": {
+      "hero": "/demo/performers/rnb-mic.png",
+      "portrait": "/demo/performers/rnb-mic.png",
+      "transparent": "/demo/performers/rnb-mic.png",
+      "performance": "/demo/performers/rnb-mic.png",
+      "walk": "/demo/performers/rnb-mic.png",
+      "crowd": "/demo/performers/rnb-mic.png",
+      "closeUp": "/demo/performers/rnb-profile.png",
+      "profile": "/demo/performers/rnb-profile.png",
+      "back": "/demo/performers/rnb-mic.png",
+      "instrument": "/demo/performers/rnb-mic.png",
+      "mic": "/demo/performers/rnb-mic.png",
+      "promo": "/demo/performers/rnb-mic.png",
+      "vip": "/demo/performers/rnb-mic.png",
+      "arenaBanner": "/demo/performers/rnb-mic.png"
+    }
+  },
+  "merchCollection": [
+    {
+      "id": "soul-circuit-tee",
+      "name": "Circuit Live Tour Tee",
+      "price": 35,
+      "imagePath": "/assets/merch/soul-circuit/soul-circuit-tee.png"
+    },
+    {
+      "id": "soul-circuit-hoodie",
+      "name": "Soul Circuit Glow Hoodie",
+      "price": 65,
+      "imagePath": "/assets/merch/soul-circuit/soul-circuit-hoodie.png"
+    },
+    {
+      "id": "soul-circuit-vinyl",
+      "name": "Live Wire Soul Vinyl",
+      "price": 45,
+      "imagePath": "/assets/merch/soul-circuit/soul-circuit-vinyl.png"
+    }
+  ],
+  "followers": 350000,
+  "monthlyListeners": 780000,
+  "fanRating": 4.6000000000000005,
+  "averageAttendance": 28000,
+  "ticketPrice": 45,
+  "vipPrice": 125,
+  "merchRevenue": 84480,
+  "tourRevenue": 144000,
+  "careerRevenue": 576000,
+  "verified": true,
+  "featured": false,
+  "socialLinks": {
+    "livecircuit": "/soul-circuit",
+    "website": "https://livecircuit.demo/soul-circuit",
+    "instagram": "@soulcircuit"
+  },
+  "currentTour": {
+    "name": "Circuit Live",
+    "posterPath": "/assets/tours/soul-circuit-poster.png",
+    "upcomingShows": [
+      {
+        "city": "Boston",
+        "venue": "Boston Harbor Arena",
+        "date": "Sep 12",
+        "ticketPrice": 45,
+        "vipPrice": 125
+      },
+      {
+        "city": "Chicago",
+        "venue": "Windy City Stadium",
+        "date": "Sep 19",
+        "ticketPrice": 55,
+        "vipPrice": 151
+      },
+      {
+        "city": "Dallas",
+        "venue": "Lone Star Arena",
+        "date": "Sep 26",
+        "ticketPrice": 45,
+        "vipPrice": 125
+      },
+      {
+        "city": "Miami",
+        "venue": "Miami Pulse Arena",
+        "date": "Oct 3",
+        "ticketPrice": 50,
+        "vipPrice": 125
+      }
+    ]
+  },
+  "favoriteVenue": "Boston Harbor Arena",
+  "performance": {
+    "signatureMove": "Circuit-bending soul ensemble",
+    "signatureLighting": "purple-magenta-cyan",
+    "signatureAnimation": "crowd-wave pulse",
+    "preferredArenaTheme": "premium-festival",
+    "preferredPyro": false,
+    "preferredConfetti": false,
+    "preferredLighting": [
+      "purple",
+      "cyan",
+      "magenta"
+    ],
+    "preferredCameraAngles": [
+      "vip",
+      "stage-left",
+      "default"
+    ],
+    "musicStyle": "Soul",
+    "performanceStyle": "Retro funk stage wear"
+  },
+  "personality": "Circuit-bending soul ensemble",
+  "fanDemographics": "25–50, funk/soul",
+  "targetAudience": "25–50, funk/soul",
+  "catchPhrase": "Circuit-bending soul ensemble",
+  "actType": "band",
+  "liveStatus": "REHEARSAL",
+  "poseCategory": "rnb",
+  "liveAudience": 0,
+  "revenueTonight": 3200,
+  "growthPct": 12,
+  "showsScheduled": 7,
+  "albumTitle": "Live Wire Soul",
+  "singleTitle": "Groove Theory",
+  "avatarInitials": "SC"
+}

@@ -1,0 +1,173 @@
+{
+  "isDemoArtist": true,
+  "visibility": "demo-only",
+  "environment": "demo",
+  "id": "blacklight-society",
+  "stageName": "Blacklight Society",
+  "realName": "Blacklight Society (collective)",
+  "genre": "Rock",
+  "subGenre": "Rock",
+  "hometown": "Las Vegas, NV",
+  "country": "United States",
+  "yearsActive": 9,
+  "label": "LiveCircuit Originals",
+  "management": "Sarah Chen",
+  "bio": "Blacklight Society is a rock act from Las Vegas, NV. UV-lit rock spectacle. Known for neon rock showmanship, they've built a devoted global fanbase on LiveCircuit with 490,000 followers.",
+  "brand": {
+    "primaryColor": "#d946ef",
+    "secondaryColor": "#c026d3",
+    "accentColor": "#e879f9",
+    "gradientClass": "from-fuchsia-500 to-purple-600",
+    "typography": "Space Grotesk",
+    "logoPath": "/assets/logos/blacklight-society.png",
+    "brandIconPath": "/assets/logos/blacklight-society-icon.png",
+    "brandDescription": "Neon rock showmanship",
+    "brandVoice": "Confident, arena-ready, fan-first"
+  },
+  "appearance": {
+    "skinTone": "golden tan",
+    "hairTexture": "straight sleek",
+    "hairColor": "honey blonde",
+    "eyeColor": "amber brown",
+    "faceDescription": "Distinctive rock performer with amber brown eyes and straight sleek honey blonde hair",
+    "bodyType": "curvy strong",
+    "height": "5'8\"",
+    "fashionStyle": "Neon rock showmanship",
+    "accessories": [
+      "signature hat"
+    ],
+    "stageOutfit": "Neon rock showmanship — premium tour edition",
+    "streetOutfit": "Casual neon rock showmanship off-stage look",
+    "performanceOutfit": "Signature Rock stage ensemble with LED accents"
+  },
+  "images": {
+    "heroImage": "/demo/performers/rock-mic.png",
+    "portraitImage": "/demo/performers/rock-mic.png",
+    "transparentPNG": "/demo/performers/rock-mic.png",
+    "tourPoster": "/assets/tours/blacklight-society-poster.png",
+    "albumCover": "/assets/albums/blacklight-society.png",
+    "arenaBanner": "/assets/backgrounds/blacklight-society-arena.png",
+    "vipImage": "/demo/performers/rock-mic.png",
+    "poses": {
+      "hero": "/demo/performers/rock-mic.png",
+      "portrait": "/demo/performers/rock-mic.png",
+      "transparent": "/demo/performers/rock-mic.png",
+      "performance": "/demo/performers/rock-guitar.png",
+      "walk": "/demo/performers/rock-full-body.png",
+      "crowd": "/demo/performers/rock-mic.png",
+      "closeUp": "/demo/performers/rock-mic.png",
+      "profile": "/demo/performers/rock-profile.png",
+      "back": "/demo/performers/rock-mic.png",
+      "instrument": "/demo/performers/rock-guitar.png",
+      "mic": "/demo/performers/rock-mic.png",
+      "promo": "/demo/performers/rock-mic.png",
+      "vip": "/demo/performers/rock-mic.png",
+      "arenaBanner": "/demo/performers/rock-mic.png"
+    }
+  },
+  "merchCollection": [
+    {
+      "id": "blacklight-society-tee",
+      "name": "Blacklight Arena Tour Tee",
+      "price": 35,
+      "imagePath": "/assets/merch/blacklight-society/blacklight-society-tee.png"
+    },
+    {
+      "id": "blacklight-society-hoodie",
+      "name": "Blacklight Society Glow Hoodie",
+      "price": 65,
+      "imagePath": "/assets/merch/blacklight-society/blacklight-society-hoodie.png"
+    },
+    {
+      "id": "blacklight-society-vinyl",
+      "name": "UV Society Vinyl",
+      "price": 45,
+      "imagePath": "/assets/merch/blacklight-society/blacklight-society-vinyl.png"
+    }
+  ],
+  "followers": 490000,
+  "monthlyListeners": 1120000,
+  "fanRating": 4.8,
+  "averageAttendance": 13400,
+  "ticketPrice": 45,
+  "vipPrice": 125,
+  "merchRevenue": 601920,
+  "tourRevenue": 1026000,
+  "careerRevenue": 4104000,
+  "verified": true,
+  "featured": false,
+  "socialLinks": {
+    "livecircuit": "/blacklight-society",
+    "website": "https://livecircuit.demo/blacklight-society",
+    "instagram": "@blacklightsociety"
+  },
+  "currentTour": {
+    "name": "Blacklight Arena",
+    "posterPath": "/assets/tours/blacklight-society-poster.png",
+    "upcomingShows": [
+      {
+        "city": "Boston",
+        "venue": "Boston Harbor Arena",
+        "date": "Sep 12",
+        "ticketPrice": 45,
+        "vipPrice": 125
+      },
+      {
+        "city": "Chicago",
+        "venue": "Windy City Stadium",
+        "date": "Sep 19",
+        "ticketPrice": 55,
+        "vipPrice": 151
+      },
+      {
+        "city": "Dallas",
+        "venue": "Lone Star Arena",
+        "date": "Sep 26",
+        "ticketPrice": 45,
+        "vipPrice": 125
+      },
+      {
+        "city": "Miami",
+        "venue": "Miami Pulse Arena",
+        "date": "Oct 3",
+        "ticketPrice": 50,
+        "vipPrice": 125
+      }
+    ]
+  },
+  "favoriteVenue": "Boston Harbor Arena",
+  "performance": {
+    "signatureMove": "UV-lit rock spectacle",
+    "signatureLighting": "purple-magenta-cyan",
+    "signatureAnimation": "crowd-wave pulse",
+    "preferredArenaTheme": "premium-festival",
+    "preferredPyro": true,
+    "preferredConfetti": false,
+    "preferredLighting": [
+      "purple",
+      "cyan",
+      "magenta"
+    ],
+    "preferredCameraAngles": [
+      "vip",
+      "stage-left",
+      "default"
+    ],
+    "musicStyle": "Rock",
+    "performanceStyle": "Neon rock showmanship"
+  },
+  "personality": "UV-lit rock spectacle",
+  "fanDemographics": "19–35, rock spectacle",
+  "targetAudience": "19–35, rock spectacle",
+  "catchPhrase": "UV-lit rock spectacle",
+  "actType": "band",
+  "liveStatus": "LIVE",
+  "poseCategory": "rock-band",
+  "liveAudience": 13400,
+  "revenueTonight": 22800,
+  "growthPct": 14,
+  "showsScheduled": 9,
+  "albumTitle": "UV Society",
+  "singleTitle": "Glow",
+  "avatarInitials": "BS"
+}

@@ -1,0 +1,173 @@
+{
+  "isDemoArtist": true,
+  "visibility": "demo-only",
+  "environment": "demo",
+  "id": "the-prism-society",
+  "stageName": "The Prism Society",
+  "realName": "The Prism Society (collective)",
+  "genre": "Alternative Pop",
+  "subGenre": "Alternative Pop",
+  "hometown": "San Francisco, CA",
+  "country": "United States",
+  "yearsActive": 8,
+  "label": "LiveCircuit Originals",
+  "management": "Marcus Lee",
+  "bio": "The Prism Society is a alternative pop act from San Francisco, CA. Art-pop collective. Known for prismatic stage design, they've built a devoted global fanbase on LiveCircuit with 350,000 followers.",
+  "brand": {
+    "primaryColor": "#d946ef",
+    "secondaryColor": "#c026d3",
+    "accentColor": "#e879f9",
+    "gradientClass": "from-fuchsia-500 to-purple-600",
+    "typography": "Space Grotesk",
+    "logoPath": "/assets/logos/the-prism-society.png",
+    "brandIconPath": "/assets/logos/the-prism-society-icon.png",
+    "brandDescription": "Prismatic stage design",
+    "brandVoice": "Confident, arena-ready, fan-first"
+  },
+  "appearance": {
+    "skinTone": "porcelain cool",
+    "hairTexture": "finger waves",
+    "hairColor": "blue-black",
+    "eyeColor": "deep brown",
+    "faceDescription": "Distinctive alternative pop performer with deep brown eyes and finger waves blue-black hair",
+    "bodyType": "long-limbed",
+    "height": "6'0\"",
+    "fashionStyle": "Prismatic stage design",
+    "accessories": [
+      "wrist cuffs"
+    ],
+    "stageOutfit": "Prismatic stage design — premium tour edition",
+    "streetOutfit": "Casual prismatic stage design off-stage look",
+    "performanceOutfit": "Signature Alternative Pop stage ensemble with LED accents"
+  },
+  "images": {
+    "heroImage": "/demo/performers/indie-mic.png",
+    "portraitImage": "/demo/performers/indie-mic.png",
+    "transparentPNG": "/demo/performers/indie-mic.png",
+    "tourPoster": "/assets/tours/the-prism-society-poster.png",
+    "albumCover": "/assets/albums/the-prism-society.png",
+    "arenaBanner": "/assets/backgrounds/the-prism-society-arena.png",
+    "vipImage": "/demo/performers/indie-mic.png",
+    "poses": {
+      "hero": "/demo/performers/indie-mic.png",
+      "portrait": "/demo/performers/indie-mic.png",
+      "transparent": "/demo/performers/indie-mic.png",
+      "performance": "/demo/performers/indie-guitar.png",
+      "walk": "/demo/performers/indie-mic.png",
+      "crowd": "/demo/performers/indie-mic.png",
+      "closeUp": "/demo/performers/indie-mic.png",
+      "profile": "/demo/performers/indie-mic.png",
+      "back": "/demo/performers/indie-mic.png",
+      "instrument": "/demo/performers/indie-guitar.png",
+      "mic": "/demo/performers/indie-mic.png",
+      "promo": "/demo/performers/indie-mic.png",
+      "vip": "/demo/performers/indie-mic.png",
+      "arenaBanner": "/demo/performers/indie-mic.png"
+    }
+  },
+  "merchCollection": [
+    {
+      "id": "the-prism-society-tee",
+      "name": "Prism Live Tour Tee",
+      "price": 35,
+      "imagePath": "/assets/merch/the-prism-society/the-prism-society-tee.png"
+    },
+    {
+      "id": "the-prism-society-hoodie",
+      "name": "The Prism Society Glow Hoodie",
+      "price": 65,
+      "imagePath": "/assets/merch/the-prism-society/the-prism-society-hoodie.png"
+    },
+    {
+      "id": "the-prism-society-vinyl",
+      "name": "Refraction Vinyl",
+      "price": 45,
+      "imagePath": "/assets/merch/the-prism-society/the-prism-society-vinyl.png"
+    }
+  ],
+  "followers": 350000,
+  "monthlyListeners": 780000,
+  "fanRating": 4.3,
+  "averageAttendance": 28000,
+  "ticketPrice": 45,
+  "vipPrice": 125,
+  "merchRevenue": 124080,
+  "tourRevenue": 211500,
+  "careerRevenue": 846000,
+  "verified": true,
+  "featured": false,
+  "socialLinks": {
+    "livecircuit": "/the-prism-society",
+    "website": "https://livecircuit.demo/the-prism-society",
+    "instagram": "@theprismsociety"
+  },
+  "currentTour": {
+    "name": "Prism Live",
+    "posterPath": "/assets/tours/the-prism-society-poster.png",
+    "upcomingShows": [
+      {
+        "city": "Boston",
+        "venue": "Boston Harbor Arena",
+        "date": "Sep 12",
+        "ticketPrice": 45,
+        "vipPrice": 125
+      },
+      {
+        "city": "Chicago",
+        "venue": "Windy City Stadium",
+        "date": "Sep 19",
+        "ticketPrice": 55,
+        "vipPrice": 151
+      },
+      {
+        "city": "Dallas",
+        "venue": "Lone Star Arena",
+        "date": "Sep 26",
+        "ticketPrice": 45,
+        "vipPrice": 125
+      },
+      {
+        "city": "Miami",
+        "venue": "Miami Pulse Arena",
+        "date": "Oct 3",
+        "ticketPrice": 50,
+        "vipPrice": 125
+      }
+    ]
+  },
+  "favoriteVenue": "Boston Harbor Arena",
+  "performance": {
+    "signatureMove": "Art-pop collective",
+    "signatureLighting": "purple-magenta-cyan",
+    "signatureAnimation": "crowd-wave pulse",
+    "preferredArenaTheme": "premium-festival",
+    "preferredPyro": false,
+    "preferredConfetti": true,
+    "preferredLighting": [
+      "purple",
+      "cyan",
+      "magenta"
+    ],
+    "preferredCameraAngles": [
+      "vip",
+      "stage-left",
+      "default"
+    ],
+    "musicStyle": "Alternative Pop",
+    "performanceStyle": "Prismatic stage design"
+  },
+  "personality": "Art-pop collective",
+  "fanDemographics": "18–32, art pop",
+  "targetAudience": "18–32, art pop",
+  "catchPhrase": "Art-pop collective",
+  "actType": "band",
+  "liveStatus": "IDLE",
+  "poseCategory": "indie",
+  "liveAudience": 0,
+  "revenueTonight": 4700,
+  "growthPct": 17,
+  "showsScheduled": 12,
+  "albumTitle": "Refraction",
+  "singleTitle": "Light",
+  "avatarInitials": "TP"
+}

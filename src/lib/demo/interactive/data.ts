@@ -6,17 +6,38 @@ import type {
   DemoSponsorArena,
   DemoStateArena,
 } from "@/lib/demo/interactive/types";
+import { getAgencyRoster, getFanChatMessages, getFeaturedOriginals, getOriginalById, getPrimaryDemoArtist } from "@/lib/demo/originals";
+
+const primary = getPrimaryDemoArtist();
+const roster = getAgencyRoster(6);
+const featured = getFeaturedOriginals();
+
+function toDemoArtist(entry: { id: string; name: string; genre: string; avatar: string; followers: number; revenue: number; shows: number }): DemoArtist {
+  const full = getOriginalById(entry.id);
+  return {
+    id: entry.id,
+    name: entry.name,
+    slug: entry.id,
+    genre: entry.genre,
+    avatar: entry.avatar,
+    followers: entry.followers,
+    verified: true,
+    revenue: entry.revenue,
+    upcomingShows: entry.shows,
+    statesReached: full ? Math.min(50, 12 + Math.floor(full.monthlyListeners / 100_000)) : 24,
+  };
+}
 
 export const DEMO_ARTIST: DemoArtist = {
-  id: "artist-1",
-  name: "Nova Ray",
-  slug: "nova-ray",
-  genre: "Electronic / Pop",
-  avatar: "NR",
-  followers: 92_114,
+  id: primary.id,
+  name: primary.stageName,
+  slug: primary.id,
+  genre: primary.genre,
+  avatar: primary.avatarInitials,
+  followers: primary.followers,
   verified: true,
-  revenue: 18_430,
-  upcomingShows: 3,
+  revenue: primary.revenueTonight,
+  upcomingShows: primary.showsScheduled,
   statesReached: 24,
 };
 
@@ -68,14 +89,7 @@ export const DEMO_AGENCY_STATS = {
   showsThisMonth: 489,
 };
 
-export const DEMO_AGENCY_ARTISTS: DemoArtist[] = [
-  DEMO_ARTIST,
-  { id: "a2", name: "The Midnight Echo", slug: "midnight-echo", genre: "Indie Rock", avatar: "ME", followers: 192_000, verified: true, revenue: 890_400, upcomingShows: 8, statesReached: 28 },
-  { id: "a3", name: "DJ Prism", slug: "dj-prism", genre: "House / EDM", avatar: "DP", followers: 412_000, verified: true, revenue: 2_100_000, upcomingShows: 18, statesReached: 44 },
-  { id: "a4", name: "Luna Vale", slug: "luna-vale", genre: "R&B / Soul", avatar: "LV", followers: 156_800, verified: false, revenue: 620_000, upcomingShows: 6, statesReached: 22 },
-  { id: "a5", name: "Kai Rivers", slug: "kai-rivers", genre: "Hip-Hop", avatar: "KR", followers: 278_000, verified: true, revenue: 1_450_000, upcomingShows: 14, statesReached: 32 },
-  { id: "a6", name: "Aurora Pulse", slug: "aurora-pulse", genre: "Synthwave", avatar: "AP", followers: 98_400, verified: true, revenue: 540_000, upcomingShows: 5, statesReached: 18 },
-];
+export const DEMO_AGENCY_ARTISTS: DemoArtist[] = roster.map(toDemoArtist);
 
 export const DEMO_ARTIST_PROFILES: Record<string, {
   contracts: { id: string; venue: string; date: string; fee: number; status: string }[];
@@ -86,7 +100,7 @@ export const DEMO_ARTIST_PROFILES: Record<string, {
   revenueHistory: { month: string; revenue: number }[];
   upcomingTours: { city: string; date: string; venue: string }[];
 }> = {
-  "artist-1": {
+  [primary.id]: {
     contracts: [
       { id: "c1", venue: "Harbor Lights Arena", date: "Sep 12", fee: 85000, status: "Signed" },
       { id: "c2", venue: "Windy City Stadium", date: "Sep 19", fee: 120000, status: "Signed" },
@@ -122,19 +136,36 @@ export const DEMO_ARTIST_PROFILES: Record<string, {
   },
 };
 
-export const DEMO_SHOWS: DemoShow[] = [
-  { id: "s1", title: "Neon Dreams — Boston", arena: "Harbor Lights Arena", tier: "arena", state: "MA", city: "Boston", date: "2026-09-12", time: "8:00 PM", ticketPrice: 55, vipPrice: 149, capacity: 10000, sold: 6200, revenue: 341_000, status: "upcoming" },
-  { id: "s2", title: "Neon Dreams — Chicago", arena: "Windy City Stadium", tier: "stadium", state: "IL", city: "Chicago", date: "2026-09-19", time: "7:30 PM", ticketPrice: 65, vipPrice: 175, capacity: 14000, sold: 4800, revenue: 312_000, status: "upcoming" },
-  { id: "s3", title: "Neon Dreams — Dallas", arena: "Lone Star Arena", tier: "arena", state: "TX", city: "Dallas", date: "2026-09-26", time: "8:00 PM", ticketPrice: 55, vipPrice: 149, capacity: 12000, sold: 3100, revenue: 170_500, status: "upcoming" },
-];
+export const DEMO_SHOWS: DemoShow[] = primary.currentTour.upcomingShows.slice(0, 3).map((d, i) => ({
+  id: `s${i + 1}`,
+  title: `${primary.currentTour.name} — ${d.city}`,
+  arena: d.venue,
+  tier: i === 1 ? "stadium" as const : "arena" as const,
+  state: d.city === "Boston" ? "MA" : d.city === "Chicago" ? "IL" : "TX",
+  city: d.city,
+  date: `2026-09-${12 + i * 7}`,
+  time: i === 1 ? "7:30 PM" : "8:00 PM",
+  ticketPrice: 55 + i * 10,
+  vipPrice: 149 + i * 26,
+  capacity: 10000 + i * 2000,
+  sold: 6200 - i * 800,
+  revenue: 341_000 - i * 50000,
+  status: "upcoming" as const,
+}));
 
-export const DEMO_EVENTS: DemoEvent[] = [
-  { id: "e1", artist: "Nova Ray", artistAvatar: "NR", title: "Neon Dreams Live", arena: "Austin Theater Arena", state: "TX", date: "Aug 15", ticketPrice: 45, vipPrice: 125, soldPercent: 85, genre: "Electronic" },
-  { id: "e2", artist: "The Midnight Echo", artistAvatar: "ME", title: "Acoustic Sessions", arena: "Denver Club Arena", state: "CO", date: "Aug 18", ticketPrice: 35, vipPrice: 89, soldPercent: 62, genre: "Indie" },
-  { id: "e3", artist: "DJ Prism", artistAvatar: "DP", title: "Bass Drop Festival", arena: "Miami Arena", state: "FL", date: "Aug 20", ticketPrice: 75, vipPrice: 199, soldPercent: 94, genre: "EDM" },
-  { id: "e4", artist: "Luna Vale", artistAvatar: "LV", title: "Soul Sessions", arena: "Atlanta Theater", state: "GA", date: "Aug 25", ticketPrice: 40, vipPrice: 99, soldPercent: 48, genre: "R&B" },
-  { id: "e5", artist: "Nova Ray", artistAvatar: "NR", title: "VIP Listening Party", arena: "LA Club Arena", state: "CA", date: "Sep 1", ticketPrice: 55, vipPrice: 175, soldPercent: 71, genre: "Electronic" },
-];
+export const DEMO_EVENTS: DemoEvent[] = featured.slice(0, 5).map((a, i) => ({
+  id: `e${i + 1}`,
+  artist: a.stageName,
+  artistAvatar: a.avatarInitials,
+  title: `${a.currentTour.name} Live`,
+  arena: a.currentTour.upcomingShows[0]?.venue ?? "LiveCircuit Arena",
+  state: ["TX", "CO", "FL", "GA", "CA"][i] ?? "TX",
+  date: a.currentTour.upcomingShows[0]?.date ?? "Aug 15",
+  ticketPrice: 35 + i * 8,
+  vipPrice: 89 + i * 20,
+  soldPercent: 85 - i * 9,
+  genre: a.genre,
+}));
 
 export const ARENA_OPTIONS = [
   { id: "community" as const, name: "Community Arena", capacity: 2500, fee: 25 },
@@ -162,14 +193,14 @@ export const STATES_REACHED = [
 ];
 
 export const DEMO_STATES: DemoStateArena[] = [
-  { state: "Texas", abbr: "TX", arenas: 12, upcomingShows: 28, ticketsSold: 142000, audience: 890000, sponsor: "TechCorp", fanGrowth: 18.2, featuredArtist: "Nova Ray" },
-  { state: "California", abbr: "CA", arenas: 18, upcomingShows: 45, ticketsSold: 198000, audience: 1_200_000, sponsor: "StreamMax", fanGrowth: 22.4, featuredArtist: "DJ Prism" },
-  { state: "New York", abbr: "NY", arenas: 14, upcomingShows: 38, ticketsSold: 165000, audience: 980000, sponsor: "UrbanBeat", fanGrowth: 15.8, featuredArtist: "The Midnight Echo" },
-  { state: "Florida", abbr: "FL", arenas: 10, upcomingShows: 32, ticketsSold: 128000, audience: 720000, fanGrowth: 20.1, featuredArtist: "DJ Prism" },
-  { state: "Tennessee", abbr: "TN", arenas: 8, upcomingShows: 22, ticketsSold: 98000, audience: 580000, sponsor: "MusicFirst", fanGrowth: 16.5, featuredArtist: "Nova Ray" },
-  { state: "Illinois", abbr: "IL", arenas: 9, upcomingShows: 24, ticketsSold: 112000, audience: 640000, fanGrowth: 14.2, featuredArtist: "Luna Vale" },
+  { state: "Texas", abbr: "TX", arenas: 12, upcomingShows: 28, ticketsSold: 142000, audience: 890000, sponsor: "TechCorp", fanGrowth: 18.2, featuredArtist: featured[4]?.stageName ?? primary.stageName },
+  { state: "California", abbr: "CA", arenas: 18, upcomingShows: 45, ticketsSold: 198000, audience: 1_200_000, sponsor: "StreamMax", fanGrowth: 22.4, featuredArtist: featured[2]?.stageName ?? roster[1]?.name ?? primary.stageName },
+  { state: "New York", abbr: "NY", arenas: 14, upcomingShows: 38, ticketsSold: 165000, audience: 980000, sponsor: "UrbanBeat", fanGrowth: 15.8, featuredArtist: featured[1]?.stageName ?? roster[2]?.name ?? primary.stageName },
+  { state: "Florida", abbr: "FL", arenas: 10, upcomingShows: 32, ticketsSold: 128000, audience: 720000, fanGrowth: 20.1, featuredArtist: featured[2]?.stageName ?? primary.stageName },
+  { state: "Tennessee", abbr: "TN", arenas: 8, upcomingShows: 22, ticketsSold: 98000, audience: 580000, sponsor: "MusicFirst", fanGrowth: 16.5, featuredArtist: featured[3]?.stageName ?? primary.stageName },
+  { state: "Illinois", abbr: "IL", arenas: 9, upcomingShows: 24, ticketsSold: 112000, audience: 640000, fanGrowth: 14.2, featuredArtist: featured[5]?.stageName ?? roster[3]?.name ?? primary.stageName },
   { state: "Colorado", abbr: "CO", arenas: 6, upcomingShows: 16, ticketsSold: 72000, audience: 420000, fanGrowth: 19.8 },
-  { state: "Georgia", abbr: "GA", arenas: 7, upcomingShows: 18, ticketsSold: 84000, audience: 480000, fanGrowth: 17.3, featuredArtist: "Luna Vale" },
+  { state: "Georgia", abbr: "GA", arenas: 7, upcomingShows: 18, ticketsSold: 84000, audience: 480000, fanGrowth: 17.3, featuredArtist: featured[6]?.stageName ?? roster[4]?.name ?? primary.stageName },
   { state: "Washington", abbr: "WA", arenas: 5, upcomingShows: 14, ticketsSold: 68000, audience: 390000, fanGrowth: 21.0 },
   { state: "Arizona", abbr: "AZ", arenas: 5, upcomingShows: 12, ticketsSold: 58000, audience: 340000, fanGrowth: 23.5 },
 ];
@@ -199,41 +230,53 @@ export const DEMO_SPONSOR_ARENAS: DemoSponsorArena[] = [
   { id: "sp5", name: "Miami Beach Arena", state: "FL", tier: "theater", monthlyVisitors: 720000, engagement: 92, availableSlots: ["Naming Rights", "Festival Sponsorship"], founderPrice: 25000, regularPrice: 50000, expectedReach: 1_900_000 },
 ];
 
-export const INITIAL_FEED: DemoFeedItem[] = [
-  { id: "f1", type: "show", author: "Nova Ray", authorAvatar: "NR", verified: true, content: "Just announced: Neon Dreams Tour hits Nashville Aug 22! 🎤", likes: 2840, comments: 412, shares: 890, hashtag: "#NeonDreamsTour", timestamp: "2m ago" },
-  { id: "f2", type: "clip", author: "Sarah M.", authorAvatar: "SM", content: "Best virtual concert experience ever. The arena felt REAL 🔥", likes: 892, comments: 67, shares: 124, timestamp: "5m ago" },
-  { id: "f3", type: "milestone", author: "DJ Prism", authorAvatar: "DP", verified: true, content: "1 MILLION fans on LiveCircuit! Thank you 🙏", likes: 12400, comments: 2100, shares: 3400, hashtag: "#1MillionStrong", timestamp: "8m ago" },
-  { id: "f4", type: "comment", author: "Mike T.", authorAvatar: "MT", content: "VIP lounge upgrade was worth every penny. Met other super fans!", likes: 234, comments: 18, shares: 12, timestamp: "12m ago" },
-  { id: "f5", type: "show", author: "The Midnight Echo", authorAvatar: "ME", verified: true, content: "Acoustic Sessions — Denver, Aug 18. Intimate. Unforgettable.", likes: 1560, comments: 289, shares: 445, timestamp: "15m ago" },
-];
+export const INITIAL_FEED: DemoFeedItem[] = featured.slice(0, 3).map((a, i) => ({
+  id: `f${i + 1}`,
+  type: i === 0 ? "show" as const : i === 1 ? "clip" as const : "milestone" as const,
+  author: a.stageName,
+  authorAvatar: a.avatarInitials,
+  verified: true,
+  content: i === 0
+    ? `Just announced: ${a.currentTour.name} hits ${a.currentTour.upcomingShows[1]?.city ?? "your city"}! 🎤`
+    : i === 1
+      ? `${a.genre} on LiveCircuit hits different. The arena felt REAL 🔥`
+      : `${a.followers.toLocaleString()} fans and counting on LiveCircuit 🙏`,
+  likes: 2800 - i * 400,
+  comments: 400 - i * 50,
+  shares: 800 - i * 100,
+  hashtag: `#${a.currentTour.name.replace(/\s+/g, "")}`,
+  timestamp: `${2 + i * 3}m ago`,
+}));
 
-export const FEED_TEMPLATES: Omit<DemoFeedItem, "id" | "timestamp">[] = [
-  { type: "clip", author: "Alex K.", authorAvatar: "AK", content: "Crowd energy is INSANE right now 🎸", likes: 456, comments: 34, shares: 78 },
-  { type: "show", author: "Luna Vale", authorAvatar: "LV", verified: true, content: "Soul Sessions tour — 6 cities, infinite vibes ✨", likes: 1890, comments: 267, shares: 534, hashtag: "#SoulSessions" },
-  { type: "comment", author: "Jamie L.", authorAvatar: "JL", content: "Digital touring changed everything for indie artists", likes: 678, comments: 89, shares: 156 },
-  { type: "milestone", author: "LiveCircuit", authorAvatar: "LC", verified: true, content: "50 states. 500+ digital arenas. One platform. 🌎", likes: 8900, comments: 1200, shares: 4500, hashtag: "#DigitalTouring" },
-];
+export const FEED_TEMPLATES: Omit<DemoFeedItem, "id" | "timestamp">[] = roster.slice(0, 3).map((a) => ({
+  type: "show" as const,
+  author: a.name,
+  authorAvatar: a.avatar,
+  verified: true,
+  content: `${getOriginalById(a.id)?.currentTour.name ?? "Tour"} — live on LiveCircuit ✨`,
+  likes: 1890,
+  comments: 267,
+  shares: 534,
+  hashtag: `#LiveCircuit`,
+}));
+
+export const CHAT_MESSAGES = getFanChatMessages(primary).map((m) => ({ user: m.user, message: m.message, emoji: m.emoji }));
+
+export const AI_RECOMMENDATIONS = roster.slice(0, 5).map((a) => {
+  const full = getOriginalById(a.id)!;
+  return {
+    artist: a.name,
+    insight: `${a.name} should schedule another show in ${full.currentTour.upcomingShows[2]?.city ?? "a new market"} next week.`,
+    detail: `${full.genre} demand trending up ${full.growthPct}% this quarter on LiveCircuit.`,
+    projectedRevenue: Math.round(a.revenue * 1.4),
+    confidence: 85 + (a.growth % 10),
+  };
+});
 
 export const FINALE_STATS = [
   { label: "States", value: 50, suffix: "" },
   { label: "Digital Arenas", value: 500, suffix: "+" },
-  { label: "Artists", value: 10000, suffix: "+" },
+  { label: "Artists", value: 120, suffix: "+" },
   { label: "Fans", value: 5, suffix: "M+" },
   { label: "Digital Tours", value: 0, suffix: "Unlimited", isText: true },
-];
-
-export const CHAT_MESSAGES = [
-  { user: "fan_tx_42", message: "THIS DROP 🔥🔥🔥", emoji: "🔥" },
-  { user: "musiclover99", message: "Best show of the year", emoji: "❤️" },
-  { user: "nova_superfan", message: "VIP lounge is amazing!", emoji: "⭐" },
-  { user: "dj_prism_crew", message: "Encore!!!", emoji: "🎉" },
-  { user: "austin_raver", message: "Texas represent 🌵", emoji: "🤘" },
-];
-
-export const AI_RECOMMENDATIONS = [
-  { artist: "Nova Ray", insight: "Your artist should schedule another show in Texas next week.", detail: "Houston and San Antonio show 82% audience overlap with Dallas.", projectedRevenue: 28000, confidence: 94 },
-  { artist: "DJ Prism", insight: "Miami and Orlando show strong EDM demand.", detail: "Combined weekend festival slot could 2× ticket velocity.", projectedRevenue: 45000, confidence: 89 },
-  { artist: "Luna Vale", insight: "Atlanta R&B audience overlap is 78%.", detail: "Pair with local soul collective for co-headline boost.", projectedRevenue: 18500, confidence: 86 },
-  { artist: "The Midnight Echo", insight: "Pacific Northwest acoustic tour extension recommended.", detail: "Portland and Seattle searches up 34% this month.", projectedRevenue: 22000, confidence: 91 },
-  { artist: "Kai Rivers", insight: "Chicago hip-hop market ready for arena upgrade.", detail: "Current club shows at 98% capacity — move to 8K venue.", projectedRevenue: 52000, confidence: 88 },
 ];

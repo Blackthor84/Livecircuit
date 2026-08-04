@@ -1,0 +1,173 @@
+{
+  "isDemoArtist": true,
+  "visibility": "demo-only",
+  "environment": "demo",
+  "id": "andre-solace",
+  "stageName": "Andre Solace",
+  "realName": "Andre Solace",
+  "genre": "Soul",
+  "subGenre": "Soul",
+  "hometown": "Chicago, IL",
+  "country": "United States",
+  "yearsActive": 3,
+  "label": "LiveCircuit Originals",
+  "management": "James Park",
+  "bio": "Andre Solace is a soul act from Chicago, IL. Classic soul for new arenas. Known for sharp suits and live brass, they've built a devoted global fanbase on LiveCircuit with 420,000 followers.",
+  "brand": {
+    "primaryColor": "#6366f1",
+    "secondaryColor": "#4f46e5",
+    "accentColor": "#818cf8",
+    "gradientClass": "from-indigo-500 to-violet-600",
+    "typography": "Space Grotesk",
+    "logoPath": "/assets/logos/andre-solace.png",
+    "brandIconPath": "/assets/logos/andre-solace-icon.png",
+    "brandDescription": "Sharp suits and live brass",
+    "brandVoice": "Confident, arena-ready, fan-first"
+  },
+  "appearance": {
+    "skinTone": "warm caramel",
+    "hairTexture": "wavy",
+    "hairColor": "platinum blonde",
+    "eyeColor": "deep brown",
+    "faceDescription": "Distinctive soul performer with deep brown eyes and wavy platinum blonde hair",
+    "bodyType": "long-limbed",
+    "height": "5'8\"",
+    "fashionStyle": "Sharp suits and live brass",
+    "accessories": [
+      "wrist cuffs"
+    ],
+    "stageOutfit": "Sharp suits and live brass — premium tour edition",
+    "streetOutfit": "Casual sharp suits and live brass off-stage look",
+    "performanceOutfit": "Signature Soul stage ensemble with LED accents"
+  },
+  "images": {
+    "heroImage": "/demo/performers/rnb-mic.png",
+    "portraitImage": "/demo/performers/rnb-mic.png",
+    "transparentPNG": "/demo/performers/rnb-mic.png",
+    "tourPoster": "/assets/tours/andre-solace-poster.png",
+    "albumCover": "/assets/albums/andre-solace.png",
+    "arenaBanner": "/assets/backgrounds/andre-solace-arena.png",
+    "vipImage": "/demo/performers/rnb-mic.png",
+    "poses": {
+      "hero": "/demo/performers/rnb-mic.png",
+      "portrait": "/demo/performers/rnb-mic.png",
+      "transparent": "/demo/performers/rnb-mic.png",
+      "performance": "/demo/performers/rnb-mic.png",
+      "walk": "/demo/performers/rnb-mic.png",
+      "crowd": "/demo/performers/rnb-mic.png",
+      "closeUp": "/demo/performers/rnb-profile.png",
+      "profile": "/demo/performers/rnb-profile.png",
+      "back": "/demo/performers/rnb-mic.png",
+      "instrument": "/demo/performers/rnb-mic.png",
+      "mic": "/demo/performers/rnb-mic.png",
+      "promo": "/demo/performers/rnb-mic.png",
+      "vip": "/demo/performers/rnb-mic.png",
+      "arenaBanner": "/demo/performers/rnb-mic.png"
+    }
+  },
+  "merchCollection": [
+    {
+      "id": "andre-solace-tee",
+      "name": "Solace Live Tour Tee",
+      "price": 35,
+      "imagePath": "/assets/merch/andre-solace/andre-solace-tee.png"
+    },
+    {
+      "id": "andre-solace-hoodie",
+      "name": "Andre Solace Glow Hoodie",
+      "price": 65,
+      "imagePath": "/assets/merch/andre-solace/andre-solace-hoodie.png"
+    },
+    {
+      "id": "andre-solace-vinyl",
+      "name": "Heartland Soul Vinyl",
+      "price": 45,
+      "imagePath": "/assets/merch/andre-solace/andre-solace-vinyl.png"
+    }
+  ],
+  "followers": 420000,
+  "monthlyListeners": 940000,
+  "fanRating": 4.3,
+  "averageAttendance": 8600,
+  "ticketPrice": 45,
+  "vipPrice": 125,
+  "merchRevenue": 324720,
+  "tourRevenue": 553500,
+  "careerRevenue": 2214000,
+  "verified": true,
+  "featured": false,
+  "socialLinks": {
+    "livecircuit": "/andre-solace",
+    "website": "https://livecircuit.demo/andre-solace",
+    "instagram": "@andresolace"
+  },
+  "currentTour": {
+    "name": "Solace Live",
+    "posterPath": "/assets/tours/andre-solace-poster.png",
+    "upcomingShows": [
+      {
+        "city": "Boston",
+        "venue": "Boston Harbor Arena",
+        "date": "Sep 12",
+        "ticketPrice": 45,
+        "vipPrice": 125
+      },
+      {
+        "city": "Chicago",
+        "venue": "Windy City Stadium",
+        "date": "Sep 19",
+        "ticketPrice": 55,
+        "vipPrice": 151
+      },
+      {
+        "city": "Dallas",
+        "venue": "Lone Star Arena",
+        "date": "Sep 26",
+        "ticketPrice": 45,
+        "vipPrice": 125
+      },
+      {
+        "city": "Miami",
+        "venue": "Miami Pulse Arena",
+        "date": "Oct 3",
+        "ticketPrice": 50,
+        "vipPrice": 125
+      }
+    ]
+  },
+  "favoriteVenue": "Boston Harbor Arena",
+  "performance": {
+    "signatureMove": "Classic soul for new arenas",
+    "signatureLighting": "purple-magenta-cyan",
+    "signatureAnimation": "crowd-wave pulse",
+    "preferredArenaTheme": "premium-festival",
+    "preferredPyro": false,
+    "preferredConfetti": false,
+    "preferredLighting": [
+      "purple",
+      "cyan",
+      "magenta"
+    ],
+    "preferredCameraAngles": [
+      "vip",
+      "stage-left",
+      "default"
+    ],
+    "musicStyle": "Soul",
+    "performanceStyle": "Sharp suits and live brass"
+  },
+  "personality": "Classic soul for new arenas",
+  "fanDemographics": "24–48, soul traditionalists",
+  "targetAudience": "24–48, soul traditionalists",
+  "catchPhrase": "Classic soul for new arenas",
+  "actType": "solo",
+  "liveStatus": "ON TOUR",
+  "poseCategory": "rnb",
+  "liveAudience": 8600,
+  "revenueTonight": 12300,
+  "growthPct": 17,
+  "showsScheduled": 12,
+  "albumTitle": "Heartland Soul",
+  "singleTitle": "Come Home",
+  "avatarInitials": "AS"
+}

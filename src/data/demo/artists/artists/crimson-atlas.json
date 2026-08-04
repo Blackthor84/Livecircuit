@@ -1,0 +1,173 @@
+{
+  "isDemoArtist": true,
+  "visibility": "demo-only",
+  "environment": "demo",
+  "id": "crimson-atlas",
+  "stageName": "Crimson Atlas",
+  "realName": "Crimson Atlas (collective)",
+  "genre": "Alternative Rock",
+  "subGenre": "Alternative Rock",
+  "hometown": "Montreal, QC",
+  "country": "Canada",
+  "yearsActive": 4,
+  "label": "LiveCircuit Originals",
+  "management": "James Park",
+  "bio": "Crimson Atlas is a alternative rock act from Montreal, QC. Wall-of-sound veterans. Known for art-rock stage design, they've built a devoted global fanbase on LiveCircuit with 590,000 followers.",
+  "brand": {
+    "primaryColor": "#f43f5e",
+    "secondaryColor": "#e11d48",
+    "accentColor": "#fb7185",
+    "gradientClass": "from-rose-500 to-pink-600",
+    "typography": "Space Grotesk",
+    "logoPath": "/assets/logos/crimson-atlas.png",
+    "brandIconPath": "/assets/logos/crimson-atlas-icon.png",
+    "brandDescription": "Art-rock stage design",
+    "brandVoice": "Confident, arena-ready, fan-first"
+  },
+  "appearance": {
+    "skinTone": "sand neutral",
+    "hairTexture": "coily 4C",
+    "hairColor": "dark brown",
+    "eyeColor": "hazel",
+    "faceDescription": "Distinctive alternative rock performer with hazel eyes and coily 4C dark brown hair",
+    "bodyType": "muscular broad",
+    "height": "5'6\"",
+    "fashionStyle": "Art-rock stage design",
+    "accessories": [
+      "chain necklace"
+    ],
+    "stageOutfit": "Art-rock stage design — premium tour edition",
+    "streetOutfit": "Casual art-rock stage design off-stage look",
+    "performanceOutfit": "Signature Alternative Rock stage ensemble with LED accents"
+  },
+  "images": {
+    "heroImage": "/demo/performers/rock-mic.png",
+    "portraitImage": "/demo/performers/rock-mic.png",
+    "transparentPNG": "/demo/performers/rock-mic.png",
+    "tourPoster": "/assets/tours/crimson-atlas-poster.png",
+    "albumCover": "/assets/albums/crimson-atlas.png",
+    "arenaBanner": "/assets/backgrounds/crimson-atlas-arena.png",
+    "vipImage": "/demo/performers/rock-mic.png",
+    "poses": {
+      "hero": "/demo/performers/rock-mic.png",
+      "portrait": "/demo/performers/rock-mic.png",
+      "transparent": "/demo/performers/rock-mic.png",
+      "performance": "/demo/performers/rock-guitar.png",
+      "walk": "/demo/performers/rock-full-body.png",
+      "crowd": "/demo/performers/rock-mic.png",
+      "closeUp": "/demo/performers/rock-mic.png",
+      "profile": "/demo/performers/rock-profile.png",
+      "back": "/demo/performers/rock-mic.png",
+      "instrument": "/demo/performers/rock-guitar.png",
+      "mic": "/demo/performers/rock-mic.png",
+      "promo": "/demo/performers/rock-mic.png",
+      "vip": "/demo/performers/rock-mic.png",
+      "arenaBanner": "/demo/performers/rock-mic.png"
+    }
+  },
+  "merchCollection": [
+    {
+      "id": "crimson-atlas-tee",
+      "name": "Atlas Rising Tour Tee",
+      "price": 35,
+      "imagePath": "/assets/merch/crimson-atlas/crimson-atlas-tee.png"
+    },
+    {
+      "id": "crimson-atlas-hoodie",
+      "name": "Crimson Atlas Glow Hoodie",
+      "price": 65,
+      "imagePath": "/assets/merch/crimson-atlas/crimson-atlas-hoodie.png"
+    },
+    {
+      "id": "crimson-atlas-vinyl",
+      "name": "Cartography Vinyl",
+      "price": 45,
+      "imagePath": "/assets/merch/crimson-atlas/crimson-atlas-vinyl.png"
+    }
+  ],
+  "followers": 590000,
+  "monthlyListeners": 1340000,
+  "fanRating": 4.4,
+  "averageAttendance": 9800,
+  "ticketPrice": 45,
+  "vipPrice": 125,
+  "merchRevenue": 411840,
+  "tourRevenue": 702000,
+  "careerRevenue": 2808000,
+  "verified": true,
+  "featured": false,
+  "socialLinks": {
+    "livecircuit": "/crimson-atlas",
+    "website": "https://livecircuit.demo/crimson-atlas",
+    "instagram": "@crimsonatlas"
+  },
+  "currentTour": {
+    "name": "Atlas Rising",
+    "posterPath": "/assets/tours/crimson-atlas-poster.png",
+    "upcomingShows": [
+      {
+        "city": "Boston",
+        "venue": "Boston Harbor Arena",
+        "date": "Sep 12",
+        "ticketPrice": 45,
+        "vipPrice": 125
+      },
+      {
+        "city": "Chicago",
+        "venue": "Windy City Stadium",
+        "date": "Sep 19",
+        "ticketPrice": 55,
+        "vipPrice": 151
+      },
+      {
+        "city": "Dallas",
+        "venue": "Lone Star Arena",
+        "date": "Sep 26",
+        "ticketPrice": 45,
+        "vipPrice": 125
+      },
+      {
+        "city": "Miami",
+        "venue": "Miami Pulse Arena",
+        "date": "Oct 3",
+        "ticketPrice": 50,
+        "vipPrice": 125
+      }
+    ]
+  },
+  "favoriteVenue": "Boston Harbor Arena",
+  "performance": {
+    "signatureMove": "Wall-of-sound veterans",
+    "signatureLighting": "purple-magenta-cyan",
+    "signatureAnimation": "crowd-wave pulse",
+    "preferredArenaTheme": "premium-festival",
+    "preferredPyro": true,
+    "preferredConfetti": false,
+    "preferredLighting": [
+      "purple",
+      "cyan",
+      "magenta"
+    ],
+    "preferredCameraAngles": [
+      "vip",
+      "stage-left",
+      "default"
+    ],
+    "musicStyle": "Alternative Rock",
+    "performanceStyle": "Art-rock stage design"
+  },
+  "personality": "Wall-of-sound veterans",
+  "fanDemographics": "20–38, art rock",
+  "targetAudience": "20–38, art rock",
+  "catchPhrase": "Wall-of-sound veterans",
+  "actType": "band",
+  "liveStatus": "LIVE",
+  "poseCategory": "rock-band",
+  "liveAudience": 9800,
+  "revenueTonight": 15600,
+  "growthPct": 10,
+  "showsScheduled": 5,
+  "albumTitle": "Cartography",
+  "singleTitle": "North",
+  "avatarInitials": "CA"
+}

@@ -6,6 +6,7 @@ import { motion } from "framer-motion";
 import { ArrowLeft, Building2, Map, Mic2, Sparkles, Ticket, Users } from "lucide-react";
 import { LiveCircuitLogo } from "@/components/brand/livecircuit-logo";
 import { DemoStadiumBackground } from "@/components/demo/interactive/shared/demo-stadium-bg";
+import { DemoContentNotice } from "@/components/demo/shared/demo-content-notice";
 import { cn } from "@/lib/utils";
 import { ROUTES } from "@/lib/constants";
 
@@ -92,6 +93,7 @@ export function InteractiveDemoLayout({ children }: { children: React.ReactNode 
         className="relative mx-auto max-w-[1600px] px-4 py-4 sm:px-6 sm:py-6"
       >
         {children}
+        <DemoContentNotice className="relative mt-8 pb-6" variant="inline" />
       </motion.main>
     </div>
   );

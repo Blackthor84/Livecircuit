@@ -1,0 +1,173 @@
+{
+  "isDemoArtist": true,
+  "visibility": "demo-only",
+  "environment": "demo",
+  "id": "velvet-midnight",
+  "stageName": "Velvet Midnight",
+  "realName": "Velvet Midnight",
+  "genre": "Contemporary R&B",
+  "subGenre": "Contemporary R&B",
+  "hometown": "Detroit, MI",
+  "country": "United States",
+  "yearsActive": 6,
+  "label": "LiveCircuit Originals",
+  "management": "James Park",
+  "bio": "Velvet Midnight is a contemporary r&b act from Detroit, MI. Silk vocals over modern trap-soul. Known for midnight satin and gold, they've built a devoted global fanbase on LiveCircuit with 980,000 followers.",
+  "brand": {
+    "primaryColor": "#f43f5e",
+    "secondaryColor": "#e11d48",
+    "accentColor": "#fb7185",
+    "gradientClass": "from-rose-500 to-pink-600",
+    "typography": "Space Grotesk",
+    "logoPath": "/assets/logos/velvet-midnight.png",
+    "brandIconPath": "/assets/logos/velvet-midnight-icon.png",
+    "brandDescription": "Midnight satin and gold",
+    "brandVoice": "Confident, arena-ready, fan-first"
+  },
+  "appearance": {
+    "skinTone": "olive medium",
+    "hairTexture": "braided locs",
+    "hairColor": "copper red",
+    "eyeColor": "hazel",
+    "faceDescription": "Distinctive contemporary r&b performer with hazel eyes and braided locs copper red hair",
+    "bodyType": "muscular broad",
+    "height": "5'2\"",
+    "fashionStyle": "Midnight satin and gold",
+    "accessories": [
+      "chain necklace"
+    ],
+    "stageOutfit": "Midnight satin and gold — premium tour edition",
+    "streetOutfit": "Casual midnight satin and gold off-stage look",
+    "performanceOutfit": "Signature Contemporary R&B stage ensemble with LED accents"
+  },
+  "images": {
+    "heroImage": "/demo/performers/rnb-mic.png",
+    "portraitImage": "/demo/performers/rnb-mic.png",
+    "transparentPNG": "/demo/performers/rnb-mic.png",
+    "tourPoster": "/assets/tours/velvet-midnight-poster.png",
+    "albumCover": "/assets/albums/velvet-midnight.png",
+    "arenaBanner": "/assets/backgrounds/velvet-midnight-arena.png",
+    "vipImage": "/demo/performers/rnb-mic.png",
+    "poses": {
+      "hero": "/demo/performers/rnb-mic.png",
+      "portrait": "/demo/performers/rnb-mic.png",
+      "transparent": "/demo/performers/rnb-mic.png",
+      "performance": "/demo/performers/rnb-mic.png",
+      "walk": "/demo/performers/rnb-mic.png",
+      "crowd": "/demo/performers/rnb-mic.png",
+      "closeUp": "/demo/performers/rnb-profile.png",
+      "profile": "/demo/performers/rnb-profile.png",
+      "back": "/demo/performers/rnb-mic.png",
+      "instrument": "/demo/performers/rnb-mic.png",
+      "mic": "/demo/performers/rnb-mic.png",
+      "promo": "/demo/performers/rnb-mic.png",
+      "vip": "/demo/performers/rnb-mic.png",
+      "arenaBanner": "/demo/performers/rnb-mic.png"
+    }
+  },
+  "merchCollection": [
+    {
+      "id": "velvet-midnight-tee",
+      "name": "Velvet Hours Tour Tee",
+      "price": 35,
+      "imagePath": "/assets/merch/velvet-midnight/velvet-midnight-tee.png"
+    },
+    {
+      "id": "velvet-midnight-hoodie",
+      "name": "Velvet Midnight Glow Hoodie",
+      "price": 65,
+      "imagePath": "/assets/merch/velvet-midnight/velvet-midnight-hoodie.png"
+    },
+    {
+      "id": "velvet-midnight-vinyl",
+      "name": "After Midnight Vinyl",
+      "price": 45,
+      "imagePath": "/assets/merch/velvet-midnight/velvet-midnight-vinyl.png"
+    }
+  ],
+  "followers": 980000,
+  "monthlyListeners": 2240000,
+  "fanRating": 4.6000000000000005,
+  "averageAttendance": 8000,
+  "ticketPrice": 45,
+  "vipPrice": 125,
+  "merchRevenue": 316800,
+  "tourRevenue": 540000,
+  "careerRevenue": 2160000,
+  "verified": true,
+  "featured": true,
+  "socialLinks": {
+    "livecircuit": "/velvet-midnight",
+    "website": "https://livecircuit.demo/velvet-midnight",
+    "instagram": "@velvetmidnight"
+  },
+  "currentTour": {
+    "name": "Velvet Hours",
+    "posterPath": "/assets/tours/velvet-midnight-poster.png",
+    "upcomingShows": [
+      {
+        "city": "Boston",
+        "venue": "Boston Harbor Arena",
+        "date": "Sep 12",
+        "ticketPrice": 45,
+        "vipPrice": 125
+      },
+      {
+        "city": "Chicago",
+        "venue": "Windy City Stadium",
+        "date": "Sep 19",
+        "ticketPrice": 55,
+        "vipPrice": 151
+      },
+      {
+        "city": "Dallas",
+        "venue": "Lone Star Arena",
+        "date": "Sep 26",
+        "ticketPrice": 45,
+        "vipPrice": 125
+      },
+      {
+        "city": "Miami",
+        "venue": "Miami Pulse Arena",
+        "date": "Oct 3",
+        "ticketPrice": 50,
+        "vipPrice": 125
+      }
+    ]
+  },
+  "favoriteVenue": "Boston Harbor Arena",
+  "performance": {
+    "signatureMove": "Silk vocals over modern trap-soul",
+    "signatureLighting": "purple-magenta-cyan",
+    "signatureAnimation": "crowd-wave pulse",
+    "preferredArenaTheme": "premium-festival",
+    "preferredPyro": false,
+    "preferredConfetti": false,
+    "preferredLighting": [
+      "purple",
+      "cyan",
+      "magenta"
+    ],
+    "preferredCameraAngles": [
+      "vip",
+      "stage-left",
+      "default"
+    ],
+    "musicStyle": "Contemporary R&B",
+    "performanceStyle": "Midnight satin and gold"
+  },
+  "personality": "Silk vocals over modern trap-soul",
+  "fanDemographics": "18–35, R&B streaming core",
+  "targetAudience": "18–35, R&B streaming core",
+  "catchPhrase": "Silk vocals over modern trap-soul",
+  "actType": "solo",
+  "liveStatus": "LIVE",
+  "poseCategory": "rnb",
+  "liveAudience": 8000,
+  "revenueTonight": 12000,
+  "growthPct": 12,
+  "showsScheduled": 3,
+  "albumTitle": "After Midnight",
+  "singleTitle": "Slow Burn",
+  "avatarInitials": "VM"
+}

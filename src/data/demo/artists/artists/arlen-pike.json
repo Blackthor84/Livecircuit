@@ -1,0 +1,173 @@
+{
+  "isDemoArtist": true,
+  "visibility": "demo-only",
+  "environment": "demo",
+  "id": "arlen-pike",
+  "stageName": "Arlen Pike",
+  "realName": "Arlen Pike",
+  "genre": "Acoustic",
+  "subGenre": "Acoustic",
+  "hometown": "Nashville, TN",
+  "country": "United States",
+  "yearsActive": 13,
+  "label": "LiveCircuit Originals",
+  "management": "James Park",
+  "bio": "Arlen Pike is a acoustic act from Nashville, TN. Story-song craftsman. Known for classic nashville acoustic, they've built a devoted global fanbase on LiveCircuit with 190,000 followers.",
+  "brand": {
+    "primaryColor": "#f59e0b",
+    "secondaryColor": "#d97706",
+    "accentColor": "#fbbf24",
+    "gradientClass": "from-amber-500 to-orange-600",
+    "typography": "Space Grotesk",
+    "logoPath": "/assets/logos/arlen-pike.png",
+    "brandIconPath": "/assets/logos/arlen-pike-icon.png",
+    "brandDescription": "Classic Nashville acoustic",
+    "brandVoice": "Confident, arena-ready, fan-first"
+  },
+  "appearance": {
+    "skinTone": "fair with warm undertones",
+    "hairTexture": "textured crop",
+    "hairColor": "purple ombre",
+    "eyeColor": "heterochromia green-brown",
+    "faceDescription": "Distinctive acoustic performer with heterochromia green-brown eyes and textured crop purple ombre hair",
+    "bodyType": "athletic lean",
+    "height": "5'4\"",
+    "fashionStyle": "Classic Nashville acoustic",
+    "accessories": [
+      "ring stack"
+    ],
+    "stageOutfit": "Classic Nashville acoustic — premium tour edition",
+    "streetOutfit": "Casual classic nashville acoustic off-stage look",
+    "performanceOutfit": "Signature Acoustic stage ensemble with LED accents"
+  },
+  "images": {
+    "heroImage": "/demo/performers/acoustic-mic.png",
+    "portraitImage": "/demo/performers/acoustic-mic.png",
+    "transparentPNG": "/demo/performers/acoustic-mic.png",
+    "tourPoster": "/assets/tours/arlen-pike-poster.png",
+    "albumCover": "/assets/albums/arlen-pike.png",
+    "arenaBanner": "/assets/backgrounds/arlen-pike-arena.png",
+    "vipImage": "/demo/performers/acoustic-mic.png",
+    "poses": {
+      "hero": "/demo/performers/acoustic-mic.png",
+      "portrait": "/demo/performers/acoustic-mic.png",
+      "transparent": "/demo/performers/acoustic-mic.png",
+      "performance": "/demo/performers/acoustic-piano.png",
+      "walk": "/demo/performers/acoustic-mic.png",
+      "crowd": "/demo/performers/acoustic-mic.png",
+      "closeUp": "/demo/performers/acoustic-mic.png",
+      "profile": "/demo/performers/acoustic-mic.png",
+      "back": "/demo/performers/acoustic-mic.png",
+      "instrument": "/demo/performers/acoustic-piano.png",
+      "mic": "/demo/performers/acoustic-mic.png",
+      "promo": "/demo/performers/acoustic-mic.png",
+      "vip": "/demo/performers/acoustic-mic.png",
+      "arenaBanner": "/demo/performers/acoustic-mic.png"
+    }
+  },
+  "merchCollection": [
+    {
+      "id": "arlen-pike-tee",
+      "name": "Pike Sessions Tour Tee",
+      "price": 35,
+      "imagePath": "/assets/merch/arlen-pike/arlen-pike-tee.png"
+    },
+    {
+      "id": "arlen-pike-hoodie",
+      "name": "Arlen Pike Glow Hoodie",
+      "price": 65,
+      "imagePath": "/assets/merch/arlen-pike/arlen-pike-hoodie.png"
+    },
+    {
+      "id": "arlen-pike-vinyl",
+      "name": "Carved Vinyl",
+      "price": 45,
+      "imagePath": "/assets/merch/arlen-pike/arlen-pike-vinyl.png"
+    }
+  ],
+  "followers": 190000,
+  "monthlyListeners": 420000,
+  "fanRating": 4.9,
+  "averageAttendance": 7800,
+  "ticketPrice": 45,
+  "vipPrice": 125,
+  "merchRevenue": 287760,
+  "tourRevenue": 490500,
+  "careerRevenue": 1962000,
+  "verified": true,
+  "featured": false,
+  "socialLinks": {
+    "livecircuit": "/arlen-pike",
+    "website": "https://livecircuit.demo/arlen-pike",
+    "instagram": "@arlenpike"
+  },
+  "currentTour": {
+    "name": "Pike Sessions",
+    "posterPath": "/assets/tours/arlen-pike-poster.png",
+    "upcomingShows": [
+      {
+        "city": "Boston",
+        "venue": "Boston Harbor Arena",
+        "date": "Sep 12",
+        "ticketPrice": 45,
+        "vipPrice": 125
+      },
+      {
+        "city": "Chicago",
+        "venue": "Windy City Stadium",
+        "date": "Sep 19",
+        "ticketPrice": 55,
+        "vipPrice": 151
+      },
+      {
+        "city": "Dallas",
+        "venue": "Lone Star Arena",
+        "date": "Sep 26",
+        "ticketPrice": 45,
+        "vipPrice": 125
+      },
+      {
+        "city": "Miami",
+        "venue": "Miami Pulse Arena",
+        "date": "Oct 3",
+        "ticketPrice": 50,
+        "vipPrice": 125
+      }
+    ]
+  },
+  "favoriteVenue": "Boston Harbor Arena",
+  "performance": {
+    "signatureMove": "Story-song craftsman",
+    "signatureLighting": "purple-magenta-cyan",
+    "signatureAnimation": "crowd-wave pulse",
+    "preferredArenaTheme": "premium-festival",
+    "preferredPyro": false,
+    "preferredConfetti": false,
+    "preferredLighting": [
+      "purple",
+      "cyan",
+      "magenta"
+    ],
+    "preferredCameraAngles": [
+      "vip",
+      "stage-left",
+      "default"
+    ],
+    "musicStyle": "Acoustic",
+    "performanceStyle": "Classic Nashville acoustic"
+  },
+  "personality": "Story-song craftsman",
+  "fanDemographics": "26–50, country-acoustic",
+  "targetAudience": "26–50, country-acoustic",
+  "catchPhrase": "Story-song craftsman",
+  "actType": "solo",
+  "liveStatus": "ON TOUR",
+  "poseCategory": "acoustic",
+  "liveAudience": 7800,
+  "revenueTonight": 10900,
+  "growthPct": 15,
+  "showsScheduled": 10,
+  "albumTitle": "Carved",
+  "singleTitle": "Grain",
+  "avatarInitials": "AP"
+}

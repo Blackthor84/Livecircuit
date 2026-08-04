@@ -1,0 +1,173 @@
+{
+  "isDemoArtist": true,
+  "visibility": "demo-only",
+  "environment": "demo",
+  "id": "solar-echo",
+  "stageName": "Solar Echo",
+  "realName": "Solar Echo",
+  "genre": "Electronic",
+  "subGenre": "Electronic",
+  "hometown": "Ibiza, ES",
+  "country": "Spain",
+  "yearsActive": 13,
+  "label": "LiveCircuit Originals",
+  "management": "Sarah Chen",
+  "bio": "Solar Echo is a electronic act from Ibiza, ES. Sunset-to-sunrise electronic. Known for solar stage visuals, they've built a devoted global fanbase on LiveCircuit with 1,320,000 followers.",
+  "brand": {
+    "primaryColor": "#f59e0b",
+    "secondaryColor": "#d97706",
+    "accentColor": "#fbbf24",
+    "gradientClass": "from-amber-500 to-orange-600",
+    "typography": "Space Grotesk",
+    "logoPath": "/assets/logos/solar-echo.png",
+    "brandIconPath": "/assets/logos/solar-echo-icon.png",
+    "brandDescription": "Solar stage visuals",
+    "brandVoice": "Confident, arena-ready, fan-first"
+  },
+  "appearance": {
+    "skinTone": "medium wheat",
+    "hairTexture": "box braids",
+    "hairColor": "golden highlights",
+    "eyeColor": "blue",
+    "faceDescription": "Distinctive electronic performer with blue eyes and box braids golden highlights hair",
+    "bodyType": "dancer-fit",
+    "height": "5'10\"",
+    "fashionStyle": "Solar stage visuals",
+    "accessories": [
+      "stud earrings"
+    ],
+    "stageOutfit": "Solar stage visuals — premium tour edition",
+    "streetOutfit": "Casual solar stage visuals off-stage look",
+    "performanceOutfit": "Signature Electronic stage ensemble with LED accents"
+  },
+  "images": {
+    "heroImage": "/demo/performers/dj-table.png",
+    "portraitImage": "/demo/performers/dj-table.png",
+    "transparentPNG": "/demo/performers/dj-table.png",
+    "tourPoster": "/assets/tours/solar-echo-poster.png",
+    "albumCover": "/assets/albums/solar-echo.png",
+    "arenaBanner": "/assets/backgrounds/solar-echo-arena.png",
+    "vipImage": "/demo/performers/dj-table.png",
+    "poses": {
+      "hero": "/demo/performers/dj-table.png",
+      "portrait": "/demo/performers/dj-table.png",
+      "transparent": "/demo/performers/dj-table.png",
+      "performance": "/demo/performers/dj-arms-up.png",
+      "walk": "/demo/performers/dj-table.png",
+      "crowd": "/demo/performers/dj-table.png",
+      "closeUp": "/demo/performers/dj-table.png",
+      "profile": "/demo/performers/dj-table.png",
+      "back": "/demo/performers/dj-table.png",
+      "instrument": "/demo/performers/dj-table.png",
+      "mic": "/demo/performers/dj-table.png",
+      "promo": "/demo/performers/dj-table.png",
+      "vip": "/demo/performers/dj-table.png",
+      "arenaBanner": "/demo/performers/dj-table.png"
+    }
+  },
+  "merchCollection": [
+    {
+      "id": "solar-echo-tee",
+      "name": "Solar Circuit Tour Tee",
+      "price": 35,
+      "imagePath": "/assets/merch/solar-echo/solar-echo-tee.png"
+    },
+    {
+      "id": "solar-echo-hoodie",
+      "name": "Solar Echo Glow Hoodie",
+      "price": 65,
+      "imagePath": "/assets/merch/solar-echo/solar-echo-hoodie.png"
+    },
+    {
+      "id": "solar-echo-vinyl",
+      "name": "Helios Vinyl",
+      "price": 45,
+      "imagePath": "/assets/merch/solar-echo/solar-echo-vinyl.png"
+    }
+  ],
+  "followers": 1320000,
+  "monthlyListeners": 2890000,
+  "fanRating": 4.7,
+  "averageAttendance": 8900,
+  "ticketPrice": 45,
+  "vipPrice": 125,
+  "merchRevenue": 364320,
+  "tourRevenue": 621000,
+  "careerRevenue": 2484000,
+  "verified": true,
+  "featured": true,
+  "socialLinks": {
+    "livecircuit": "/solar-echo",
+    "website": "https://livecircuit.demo/solar-echo",
+    "instagram": "@solarecho"
+  },
+  "currentTour": {
+    "name": "Solar Circuit",
+    "posterPath": "/assets/tours/solar-echo-poster.png",
+    "upcomingShows": [
+      {
+        "city": "Boston",
+        "venue": "Boston Harbor Arena",
+        "date": "Sep 12",
+        "ticketPrice": 45,
+        "vipPrice": 125
+      },
+      {
+        "city": "Chicago",
+        "venue": "Windy City Stadium",
+        "date": "Sep 19",
+        "ticketPrice": 55,
+        "vipPrice": 151
+      },
+      {
+        "city": "Dallas",
+        "venue": "Lone Star Arena",
+        "date": "Sep 26",
+        "ticketPrice": 45,
+        "vipPrice": 125
+      },
+      {
+        "city": "Miami",
+        "venue": "Miami Pulse Arena",
+        "date": "Oct 3",
+        "ticketPrice": 50,
+        "vipPrice": 125
+      }
+    ]
+  },
+  "favoriteVenue": "Boston Harbor Arena",
+  "performance": {
+    "signatureMove": "Sunset-to-sunrise electronic",
+    "signatureLighting": "purple-magenta-cyan",
+    "signatureAnimation": "crowd-wave pulse",
+    "preferredArenaTheme": "premium-festival",
+    "preferredPyro": false,
+    "preferredConfetti": false,
+    "preferredLighting": [
+      "purple",
+      "cyan",
+      "magenta"
+    ],
+    "preferredCameraAngles": [
+      "vip",
+      "stage-left",
+      "default"
+    ],
+    "musicStyle": "Electronic",
+    "performanceStyle": "Solar stage visuals"
+  },
+  "personality": "Sunset-to-sunrise electronic",
+  "fanDemographics": "20–36, electronic",
+  "targetAudience": "20–36, electronic",
+  "catchPhrase": "Sunset-to-sunrise electronic",
+  "actType": "solo",
+  "liveStatus": "LIVE",
+  "poseCategory": "dj",
+  "liveAudience": 8900,
+  "revenueTonight": 13800,
+  "growthPct": 13,
+  "showsScheduled": 4,
+  "albumTitle": "Helios",
+  "singleTitle": "Ray",
+  "avatarInitials": "SE"
+}

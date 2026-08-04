@@ -1,0 +1,173 @@
+{
+  "isDemoArtist": true,
+  "visibility": "demo-only",
+  "environment": "demo",
+  "id": "midnight-collective",
+  "stageName": "Midnight Collective",
+  "realName": "Midnight Collective (collective)",
+  "genre": "Alternative R&B",
+  "subGenre": "Alternative R&B",
+  "hometown": "Seattle, WA",
+  "country": "United States",
+  "yearsActive": 10,
+  "label": "LiveCircuit Originals",
+  "management": "James Park",
+  "bio": "Midnight Collective is a alternative r&b act from Seattle, WA. Alt-R&B with live instrumentation. Known for dark minimal stage wear, they've built a devoted global fanbase on LiveCircuit with 290,000 followers.",
+  "brand": {
+    "primaryColor": "#64748b",
+    "secondaryColor": "#475569",
+    "accentColor": "#94a3b8",
+    "gradientClass": "from-slate-500 to-zinc-600",
+    "typography": "Space Grotesk",
+    "logoPath": "/assets/logos/midnight-collective.png",
+    "brandIconPath": "/assets/logos/midnight-collective-icon.png",
+    "brandDescription": "Dark minimal stage wear",
+    "brandVoice": "Confident, arena-ready, fan-first"
+  },
+  "appearance": {
+    "skinTone": "olive medium",
+    "hairTexture": "braided locs",
+    "hairColor": "copper red",
+    "eyeColor": "hazel",
+    "faceDescription": "Distinctive alternative r&b performer with hazel eyes and braided locs copper red hair",
+    "bodyType": "muscular broad",
+    "height": "5'6\"",
+    "fashionStyle": "Dark minimal stage wear",
+    "accessories": [
+      "chain necklace"
+    ],
+    "stageOutfit": "Dark minimal stage wear — premium tour edition",
+    "streetOutfit": "Casual dark minimal stage wear off-stage look",
+    "performanceOutfit": "Signature Alternative R&B stage ensemble with LED accents"
+  },
+  "images": {
+    "heroImage": "/demo/performers/rnb-mic.png",
+    "portraitImage": "/demo/performers/rnb-mic.png",
+    "transparentPNG": "/demo/performers/rnb-mic.png",
+    "tourPoster": "/assets/tours/midnight-collective-poster.png",
+    "albumCover": "/assets/albums/midnight-collective.png",
+    "arenaBanner": "/assets/backgrounds/midnight-collective-arena.png",
+    "vipImage": "/demo/performers/rnb-mic.png",
+    "poses": {
+      "hero": "/demo/performers/rnb-mic.png",
+      "portrait": "/demo/performers/rnb-mic.png",
+      "transparent": "/demo/performers/rnb-mic.png",
+      "performance": "/demo/performers/rnb-mic.png",
+      "walk": "/demo/performers/rnb-mic.png",
+      "crowd": "/demo/performers/rnb-mic.png",
+      "closeUp": "/demo/performers/rnb-profile.png",
+      "profile": "/demo/performers/rnb-profile.png",
+      "back": "/demo/performers/rnb-mic.png",
+      "instrument": "/demo/performers/rnb-mic.png",
+      "mic": "/demo/performers/rnb-mic.png",
+      "promo": "/demo/performers/rnb-mic.png",
+      "vip": "/demo/performers/rnb-mic.png",
+      "arenaBanner": "/demo/performers/rnb-mic.png"
+    }
+  },
+  "merchCollection": [
+    {
+      "id": "midnight-collective-tee",
+      "name": "Collective Nights Tour Tee",
+      "price": 35,
+      "imagePath": "/assets/merch/midnight-collective/midnight-collective-tee.png"
+    },
+    {
+      "id": "midnight-collective-hoodie",
+      "name": "Midnight Collective Glow Hoodie",
+      "price": 65,
+      "imagePath": "/assets/merch/midnight-collective/midnight-collective-hoodie.png"
+    },
+    {
+      "id": "midnight-collective-vinyl",
+      "name": "Grey Hour Vinyl",
+      "price": 45,
+      "imagePath": "/assets/merch/midnight-collective/midnight-collective-vinyl.png"
+    }
+  ],
+  "followers": 290000,
+  "monthlyListeners": 640000,
+  "fanRating": 4.8,
+  "averageAttendance": 7400,
+  "ticketPrice": 45,
+  "vipPrice": 125,
+  "merchRevenue": 269280,
+  "tourRevenue": 459000,
+  "careerRevenue": 1836000,
+  "verified": true,
+  "featured": false,
+  "socialLinks": {
+    "livecircuit": "/midnight-collective",
+    "website": "https://livecircuit.demo/midnight-collective",
+    "instagram": "@midnightcollective"
+  },
+  "currentTour": {
+    "name": "Collective Nights",
+    "posterPath": "/assets/tours/midnight-collective-poster.png",
+    "upcomingShows": [
+      {
+        "city": "Boston",
+        "venue": "Boston Harbor Arena",
+        "date": "Sep 12",
+        "ticketPrice": 45,
+        "vipPrice": 125
+      },
+      {
+        "city": "Chicago",
+        "venue": "Windy City Stadium",
+        "date": "Sep 19",
+        "ticketPrice": 55,
+        "vipPrice": 151
+      },
+      {
+        "city": "Dallas",
+        "venue": "Lone Star Arena",
+        "date": "Sep 26",
+        "ticketPrice": 45,
+        "vipPrice": 125
+      },
+      {
+        "city": "Miami",
+        "venue": "Miami Pulse Arena",
+        "date": "Oct 3",
+        "ticketPrice": 50,
+        "vipPrice": 125
+      }
+    ]
+  },
+  "favoriteVenue": "Boston Harbor Arena",
+  "performance": {
+    "signatureMove": "Alt-R&B with live instrumentation",
+    "signatureLighting": "purple-magenta-cyan",
+    "signatureAnimation": "crowd-wave pulse",
+    "preferredArenaTheme": "premium-festival",
+    "preferredPyro": false,
+    "preferredConfetti": false,
+    "preferredLighting": [
+      "purple",
+      "cyan",
+      "magenta"
+    ],
+    "preferredCameraAngles": [
+      "vip",
+      "stage-left",
+      "default"
+    ],
+    "musicStyle": "Alternative R&B",
+    "performanceStyle": "Dark minimal stage wear"
+  },
+  "personality": "Alt-R&B with live instrumentation",
+  "fanDemographics": "20–36, alt-R&B live",
+  "targetAudience": "20–36, alt-R&B live",
+  "catchPhrase": "Alt-R&B with live instrumentation",
+  "actType": "group",
+  "liveStatus": "ON TOUR",
+  "poseCategory": "rnb",
+  "liveAudience": 7400,
+  "revenueTonight": 10200,
+  "growthPct": 14,
+  "showsScheduled": 9,
+  "albumTitle": "Grey Hour",
+  "singleTitle": "Assemble",
+  "avatarInitials": "MC"
+}

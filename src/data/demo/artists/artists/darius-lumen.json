@@ -1,0 +1,173 @@
+{
+  "isDemoArtist": true,
+  "visibility": "demo-only",
+  "environment": "demo",
+  "id": "darius-lumen",
+  "stageName": "Darius Lumen",
+  "realName": "Darius Lumen",
+  "genre": "R&B",
+  "subGenre": "R&B",
+  "hometown": "Houston, TX",
+  "country": "United States",
+  "yearsActive": 3,
+  "label": "LiveCircuit Originals",
+  "management": "Marcus Lee",
+  "bio": "Darius Lumen is a r&b act from Houston, TX. Late-night groove architect. Known for tailored soul luxury, they've built a devoted global fanbase on LiveCircuit with 840,000 followers.",
+  "brand": {
+    "primaryColor": "#a855f7",
+    "secondaryColor": "#7c3aed",
+    "accentColor": "#c084fc",
+    "gradientClass": "from-violet-500 to-purple-600",
+    "typography": "Space Grotesk",
+    "logoPath": "/assets/logos/darius-lumen.png",
+    "brandIconPath": "/assets/logos/darius-lumen-icon.png",
+    "brandDescription": "Tailored soul luxury",
+    "brandVoice": "Confident, arena-ready, fan-first"
+  },
+  "appearance": {
+    "skinTone": "espresso",
+    "hairTexture": "layered waves",
+    "hairColor": "jet black",
+    "eyeColor": "amber brown",
+    "faceDescription": "Distinctive r&b performer with amber brown eyes and layered waves jet black hair",
+    "bodyType": "curvy strong",
+    "height": "5'8\"",
+    "fashionStyle": "Tailored soul luxury",
+    "accessories": [
+      "signature hat"
+    ],
+    "stageOutfit": "Tailored soul luxury — premium tour edition",
+    "streetOutfit": "Casual tailored soul luxury off-stage look",
+    "performanceOutfit": "Signature R&B stage ensemble with LED accents"
+  },
+  "images": {
+    "heroImage": "/demo/performers/rnb-mic.png",
+    "portraitImage": "/demo/performers/rnb-mic.png",
+    "transparentPNG": "/demo/performers/rnb-mic.png",
+    "tourPoster": "/assets/tours/darius-lumen-poster.png",
+    "albumCover": "/assets/albums/darius-lumen.png",
+    "arenaBanner": "/assets/backgrounds/darius-lumen-arena.png",
+    "vipImage": "/demo/performers/rnb-mic.png",
+    "poses": {
+      "hero": "/demo/performers/rnb-mic.png",
+      "portrait": "/demo/performers/rnb-mic.png",
+      "transparent": "/demo/performers/rnb-mic.png",
+      "performance": "/demo/performers/rnb-mic.png",
+      "walk": "/demo/performers/rnb-mic.png",
+      "crowd": "/demo/performers/rnb-mic.png",
+      "closeUp": "/demo/performers/rnb-profile.png",
+      "profile": "/demo/performers/rnb-profile.png",
+      "back": "/demo/performers/rnb-mic.png",
+      "instrument": "/demo/performers/rnb-mic.png",
+      "mic": "/demo/performers/rnb-mic.png",
+      "promo": "/demo/performers/rnb-mic.png",
+      "vip": "/demo/performers/rnb-mic.png",
+      "arenaBanner": "/demo/performers/rnb-mic.png"
+    }
+  },
+  "merchCollection": [
+    {
+      "id": "darius-lumen-tee",
+      "name": "Lumen Lines Tour Tee",
+      "price": 35,
+      "imagePath": "/assets/merch/darius-lumen/darius-lumen-tee.png"
+    },
+    {
+      "id": "darius-lumen-hoodie",
+      "name": "Darius Lumen Glow Hoodie",
+      "price": 65,
+      "imagePath": "/assets/merch/darius-lumen/darius-lumen-hoodie.png"
+    },
+    {
+      "id": "darius-lumen-vinyl",
+      "name": "City Glow Vinyl",
+      "price": 45,
+      "imagePath": "/assets/merch/darius-lumen/darius-lumen-vinyl.png"
+    }
+  ],
+  "followers": 840000,
+  "monthlyListeners": 1920000,
+  "fanRating": 4.4,
+  "averageAttendance": 9800,
+  "ticketPrice": 45,
+  "vipPrice": 125,
+  "merchRevenue": 411840,
+  "tourRevenue": 702000,
+  "careerRevenue": 2808000,
+  "verified": true,
+  "featured": false,
+  "socialLinks": {
+    "livecircuit": "/darius-lumen",
+    "website": "https://livecircuit.demo/darius-lumen",
+    "instagram": "@dariuslumen"
+  },
+  "currentTour": {
+    "name": "Lumen Lines",
+    "posterPath": "/assets/tours/darius-lumen-poster.png",
+    "upcomingShows": [
+      {
+        "city": "Boston",
+        "venue": "Boston Harbor Arena",
+        "date": "Sep 12",
+        "ticketPrice": 45,
+        "vipPrice": 125
+      },
+      {
+        "city": "Chicago",
+        "venue": "Windy City Stadium",
+        "date": "Sep 19",
+        "ticketPrice": 55,
+        "vipPrice": 151
+      },
+      {
+        "city": "Dallas",
+        "venue": "Lone Star Arena",
+        "date": "Sep 26",
+        "ticketPrice": 45,
+        "vipPrice": 125
+      },
+      {
+        "city": "Miami",
+        "venue": "Miami Pulse Arena",
+        "date": "Oct 3",
+        "ticketPrice": 50,
+        "vipPrice": 125
+      }
+    ]
+  },
+  "favoriteVenue": "Boston Harbor Arena",
+  "performance": {
+    "signatureMove": "Late-night groove architect",
+    "signatureLighting": "purple-magenta-cyan",
+    "signatureAnimation": "crowd-wave pulse",
+    "preferredArenaTheme": "premium-festival",
+    "preferredPyro": false,
+    "preferredConfetti": false,
+    "preferredLighting": [
+      "purple",
+      "cyan",
+      "magenta"
+    ],
+    "preferredCameraAngles": [
+      "vip",
+      "stage-left",
+      "default"
+    ],
+    "musicStyle": "R&B",
+    "performanceStyle": "Tailored soul luxury"
+  },
+  "personality": "Late-night groove architect",
+  "fanDemographics": "20–38, Southern R&B",
+  "targetAudience": "20–38, Southern R&B",
+  "catchPhrase": "Late-night groove architect",
+  "actType": "solo",
+  "liveStatus": "LIVE",
+  "poseCategory": "rnb",
+  "liveAudience": 9800,
+  "revenueTonight": 15600,
+  "growthPct": 10,
+  "showsScheduled": 5,
+  "albumTitle": "City Glow",
+  "singleTitle": "Hold On",
+  "avatarInitials": "DL"
+}

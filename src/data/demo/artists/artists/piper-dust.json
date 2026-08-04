@@ -1,0 +1,173 @@
+{
+  "isDemoArtist": true,
+  "visibility": "demo-only",
+  "environment": "demo",
+  "id": "piper-dust",
+  "stageName": "Piper Dust",
+  "realName": "Piper Dust",
+  "genre": "Country",
+  "subGenre": "Country",
+  "hometown": "Austin, TX",
+  "country": "United States",
+  "yearsActive": 13,
+  "label": "LiveCircuit Originals",
+  "management": "James Park",
+  "bio": "Piper Dust is a country act from Austin, TX. Festival country favorite. Known for boho country festival, they've built a devoted global fanbase on LiveCircuit with 390,000 followers.",
+  "brand": {
+    "primaryColor": "#06b6d4",
+    "secondaryColor": "#0891b2",
+    "accentColor": "#22d3ee",
+    "gradientClass": "from-cyan-500 to-blue-600",
+    "typography": "Space Grotesk",
+    "logoPath": "/assets/logos/piper-dust.png",
+    "brandIconPath": "/assets/logos/piper-dust-icon.png",
+    "brandDescription": "Boho country festival",
+    "brandVoice": "Confident, arena-ready, fan-first"
+  },
+  "appearance": {
+    "skinTone": "medium wheat",
+    "hairTexture": "box braids",
+    "hairColor": "golden highlights",
+    "eyeColor": "blue",
+    "faceDescription": "Distinctive country performer with blue eyes and box braids golden highlights hair",
+    "bodyType": "dancer-fit",
+    "height": "5'6\"",
+    "fashionStyle": "Boho country festival",
+    "accessories": [
+      "stud earrings"
+    ],
+    "stageOutfit": "Boho country festival — premium tour edition",
+    "streetOutfit": "Casual boho country festival off-stage look",
+    "performanceOutfit": "Signature Country stage ensemble with LED accents"
+  },
+  "images": {
+    "heroImage": "/demo/performers/country-mic.png",
+    "portraitImage": "/demo/performers/country-mic.png",
+    "transparentPNG": "/demo/performers/country-mic.png",
+    "tourPoster": "/assets/tours/piper-dust-poster.png",
+    "albumCover": "/assets/albums/piper-dust.png",
+    "arenaBanner": "/assets/backgrounds/piper-dust-arena.png",
+    "vipImage": "/demo/performers/country-mic.png",
+    "poses": {
+      "hero": "/demo/performers/country-mic.png",
+      "portrait": "/demo/performers/country-mic.png",
+      "transparent": "/demo/performers/country-mic.png",
+      "performance": "/demo/performers/country-guitar.png",
+      "walk": "/demo/performers/country-mic.png",
+      "crowd": "/demo/performers/country-mic.png",
+      "closeUp": "/demo/performers/country-mic.png",
+      "profile": "/demo/performers/country-mic.png",
+      "back": "/demo/performers/country-mic.png",
+      "instrument": "/demo/performers/country-guitar.png",
+      "mic": "/demo/performers/country-mic.png",
+      "promo": "/demo/performers/country-mic.png",
+      "vip": "/demo/performers/country-mic.png",
+      "arenaBanner": "/demo/performers/country-mic.png"
+    }
+  },
+  "merchCollection": [
+    {
+      "id": "piper-dust-tee",
+      "name": "Dust Bowl Fest Tour Tee",
+      "price": 35,
+      "imagePath": "/assets/merch/piper-dust/piper-dust-tee.png"
+    },
+    {
+      "id": "piper-dust-hoodie",
+      "name": "Piper Dust Glow Hoodie",
+      "price": 65,
+      "imagePath": "/assets/merch/piper-dust/piper-dust-hoodie.png"
+    },
+    {
+      "id": "piper-dust-vinyl",
+      "name": "Red Dirt Vinyl",
+      "price": 45,
+      "imagePath": "/assets/merch/piper-dust/piper-dust-vinyl.png"
+    }
+  ],
+  "followers": 390000,
+  "monthlyListeners": 890000,
+  "fanRating": 4.2,
+  "averageAttendance": 31200,
+  "ticketPrice": 45,
+  "vipPrice": 125,
+  "merchRevenue": 116160,
+  "tourRevenue": 198000,
+  "careerRevenue": 792000,
+  "verified": true,
+  "featured": false,
+  "socialLinks": {
+    "livecircuit": "/piper-dust",
+    "website": "https://livecircuit.demo/piper-dust",
+    "instagram": "@piperdust"
+  },
+  "currentTour": {
+    "name": "Dust Bowl Fest",
+    "posterPath": "/assets/tours/piper-dust-poster.png",
+    "upcomingShows": [
+      {
+        "city": "Boston",
+        "venue": "Boston Harbor Arena",
+        "date": "Sep 12",
+        "ticketPrice": 45,
+        "vipPrice": 125
+      },
+      {
+        "city": "Chicago",
+        "venue": "Windy City Stadium",
+        "date": "Sep 19",
+        "ticketPrice": 55,
+        "vipPrice": 151
+      },
+      {
+        "city": "Dallas",
+        "venue": "Lone Star Arena",
+        "date": "Sep 26",
+        "ticketPrice": 45,
+        "vipPrice": 125
+      },
+      {
+        "city": "Miami",
+        "venue": "Miami Pulse Arena",
+        "date": "Oct 3",
+        "ticketPrice": 50,
+        "vipPrice": 125
+      }
+    ]
+  },
+  "favoriteVenue": "Boston Harbor Arena",
+  "performance": {
+    "signatureMove": "Festival country favorite",
+    "signatureLighting": "purple-magenta-cyan",
+    "signatureAnimation": "crowd-wave pulse",
+    "preferredArenaTheme": "premium-festival",
+    "preferredPyro": false,
+    "preferredConfetti": false,
+    "preferredLighting": [
+      "purple",
+      "cyan",
+      "magenta"
+    ],
+    "preferredCameraAngles": [
+      "vip",
+      "stage-left",
+      "default"
+    ],
+    "musicStyle": "Country",
+    "performanceStyle": "Boho country festival"
+  },
+  "personality": "Festival country favorite",
+  "fanDemographics": "19–35, festival country",
+  "targetAudience": "19–35, festival country",
+  "catchPhrase": "Festival country favorite",
+  "actType": "solo",
+  "liveStatus": "IDLE",
+  "poseCategory": "country",
+  "liveAudience": 0,
+  "revenueTonight": 4400,
+  "growthPct": 16,
+  "showsScheduled": 11,
+  "albumTitle": "Red Dirt",
+  "singleTitle": "Spin",
+  "avatarInitials": "PD"
+}

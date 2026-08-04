@@ -1,0 +1,173 @@
+{
+  "isDemoArtist": true,
+  "visibility": "demo-only",
+  "environment": "demo",
+  "id": "iron-harbor",
+  "stageName": "Iron Harbor",
+  "realName": "Iron Harbor (collective)",
+  "genre": "Hard Rock",
+  "subGenre": "Hard Rock",
+  "hometown": "Portland, ME",
+  "country": "United States",
+  "yearsActive": 14,
+  "label": "LiveCircuit Originals",
+  "management": "James Park",
+  "bio": "Iron Harbor is a hard rock act from Portland, ME. Coastal rock storm. Known for work boots and stage flannel, they've built a devoted global fanbase on LiveCircuit with 410,000 followers.",
+  "brand": {
+    "primaryColor": "#64748b",
+    "secondaryColor": "#475569",
+    "accentColor": "#94a3b8",
+    "gradientClass": "from-slate-500 to-zinc-600",
+    "typography": "Space Grotesk",
+    "logoPath": "/assets/logos/iron-harbor.png",
+    "brandIconPath": "/assets/logos/iron-harbor-icon.png",
+    "brandDescription": "Work boots and stage flannel",
+    "brandVoice": "Confident, arena-ready, fan-first"
+  },
+  "appearance": {
+    "skinTone": "deep mahogany",
+    "hairTexture": "dreadlocks",
+    "hairColor": "natural black",
+    "eyeColor": "hazel",
+    "faceDescription": "Distinctive hard rock performer with hazel eyes and dreadlocks natural black hair",
+    "bodyType": "muscular broad",
+    "height": "5'10\"",
+    "fashionStyle": "Work boots and stage flannel",
+    "accessories": [
+      "chain necklace"
+    ],
+    "stageOutfit": "Work boots and stage flannel — premium tour edition",
+    "streetOutfit": "Casual work boots and stage flannel off-stage look",
+    "performanceOutfit": "Signature Hard Rock stage ensemble with LED accents"
+  },
+  "images": {
+    "heroImage": "/demo/performers/rock-mic.png",
+    "portraitImage": "/demo/performers/rock-mic.png",
+    "transparentPNG": "/demo/performers/rock-mic.png",
+    "tourPoster": "/assets/tours/iron-harbor-poster.png",
+    "albumCover": "/assets/albums/iron-harbor.png",
+    "arenaBanner": "/assets/backgrounds/iron-harbor-arena.png",
+    "vipImage": "/demo/performers/rock-mic.png",
+    "poses": {
+      "hero": "/demo/performers/rock-mic.png",
+      "portrait": "/demo/performers/rock-mic.png",
+      "transparent": "/demo/performers/rock-mic.png",
+      "performance": "/demo/performers/rock-guitar.png",
+      "walk": "/demo/performers/rock-full-body.png",
+      "crowd": "/demo/performers/rock-mic.png",
+      "closeUp": "/demo/performers/rock-mic.png",
+      "profile": "/demo/performers/rock-profile.png",
+      "back": "/demo/performers/rock-mic.png",
+      "instrument": "/demo/performers/rock-guitar.png",
+      "mic": "/demo/performers/rock-mic.png",
+      "promo": "/demo/performers/rock-mic.png",
+      "vip": "/demo/performers/rock-mic.png",
+      "arenaBanner": "/demo/performers/rock-mic.png"
+    }
+  },
+  "merchCollection": [
+    {
+      "id": "iron-harbor-tee",
+      "name": "Iron Coast Tour Tee",
+      "price": 35,
+      "imagePath": "/assets/merch/iron-harbor/iron-harbor-tee.png"
+    },
+    {
+      "id": "iron-harbor-hoodie",
+      "name": "Iron Harbor Glow Hoodie",
+      "price": 65,
+      "imagePath": "/assets/merch/iron-harbor/iron-harbor-hoodie.png"
+    },
+    {
+      "id": "iron-harbor-vinyl",
+      "name": "Salt & Steel Vinyl",
+      "price": 45,
+      "imagePath": "/assets/merch/iron-harbor/iron-harbor-vinyl.png"
+    }
+  ],
+  "followers": 410000,
+  "monthlyListeners": 920000,
+  "fanRating": 4.4,
+  "averageAttendance": 9800,
+  "ticketPrice": 45,
+  "vipPrice": 125,
+  "merchRevenue": 411840,
+  "tourRevenue": 702000,
+  "careerRevenue": 2808000,
+  "verified": true,
+  "featured": false,
+  "socialLinks": {
+    "livecircuit": "/iron-harbor",
+    "website": "https://livecircuit.demo/iron-harbor",
+    "instagram": "@ironharbor"
+  },
+  "currentTour": {
+    "name": "Iron Coast",
+    "posterPath": "/assets/tours/iron-harbor-poster.png",
+    "upcomingShows": [
+      {
+        "city": "Boston",
+        "venue": "Boston Harbor Arena",
+        "date": "Sep 12",
+        "ticketPrice": 45,
+        "vipPrice": 125
+      },
+      {
+        "city": "Chicago",
+        "venue": "Windy City Stadium",
+        "date": "Sep 19",
+        "ticketPrice": 55,
+        "vipPrice": 151
+      },
+      {
+        "city": "Dallas",
+        "venue": "Lone Star Arena",
+        "date": "Sep 26",
+        "ticketPrice": 45,
+        "vipPrice": 125
+      },
+      {
+        "city": "Miami",
+        "venue": "Miami Pulse Arena",
+        "date": "Oct 3",
+        "ticketPrice": 50,
+        "vipPrice": 125
+      }
+    ]
+  },
+  "favoriteVenue": "Boston Harbor Arena",
+  "performance": {
+    "signatureMove": "Coastal rock storm",
+    "signatureLighting": "purple-magenta-cyan",
+    "signatureAnimation": "crowd-wave pulse",
+    "preferredArenaTheme": "premium-festival",
+    "preferredPyro": true,
+    "preferredConfetti": false,
+    "preferredLighting": [
+      "purple",
+      "cyan",
+      "magenta"
+    ],
+    "preferredCameraAngles": [
+      "vip",
+      "stage-left",
+      "default"
+    ],
+    "musicStyle": "Hard Rock",
+    "performanceStyle": "Work boots and stage flannel"
+  },
+  "personality": "Coastal rock storm",
+  "fanDemographics": "24–48, classic rock adj",
+  "targetAudience": "24–48, classic rock adj",
+  "catchPhrase": "Coastal rock storm",
+  "actType": "band",
+  "liveStatus": "LIVE",
+  "poseCategory": "rock-band",
+  "liveAudience": 9800,
+  "revenueTonight": 15600,
+  "growthPct": 10,
+  "showsScheduled": 5,
+  "albumTitle": "Salt & Steel",
+  "singleTitle": "Anchor",
+  "avatarInitials": "IH"
+}
