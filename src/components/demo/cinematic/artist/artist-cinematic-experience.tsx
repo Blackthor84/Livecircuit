@@ -41,6 +41,14 @@ const LIVE_NOTIFS = [
 
 /** Demo 2 — Artist: perform on LiveCircuit */
 export function ArtistCinematicExperience() {
+  return (
+    <CinematicShell>
+      <ArtistCinematicExperienceInner />
+    </CinematicShell>
+  );
+}
+
+function ArtistCinematicExperienceInner() {
   const meta = DEMO_META.artist;
   const [phase, setPhase] = useState<Phase>("entry");
   const [countdown, setCountdown] = useState(3);
@@ -110,9 +118,16 @@ export function ArtistCinematicExperience() {
     }
   };
 
-  if (phase === "tour") return <CinematicShell><div className="flex h-full flex-col pt-20"><TourBuilderMap onBack={() => setPhase("pre-show")} /></div></CinematicShell>;
-  if (phase === "analytics") return (
-    <CinematicShell>
+  if (phase === "tour") {
+    return (
+      <div className="flex h-full flex-col pt-20">
+        <TourBuilderMap onBack={() => setPhase("pre-show")} />
+      </div>
+    );
+  }
+
+  if (phase === "analytics") {
+    return (
       <div className="h-full overflow-y-auto px-4 pb-8 pt-20 sm:px-8">
         <button type="button" onClick={() => setPhase("live")} className="text-sm text-muted-foreground hover:text-foreground">← Back to Show</button>
         <h2 className="mt-4 text-2xl font-bold">Fan Analytics</h2>
@@ -122,11 +137,11 @@ export function ArtistCinematicExperience() {
           ))}
         </div>
       </div>
-    </CinematicShell>
-  );
+    );
+  }
 
   return (
-    <CinematicShell>
+    <>
       <AnimatePresence mode="wait">
         {phase === "entry" && <DemoEntryScreen title={meta.title} subtitle={meta.subtitle} cta={meta.entryCta} onEnter={() => { sound.playClick(); setPhase("pre-show"); sound.playCrowd(0.35); }} />}
       </AnimatePresence>
@@ -210,6 +225,6 @@ export function ArtistCinematicExperience() {
           )}
         </div>
       )}
-    </CinematicShell>
+    </>
   );
 }

@@ -35,6 +35,7 @@ export function DemoSoundProvider({ children }: { children: React.ReactNode }) {
   const crowdRef = useRef<{ gain: GainNode; source: AudioBufferSourceNode } | null>(null);
 
   const getCtx = useCallback(() => {
+    if (typeof window === "undefined") return null;
     if (!ctxRef.current) ctxRef.current = new AudioContext();
     return ctxRef.current;
   }, []);
@@ -43,7 +44,7 @@ export function DemoSoundProvider({ children }: { children: React.ReactNode }) {
     setEnabled((e) => {
       if (!e) {
         const ctx = getCtx();
-        if (ctx.state === "suspended") void ctx.resume();
+        if (ctx?.state === "suspended") void ctx.resume();
       }
       return !e;
     });
@@ -53,6 +54,7 @@ export function DemoSoundProvider({ children }: { children: React.ReactNode }) {
     (intensity = 0.3) => {
       if (!enabled) return;
       const ctx = getCtx();
+      if (!ctx) return;
       if (crowdRef.current) {
         crowdRef.current.gain.gain.linearRampToValueAtTime(intensity * 0.15, ctx.currentTime + 0.5);
         return;
@@ -68,6 +70,7 @@ export function DemoSoundProvider({ children }: { children: React.ReactNode }) {
   const playBass = useCallback(() => {
     if (!enabled) return;
     const ctx = getCtx();
+    if (!ctx) return;
     const osc = ctx.createOscillator();
     const gain = ctx.createGain();
     osc.type = "sine";
@@ -84,6 +87,7 @@ export function DemoSoundProvider({ children }: { children: React.ReactNode }) {
   const playClick = useCallback(() => {
     if (!enabled) return;
     const ctx = getCtx();
+    if (!ctx) return;
     const osc = ctx.createOscillator();
     const gain = ctx.createGain();
     osc.frequency.value = 800;
@@ -98,12 +102,14 @@ export function DemoSoundProvider({ children }: { children: React.ReactNode }) {
   const playApplause = useCallback(() => {
     if (!enabled) return;
     const ctx = getCtx();
+    if (!ctx) return;
     createNoise(ctx, 1.2, 0.2);
   }, [enabled, getCtx]);
 
   const playTip = useCallback(() => {
     if (!enabled) return;
     const ctx = getCtx();
+    if (!ctx) return;
     [523, 659, 784].forEach((freq, i) => {
       const osc = ctx.createOscillator();
       const gain = ctx.createGain();
@@ -124,8 +130,17 @@ export function DemoSoundProvider({ children }: { children: React.ReactNode }) {
   );
 }
 
+const NOOP_SOUND: SoundEngine = {
+  enabled: false,
+  toggle: () => {},
+  playCrowd: () => {},
+  playBass: () => {},
+  playClick: () => {},
+  playApplause: () => {},
+  playTip: () => {},
+};
+
 export function useDemoSound() {
   const ctx = useContext(DemoSoundContext);
-  if (!ctx) throw new Error("useDemoSound must be used within DemoSoundProvider");
-  return ctx;
+  return ctx ?? NOOP_SOUND;
 }

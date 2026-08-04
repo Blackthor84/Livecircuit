@@ -37,6 +37,14 @@ type Scene = "entry" | "intro" | "tunnel" | "curtains" | "live";
 
 /** Demo 1 — Fan: attend the future of live entertainment */
 export function FanCinematicExperience() {
+  return (
+    <CinematicShell>
+      <FanCinematicExperienceInner />
+    </CinematicShell>
+  );
+}
+
+function FanCinematicExperienceInner() {
   const meta = DEMO_META.fan;
   const [scene, setScene] = useState<Scene>("entry");
   const [tunnelProgress, setTunnelProgress] = useState(0);
@@ -110,7 +118,7 @@ export function FanCinematicExperience() {
   };
 
   return (
-    <CinematicShell>
+    <>
       <ToastNotification message={toast} />
       <AnimatePresence mode="wait">
         {scene === "entry" && (
@@ -202,7 +210,7 @@ export function FanCinematicExperience() {
           </motion.div>
         )}
       </AnimatePresence>
-    </CinematicShell>
+    </>
   );
 }
 

@@ -26,6 +26,14 @@ type View = "entry" | "mission" | "arena" | "compare" | "tours";
 
 /** Demo 3 — Agency: manage artists with LiveCircuit */
 export function AgencyCinematicExperience() {
+  return (
+    <CinematicShell>
+      <AgencyCinematicExperienceInner />
+    </CinematicShell>
+  );
+}
+
+function AgencyCinematicExperienceInner() {
   const meta = DEMO_META.agency;
   const [view, setView] = useState<View>("entry");
   const [tab, setTab] = useState<"roster" | "analytics" | "notifications">("roster");
@@ -66,8 +74,7 @@ export function AgencyCinematicExperience() {
   };
 
   return (
-    <CinematicShell>
-      <AnimatePresence mode="wait">
+    <AnimatePresence mode="wait">
         {view === "entry" && (
           <DemoEntryScreen title={meta.title} subtitle={meta.subtitle} cta={meta.entryCta} onEnter={() => { sound.playClick(); setView("mission"); }} />
         )}
@@ -214,7 +221,6 @@ export function AgencyCinematicExperience() {
           </motion.div>
         )}
       </AnimatePresence>
-    </CinematicShell>
   );
 }
 
