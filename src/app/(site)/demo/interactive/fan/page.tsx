@@ -1,5 +1,5 @@
-import { FanDemoExperience } from "@/components/demo/interactive/fan/fan-demo-experience";
+import { FanCinematicExperience } from "@/components/demo/cinematic/fan/fan-cinematic-experience";
 
 export default function FanDemoPage() {
-  return <FanDemoExperience />;
+  return <FanCinematicExperience />;
 }

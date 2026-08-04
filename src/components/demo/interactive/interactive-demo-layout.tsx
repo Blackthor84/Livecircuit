@@ -19,11 +19,14 @@ const NAV = [
   { href: `${ROUTES.interactiveDemo}/map`, label: "Map", icon: Map },
 ];
 
+const CINEMATIC_ROUTES = [ROUTES.demoFan, ROUTES.demoArtist, ROUTES.demoAgency];
+
 export function InteractiveDemoLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const isFinale = pathname.includes("/finale");
+  const isCinematic = CINEMATIC_ROUTES.some((r) => pathname.startsWith(r));
 
-  if (isFinale) return <>{children}</>;
+  if (isFinale || isCinematic) return <>{children}</>;
 
   return (
     <div className="gradient-mesh relative min-h-screen">

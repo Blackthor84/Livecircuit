@@ -1,5 +1,5 @@
-import { ArtistDemoExperience } from "@/components/demo/interactive/artist/artist-demo-experience";
+import { ArtistCinematicExperience } from "@/components/demo/cinematic/artist/artist-cinematic-experience";
 
 export default function ArtistDemoPage() {
-  return <ArtistDemoExperience />;
+  return <ArtistCinematicExperience />;
 }

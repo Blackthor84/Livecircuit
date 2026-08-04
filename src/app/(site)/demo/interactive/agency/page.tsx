@@ -1,5 +1,5 @@
-import { AgencyDemoExperience } from "@/components/demo/interactive/agency/agency-demo-experience";
+import { AgencyCinematicExperience } from "@/components/demo/cinematic/agency/agency-cinematic-experience";
 
 export default function AgencyDemoPage() {
-  return <AgencyDemoExperience />;
+  return <AgencyCinematicExperience />;
 }
