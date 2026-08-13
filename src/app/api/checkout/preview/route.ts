@@ -6,7 +6,12 @@ import {
   assertCheckoutAllowed,
   resolveCheckout,
 } from "@/lib/services/orders.service";
-import { calculateCheckoutTotals } from "@/lib/monetization/coupon.service";
+import { calculateCheckoutTotals, validateAndApplyCoupon } from "@/lib/monetization/coupon.service";
+import { getMonetizationSnapshot } from "@/lib/monetization/pricing-resolver.server";
+import {
+  calculateArtistTicketRevenueSplit,
+  isPaidArtistTicketCheckout,
+} from "@/lib/monetization/ticket-revenue-split";
 import { createClient } from "@/lib/supabase/server";
 import {
   checkoutPreviewQuerySchema,
@@ -16,15 +21,7 @@ import {
 export async function GET(request: Request) {
   try {
     if (!isSupabaseConfigured()) {
-      return NextResponse.json({
-        description: "Demo checkout",
-        unitAmountCents: 2500,
-        currency: "USD",
-        quantity: 1,
-        totalCents: 2500,
-        tier: "general",
-        vipAvailable: false,
-      });
+      return jsonError("Checkout is not available", 503);
     }
 
     const { searchParams } = new URL(request.url);
@@ -90,14 +87,60 @@ export async function GET(request: Request) {
 
     const quantity = body.type === "ticket" ? 1 : (body.quantity ?? 1);
     const subtotalCents = resolved.pricing.unitAmountCents * quantity;
-
-    const totals = await calculateCheckoutTotals({
-      subtotalCents,
-      couponCode: body.couponCode,
-      userId: user?.id,
-      purchaseType: body.type === "ticket" ? "ticket" : "general",
-      supabase,
+    const paidArtistTicket = isPaidArtistTicketCheckout({
+      orderType: body.type,
+      unitAmountCents: resolved.pricing.unitAmountCents,
+      artistId: resolved.artistId,
     });
+
+    let platformFeeCents = 0;
+    let discountCents = 0;
+    let totalCents = subtotalCents;
+    let platformFeePercent = 10;
+    let artistEarningsCents = 0;
+    let couponApplied: string | null = null;
+    let couponError: string | null = null;
+
+    if (paidArtistTicket) {
+      const snapshot = await getMonetizationSnapshot();
+      platformFeePercent = snapshot.tickets.platformFeePercent;
+      if (body.couponCode) {
+        const couponResult = await validateAndApplyCoupon(supabase, {
+          code: body.couponCode,
+          purchaseType: body.tier === "vip" ? "vip" : "ticket",
+          subtotalCents,
+          userId: user?.id,
+        });
+        if (couponResult.valid) {
+          discountCents = couponResult.discountCents;
+          couponApplied = couponResult.code ?? null;
+        } else {
+          couponError = couponResult.error ?? "Invalid coupon";
+        }
+      }
+      const split = calculateArtistTicketRevenueSplit({
+        ticketSubtotalCents: subtotalCents,
+        discountCents,
+        platformFeePercent,
+      });
+      platformFeeCents = split.platformFeeCents;
+      artistEarningsCents = split.artistEarningsCents;
+      totalCents = split.grossCents;
+    } else {
+      const totals = await calculateCheckoutTotals({
+        subtotalCents,
+        couponCode: body.couponCode,
+        userId: user?.id,
+        purchaseType: body.type === "ticket" ? "ticket" : "general",
+        supabase,
+      });
+      platformFeeCents = totals.platformFeeCents;
+      discountCents = totals.discountCents;
+      totalCents = totals.totalCents;
+      platformFeePercent = totals.platformFeePercent;
+      couponApplied = totals.coupon?.valid ? totals.coupon.code : null;
+      couponError = totals.coupon && !totals.coupon.valid ? totals.coupon.error : null;
+    }
 
     return NextResponse.json({
       description: resolved.pricing.description,
@@ -105,12 +148,13 @@ export async function GET(request: Request) {
       currency: resolved.pricing.currency,
       quantity,
       subtotalCents,
-      platformFeeCents: totals.platformFeeCents,
-      discountCents: totals.discountCents,
-      totalCents: totals.totalCents,
-      platformFeePercent: totals.platformFeePercent,
-      couponApplied: totals.coupon?.valid ? totals.coupon.code : null,
-      couponError: totals.coupon && !totals.coupon.valid ? totals.coupon.error : null,
+      platformFeeCents,
+      artistEarningsCents,
+      discountCents,
+      totalCents,
+      platformFeePercent,
+      couponApplied,
+      couponError,
       tier: resolved.tier,
       vipAvailable,
       availabilityError,

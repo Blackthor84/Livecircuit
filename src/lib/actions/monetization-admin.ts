@@ -549,3 +549,76 @@ export async function validatePricingPublishAction(): Promise<
   }
   return { ok: true, issues: issues.map((i) => ({ severity: i.severity, message: i.message })) };
 }
+
+export async function runFinancialReconciliationAction(): Promise<
+  { ok: true; report: import("@/lib/services/financial-reconciliation.service").ReconciliationReport } | MonetizationActionResult
+> {
+  await requireAdmin("/admin/monetization/payouts");
+  const { getSupabaseAdmin } = await import("@/lib/supabase/admin");
+  const { runFinancialReconciliation } = await import("@/lib/services/financial-reconciliation.service");
+  const supabase = getSupabaseAdmin();
+  const report = await runFinancialReconciliation(supabase);
+  return { ok: true, report };
+}
+
+export async function syncArtistPayoutSchedulesAction(input?: {
+  dryRun?: boolean;
+  artistId?: string;
+}): Promise<
+  | { ok: true; result: import("@/lib/stripe/connect-payout-sync").ConnectPayoutSyncResult }
+  | MonetizationActionResult
+> {
+  await requireAdmin("/admin/monetization/payouts");
+  const { getSupabaseAdmin } = await import("@/lib/supabase/admin");
+  const { syncExistingArtistPayoutSchedules } = await import("@/lib/stripe/connect-payout-sync");
+  const supabase = getSupabaseAdmin();
+  const result = await syncExistingArtistPayoutSchedules(supabase, {
+    dryRun: input?.dryRun ?? true,
+    artistId: input?.artistId,
+  });
+  revalidatePath("/admin/monetization/payouts");
+  return { ok: true, result };
+}
+
+export async function recordArtistRecoveryAction(input: unknown): Promise<MonetizationActionResult> {
+  await requireAdmin("/admin/monetization/payouts");
+  const parsed = z
+    .object({
+      receivableId: z.string().uuid(),
+      amountCents: z.number().int().positive(),
+      referenceId: z.string().min(1),
+      notes: z.string().optional(),
+    })
+    .safeParse(input);
+  if (!parsed.success) return { ok: false, error: "Invalid recovery input" };
+
+  const { getSupabaseAdmin } = await import("@/lib/supabase/admin");
+  const { recordManualArtistRecovery } = await import("@/lib/services/artist-recovery.service");
+  const supabase = getSupabaseAdmin();
+  const { data: userData } = await supabase.auth.getUser();
+  const result = await recordManualArtistRecovery(supabase, {
+    receivableId: parsed.data.receivableId,
+    amountCents: parsed.data.amountCents,
+    referenceId: parsed.data.referenceId,
+    notes: parsed.data.notes ?? null,
+    adminId: userData.user?.id ?? null,
+  });
+  if (!result.ok) return { ok: false, error: result.error };
+  revalidatePath("/admin/monetization/payouts");
+  return { ok: true };
+}
+
+export async function writeOffArtistReceivableAction(input: unknown): Promise<MonetizationActionResult> {
+  await requireAdmin("/admin/monetization/payouts");
+  const parsed = z.object({ receivableId: z.string().uuid() }).safeParse(input);
+  if (!parsed.success) return { ok: false, error: "Invalid receivable id" };
+
+  const { getSupabaseAdmin } = await import("@/lib/supabase/admin");
+  const { writeOffArtistReceivable } = await import("@/lib/services/artist-recovery.service");
+  const supabase = getSupabaseAdmin();
+  const { data: userData } = await supabase.auth.getUser();
+  const result = await writeOffArtistReceivable(supabase, parsed.data.receivableId, userData.user?.id ?? null);
+  if (!result.ok) return { ok: false, error: result.error };
+  revalidatePath("/admin/monetization/payouts");
+  return { ok: true };
+}

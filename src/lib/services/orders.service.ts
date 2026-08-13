@@ -26,6 +26,9 @@ export class CheckoutValidationError extends Error {
   }
 }
 
+/** Event statuses that allow public discovery and ticket purchase */
+export const SELLABLE_EVENT_STATUSES = ["scheduled", "live"] as const;
+
 export async function resolveEventIdForTourStop(
   supabase: SupabaseClient,
   tourStopId: string
@@ -56,20 +59,46 @@ export async function resolveCheckout(
   if (body.type === "ticket" && body.eventId) {
     const { data: event } = await supabase
       .from("events")
-      .select("title, artist_id, tour_stops(ticket_price_cents, vip_price_cents, virtual_location_label)")
+      .select("title, artist_id, status, tour_stops(ticket_price_cents, vip_price_cents, virtual_location_label, tours(status))")
       .eq("id", body.eventId)
       .maybeSingle();
 
+    if (!event) {
+      throw new CheckoutValidationError("Event not found");
+    }
+
+    if (!SELLABLE_EVENT_STATUSES.includes(event.status as (typeof SELLABLE_EVENT_STATUSES)[number])) {
+      throw new CheckoutValidationError("This event is not on sale");
+    }
+
     if (event?.tour_stops) {
       const raw = event.tour_stops as
-        | { ticket_price_cents: number; vip_price_cents: number | null; virtual_location_label: string }
-        | { ticket_price_cents: number; vip_price_cents: number | null; virtual_location_label: string }[];
+        | {
+            ticket_price_cents: number;
+            vip_price_cents: number | null;
+            virtual_location_label: string;
+            tours: { status: string } | { status: string }[] | null;
+          }
+        | {
+            ticket_price_cents: number;
+            vip_price_cents: number | null;
+            virtual_location_label: string;
+            tours: { status: string } | { status: string }[] | null;
+          }[];
       const stop = Array.isArray(raw) ? raw[0] : raw;
       if (stop) {
+        const tours = stop.tours;
+        const tourStatus = Array.isArray(tours) ? tours[0]?.status : tours?.status;
+        if (tourStatus && tourStatus !== "published") {
+          throw new CheckoutValidationError("This tour is not published yet");
+        }
         const unitAmountCents =
           tier === "vip"
             ? stop.vip_price_cents ?? stop.ticket_price_cents
             : stop.ticket_price_cents;
+        if (unitAmountCents <= 0) {
+          throw new CheckoutValidationError("Ticket price is not configured for this event");
+        }
         return {
           pricing: {
             unitAmountCents,
@@ -88,36 +117,44 @@ export async function resolveCheckout(
         };
       }
     }
+    throw new CheckoutValidationError("Ticket pricing is not configured for this event");
   }
 
   if (body.type === "ticket" && tourStopId) {
     const { data: stop } = await supabase
       .from("tour_stops")
-      .select("ticket_price_cents, vip_price_cents, virtual_location_label, tour_id, tours(artist_id)")
+      .select("ticket_price_cents, vip_price_cents, virtual_location_label, tour_id, tours(artist_id, status)")
       .eq("id", tourStopId)
       .maybeSingle();
-    if (stop) {
-      const unitAmountCents =
-        tier === "vip" ? stop.vip_price_cents ?? stop.ticket_price_cents : stop.ticket_price_cents;
-      const tours = stop.tours as { artist_id: string } | { artist_id: string }[] | null;
-      const artistId = Array.isArray(tours) ? tours[0]?.artist_id : tours?.artist_id;
-      return {
-        pricing: {
-          unitAmountCents,
-          currency,
-          description:
-            tier === "vip"
-              ? `VIP — ${stop.virtual_location_label}`
-              : `Ticket — ${stop.virtual_location_label}`,
-        },
-        artistId: artistId ?? null,
-        eventId,
-        tourStopId,
-        tourId: (stop.tour_id as string) ?? null,
-        productId: null,
-        tier,
-      };
+    if (!stop) {
+      throw new CheckoutValidationError("Tour stop not found");
     }
+    const tours = stop.tours as { artist_id: string; status: string } | { artist_id: string; status: string }[] | null;
+    const tour = Array.isArray(tours) ? tours[0] : tours;
+    if (!tour || tour.status !== "published") {
+      throw new CheckoutValidationError("This tour is not published yet");
+    }
+    const unitAmountCents =
+      tier === "vip" ? stop.vip_price_cents ?? stop.ticket_price_cents : stop.ticket_price_cents;
+    if (unitAmountCents <= 0) {
+      throw new CheckoutValidationError("Ticket price is not configured for this stop");
+    }
+    return {
+      pricing: {
+        unitAmountCents,
+        currency,
+        description:
+          tier === "vip"
+            ? `VIP — ${stop.virtual_location_label}`
+            : `Ticket — ${stop.virtual_location_label}`,
+      },
+      artistId: tour.artist_id ?? null,
+      eventId,
+      tourStopId,
+      tourId: (stop.tour_id as string) ?? null,
+      productId: null,
+      tier,
+    };
   }
 
   if (body.type === "tour_pass" && body.tourId) {
@@ -302,15 +339,7 @@ export async function resolveCheckout(
     }
   }
 
-  return {
-    pricing: { unitAmountCents: 2500, currency, description: `LiveCircuit ${body.type}` },
-    artistId: null,
-    eventId,
-    tourStopId,
-    tourId: null,
-    productId,
-    tier,
-  };
+  throw new CheckoutValidationError(`Unable to resolve pricing for checkout type "${body.type}"`);
 }
 
 /** @deprecated use resolveCheckout */
@@ -383,27 +412,46 @@ export async function assertCheckoutAllowed(
 
     const { data: event } = await supabase
       .from("events")
-      .select("status, tour_stops(capacity, vip_capacity)")
+      .select("status, tour_stops(capacity, vip_capacity, tours(status))")
       .eq("id", resolved.eventId)
       .maybeSingle();
-    if (!event || event.status === "cancelled" || event.status === "ended") {
+    if (!event) {
+      throw new CheckoutValidationError("This event is not available for ticket sales");
+    }
+    if (event.status === "draft") {
+      throw new CheckoutValidationError("This event is not on sale yet");
+    }
+    if (!SELLABLE_EVENT_STATUSES.includes(event.status as (typeof SELLABLE_EVENT_STATUSES)[number])) {
       throw new CheckoutValidationError("This event is not available for ticket sales");
     }
 
     const raw = event.tour_stops as
-      | { capacity: number; vip_capacity: number | null }
-      | { capacity: number; vip_capacity: number | null }[];
+      | { capacity: number; vip_capacity: number | null; tours: { status: string } | { status: string }[] | null }
+      | { capacity: number; vip_capacity: number | null; tours: { status: string } | { status: string }[] | null }[];
     const stop = Array.isArray(raw) ? raw[0] : raw;
     if (stop) {
-      const cap = resolved.tier === "vip" ? stop.vip_capacity ?? stop.capacity : stop.capacity;
-      const { count } = await supabase
-        .from("tickets")
-        .select("id", { count: "exact", head: true })
-        .eq("event_id", resolved.eventId)
-        .eq("tier", resolved.tier);
-      if (typeof count === "number" && count >= cap) {
+      const tours = stop.tours;
+      const tourStatus = Array.isArray(tours) ? tours[0]?.status : tours?.status;
+      if (tourStatus && tourStatus !== "published") {
+        throw new CheckoutValidationError("This tour is not published yet");
+      }
+    }
+
+    const { error: capacityError } = await supabase.rpc("assert_ticket_capacity_available", {
+      p_event_id: resolved.eventId,
+      p_tier: resolved.tier,
+      p_quantity: 1,
+      p_exclude_order_id: null,
+    });
+    if (capacityError) {
+      const message = capacityError.message ?? "Could not reserve ticket";
+      if (message.includes("Sold out")) {
         throw new CheckoutValidationError("This tier is sold out");
       }
+      if (message.includes("not on sale") || message.includes("not available")) {
+        throw new CheckoutValidationError("This event is not available for ticket sales");
+      }
+      throw new CheckoutValidationError(message);
     }
 
     if (resolved.tier === "vip" && resolved.pricing.unitAmountCents <= 0) {
@@ -457,6 +505,10 @@ export async function createPendingOrder(
       totalCents: number;
       couponId?: string | null;
       couponCode?: string | null;
+      grossCents?: number | null;
+      artistEarningsCents?: number | null;
+      lockedPlatformFeePercent?: number | null;
+      ticketRevenueSplit?: boolean;
     };
   }
 ) {
@@ -468,6 +520,8 @@ export async function createPendingOrder(
     discountCents: 0,
     totalCents: lineTotal,
   };
+  const grossCents = totals.grossCents ?? totals.totalCents;
+  const artistEarningsCents = totals.artistEarningsCents ?? 0;
   const orderType =
     input.body.type === "digital" || input.body.type === "festival"
       ? "digital"
@@ -484,9 +538,13 @@ export async function createPendingOrder(
       status: "pending",
       subtotal_cents: totals.subtotalCents,
       tax_cents: 0,
+      gross_cents: totals.ticketRevenueSplit ? grossCents : null,
+      platform_fee_cents: totals.platformFeeCents,
+      artist_earnings_cents: totals.ticketRevenueSplit ? artistEarningsCents : 0,
       total_cents: totals.totalCents,
       currency: input.resolved.pricing.currency,
       stripe_checkout_session_id: input.stripeCheckoutSessionId ?? null,
+      artist_payout_status: totals.ticketRevenueSplit ? "pending" : "pending",
       metadata: {
         event_id: input.resolved.eventId,
         tour_stop_id: input.resolved.tourStopId,
@@ -500,6 +558,10 @@ export async function createPendingOrder(
         discount_cents: totals.discountCents,
         coupon_id: totals.couponId ?? null,
         coupon_code: totals.couponCode ?? null,
+        gross_cents: totals.ticketRevenueSplit ? grossCents : null,
+        artist_earnings_cents: totals.ticketRevenueSplit ? artistEarningsCents : null,
+        locked_platform_fee_percent: totals.lockedPlatformFeePercent ?? null,
+        ticket_revenue_split: totals.ticketRevenueSplit ?? false,
         fulfilled: false,
       },
     })

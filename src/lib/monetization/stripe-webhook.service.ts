@@ -15,9 +15,21 @@ import { handleMarketplaceCheckoutSession } from "@/lib/services/marketplace.ser
 import { handleLocalBusinessCampaignCheckout } from "@/lib/services/local-business.service";
 import {
   recordDispute,
-  recordRefund,
   recordStripeWebhookEvent,
 } from "@/lib/monetization/financial-ledger.service";
+import { processRefundByPaymentIntent } from "@/lib/services/refund.service";
+import {
+  handleDestinationChargeDisputeClosed,
+  handleDestinationChargeDisputeCreated,
+} from "@/lib/services/dispute.service";
+import {
+  handleStripePayoutEvent,
+} from "@/lib/services/artist-payout.service";
+import { reconcileOrderStripeFeesFromCharge } from "@/lib/monetization/stripe-fee-reconciliation.service";
+import {
+  resolveArtistIdForStripeAccount,
+  syncArtistConnectFromStripeAccount,
+} from "@/lib/stripe/connect";
 import { createAdminNotification } from "@/lib/monetization/admin-notifications.service";
 
 export async function processStripeWebhookEvent(
@@ -60,8 +72,26 @@ export async function processStripeWebhookEvent(
         result = { duplicate: false, handled: true };
         break;
 
+      case "charge.succeeded":
+        await handleChargeSucceeded(supabase, event.data.object as Stripe.Charge);
+        result = { duplicate: false, handled: true };
+        break;
+
       case "charge.dispute.created":
-        await handleDisputeCreated(supabase, event.data.object as Stripe.Dispute);
+        await handleDisputeCreated(supabase, stripe, event.data.object as Stripe.Dispute, event.id);
+        result = { duplicate: false, handled: true };
+        break;
+
+      case "charge.dispute.closed":
+        await handleDisputeClosed(supabase, stripe, event.data.object as Stripe.Dispute);
+        result = { duplicate: false, handled: true };
+        break;
+
+      case "payout.created":
+      case "payout.paid":
+      case "payout.failed":
+      case "payout.canceled":
+        await handlePayoutEvent(supabase, event);
         result = { duplicate: false, handled: true };
         break;
 
@@ -79,6 +109,10 @@ export async function processStripeWebhookEvent(
       case "invoice.payment_failed":
         await handleInvoiceFailed(supabase, event.data.object as Stripe.Invoice);
         result = { duplicate: false, handled: true };
+        break;
+
+      case "account.updated":
+        result = await handleAccountUpdated(supabase, event.data.object as Stripe.Account);
         break;
 
       default:
@@ -145,23 +179,61 @@ async function handlePaymentFailed(supabase: SupabaseClient, paymentIntent: Stri
 
 async function handleChargeRefunded(supabase: SupabaseClient, charge: Stripe.Charge) {
   const piId = typeof charge.payment_intent === "string" ? charge.payment_intent : charge.payment_intent?.id;
-  await recordRefund(supabase, {
+  if (!piId) {
+    console.warn("[stripe-webhook] charge.refunded without payment_intent", charge.id);
+    return;
+  }
+
+  const latestRefund = charge.refunds?.data?.[0];
+  const result = await processRefundByPaymentIntent(supabase, {
+    stripePaymentIntentId: piId,
     amountCents: charge.amount_refunded,
-    stripePaymentIntentId: piId ?? null,
     stripeEventId: charge.id,
+    stripeRefundId: latestRefund?.id ?? charge.id,
     reason: "Stripe charge refunded",
   });
+
+  if (!result.ok) {
+    throw new Error(result.error);
+  }
 }
 
-async function handleDisputeCreated(supabase: SupabaseClient, dispute: Stripe.Dispute) {
+async function handleChargeSucceeded(supabase: SupabaseClient, charge: Stripe.Charge) {
+  const orderId = charge.metadata?.order_id ?? null;
+  await reconcileOrderStripeFeesFromCharge(supabase, charge, orderId);
+}
+
+async function handleDisputeCreated(
+  supabase: SupabaseClient,
+  stripe: Stripe,
+  dispute: Stripe.Dispute,
+  stripeEventId: string,
+) {
   const piId =
     typeof dispute.payment_intent === "string" ? dispute.payment_intent : dispute.payment_intent?.id;
+
   await recordDispute(supabase, {
     amountCents: dispute.amount,
     stripePaymentIntentId: piId ?? null,
     stripeEventId: dispute.id,
     reason: dispute.reason ?? "Payment dispute opened",
   });
+
+  await handleDestinationChargeDisputeCreated(supabase, stripe, dispute, stripeEventId);
+}
+
+async function handleDisputeClosed(
+  supabase: SupabaseClient,
+  stripe: Stripe,
+  dispute: Stripe.Dispute,
+) {
+  await handleDestinationChargeDisputeClosed(supabase, stripe, dispute);
+}
+
+async function handlePayoutEvent(supabase: SupabaseClient, event: Stripe.Event) {
+  const payout = event.data.object as Stripe.Payout;
+  const connectedAccountId = event.account ?? null;
+  await handleStripePayoutEvent(supabase, payout, connectedAccountId);
 }
 
 async function handleInvoicePaid(
@@ -186,4 +258,18 @@ async function handleInvoiceFailed(supabase: SupabaseClient, invoice: Stripe.Inv
     priority: "high",
     entityKey: invoice.id,
   });
+}
+
+async function handleAccountUpdated(
+  supabase: SupabaseClient,
+  account: Stripe.Account,
+): Promise<{ duplicate: boolean; handled: boolean }> {
+  const artistId = await resolveArtistIdForStripeAccount(supabase, account);
+  if (!artistId) {
+    console.warn("[stripe-webhook] account.updated without linked artist", account.id);
+    return { duplicate: false, handled: false };
+  }
+
+  await syncArtistConnectFromStripeAccount(supabase, artistId, account);
+  return { duplicate: false, handled: true };
 }

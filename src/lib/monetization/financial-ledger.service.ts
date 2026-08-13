@@ -6,10 +6,13 @@ import { createAdminNotification } from "@/lib/monetization/admin-notifications.
 export type PaymentRecordInput = {
   orderId?: string | null;
   userId?: string | null;
+  artistId?: string | null;
   purchaseType: string;
   status?: "pending" | "completed" | "failed" | "refunded" | "disputed" | "partially_refunded";
   subtotalCents: number;
   platformFeeCents?: number;
+  artistEarningsCents?: number;
+  grossCents?: number;
   discountCents?: number;
   taxCents?: number;
   totalCents: number;
@@ -68,7 +71,7 @@ export async function recordPayment(
   await appendLedgerEntry(supabase, {
     entryType: "payment",
     direction: "credit",
-    amountCents: input.totalCents,
+    amountCents: input.grossCents ?? input.totalCents,
     currency: input.currency ?? "USD",
     orderId: input.orderId,
     userId: input.userId,
@@ -76,7 +79,7 @@ export async function recordPayment(
     stripePaymentIntentId: input.stripePaymentIntentId,
     stripeCheckoutSessionId: input.stripeCheckoutSessionId,
     category: input.purchaseType,
-    description: `Payment received: ${input.purchaseType}`,
+    description: `Customer payment: ${input.purchaseType}`,
     metadata: { payment_record_id: data.id, ...input.metadata },
   });
 
@@ -90,8 +93,26 @@ export async function recordPayment(
       userId: input.userId,
       stripeCheckoutSessionId: input.stripeCheckoutSessionId,
       category: "platform_fee",
-      description: "Platform fee",
+      description: "LiveCircuit platform fee",
       metadata: { payment_record_id: data.id },
+    });
+  }
+
+  if (input.artistEarningsCents && input.artistEarningsCents > 0) {
+    await appendLedgerEntry(supabase, {
+      entryType: "payment",
+      direction: "credit",
+      amountCents: input.artistEarningsCents,
+      currency: input.currency ?? "USD",
+      orderId: input.orderId,
+      userId: input.userId,
+      stripeCheckoutSessionId: input.stripeCheckoutSessionId,
+      category: "artist_earnings",
+      description: "Artist ticket earnings",
+      metadata: {
+        payment_record_id: data.id,
+        artist_id: input.artistId ?? null,
+      },
     });
   }
 
@@ -237,6 +258,8 @@ export async function recordRefund(
     stripeEventId?: string | null;
     stripePaymentIntentId?: string | null;
     reason?: string;
+    artistReversalCents?: number;
+    platformReversalCents?: number;
   }
 ) {
   await appendLedgerEntry(supabase, {
@@ -250,6 +273,32 @@ export async function recordRefund(
     category: "refund",
     description: input.reason ?? "Refund processed",
   });
+
+  if (input.platformReversalCents && input.platformReversalCents > 0) {
+    await appendLedgerEntry(supabase, {
+      entryType: "adjustment",
+      direction: "debit",
+      amountCents: input.platformReversalCents,
+      orderId: input.orderId,
+      userId: input.userId,
+      stripePaymentIntentId: input.stripePaymentIntentId,
+      category: "platform_fee_reversal",
+      description: "Platform fee reversal",
+    });
+  }
+
+  if (input.artistReversalCents && input.artistReversalCents > 0) {
+    await appendLedgerEntry(supabase, {
+      entryType: "adjustment",
+      direction: "debit",
+      amountCents: input.artistReversalCents,
+      orderId: input.orderId,
+      userId: input.userId,
+      stripePaymentIntentId: input.stripePaymentIntentId,
+      category: "artist_earnings_reversal",
+      description: "Artist earnings reversal",
+    });
+  }
 
   if (input.stripePaymentIntentId) {
     await supabase

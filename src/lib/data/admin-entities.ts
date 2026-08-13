@@ -17,7 +17,9 @@ export async function listAdminArtists(limit = 50) {
   const supabase = await createClient();
   const { data } = await supabase
     .from("artists")
-    .select("id, slug, stage_name, verified, featured, follower_count, monthly_listeners, created_at")
+    .select(
+      "id, slug, stage_name, verified, featured, follower_count, monthly_listeners, created_at, stripe_account_id, stripe_onboarding_complete, stripe_charges_enabled, stripe_payouts_enabled, stripe_payouts_manual, stripe_payouts_schedule, stripe_details_submitted, stripe_requirements_due, stripe_connect_updated_at",
+    )
     .order("follower_count", { ascending: false })
     .limit(limit);
   return data ?? [];

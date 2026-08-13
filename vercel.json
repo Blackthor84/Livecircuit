@@ -3,6 +3,10 @@
     {
       "path": "/api/cron/rollup-sponsor-metrics?days=2",
       "schedule": "15 6 * * *"
+    },
+    {
+      "path": "/api/cron/artist-payouts",
+      "schedule": "0 7 * * *"
     }
   ]
 }

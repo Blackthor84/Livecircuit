@@ -165,6 +165,7 @@ export async function getEventBySlug(artistSlug: string, eventSlug: string) {
     .select(`*, streams(*), artists(*), tour_stops(*, tours(title, slug)), venues(slug, name, display_name, default_name, sponsored_name)`)
     .eq("artist_id", artist.id)
     .eq("slug", eventSlug)
+    .in("status", ["scheduled", "live"])
     .maybeSingle();
 
   return data;
@@ -205,6 +206,7 @@ export async function getTourWithStops(artistSlug: string, tourSlug: string) {
     .select("*")
     .eq("artist_id", artist.id)
     .eq("slug", tourSlug)
+    .eq("status", "published")
     .maybeSingle();
   if (!tour) return null;
 
@@ -274,6 +276,7 @@ export async function searchCatalog(query: string) {
           "id, slug, title, scheduled_at, artists!inner(slug, stage_name, profiles!inner(username, is_test_account))"
         )
         .eq("artists.profiles.is_test_account", false)
+        .in("status", ["scheduled", "live"])
         .ilike("title", q)
         .limit(10),
       supabase

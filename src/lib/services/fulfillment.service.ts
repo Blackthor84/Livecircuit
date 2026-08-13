@@ -1,9 +1,13 @@
 import type { SupabaseClient } from "@supabase/supabase-js";
 import type Stripe from "stripe";
+import { createAdminNotification } from "@/lib/monetization/admin-notifications.service";
 import {
   recordCouponRedemption,
   recordPayment,
 } from "@/lib/monetization/financial-ledger.service";
+import { creditArtistTicketSale } from "@/lib/services/artist-balance.service";
+import { getPayoutConfig } from "@/lib/monetization/payout-config.server";
+import { reconcileOrderStripeFees } from "@/lib/monetization/stripe-fee-reconciliation.service";
 import { generateTicketQrPayload } from "@/lib/tickets/qr";
 import { resolveEventIdForTourStop } from "@/lib/services/orders.service";
 
@@ -14,6 +18,9 @@ type OrderRow = {
   order_type: string;
   status: string;
   total_cents: number;
+  gross_cents: number | null;
+  platform_fee_cents: number;
+  artist_earnings_cents: number;
   metadata: Record<string, unknown> | null;
 };
 
@@ -25,7 +32,9 @@ export async function fulfillPaidOrder(
 
   const { data: orderRaw } = await supabase
     .from("orders")
-    .select("id, user_id, artist_id, order_type, status, total_cents, metadata")
+    .select(
+      "id, user_id, artist_id, order_type, status, total_cents, gross_cents, platform_fee_cents, artist_earnings_cents, metadata",
+    )
     .eq("stripe_checkout_session_id", sessionId)
     .maybeSingle();
 
@@ -34,7 +43,9 @@ export async function fulfillPaidOrder(
   if (!order && session.metadata?.order_id) {
     const { data: byId } = await supabase
       .from("orders")
-      .select("id, user_id, artist_id, order_type, status, total_cents, metadata")
+      .select(
+        "id, user_id, artist_id, order_type, status, total_cents, gross_cents, platform_fee_cents, artist_earnings_cents, metadata",
+      )
       .eq("id", session.metadata.order_id)
       .maybeSingle();
     order = byId as OrderRow | null;
@@ -50,16 +61,45 @@ export async function fulfillPaidOrder(
     return { duplicate: true };
   }
 
+  const paidAmountCents = session.amount_total;
+  const expectedAmountCents = order.gross_cents ?? order.total_cents;
+  if (paidAmountCents == null || paidAmountCents !== expectedAmountCents) {
+    console.error(
+      "[fulfillment] Stripe amount mismatch",
+      sessionId,
+      "expected",
+      expectedAmountCents,
+      "got",
+      paidAmountCents,
+    );
+    await createAdminNotification(supabase, {
+      category: "payment_fail",
+      title: "Checkout amount mismatch",
+      message: `Order ${order.id}: expected ${expectedAmountCents} cents, Stripe session paid ${paidAmountCents ?? "unknown"} cents.`,
+      severity: "error",
+      priority: "high",
+      entityKey: order.id,
+    });
+    return { duplicate: false };
+  }
+
   await supabase
     .from("orders")
     .update({
       status: "paid",
+      payment_success_at: new Date().toISOString(),
       stripe_payment_intent_id:
         typeof session.payment_intent === "string" ? session.payment_intent : null,
     })
     .eq("id", order.id);
 
-  const platformFeeCents = Number(meta.platform_fee_cents ?? session.metadata?.platform_fee_cents ?? 0);
+  const platformFeeCents = Number(
+    order.platform_fee_cents ?? meta.platform_fee_cents ?? session.metadata?.platform_fee_cents ?? 0,
+  );
+  const artistEarningsCents = Number(
+    order.artist_earnings_cents ?? meta.artist_earnings_cents ?? session.metadata?.artist_earnings_cents ?? 0,
+  );
+  const grossCents = Number(order.gross_cents ?? meta.gross_cents ?? session.metadata?.gross_cents ?? paidAmountCents);
   const discountCents = Number(meta.discount_cents ?? session.metadata?.discount_cents ?? 0);
   const subtotalCents = Number(meta.subtotal_cents ?? session.metadata?.subtotal_cents ?? order.total_cents);
   const couponId = (meta.coupon_id as string | undefined) || session.metadata?.coupon_id || null;
@@ -68,17 +108,20 @@ export async function fulfillPaidOrder(
   const paymentRecordId = await recordPayment(supabase, {
     orderId: order.id,
     userId: order.user_id,
+    artistId: order.artist_id,
     purchaseType: order.order_type,
     subtotalCents,
     platformFeeCents,
+    artistEarningsCents,
     discountCents,
-    totalCents: session.amount_total ?? order.total_cents,
+    totalCents: paidAmountCents,
+    grossCents,
     couponId: couponId || null,
     couponCode: couponCode || null,
     stripeCheckoutSessionId: session.id,
     stripePaymentIntentId:
       typeof session.payment_intent === "string" ? session.payment_intent : null,
-    metadata: { order_type: order.order_type },
+    metadata: { order_type: order.order_type, ticket_revenue_split: meta.ticket_revenue_split === true },
   });
 
   if (couponId && discountCents > 0) {
@@ -102,6 +145,15 @@ export async function fulfillPaidOrder(
 
   if (orderType === "ticket") {
     await fulfillTicketOrder(supabase, order, session);
+    if (artistEarningsCents > 0 && order.artist_id) {
+      const payoutConfig = await getPayoutConfig(supabase);
+      await creditArtistTicketSale(
+        supabase,
+        order.id,
+        new Date().toISOString(),
+        payoutConfig.payoutDelayDays,
+      );
+    }
   } else if (orderType === "tip") {
     await fulfillTipOrder(supabase, order);
   } else if (orderType === "vip") {
@@ -122,6 +174,15 @@ export async function fulfillPaidOrder(
       },
     })
     .eq("id", order.id);
+
+  const paymentIntentId =
+    typeof session.payment_intent === "string" ? session.payment_intent : null;
+  if (paymentIntentId && meta.ticket_revenue_split === true) {
+    await reconcileOrderStripeFees(supabase, {
+      orderId: order.id,
+      paymentIntentId,
+    }).catch((err) => console.error("[fulfillment] stripe fee reconciliation", err));
+  }
 
   return { duplicate: false };
 }
@@ -148,34 +209,23 @@ async function fulfillTicketOrder(
     return;
   }
 
-  const { data: existing } = await supabase
-    .from("tickets")
-    .select("id")
-    .eq("order_id", order.id)
-    .maybeSingle();
-  if (existing) return;
+  const priceCents = Number(
+    order.gross_cents ?? meta.gross_cents ?? meta.subtotal_cents ?? order.total_cents,
+  );
+  const { data: ticketId, error } = await supabase.rpc("create_ticket_for_order", {
+    p_event_id: eventId,
+    p_user_id: order.user_id,
+    p_order_id: order.id,
+    p_tier: tier,
+    p_price_cents: priceCents > 0 ? priceCents : order.total_cents,
+  });
 
-  const unitCents =
-    session.amount_total != null && session.amount_total > 0
-      ? session.amount_total
-      : order.total_cents;
-
-  const { data: ticket, error } = await supabase
-    .from("tickets")
-    .insert({
-      event_id: eventId,
-      user_id: order.user_id,
-      order_id: order.id,
-      tier,
-      price_cents: unitCents,
-    })
-    .select("id")
-    .single();
-
-  if (error || !ticket) {
-    console.error("[fulfillment] ticket insert", error?.message);
+  if (error || !ticketId) {
+    console.error("[fulfillment] create_ticket_for_order", error?.message);
     return;
   }
+
+  const ticket = { id: ticketId as string };
 
   const qr_code = generateTicketQrPayload(ticket.id as string);
   await supabase.from("tickets").update({ qr_code }).eq("id", ticket.id);

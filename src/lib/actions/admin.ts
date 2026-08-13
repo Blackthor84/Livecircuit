@@ -4,9 +4,9 @@ import { revalidatePath } from "next/cache";
 import { requireRole } from "@/lib/auth/session";
 import { ADMIN_ROLES } from "@/lib/auth/roles";
 import { createClient } from "@/lib/supabase/server";
-import { isStripeConfigured, isSupabaseConfigured } from "@/lib/config/env";
+import { isSupabaseConfigured } from "@/lib/config/env";
 import { createNotification } from "@/lib/services/notifications.service";
-import { getStripe } from "@/lib/stripe/server";
+import { processOrderRefund } from "@/lib/services/refund.service";
 import {
   refundOrderSchema,
   reviewVerificationSchema,
@@ -141,65 +141,17 @@ export async function refundOrderAction(input: unknown): Promise<AdminActionResu
     return { ok: false, error: parsed.error.issues[0]?.message ?? "Invalid input" };
   }
 
-  const { data: order } = await ctx.supabase
-    .from("orders")
-    .select("id, user_id, status, stripe_payment_intent_id, order_type, metadata")
-    .eq("id", parsed.data.orderId)
-    .maybeSingle();
-
-  if (!order) return { ok: false, error: "Order not found" };
-  if (order.status !== "paid") return { ok: false, error: "Only paid orders can be refunded" };
-
-  const paymentIntent = order.stripe_payment_intent_id as string | null;
-  if (!paymentIntent) {
-    return { ok: false, error: "No Stripe payment on this order" };
-  }
-
-  if (!isStripeConfigured()) {
-    return { ok: false, error: "Stripe is not configured" };
-  }
-
-  try {
-    const stripe = getStripe();
-    await stripe.refunds.create({
-      payment_intent: paymentIntent,
-      reason: "requested_by_customer",
-      metadata: {
-        order_id: order.id as string,
-        admin_id: ctx.adminId,
-        note: parsed.data.reason ?? "",
-      },
-    });
-  } catch (e) {
-    const message = e instanceof Error ? e.message : "Stripe refund failed";
-    return { ok: false, error: message };
-  }
-
-  const existingMeta = (order.metadata as Record<string, unknown>) ?? {};
-  await ctx.supabase
-    .from("orders")
-    .update({
-      status: "refunded",
-      metadata: {
-        ...existingMeta,
-        refunded_at: new Date().toISOString(),
-        refund_reason: parsed.data.reason ?? null,
-        refunded_by: ctx.adminId,
-      },
-    })
-    .eq("id", order.id);
-
-  if (order.order_type === "ticket") {
-    await ctx.supabase.from("tickets").delete().eq("order_id", order.id);
-  }
-
-  await createNotification({
-    userId: order.user_id as string,
-    type: "system",
-    title: "Refund processed",
-    body: "Your payment has been refunded. It may take several days to appear on your statement.",
-    link: "/dashboard",
+  const result = await processOrderRefund(ctx.supabase, {
+    orderId: parsed.data.orderId,
+    createStripeRefund: true,
+    reason: parsed.data.reason ?? null,
+    adminId: ctx.adminId,
+    notifyUser: true,
   });
+
+  if (!result.ok) {
+    return { ok: false, error: result.error };
+  }
 
   revalidatePath("/admin");
   revalidatePath("/dashboard");

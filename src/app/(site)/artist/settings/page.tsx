@@ -2,10 +2,19 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import { ArtistProfileForm } from "@/components/artist/artist-profile-form";
+import { ArtistPaymentsPanel } from "@/components/artist/artist-payments-panel";
 import { requireUserProfile } from "@/lib/auth/guards";
 import { isArtistOrAdminRole } from "@/lib/auth/roles";
+import { isStripeConfigured } from "@/lib/config/env";
 import { getGenres } from "@/lib/data/locations";
 import { getArtistForSettings } from "@/lib/data/profiles";
+import { getArtistConnectStatus } from "@/lib/stripe/connect";
+import {
+  getArtistBalanceSummary,
+  listArtistTicketTransactions,
+} from "@/lib/services/artist-balance.service";
+import { listArtistPayoutHistory } from "@/lib/services/artist-payout.service";
+import { createClient } from "@/lib/supabase/server";
 import { artistProfileUrl } from "@/lib/username";
 
 export const metadata: Metadata = { title: "Artist settings" };
@@ -25,6 +34,12 @@ export default async function ArtistSettingsPage() {
   const social = (bundle.artist.social_links ?? {}) as Record<string, string>;
   const donation = (bundle.artist.donation_links ?? {}) as Record<string, string>;
 
+  const supabase = await createClient();
+  const { status: connectStatus } = await getArtistConnectStatus(supabase, bundle.artist.id);
+  const balance = await getArtistBalanceSummary(supabase, bundle.artist.id);
+  const transactions = await listArtistTicketTransactions(supabase, bundle.artist.id);
+  const payouts = await listArtistPayoutHistory(supabase, bundle.artist.id);
+
   const publicUrl = artistProfileUrl(profile.username ?? bundle.artist.slug);
 
   return (
@@ -40,7 +55,14 @@ export default async function ArtistSettingsPage() {
           View public page
         </Link>
       </div>
-      <div className="mt-8">
+      <div className="mt-8 space-y-8">
+        <ArtistPaymentsPanel
+          initialStatus={connectStatus}
+          stripeConfigured={isStripeConfigured()}
+          balance={balance}
+          transactions={transactions}
+          payouts={payouts}
+        />
         <ArtistProfileForm
           initial={{
             userId: user.id,
