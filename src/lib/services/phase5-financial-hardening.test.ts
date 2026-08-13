@@ -310,7 +310,10 @@ describe("Phase 5 financial hardening", () => {
   describe("5H webhook hardening", () => {
     it("23. webhook handler records stripe_event_id before processing", () => {
       const route = readSource("src/app/api/stripe/webhook/route.ts");
-      expect(route).toMatch(/constructEvent/);
+      const verify = readSource("src/lib/stripe/webhook-verify.ts");
+      expect(route).toMatch(/verifyStripeWebhookPayload/);
+      expect(verify).toMatch(/STRIPE_WEBHOOK_SECRET/);
+      expect(verify).toMatch(/STRIPE_CONNECT_WEBHOOK_SECRET/);
       const service = readSource("src/lib/monetization/stripe-webhook.service.ts");
       expect(service).toMatch(/monetization_stripe_webhook_events/);
       expect(service).toMatch(/stripe_event_id/);
@@ -324,6 +327,9 @@ describe("Phase 5 financial hardening", () => {
       expect(admin).toMatch(/SUPABASE_SERVICE_ROLE_KEY/);
       const client = readSource("src/lib/supabase/client.ts");
       expect(client).not.toMatch(/SERVICE_ROLE/);
+      const verify = readSource("src/lib/stripe/webhook-verify.ts");
+      expect(verify).toMatch(/server-only/);
+      expect(verify).not.toMatch(/NEXT_PUBLIC_/);
     });
 
     it("25. ticket payout path does not call stripe.transfers.create", () => {

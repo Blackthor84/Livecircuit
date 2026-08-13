@@ -18,6 +18,16 @@ export function isStripeConfigured(): boolean {
   );
 }
 
+export function isStripeWebhookVerificationConfigured(): boolean {
+  return Boolean(
+    process.env.STRIPE_WEBHOOK_SECRET?.trim() || process.env.STRIPE_CONNECT_WEBHOOK_SECRET?.trim(),
+  );
+}
+
+export function isStripeConnectWebhookSecretConfigured(): boolean {
+  return Boolean(process.env.STRIPE_CONNECT_WEBHOOK_SECRET?.trim());
+}
+
 function normalizeExplicitStreamingProvider(value: string | undefined): StreamingProviderName | null {
   const raw = (value ?? "").toLowerCase().trim();
   if (raw === "livekit" || raw === "agora" || raw === "mux") return raw;
