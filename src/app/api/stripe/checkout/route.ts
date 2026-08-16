@@ -223,6 +223,8 @@ export async function POST(request: Request) {
           artist_id: resolved.artistId ?? "",
         },
       };
+      // Stripe Managed Payments (default on new accounts) is incompatible with Connect destination charges.
+      sessionParams.managed_payments = { enabled: false };
     }
 
     const session = await stripe.checkout.sessions.create(sessionParams);
