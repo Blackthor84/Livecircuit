@@ -4,6 +4,39 @@ import type { SupabaseClient } from "@supabase/supabase-js";
 import type Stripe from "stripe";
 import { getStripe } from "@/lib/stripe/server";
 
+async function resolveBalanceTransaction(
+  stripe: Stripe,
+  balanceTxn: Stripe.BalanceTransaction | string | null | undefined,
+): Promise<Stripe.BalanceTransaction | null> {
+  if (!balanceTxn) return null;
+  if (typeof balanceTxn !== "string") return balanceTxn;
+  return stripe.balanceTransactions.retrieve(balanceTxn);
+}
+
+export async function resolveOrderIdForStripeCharge(
+  supabase: SupabaseClient,
+  stripe: Stripe,
+  charge: Stripe.Charge,
+  hintedOrderId?: string | null,
+): Promise<string | null> {
+  if (hintedOrderId) return hintedOrderId;
+  if (charge.metadata?.order_id) return charge.metadata.order_id;
+
+  const piId =
+    typeof charge.payment_intent === "string" ? charge.payment_intent : charge.payment_intent?.id;
+  if (!piId) return null;
+
+  const { data } = await supabase
+    .from("orders")
+    .select("id")
+    .eq("stripe_payment_intent_id", piId)
+    .maybeSingle();
+  if (data?.id) return data.id as string;
+
+  const paymentIntent = await stripe.paymentIntents.retrieve(piId);
+  return paymentIntent.metadata?.order_id ?? null;
+}
+
 export async function reconcileOrderStripeFees(
   supabase: SupabaseClient,
   input: {
@@ -22,9 +55,8 @@ export async function reconcileOrderStripeFees(
     return { ok: false, stripeFeeCents: null };
   }
 
-  const balanceTxn = charge.balance_transaction;
-  const stripeFeeCents =
-    balanceTxn && typeof balanceTxn !== "string" ? balanceTxn.fee : null;
+  const balanceTxn = await resolveBalanceTransaction(stripe, charge.balance_transaction);
+  const stripeFeeCents = balanceTxn?.fee ?? null;
 
   const transferId =
     typeof charge.transfer === "string" ? charge.transfer : charge.transfer?.id ?? null;
@@ -32,8 +64,7 @@ export async function reconcileOrderStripeFees(
     typeof charge.application_fee === "string"
       ? charge.application_fee
       : charge.application_fee?.id ?? null;
-  const balanceTransactionId =
-    balanceTxn && typeof balanceTxn !== "string" ? balanceTxn.id : null;
+  const balanceTransactionId = balanceTxn?.id ?? null;
 
   const { error } = await supabase
     .from("orders")
@@ -58,21 +89,14 @@ export async function reconcileOrderStripeFeesFromCharge(
   supabase: SupabaseClient,
   charge: Stripe.Charge,
   orderId?: string | null,
+  stripeClient?: Stripe,
 ): Promise<void> {
   const piId =
     typeof charge.payment_intent === "string" ? charge.payment_intent : charge.payment_intent?.id;
   if (!piId) return;
 
-  let resolvedOrderId = orderId ?? null;
-  if (!resolvedOrderId) {
-    const { data } = await supabase
-      .from("orders")
-      .select("id")
-      .eq("stripe_payment_intent_id", piId)
-      .maybeSingle();
-    resolvedOrderId = (data?.id as string | undefined) ?? null;
-  }
-
+  const stripe = stripeClient ?? getStripe();
+  const resolvedOrderId = await resolveOrderIdForStripeCharge(supabase, stripe, charge, orderId);
   if (!resolvedOrderId) return;
 
   await reconcileOrderStripeFees(supabase, {

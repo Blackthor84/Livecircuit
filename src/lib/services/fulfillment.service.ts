@@ -90,6 +90,7 @@ export async function fulfillPaidOrder(
       payment_success_at: new Date().toISOString(),
       stripe_payment_intent_id:
         typeof session.payment_intent === "string" ? session.payment_intent : null,
+      stripe_checkout_session_id: session.id,
     })
     .eq("id", order.id);
 
@@ -177,7 +178,7 @@ export async function fulfillPaidOrder(
 
   const paymentIntentId =
     typeof session.payment_intent === "string" ? session.payment_intent : null;
-  if (paymentIntentId && meta.ticket_revenue_split === true) {
+  if (paymentIntentId && order.order_type === "ticket" && order.artist_id) {
     await reconcileOrderStripeFees(supabase, {
       orderId: order.id,
       paymentIntentId,

@@ -229,7 +229,7 @@ export async function POST(request: Request) {
 
     const session = await stripe.checkout.sessions.create(sessionParams);
 
-    await attachStripeSessionToOrder(supabase, orderId, session.id);
+    await attachStripeSessionToOrder(admin, orderId, session.id);
 
     return NextResponse.json({ url: session.url });
   } catch (error) {

@@ -25,12 +25,42 @@ import {
 import {
   handleStripePayoutEvent,
 } from "@/lib/services/artist-payout.service";
-import { reconcileOrderStripeFeesFromCharge } from "@/lib/monetization/stripe-fee-reconciliation.service";
+import {
+  reconcileOrderStripeFeesFromCharge,
+  resolveOrderIdForStripeCharge,
+} from "@/lib/monetization/stripe-fee-reconciliation.service";
 import {
   resolveArtistIdForStripeAccount,
   syncArtistConnectFromStripeAccount,
 } from "@/lib/stripe/connect";
 import { createAdminNotification } from "@/lib/monetization/admin-notifications.service";
+
+async function resolveOrderIdForWebhookEvent(
+  supabase: SupabaseClient,
+  stripe: Stripe,
+  event: Stripe.Event,
+): Promise<string | null> {
+  switch (event.type) {
+    case "checkout.session.completed":
+    case "checkout.session.expired": {
+      const session = event.data.object as Stripe.Checkout.Session;
+      if (session.metadata?.order_id) return session.metadata.order_id;
+      const { data } = await supabase
+        .from("orders")
+        .select("id")
+        .eq("stripe_checkout_session_id", session.id)
+        .maybeSingle();
+      return (data?.id as string | undefined) ?? null;
+    }
+    case "charge.succeeded":
+    case "charge.refunded": {
+      const charge = event.data.object as Stripe.Charge;
+      return resolveOrderIdForStripeCharge(supabase, stripe, charge);
+    }
+    default:
+      return null;
+  }
+}
 
 export async function processStripeWebhookEvent(
   supabase: SupabaseClient,
@@ -73,7 +103,7 @@ export async function processStripeWebhookEvent(
         break;
 
       case "charge.succeeded":
-        await handleChargeSucceeded(supabase, event.data.object as Stripe.Charge);
+        await handleChargeSucceeded(supabase, stripe, event.data.object as Stripe.Charge);
         result = { duplicate: false, handled: true };
         break;
 
@@ -129,6 +159,7 @@ export async function processStripeWebhookEvent(
       eventType: event.type,
       status: "processed",
       payload: { type: event.type, livemode: event.livemode },
+      orderId: await resolveOrderIdForWebhookEvent(supabase, stripe, event),
     });
 
     return result;
@@ -198,9 +229,13 @@ async function handleChargeRefunded(supabase: SupabaseClient, charge: Stripe.Cha
   }
 }
 
-async function handleChargeSucceeded(supabase: SupabaseClient, charge: Stripe.Charge) {
+async function handleChargeSucceeded(
+  supabase: SupabaseClient,
+  stripe: Stripe,
+  charge: Stripe.Charge,
+) {
   const orderId = charge.metadata?.order_id ?? null;
-  await reconcileOrderStripeFeesFromCharge(supabase, charge, orderId);
+  await reconcileOrderStripeFeesFromCharge(supabase, charge, orderId, stripe);
 }
 
 async function handleDisputeCreated(

@@ -598,5 +598,12 @@ export async function attachStripeSessionToOrder(
   orderId: string,
   sessionId: string
 ) {
-  await supabase.from("orders").update({ stripe_checkout_session_id: sessionId }).eq("id", orderId);
+  const { error } = await supabase
+    .from("orders")
+    .update({ stripe_checkout_session_id: sessionId })
+    .eq("id", orderId);
+
+  if (error) {
+    throw new Error(`Could not attach checkout session: ${error.message}`);
+  }
 }

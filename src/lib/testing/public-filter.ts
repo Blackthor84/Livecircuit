@@ -30,6 +30,22 @@ export function isPublicProfile(profile: { is_test_account?: boolean } | null | 
   return !profile?.is_test_account;
 }
 
+export async function isArtistPubliclyVisible(
+  supabase: SupabaseClient,
+  artistId: string,
+): Promise<boolean> {
+  const { data } = await supabase
+    .from("artists")
+    .select("profiles!inner(is_test_account)")
+    .eq("id", artistId)
+    .maybeSingle();
+
+  if (!data?.profiles) return false;
+  const profiles = data.profiles as { is_test_account?: boolean } | { is_test_account?: boolean }[];
+  const profile = Array.isArray(profiles) ? profiles[0] : profiles;
+  return isPublicProfile(profile);
+}
+
 export function filterRowsByPublicProfile<
   T extends { profiles?: { is_test_account?: boolean } | { is_test_account?: boolean }[] | null },
 >(rows: T[]): T[] {

@@ -2,6 +2,7 @@ import type { SupabaseClient } from "@supabase/supabase-js";
 import type { CheckoutBody } from "@/lib/validations/checkout";
 import { getEventPublicPath } from "@/lib/services/events.service";
 import type { ResolvedCheckout } from "@/lib/services/orders.service";
+import { isArtistPubliclyVisible } from "@/lib/testing/public-filter";
 
 export async function buildCheckoutSuccessUrl(
   supabase: SupabaseClient,
@@ -10,8 +11,12 @@ export async function buildCheckoutSuccessUrl(
   resolved: ResolvedCheckout
 ): Promise<string> {
   if (body.type === "ticket" && resolved.eventId) {
-    const path = await getEventPublicPath(supabase, resolved.eventId);
-    if (path) return `${origin}${path}?checkout=success`;
+    const artistIsPublic =
+      resolved.artistId != null && (await isArtistPubliclyVisible(supabase, resolved.artistId));
+    if (artistIsPublic) {
+      const path = await getEventPublicPath(supabase, resolved.eventId);
+      if (path) return `${origin}${path}?checkout=success`;
+    }
   }
   return `${origin}/dashboard?checkout=success`;
 }
