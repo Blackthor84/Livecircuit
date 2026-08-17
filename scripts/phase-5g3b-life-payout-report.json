@@ -1,0 +1,72 @@
+{
+  "phase": "5G.3B",
+  "startedAt": "2026-08-17T03:01:37.673Z",
+  "step0_preFlight": {
+    "stripeLivemode": false,
+    "connectAccount": "acct_1U3xwlEJwfCXyXc7",
+    "payoutConfig": {
+      "payout_delay_days": 7,
+      "min_payout_cents": 500,
+      "reserve_percent": 0,
+      "stripe_connect_ready": false
+    },
+    "lifeOrder": {
+      "status": "paid",
+      "artist_payout_status": "available",
+      "remaining_artist_earnings_cents": 1800
+    },
+    "lcAvailable": 1800,
+    "artistPayoutsCount": 0,
+    "stripeAvailableCents": 0,
+    "stripePendingCents": 5400
+  },
+  "step1_beforeState": {
+    "lc": {
+      "available_cents": 1800,
+      "pending_cents": 7200,
+      "lifetime_paid_out_cents": 0
+    },
+    "artist_payouts_count": 0,
+    "payout_ledger_count": 0,
+    "life": {
+      "artist_payout_status": "available",
+      "remaining_artist_earnings_cents": 1800
+    },
+    "stripe": {
+      "available": 0,
+      "pending": 5400,
+      "payoutCount": 0
+    }
+  },
+  "classification": "BLOCKED",
+  "blockedReasons": [
+    "stripe_available_insufficient"
+  ],
+  "step8_configRestore": {
+    "ok": true,
+    "config": {
+      "min_payout_cents": 2500,
+      "payout_delay_days": 7,
+      "reserve_percent": 0,
+      "stripe_connect_ready": false
+    }
+  },
+  "step9_protectedObjects": {
+    "goldenOk": true,
+    "histOk": true,
+    "freshOk": true,
+    "golden": {
+      "status": "paid",
+      "artist_payout_status": "pending",
+      "refund_cents": 0,
+      "available_at": "2026-08-23T23:57:23.104+00:00"
+    },
+    "hist": {
+      "artist_payout_status": "held"
+    },
+    "fresh": {
+      "artist_payout_status": "held"
+    }
+  },
+  "finishedAt": "2026-08-17T03:01:50.721Z"
+}

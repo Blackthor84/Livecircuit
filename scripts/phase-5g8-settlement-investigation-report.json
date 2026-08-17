@@ -1,0 +1,291 @@
+{
+  "phase": "5G.8",
+  "investigatedAt": "2026-08-17T03:15:27.380Z",
+  "step1_stripeConnectBalance": {
+    "livemode": false,
+    "available_usd_cents": 0,
+    "pending_usd_cents": 5400,
+    "instant_available_usd_cents": 5400,
+    "stripePayoutCount": 0,
+    "pendingBalanceTransactionIds": [
+      "txn_1U5GTsEJwfCXyXc7wxDruoT1",
+      "txn_1U5GTpEJwfCXyXc78LhMHAgA",
+      "txn_1U5GOJEJwfCXyXc76UBYLDeL",
+      "txn_1U5FUhEJwfCXyXc7z1KrUMcZ",
+      "txn_1U5FUhEJwfCXyXc7TbAxHj6B",
+      "txn_1U5FUWEJwfCXyXc7B9TlIQFR",
+      "txn_1U5FUWEJwfCXyXc7flbni00E",
+      "txn_1U5FPxEJwfCXyXc7ufLyJsOp",
+      "txn_1U5FOxEJwfCXyXc7qV7ykpI1",
+      "txn_1U5FBFEJwfCXyXc7VlLiaIru",
+      "txn_1U5F9YEJwfCXyXc7PLzZDYZS",
+      "txn_1U5DvWEJwfCXyXc7eXJMIvz0"
+    ],
+    "availableBalanceTransactionIds": [],
+    "pendingBalanceTransactions": [
+      {
+        "balanceTransactionId": "txn_1U5GTsEJwfCXyXc7wxDruoT1",
+        "type": "payment_refund",
+        "amount": -1800,
+        "net": -1800,
+        "status": "pending",
+        "available_on": 1787529600,
+        "created": 1786934455,
+        "source": "pyr_1U5GTrEJwfCXyXc7De0IM2lP",
+        "description": "REFUND FOR PAYMENT",
+        "sourceDetail": null
+      },
+      {
+        "balanceTransactionId": "txn_1U5GTpEJwfCXyXc78LhMHAgA",
+        "type": "payment",
+        "amount": 2000,
+        "net": 1800,
+        "status": "pending",
+        "available_on": 1787529600,
+        "created": 1786934453,
+        "source": "py_1U5GTpEJwfCXyXc7Wba1Ai3U",
+        "description": null,
+        "sourceDetail": null
+      },
+      {
+        "balanceTransactionId": "txn_1U5GOJEJwfCXyXc76UBYLDeL",
+        "type": "payment_refund",
+        "amount": -1800,
+        "net": -1800,
+        "status": "pending",
+        "available_on": 1787529600,
+        "created": 1786934111,
+        "source": "pyr_1U5GOJEJwfCXyXc7c1UCZoMl",
+        "description": "REFUND FOR PAYMENT",
+        "sourceDetail": null
+      },
+      {
+        "balanceTransactionId": "txn_1U5FUhEJwfCXyXc7z1KrUMcZ",
+        "type": "adjustment",
+        "amount": 150,
+        "net": 150,
+        "status": "pending",
+        "available_on": 1787529600,
+        "created": 1786930663,
+        "source": "py_1U5FOxEJwfCXyXc7CuWjdDUv",
+        "description": "Application fee refund for py_1U5FOxEJwfCXyXc7CuWjdDUv",
+        "sourceDetail": null
+      },
+      {
+        "balanceTransactionId": "txn_1U5FUhEJwfCXyXc7TbAxHj6B",
+        "type": "payment_refund",
+        "amount": -1500,
+        "net": -1500,
+        "status": "pending",
+        "available_on": 1787529600,
+        "created": 1786930663,
+        "source": "pyr_1U5FUhEJwfCXyXc7l5vnSwiM",
+        "description": "REFUND FOR PAYMENT",
+        "sourceDetail": null
+      },
+      {
+        "balanceTransactionId": "txn_1U5FUWEJwfCXyXc7B9TlIQFR",
+        "type": "adjustment",
+        "amount": 50,
+        "net": 50,
+        "status": "pending",
+        "available_on": 1787529600,
+        "created": 1786930652,
+        "source": "py_1U5FOxEJwfCXyXc7CuWjdDUv",
+        "description": "Application fee refund for py_1U5FOxEJwfCXyXc7CuWjdDUv",
+        "sourceDetail": null
+      },
+      {
+        "balanceTransactionId": "txn_1U5FUWEJwfCXyXc7flbni00E",
+        "type": "payment_refund",
+        "amount": -500,
+        "net": -500,
+        "status": "pending",
+        "available_on": 1787529600,
+        "created": 1786930651,
+        "source": "pyr_1U5FUVEJwfCXyXc7CRfDERT5",
+        "description": "REFUND FOR PAYMENT",
+        "sourceDetail": null
+      },
+      {
+        "balanceTransactionId": "txn_1U5FPxEJwfCXyXc7ufLyJsOp",
+        "type": "payment",
+        "amount": 2000,
+        "net": 1800,
+        "status": "pending",
+        "available_on": 1787529600,
+        "created": 1786930369,
+        "source": "py_1U5FPwEJwfCXyXc7x1Hni6Kj",
+        "description": null,
+        "sourceDetail": null
+      },
+      {
+        "balanceTransactionId": "txn_1U5FOxEJwfCXyXc7qV7ykpI1",
+        "type": "payment",
+        "amount": 2000,
+        "net": 1800,
+        "status": "pending",
+        "available_on": 1787529600,
+        "created": 1786930307,
+        "source": "py_1U5FOxEJwfCXyXc7CuWjdDUv",
+        "description": null,
+        "sourceDetail": null
+      },
+      {
+        "balanceTransactionId": "txn_1U5FBFEJwfCXyXc7VlLiaIru",
+        "type": "payment",
+        "amount": 2000,
+        "net": 1800,
+        "status": "pending",
+        "available_on": 1787529600,
+        "created": 1786929457,
+        "source": "py_1U5FBFEJwfCXyXc7o9n2G80a",
+        "description": null,
+        "sourceDetail": null
+      },
+      {
+        "balanceTransactionId": "txn_1U5F9YEJwfCXyXc7PLzZDYZS",
+        "type": "payment",
+        "amount": 2000,
+        "net": 1800,
+        "status": "pending",
+        "available_on": 1787529600,
+        "created": 1786929352,
+        "source": "py_1U5F9YEJwfCXyXc7SGeF7igZ",
+        "description": null,
+        "sourceDetail": null
+      },
+      {
+        "balanceTransactionId": "txn_1U5DvWEJwfCXyXc7eXJMIvz0",
+        "type": "payment",
+        "amount": 2000,
+        "net": 1800,
+        "status": "pending",
+        "available_on": 1787443200,
+        "created": 1786924638,
+        "source": "py_1U5DvWEJwfCXyXc7pW9CfNDA",
+        "description": null,
+        "sourceDetail": null
+      }
+    ]
+  },
+  "step2_pendingFundSources": {
+    "lifeTransfer": {
+      "error": "No such transfer: 'tr_3U5FBBEJwfqaexCo0IwKnDjo'"
+    },
+    "lifeOrderStripeRefs": null,
+    "pendingTxnCount": 12,
+    "pendingTotalNet": 5400
+  },
+  "step3_supportedMechanismsInvestigation": {
+    "testClocks": {
+      "exists": true,
+      "api": "POST /v1/test_helpers/test_clocks/:id/advance",
+      "appliesToConnectPendingSettlement": false,
+      "notes": "Official Stripe Test Clocks advance time for Billing objects (subscriptions/invoices). They do not accelerate Connect balance pending→available settlement for existing transfer balance transactions.",
+      "source": "https://docs.stripe.com/api/test_clocks"
+    },
+    "testCardBypassPending": {
+      "exists": true,
+      "cards": [
+        "4000000000000077",
+        "4000003720000278"
+      ],
+      "appliesToExistingPendingTransfers": false,
+      "notes": "Official Stripe test cards bypass pending balance for NEW charges only. Would require creating a new payment/charge — disallowed for this phase.",
+      "source": "https://docs.stripe.com/testing#cards"
+    },
+    "balanceSettingsDelayOverride": {
+      "exists": true,
+      "api": "POST /v1/balance_settings (Stripe-Account header)",
+      "parameter": "payments[settlement_timing][delay_days_override]",
+      "appliesToExistingPendingBalanceTransactions": false,
+      "notes": "Official Balance Settings API controls settlement timing for future charges/transfers. It does not retroactively move existing pending balance transactions to available before their available_on timestamp.",
+      "source": "https://docs.stripe.com/connect/manage-payout-schedule",
+      "currentSettings": {
+        "delay_days": 2,
+        "start_of_day": {
+          "hour": 0,
+          "minutes": 0,
+          "timezone": "Etc/UTC"
+        }
+      }
+    },
+    "instantAvailable": {
+      "exists": true,
+      "observed": 5400,
+      "appliesToStandardPayoutGuard": false,
+      "notes": "Connect balance may expose instant_available while available=0. LiveCircuit processEligibleArtistPayouts() gates on balance.available, not instant_available."
+    },
+    "waitForAvailableOn": {
+      "exists": true,
+      "appliesToExistingPendingBalanceTransactions": true,
+      "notes": "Official mechanism: pending balance transactions become available when Stripe's clock reaches each transaction's available_on timestamp. In TEST mode there is no documented API to force-advance existing pending txn available_on dates."
+    }
+  },
+  "step4_accelerationAttempt": {
+    "mechanismUsed": null,
+    "reasonNotExecuted": "No official Stripe TEST API exists to retroactively advance existing Connect pending balance transactions to available without creating a new payment/transfer/payout. Test Clocks and delay_days_override do not apply to existing pending txn available_on dates.",
+    "before": {
+      "available": 0,
+      "pending": 5400,
+      "instant_available": 5400,
+      "lcAvailable": 1800,
+      "lifeState": {
+        "status": "paid",
+        "artist_payout_status": "available",
+        "remaining_artist_earnings_cents": 1800
+      },
+      "artistPayoutsCount": 0,
+      "stripePayoutCount": 0
+    },
+    "after": {
+      "available": 0,
+      "pending": 5400,
+      "instant_available": 5400
+    },
+    "balanceChanged": false
+  },
+  "step5_classification": "SETTLEMENT_STILL_BLOCKED",
+  "availableMeetsThreshold": false,
+  "step6_safetyReconciliation": {
+    "golden": {
+      "pass": true,
+      "actual": {
+        "status": "paid",
+        "artist_payout_status": "pending",
+        "refund_cents": 0,
+        "available_at": "2026-08-23T23:57:23.104+00:00"
+      }
+    },
+    "historicalDisp": {
+      "pass": true
+    },
+    "freshDisp": {
+      "pass": true
+    },
+    "life": {
+      "pass": true,
+      "actual": {
+        "status": "paid",
+        "artist_payout_status": "available",
+        "remaining_artist_earnings_cents": 1800
+      }
+    },
+    "artist_payouts_count": 0,
+    "stripe_payout_count": 0,
+    "payoutConfig": {
+      "payout_delay_days": 7,
+      "min_payout_cents": 2500,
+      "reserve_percent": 0,
+      "stripe_connect_ready": false
+    },
+    "allSafetyChecksPass": true
+  },
+  "recommendations": [
+    "Wait until pending balance transactions reach their available_on timestamps (earliest pending txn date drives settlement).",
+    "Re-run Phase 5G.6 periodically until balance.available >= 1800.",
+    "Do NOT use a new test charge (4000000000000077) during LIFE payout E2E — that would create a new payment and contaminate the controlled test state.",
+    "instant_available (5400) cannot be used by processEligibleArtistPayouts(); the app correctly gates on balance.available."
+  ]
+}

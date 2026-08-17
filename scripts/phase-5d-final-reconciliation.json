@@ -1,0 +1,849 @@
+{
+  "generatedAt": "2026-08-17T01:38:34.666Z",
+  "orders": {
+    "78581ea3-0b38-47b7-b981-6cc94fc7d057": {
+      "label": "GOLDEN",
+      "order": {
+        "id": "78581ea3-0b38-47b7-b981-6cc94fc7d057",
+        "user_id": "78df036b-c597-4567-8f9a-76d85fbff9e5",
+        "artist_id": "91b8850b-c145-4fa1-9167-0ba83cd329e8",
+        "order_type": "ticket",
+        "status": "paid",
+        "subtotal_cents": 2000,
+        "tax_cents": 0,
+        "total_cents": 2000,
+        "currency": "USD",
+        "stripe_payment_intent_id": "pi_3U5DvTEJwfqaexCo0kYCpswq",
+        "stripe_checkout_session_id": "cs_test_a1w7mcCNjoqndcapOk5UGQ3GkSuldHv3t2Eunq0K2i38mdrM26zY9kglcd",
+        "metadata": {
+          "tier": "general",
+          "tour_id": "95aae89d-ea9b-4042-8690-e1b02f033b6d",
+          "event_id": "b52cabb9-8f58-4512-b05c-8d2ad2f5e904",
+          "coupon_id": null,
+          "fulfilled": true,
+          "product_id": null,
+          "coupon_code": null,
+          "festival_id": null,
+          "gross_cents": 2000,
+          "tip_message": null,
+          "fulfilled_at": "2026-08-16T23:57:23.250Z",
+          "tour_stop_id": "9fc4eebc-5502-4f16-88dc-ebe1c412a53e",
+          "discount_cents": 0,
+          "festival_tier_id": null,
+          "platform_fee_cents": 200,
+          "ticket_revenue_split": true,
+          "artist_earnings_cents": 1800,
+          "locked_platform_fee_percent": 10
+        },
+        "created_at": "2026-08-16T23:41:36.271864+00:00",
+        "updated_at": "2026-08-17T00:18:35.182956+00:00",
+        "gross_cents": 2000,
+        "platform_fee_cents": 200,
+        "artist_earnings_cents": 1800,
+        "stripe_fee_cents": 88,
+        "refund_cents": 0,
+        "artist_payout_status": "pending",
+        "payment_success_at": "2026-08-16T23:57:22.021+00:00",
+        "available_at": "2026-08-23T23:57:23.104+00:00",
+        "remaining_artist_earnings_cents": 1800,
+        "stripe_balance_transaction_id": "txn_3U5DvTEJwfqaexCo0cMaaDTQ",
+        "stripe_transfer_id": null,
+        "stripe_application_fee_id": null,
+        "artist_receivable_cents": 0,
+        "recovery_status": "none"
+      },
+      "ledger": [
+        {
+          "id": "d3f61215-f605-4ced-bb88-4590c8039c90",
+          "artist_id": "91b8850b-c145-4fa1-9167-0ba83cd329e8",
+          "order_id": "78581ea3-0b38-47b7-b981-6cc94fc7d057",
+          "transaction_type": "ticket_sale",
+          "pending_delta_cents": 1800,
+          "available_delta_cents": 0,
+          "gross_cents": 2000,
+          "platform_fee_cents": 200,
+          "artist_earnings_cents": 1800,
+          "metadata": {},
+          "created_at": "2026-08-16T23:57:23.220947+00:00",
+          "reference_id": "ticket_sale:78581ea3-0b38-47b7-b981-6cc94fc7d057"
+        }
+      ],
+      "webhooks": [
+        {
+          "id": "cd911e38-c369-478d-a039-f8f4cdb0da48",
+          "stripe_event_id": "evt_3U5DvTEJwfqaexCo0VdY6uTZ",
+          "event_type": "charge.succeeded",
+          "status": "processed",
+          "payload": {
+            "type": "charge.succeeded",
+            "livemode": false
+          },
+          "error_message": null,
+          "order_id": "78581ea3-0b38-47b7-b981-6cc94fc7d057",
+          "processed_at": "2026-08-16T23:57:22.168978+00:00"
+        },
+        {
+          "id": "9319fa14-fd38-48e7-a2bb-0e1f88e2783f",
+          "stripe_event_id": "evt_1U5DvXEJwfqaexCoEBRpMJYb",
+          "event_type": "checkout.session.completed",
+          "status": "processed",
+          "payload": {
+            "type": "checkout.session.completed",
+            "livemode": false
+          },
+          "error_message": null,
+          "order_id": "78581ea3-0b38-47b7-b981-6cc94fc7d057",
+          "processed_at": "2026-08-16T23:57:23.618348+00:00"
+        }
+      ],
+      "disputes": [],
+      "receivables": [],
+      "stripe": {
+        "checkoutSession": "cs_test_a1w7mcCNjoqndcapOk5UGQ3GkSuldHv3t2Eunq0K2i38mdrM26zY9kglcd",
+        "paymentIntent": "pi_3U5DvTEJwfqaexCo0kYCpswq",
+        "piStatus": "succeeded",
+        "charge": "ch_3U5DvTEJwfqaexCo0kPxTJOY",
+        "chargeStatus": "succeeded",
+        "chargeAmount": 2000,
+        "chargeRefunded": false,
+        "amountRefunded": 0,
+        "applicationFee": 200,
+        "applicationFeeId": "fee_1U5DvWEJwfCXyXc7KspcsxCN",
+        "destination": "acct_1U3xwlEJwfCXyXc7",
+        "transferId": "tr_3U5DvTEJwfqaexCo0iUibd0X",
+        "transferAmount": 2000,
+        "balanceTransactionId": "txn_3U5DvTEJwfqaexCo0cMaaDTQ",
+        "stripeFeeCents": 88,
+        "disputed": false,
+        "disputeId": null,
+        "refunds": [],
+        "transferReversals": []
+      }
+    },
+    "2d9d1586-10f9-4255-a47b-d962962d343b": {
+      "label": "LIFE",
+      "order": {
+        "id": "2d9d1586-10f9-4255-a47b-d962962d343b",
+        "user_id": "e2ea5ff0-66ca-448b-980e-e56aec8e8f6a",
+        "artist_id": "91b8850b-c145-4fa1-9167-0ba83cd329e8",
+        "order_type": "ticket",
+        "status": "paid",
+        "subtotal_cents": 2000,
+        "tax_cents": 0,
+        "total_cents": 2000,
+        "currency": "USD",
+        "stripe_payment_intent_id": "pi_3U5FBBEJwfqaexCo0rh1Wp7p",
+        "stripe_checkout_session_id": "cs_test_a1dH8zMvI737oCWUCXRnzfTglYfzIy8oskbT2IM4VeXcTA4sQEs37WUQNd",
+        "metadata": {
+          "tier": "general",
+          "tour_id": "95aae89d-ea9b-4042-8690-e1b02f033b6d",
+          "event_id": "b52cabb9-8f58-4512-b05c-8d2ad2f5e904",
+          "coupon_id": null,
+          "fulfilled": true,
+          "product_id": null,
+          "coupon_code": null,
+          "festival_id": null,
+          "gross_cents": 2000,
+          "tip_message": null,
+          "fulfilled_at": "2026-08-17T01:17:36.942Z",
+          "tour_stop_id": "9fc4eebc-5502-4f16-88dc-ebe1c412a53e",
+          "discount_cents": 0,
+          "festival_tier_id": null,
+          "platform_fee_cents": 200,
+          "ticket_revenue_split": true,
+          "artist_earnings_cents": 1800,
+          "locked_platform_fee_percent": 10
+        },
+        "created_at": "2026-08-17T01:16:51.662144+00:00",
+        "updated_at": "2026-08-17T01:17:37.720205+00:00",
+        "gross_cents": 2000,
+        "platform_fee_cents": 200,
+        "artist_earnings_cents": 1800,
+        "stripe_fee_cents": null,
+        "refund_cents": 0,
+        "artist_payout_status": "available",
+        "payment_success_at": "2026-08-17T01:17:36.008+00:00",
+        "available_at": "2026-08-17T01:17:36.855+00:00",
+        "remaining_artist_earnings_cents": 1800,
+        "stripe_balance_transaction_id": null,
+        "stripe_transfer_id": null,
+        "stripe_application_fee_id": null,
+        "artist_receivable_cents": 0,
+        "recovery_status": "none"
+      },
+      "ledger": [
+        {
+          "id": "ccb9772f-511f-42ca-a2c5-1fb6d883a1a1",
+          "artist_id": "91b8850b-c145-4fa1-9167-0ba83cd329e8",
+          "order_id": "2d9d1586-10f9-4255-a47b-d962962d343b",
+          "transaction_type": "ticket_sale",
+          "pending_delta_cents": 1800,
+          "available_delta_cents": 0,
+          "gross_cents": 2000,
+          "platform_fee_cents": 200,
+          "artist_earnings_cents": 1800,
+          "metadata": {},
+          "created_at": "2026-08-17T01:17:36.922809+00:00",
+          "reference_id": "ticket_sale:2d9d1586-10f9-4255-a47b-d962962d343b"
+        },
+        {
+          "id": "c3ee8e0f-d777-4942-b3d8-8b660ab9d1ad",
+          "artist_id": "91b8850b-c145-4fa1-9167-0ba83cd329e8",
+          "order_id": "2d9d1586-10f9-4255-a47b-d962962d343b",
+          "transaction_type": "release",
+          "pending_delta_cents": -1800,
+          "available_delta_cents": 1800,
+          "gross_cents": 0,
+          "platform_fee_cents": 0,
+          "artist_earnings_cents": 1800,
+          "metadata": {},
+          "created_at": "2026-08-17T01:17:37.720205+00:00",
+          "reference_id": "release:2d9d1586-10f9-4255-a47b-d962962d343b"
+        }
+      ],
+      "webhooks": [
+        {
+          "id": "7b5a6531-3d39-42d1-91a9-3393eaca7d19",
+          "stripe_event_id": "evt_3U5FBBEJwfqaexCo0ahS11Sz",
+          "event_type": "charge.succeeded",
+          "status": "processed",
+          "payload": {
+            "type": "charge.succeeded",
+            "livemode": false
+          },
+          "error_message": null,
+          "order_id": "2d9d1586-10f9-4255-a47b-d962962d343b",
+          "processed_at": "2026-08-17T01:17:36.104398+00:00"
+        },
+        {
+          "id": "de1ba688-69e2-4565-bf48-20a78dbbde77",
+          "stripe_event_id": "evt_1U5FBDEJwfqaexCoV2CMqnRG",
+          "event_type": "checkout.session.completed",
+          "status": "processed",
+          "payload": {
+            "type": "checkout.session.completed",
+            "livemode": false
+          },
+          "error_message": null,
+          "order_id": "2d9d1586-10f9-4255-a47b-d962962d343b",
+          "processed_at": "2026-08-17T01:17:37.270146+00:00"
+        }
+      ],
+      "disputes": [],
+      "receivables": [],
+      "stripe": {
+        "checkoutSession": "cs_test_a1dH8zMvI737oCWUCXRnzfTglYfzIy8oskbT2IM4VeXcTA4sQEs37WUQNd",
+        "paymentIntent": "pi_3U5FBBEJwfqaexCo0rh1Wp7p",
+        "piStatus": "succeeded",
+        "charge": "ch_3U5FBBEJwfqaexCo0IwKnDjo",
+        "chargeStatus": "succeeded",
+        "chargeAmount": 2000,
+        "chargeRefunded": false,
+        "amountRefunded": 0,
+        "applicationFee": 200,
+        "applicationFeeId": "fee_1U5FBFEJwfCXyXc7t8sfiQWj",
+        "destination": "acct_1U3xwlEJwfCXyXc7",
+        "transferId": "tr_3U5FBBEJwfqaexCo0ve8w08H",
+        "transferAmount": 2000,
+        "balanceTransactionId": "txn_3U5FBBEJwfqaexCo08kN543f",
+        "stripeFeeCents": 88,
+        "disputed": false,
+        "disputeId": null,
+        "refunds": [],
+        "transferReversals": []
+      }
+    },
+    "f4c16268-8c26-4258-a83e-83d215d68a4e": {
+      "label": "REF-P",
+      "order": {
+        "id": "f4c16268-8c26-4258-a83e-83d215d68a4e",
+        "user_id": "cb1bb22d-dd48-4d0a-a3d3-64b75f58a0ba",
+        "artist_id": "91b8850b-c145-4fa1-9167-0ba83cd329e8",
+        "order_type": "ticket",
+        "status": "refunded",
+        "subtotal_cents": 2000,
+        "tax_cents": 0,
+        "total_cents": 2000,
+        "currency": "USD",
+        "stripe_payment_intent_id": "pi_3U5FOtEJwfqaexCo06XthhTc",
+        "stripe_checkout_session_id": "cs_test_a1FbvVo8P9pDK2VPuGuhfF5JaP7k7KpzGJpimZZ0RmlrFfo2ZHtitDt4Dl",
+        "metadata": {
+          "tier": "general",
+          "tour_id": "95aae89d-ea9b-4042-8690-e1b02f033b6d",
+          "event_id": "b52cabb9-8f58-4512-b05c-8d2ad2f5e904",
+          "coupon_id": null,
+          "fulfilled": true,
+          "product_id": null,
+          "coupon_code": null,
+          "festival_id": null,
+          "gross_cents": 2000,
+          "refunded_at": "2026-08-17T01:37:45.807Z",
+          "refunded_by": "468563fc-5dd6-4728-b55b-0fa78c67136c",
+          "tip_message": null,
+          "fulfilled_at": "2026-08-17T01:31:48.298Z",
+          "tour_stop_id": "9fc4eebc-5502-4f16-88dc-ebe1c412a53e",
+          "refund_reason": "Phase 5D REF-P full remainder",
+          "discount_cents": 0,
+          "festival_tier_id": null,
+          "platform_fee_cents": 200,
+          "ticket_revenue_split": true,
+          "artist_earnings_cents": 1800,
+          "locked_platform_fee_percent": 10
+        },
+        "created_at": "2026-08-17T01:31:01.509015+00:00",
+        "updated_at": "2026-08-17T01:37:44.831739+00:00",
+        "gross_cents": 2000,
+        "platform_fee_cents": 200,
+        "artist_earnings_cents": 1800,
+        "stripe_fee_cents": 88,
+        "refund_cents": 2000,
+        "artist_payout_status": "refunded",
+        "payment_success_at": "2026-08-17T01:31:47.259+00:00",
+        "available_at": "2026-08-24T01:31:48.159+00:00",
+        "remaining_artist_earnings_cents": 0,
+        "stripe_balance_transaction_id": "txn_3U5FOtEJwfqaexCo0tcP0pXq",
+        "stripe_transfer_id": "tr_3U5FOtEJwfqaexCo0Ku60RB0",
+        "stripe_application_fee_id": "fee_1U5FOxEJwfCXyXc7ERu7sq7b",
+        "artist_receivable_cents": 0,
+        "recovery_status": "none"
+      },
+      "ledger": [
+        {
+          "id": "180c1297-18a4-4332-9093-46824a7b64c1",
+          "artist_id": "91b8850b-c145-4fa1-9167-0ba83cd329e8",
+          "order_id": "f4c16268-8c26-4258-a83e-83d215d68a4e",
+          "transaction_type": "ticket_sale",
+          "pending_delta_cents": 1800,
+          "available_delta_cents": 0,
+          "gross_cents": 2000,
+          "platform_fee_cents": 200,
+          "artist_earnings_cents": 1800,
+          "metadata": {},
+          "created_at": "2026-08-17T01:31:48.275655+00:00",
+          "reference_id": "ticket_sale:f4c16268-8c26-4258-a83e-83d215d68a4e"
+        },
+        {
+          "id": "3190540f-d194-4d10-8445-09f3c8caddcf",
+          "artist_id": "91b8850b-c145-4fa1-9167-0ba83cd329e8",
+          "order_id": "f4c16268-8c26-4258-a83e-83d215d68a4e",
+          "transaction_type": "partial_refund",
+          "pending_delta_cents": -450,
+          "available_delta_cents": 0,
+          "gross_cents": 500,
+          "platform_fee_cents": 50,
+          "artist_earnings_cents": 450,
+          "metadata": {
+            "full_refund": false,
+            "receivable_cents": 0
+          },
+          "created_at": "2026-08-17T01:37:33.479766+00:00",
+          "reference_id": "refund:f4c16268-8c26-4258-a83e-83d215d68a4e:500"
+        },
+        {
+          "id": "1163a2bd-84b4-40ba-a738-8e2ee20f59ed",
+          "artist_id": "91b8850b-c145-4fa1-9167-0ba83cd329e8",
+          "order_id": "f4c16268-8c26-4258-a83e-83d215d68a4e",
+          "transaction_type": "refund",
+          "pending_delta_cents": -1350,
+          "available_delta_cents": 0,
+          "gross_cents": 1500,
+          "platform_fee_cents": 200,
+          "artist_earnings_cents": 1350,
+          "metadata": {
+            "full_refund": true,
+            "receivable_cents": 0
+          },
+          "created_at": "2026-08-17T01:37:44.831739+00:00",
+          "reference_id": "refund:f4c16268-8c26-4258-a83e-83d215d68a4e:2000"
+        }
+      ],
+      "webhooks": [
+        {
+          "id": "d69a3f7c-bfd7-4174-8e34-6b0b4aa13e71",
+          "stripe_event_id": "evt_3U5FOtEJwfqaexCo0XOX7wSB",
+          "event_type": "charge.succeeded",
+          "status": "processed",
+          "payload": {
+            "type": "charge.succeeded",
+            "livemode": false
+          },
+          "error_message": null,
+          "order_id": "f4c16268-8c26-4258-a83e-83d215d68a4e",
+          "processed_at": "2026-08-17T01:31:46.691657+00:00"
+        },
+        {
+          "id": "ff92055a-9316-4828-8b71-ade056062632",
+          "stripe_event_id": "evt_1U5FOvEJwfqaexCoU39xPO4s",
+          "event_type": "checkout.session.completed",
+          "status": "processed",
+          "payload": {
+            "type": "checkout.session.completed",
+            "livemode": false
+          },
+          "error_message": null,
+          "order_id": "f4c16268-8c26-4258-a83e-83d215d68a4e",
+          "processed_at": "2026-08-17T01:31:48.950545+00:00"
+        },
+        {
+          "id": "741425ec-6255-4713-8ce0-1cb4d0439caa",
+          "stripe_event_id": "evt_3U5FOtEJwfqaexCo0AugpA5e",
+          "event_type": "charge.refunded",
+          "status": "processed",
+          "payload": {
+            "type": "charge.refunded",
+            "livemode": false
+          },
+          "error_message": null,
+          "order_id": "f4c16268-8c26-4258-a83e-83d215d68a4e",
+          "processed_at": "2026-08-17T01:37:33.874103+00:00"
+        },
+        {
+          "id": "947f8e76-35ef-451f-8590-e5002e6e9b76",
+          "stripe_event_id": "evt_3U5FOtEJwfqaexCo0aAj1YOJ",
+          "event_type": "charge.refunded",
+          "status": "processed",
+          "payload": {
+            "type": "charge.refunded",
+            "livemode": false
+          },
+          "error_message": null,
+          "order_id": "f4c16268-8c26-4258-a83e-83d215d68a4e",
+          "processed_at": "2026-08-17T01:37:45.335149+00:00"
+        }
+      ],
+      "disputes": [],
+      "receivables": [],
+      "stripe": {
+        "checkoutSession": "cs_test_a1FbvVo8P9pDK2VPuGuhfF5JaP7k7KpzGJpimZZ0RmlrFfo2ZHtitDt4Dl",
+        "paymentIntent": "pi_3U5FOtEJwfqaexCo06XthhTc",
+        "piStatus": "succeeded",
+        "charge": "ch_3U5FOtEJwfqaexCo0VDpl4EM",
+        "chargeStatus": "succeeded",
+        "chargeAmount": 2000,
+        "chargeRefunded": true,
+        "amountRefunded": 2000,
+        "applicationFee": 200,
+        "applicationFeeId": "fee_1U5FOxEJwfCXyXc7ERu7sq7b",
+        "destination": "acct_1U3xwlEJwfCXyXc7",
+        "transferId": "tr_3U5FOtEJwfqaexCo0Ku60RB0",
+        "transferAmount": 2000,
+        "balanceTransactionId": "txn_3U5FOtEJwfqaexCo0tcP0pXq",
+        "stripeFeeCents": 88,
+        "disputed": false,
+        "disputeId": null,
+        "refunds": [
+          {
+            "id": "re_3U5FOtEJwfqaexCo084w9dBy",
+            "amount": 1500,
+            "status": "succeeded",
+            "transferReversal": "trr_1U5FUhEJwfqaexComPjuRQff"
+          },
+          {
+            "id": "re_3U5FOtEJwfqaexCo0dZdhkzR",
+            "amount": 500,
+            "status": "succeeded",
+            "transferReversal": "trr_1U5FUVEJwfqaexCo2ShNa2Ee"
+          }
+        ],
+        "transferReversals": [
+          {
+            "id": "trr_1U5FUhEJwfqaexComPjuRQff",
+            "amount": 1500,
+            "metadata": {}
+          },
+          {
+            "id": "trr_1U5FUVEJwfqaexCo2ShNa2Ee",
+            "amount": 500,
+            "metadata": {}
+          }
+        ]
+      }
+    },
+    "56d3952c-43bc-4457-9a4d-e7a50deaec50": {
+      "label": "DISP",
+      "order": {
+        "id": "56d3952c-43bc-4457-9a4d-e7a50deaec50",
+        "user_id": "21fc4d16-e0e7-4448-aa86-6a00a16d85e9",
+        "artist_id": "91b8850b-c145-4fa1-9167-0ba83cd329e8",
+        "order_type": "ticket",
+        "status": "paid",
+        "subtotal_cents": 2000,
+        "tax_cents": 0,
+        "total_cents": 2000,
+        "currency": "USD",
+        "stripe_payment_intent_id": "pi_3U5FPsEJwfqaexCo1y68LFDQ",
+        "stripe_checkout_session_id": "cs_test_a1jMN4H86h0iZRE547MrDArnmRb16UWnjF21yOUb8qYqlG8hr4I8qT5wCO",
+        "metadata": {
+          "tier": "general",
+          "tour_id": "95aae89d-ea9b-4042-8690-e1b02f033b6d",
+          "event_id": "b52cabb9-8f58-4512-b05c-8d2ad2f5e904",
+          "coupon_id": null,
+          "fulfilled": true,
+          "product_id": null,
+          "coupon_code": null,
+          "festival_id": null,
+          "gross_cents": 2000,
+          "tip_message": null,
+          "fulfilled_at": "2026-08-17T01:32:48.203Z",
+          "tour_stop_id": "9fc4eebc-5502-4f16-88dc-ebe1c412a53e",
+          "discount_cents": 0,
+          "festival_tier_id": null,
+          "platform_fee_cents": 200,
+          "ticket_revenue_split": true,
+          "artist_earnings_cents": 1800,
+          "locked_platform_fee_percent": 10
+        },
+        "created_at": "2026-08-17T01:32:02.549201+00:00",
+        "updated_at": "2026-08-17T01:32:48.593706+00:00",
+        "gross_cents": 2000,
+        "platform_fee_cents": 200,
+        "artist_earnings_cents": 1800,
+        "stripe_fee_cents": null,
+        "refund_cents": 0,
+        "artist_payout_status": "pending",
+        "payment_success_at": "2026-08-17T01:32:47.415+00:00",
+        "available_at": "2026-08-24T01:32:48.109+00:00",
+        "remaining_artist_earnings_cents": 1800,
+        "stripe_balance_transaction_id": null,
+        "stripe_transfer_id": null,
+        "stripe_application_fee_id": null,
+        "artist_receivable_cents": 0,
+        "recovery_status": "none"
+      },
+      "ledger": [
+        {
+          "id": "60520cca-b410-48f9-a184-19f2612ab262",
+          "artist_id": "91b8850b-c145-4fa1-9167-0ba83cd329e8",
+          "order_id": "56d3952c-43bc-4457-9a4d-e7a50deaec50",
+          "transaction_type": "ticket_sale",
+          "pending_delta_cents": 1800,
+          "available_delta_cents": 0,
+          "gross_cents": 2000,
+          "platform_fee_cents": 200,
+          "artist_earnings_cents": 1800,
+          "metadata": {},
+          "created_at": "2026-08-17T01:32:48.184916+00:00",
+          "reference_id": "ticket_sale:56d3952c-43bc-4457-9a4d-e7a50deaec50"
+        }
+      ],
+      "webhooks": [
+        {
+          "id": "01748ef7-485a-4cc2-89d7-65aee46992cb",
+          "stripe_event_id": "evt_3U5FPsEJwfqaexCo12Ut6dlo",
+          "event_type": "charge.succeeded",
+          "status": "processed",
+          "payload": {
+            "type": "charge.succeeded",
+            "livemode": false
+          },
+          "error_message": null,
+          "order_id": "56d3952c-43bc-4457-9a4d-e7a50deaec50",
+          "processed_at": "2026-08-17T01:32:47.512142+00:00"
+        },
+        {
+          "id": "1467b5da-5b18-4564-bbcd-34f9975e1a63",
+          "stripe_event_id": "evt_1U5FPuEJwfqaexColCnUXJh0",
+          "event_type": "checkout.session.completed",
+          "status": "processed",
+          "payload": {
+            "type": "checkout.session.completed",
+            "livemode": false
+          },
+          "error_message": null,
+          "order_id": "56d3952c-43bc-4457-9a4d-e7a50deaec50",
+          "processed_at": "2026-08-17T01:32:48.632998+00:00"
+        }
+      ],
+      "disputes": [],
+      "receivables": [],
+      "stripe": {
+        "checkoutSession": "cs_test_a1jMN4H86h0iZRE547MrDArnmRb16UWnjF21yOUb8qYqlG8hr4I8qT5wCO",
+        "paymentIntent": "pi_3U5FPsEJwfqaexCo1y68LFDQ",
+        "piStatus": "succeeded",
+        "charge": "ch_3U5FPsEJwfqaexCo18LZoz29",
+        "chargeStatus": "succeeded",
+        "chargeAmount": 2000,
+        "chargeRefunded": false,
+        "amountRefunded": 0,
+        "applicationFee": 200,
+        "applicationFeeId": "fee_1U5FPxEJwfCXyXc7nLKpIah6",
+        "destination": "acct_1U3xwlEJwfCXyXc7",
+        "transferId": "tr_3U5FPsEJwfqaexCo1b9ucrn1",
+        "transferAmount": 2000,
+        "balanceTransactionId": "txn_3U5FPsEJwfqaexCo129wdD4O",
+        "stripeFeeCents": 88,
+        "disputed": true,
+        "disputeId": "du_1U5FPtEJwfqaexCo2K4kMbhl",
+        "refunds": [],
+        "transferReversals": []
+      }
+    },
+    "6244737a-edc1-48c7-b8d5-af7f39050ce8": {
+      "label": "DEBUG",
+      "order": {
+        "id": "6244737a-edc1-48c7-b8d5-af7f39050ce8",
+        "user_id": "031c0198-d317-4689-a001-ae243d810f98",
+        "artist_id": "91b8850b-c145-4fa1-9167-0ba83cd329e8",
+        "order_type": "ticket",
+        "status": "paid",
+        "subtotal_cents": 2000,
+        "tax_cents": 0,
+        "total_cents": 2000,
+        "currency": "USD",
+        "stripe_payment_intent_id": "pi_3U5F9VEJwfqaexCo0j2UHnq6",
+        "stripe_checkout_session_id": "cs_test_a1OuaO1iZYWAzGX4DpI0SqNFvem2JUFiO8lWGL6By2weLyE5SncHsI9YjV",
+        "metadata": {
+          "tier": "general",
+          "tour_id": "95aae89d-ea9b-4042-8690-e1b02f033b6d",
+          "event_id": "b52cabb9-8f58-4512-b05c-8d2ad2f5e904",
+          "coupon_id": null,
+          "fulfilled": true,
+          "product_id": null,
+          "coupon_code": null,
+          "festival_id": null,
+          "gross_cents": 2000,
+          "tip_message": null,
+          "fulfilled_at": "2026-08-17T01:15:52.965Z",
+          "tour_stop_id": "9fc4eebc-5502-4f16-88dc-ebe1c412a53e",
+          "discount_cents": 0,
+          "festival_tier_id": null,
+          "platform_fee_cents": 200,
+          "ticket_revenue_split": true,
+          "artist_earnings_cents": 1800,
+          "locked_platform_fee_percent": 10
+        },
+        "created_at": "2026-08-17T01:02:59.595132+00:00",
+        "updated_at": "2026-08-17T01:15:53.337578+00:00",
+        "gross_cents": 2000,
+        "platform_fee_cents": 200,
+        "artist_earnings_cents": 1800,
+        "stripe_fee_cents": null,
+        "refund_cents": 0,
+        "artist_payout_status": "pending",
+        "payment_success_at": "2026-08-17T01:15:52.085+00:00",
+        "available_at": "2026-08-24T01:15:52.812+00:00",
+        "remaining_artist_earnings_cents": 1800,
+        "stripe_balance_transaction_id": null,
+        "stripe_transfer_id": null,
+        "stripe_application_fee_id": null,
+        "artist_receivable_cents": 0,
+        "recovery_status": "none"
+      },
+      "ledger": [
+        {
+          "id": "182e8f9c-1186-4eae-83ad-8143247f5e05",
+          "artist_id": "91b8850b-c145-4fa1-9167-0ba83cd329e8",
+          "order_id": "6244737a-edc1-48c7-b8d5-af7f39050ce8",
+          "transaction_type": "ticket_sale",
+          "pending_delta_cents": 1800,
+          "available_delta_cents": 0,
+          "gross_cents": 2000,
+          "platform_fee_cents": 200,
+          "artist_earnings_cents": 1800,
+          "metadata": {},
+          "created_at": "2026-08-17T01:15:52.935197+00:00",
+          "reference_id": "ticket_sale:6244737a-edc1-48c7-b8d5-af7f39050ce8"
+        }
+      ],
+      "webhooks": [
+        {
+          "id": "e09b5ff4-69d3-4061-8c53-32c20333a564",
+          "stripe_event_id": "evt_3U5F9VEJwfqaexCo01O28PoS",
+          "event_type": "charge.succeeded",
+          "status": "processed",
+          "payload": {
+            "type": "charge.succeeded",
+            "livemode": false
+          },
+          "error_message": null,
+          "order_id": "6244737a-edc1-48c7-b8d5-af7f39050ce8",
+          "processed_at": "2026-08-17T01:15:52.430505+00:00"
+        },
+        {
+          "id": "ce236bbd-df3a-4948-9080-72d16d5e1172",
+          "stripe_event_id": "evt_1U5F9WEJwfqaexCoio8pt8VP",
+          "event_type": "checkout.session.completed",
+          "status": "processed",
+          "payload": {
+            "type": "checkout.session.completed",
+            "livemode": false
+          },
+          "error_message": null,
+          "order_id": "6244737a-edc1-48c7-b8d5-af7f39050ce8",
+          "processed_at": "2026-08-17T01:15:53.384589+00:00"
+        }
+      ],
+      "disputes": [],
+      "receivables": [],
+      "stripe": {
+        "checkoutSession": "cs_test_a1OuaO1iZYWAzGX4DpI0SqNFvem2JUFiO8lWGL6By2weLyE5SncHsI9YjV",
+        "paymentIntent": "pi_3U5F9VEJwfqaexCo0j2UHnq6",
+        "piStatus": "succeeded",
+        "charge": "ch_3U5F9VEJwfqaexCo0qcgp0F5",
+        "chargeStatus": "succeeded",
+        "chargeAmount": 2000,
+        "chargeRefunded": false,
+        "amountRefunded": 0,
+        "applicationFee": 200,
+        "applicationFeeId": "fee_1U5F9YEJwfCXyXc7FBIripm9",
+        "destination": "acct_1U3xwlEJwfCXyXc7",
+        "transferId": "tr_3U5F9VEJwfqaexCo0UC7P2Vy",
+        "transferAmount": 2000,
+        "balanceTransactionId": "txn_3U5F9VEJwfqaexCo0esyckSc",
+        "stripeFeeCents": 88,
+        "disputed": false,
+        "disputeId": null,
+        "refunds": [],
+        "transferReversals": []
+      }
+    }
+  },
+  "artistBalance": {
+    "id": "4d3a88ab-130f-4d45-9b01-130952d93235",
+    "artist_id": "91b8850b-c145-4fa1-9167-0ba83cd329e8",
+    "pending_cents": 5400,
+    "available_cents": 1800,
+    "lifetime_gross_cents": 8000,
+    "lifetime_platform_fee_cents": 750,
+    "lifetime_artist_earnings_cents": 7200,
+    "created_at": "2026-08-16T23:57:23.220947+00:00",
+    "updated_at": "2026-08-17T01:37:44.831739+00:00",
+    "receivable_cents": 0,
+    "lifetime_paid_out_cents": 0
+  },
+  "artistPayouts": [],
+  "payoutConfig": {
+    "id": "default",
+    "payout_delay_days": 7,
+    "min_payout_cents": 2500,
+    "max_payout_cents": null,
+    "reserve_percent": 0,
+    "manual_review_threshold_cents": 100000,
+    "stripe_connect_ready": false,
+    "updated_at": "2026-08-17T01:24:54.994317+00:00",
+    "updated_by": null
+  },
+  "stripeConnectBalance": {
+    "object": "balance",
+    "available": [
+      {
+        "amount": 0,
+        "currency": "usd",
+        "source_types": {
+          "card": 0
+        }
+      }
+    ],
+    "instant_available": [
+      {
+        "amount": 7200,
+        "currency": "usd",
+        "source_types": {
+          "card": 7200
+        }
+      }
+    ],
+    "livemode": false,
+    "pending": [
+      {
+        "amount": 7200,
+        "currency": "usd",
+        "source_types": {
+          "card": 7200
+        }
+      }
+    ],
+    "refund_and_dispute_prefunding": {
+      "available": [
+        {
+          "amount": 0,
+          "currency": "usd"
+        }
+      ],
+      "pending": [
+        {
+          "amount": 0,
+          "currency": "usd"
+        }
+      ]
+    }
+  },
+  "stripePlatformBalance": {
+    "object": "balance",
+    "available": [
+      {
+        "amount": -3500,
+        "currency": "usd",
+        "source_types": {
+          "card": -3500
+        }
+      }
+    ],
+    "connect_reserved": [
+      {
+        "amount": 0,
+        "currency": "usd"
+      }
+    ],
+    "livemode": false,
+    "pending": [
+      {
+        "amount": 4184,
+        "currency": "usd",
+        "source_types": {
+          "card": 4184
+        }
+      }
+    ],
+    "refund_and_dispute_prefunding": {
+      "available": [
+        {
+          "amount": 0,
+          "currency": "usd"
+        }
+      ],
+      "pending": [
+        {
+          "amount": 0,
+          "currency": "usd"
+        }
+      ]
+    }
+  },
+  "reconciliation": {
+    "scannedOrders": 4,
+    "scannedPayouts": 0,
+    "issues": [
+      {
+        "code": "missing_stripe_fee",
+        "severity": "warning",
+        "message": "Paid ticket order missing stripe_fee_cents reconciliation",
+        "orderId": "2d9d1586-10f9-4255-a47b-d962962d343b"
+      },
+      {
+        "code": "missing_stripe_fee",
+        "severity": "warning",
+        "message": "Paid ticket order missing stripe_fee_cents reconciliation",
+        "orderId": "6244737a-edc1-48c7-b8d5-af7f39050ce8"
+      },
+      {
+        "code": "missing_stripe_fee",
+        "severity": "warning",
+        "message": "Paid ticket order missing stripe_fee_cents reconciliation",
+        "orderId": "56d3952c-43bc-4457-9a4d-e7a50deaec50"
+      }
+    ],
+    "summary": {
+      "grossTicketCents": 8000,
+      "platformFeeCents": 800,
+      "artistEarningsCents": 7200,
+      "stripeFeeCents": 88,
+      "pendingArtistCents": 5400,
+      "availableArtistCents": 1800,
+      "receivableArtistCents": 0
+    }
+  },
+  "goldenIntegrity": {
+    "ok": true
+  }
+}

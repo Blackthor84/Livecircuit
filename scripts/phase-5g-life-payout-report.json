@@ -1,0 +1,63 @@
+{
+  "phase": "5G",
+  "startedAt": "2026-08-17T02:44:50.751Z",
+  "safetyBaseline": {
+    "golden": {
+      "id": "78581ea3-0b38-47b7-b981-6cc94fc7d057",
+      "status": "paid",
+      "artist_payout_status": "pending",
+      "refund_cents": 0,
+      "updated_at": "2026-08-17T00:18:35.182956+00:00"
+    },
+    "hist": {
+      "id": "56d3952c-43bc-4457-9a4d-e7a50deaec50",
+      "status": "paid",
+      "artist_payout_status": "held",
+      "refund_cents": 0,
+      "updated_at": "2026-08-17T02:35:10.540928+00:00"
+    },
+    "fresh": {
+      "id": "0d4e711f-970f-494d-bd54-56f18c3dbda5",
+      "status": "paid",
+      "artist_payout_status": "held",
+      "refund_cents": 0,
+      "updated_at": "2026-08-17T02:40:55.298333+00:00"
+    }
+  },
+  "step1": {
+    "stripeConnect": {
+      "account": "acct_1U3xwlEJwfCXyXc7",
+      "availableUsd": 0,
+      "pendingUsd": 5400,
+      "instantAvailableUsd": 5400,
+      "livemode": false
+    },
+    "lifeOrder": {
+      "id": "2d9d1586-10f9-4255-a47b-d962962d343b",
+      "artist_payout_status": "available",
+      "available_at": "2026-08-17T01:17:36.855+00:00",
+      "remaining_artist_earnings_cents": 1800,
+      "artist_earnings_cents": 1800
+    },
+    "lcBalance": {
+      "available_cents": 1800,
+      "pending_cents": 7200,
+      "lifetime_paid_out_cents": 0
+    },
+    "existingPayoutCount": 0,
+    "existingLifePayoutAllocations": []
+  },
+  "step2": {
+    "eligibility": {
+      "lcAvailableGte1800": true,
+      "stripeAvailableGte1800": false,
+      "payoutReady": true,
+      "lifeStatusAvailable": true,
+      "eligible": false
+    },
+    "connectStatus": "ready",
+    "skipReason": "stripe_balance_not_available"
+  },
+  "stopped": "Payout eligibility not met — settlement guard",
+  "finishedAt": "2026-08-17T02:45:03.273Z"
+}

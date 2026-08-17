@@ -1,0 +1,71 @@
+{
+  "phase": "5G.3A",
+  "startedAt": "2026-08-17T02:59:09.776Z",
+  "payoutExecuted": false,
+  "step1_safetySnapshot": {
+    "payout_delay_days": 7,
+    "min_payout_cents": 2500,
+    "reserve_percent": 0,
+    "stripe_connect_ready": false,
+    "lc_available_cents": 1800,
+    "lc_pending_cents": 7200,
+    "lifetime_paid_out_cents": 0,
+    "life_artist_payout_status": "available",
+    "life_remaining_artist_earnings_cents": 1800,
+    "stripe_connect_available": 0,
+    "stripe_connect_pending": 5400,
+    "artist_payouts_count": 0
+  },
+  "step2_configUpdate": {
+    "changed": {
+      "min_payout_cents": 500
+    },
+    "unchanged": {
+      "payout_delay_days": 7,
+      "reserve_percent": 0,
+      "stripe_connect_ready": false
+    }
+  },
+  "step3_verifyConfiguration": {
+    "configOk": true,
+    "payout_delay_days": 7,
+    "min_payout_cents": 500,
+    "reserve_percent": 0,
+    "stripe_connect_ready": false,
+    "life_artist_payout_status": "available",
+    "life_remaining_artist_earnings_cents": 1800,
+    "lifeOk": true,
+    "artist_payouts_count": 0,
+    "noPayoutCreated": true
+  },
+  "step4_stripeSettlement": {
+    "stripe_connect_available": 0,
+    "stripe_connect_pending": 5400,
+    "required_cents": 1800,
+    "settlementOk": false
+  },
+  "status": "STRIPE_SETTLEMENT_BLOCKED",
+  "nextStepBlocked": true,
+  "message": "min_payout_cents temporarily set to 500; payout processing NOT executed — Stripe available < 1800",
+  "protectedObjects": {
+    "golden": {
+      "id": "78581ea3-0b38-47b7-b981-6cc94fc7d057",
+      "status": "paid",
+      "artist_payout_status": "pending"
+    },
+    "life": {
+      "id": "2d9d1586-10f9-4255-a47b-d962962d343b",
+      "artist_payout_status": "available"
+    },
+    "historicalDisp": {
+      "id": "56d3952c-43bc-4457-9a4d-e7a50deaec50",
+      "artist_payout_status": "held"
+    },
+    "freshDisp": {
+      "id": "0d4e711f-970f-494d-bd54-56f18c3dbda5",
+      "artist_payout_status": "held"
+    }
+  },
+  "completedAt": "2026-08-17T02:59:22.714Z",
+  "restoreReminder": "Restore min_payout_cents = 2500 after authorized payout E2E completes"
+}

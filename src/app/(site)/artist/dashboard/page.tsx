@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { ArtistActiveTourPanel } from "@/components/artist/artist-active-tour-panel";
+import { ArtistBalanceSummaryCard } from "@/components/artist/artist-balance-summary-card";
 import { ArtistDashboardCharts } from "@/components/dashboard/artist-dashboard-charts";
 import { Button } from "@/components/ui/button";
 import { requireRoles } from "@/lib/auth/guards";
@@ -14,6 +15,8 @@ import { getViewerFeatureAccess } from "@/lib/features/guard";
 import { listArtistUpcomingEvents } from "@/lib/data/artist-events";
 import { ROUTES } from "@/lib/constants";
 import { getArtistActiveTourSnapshot } from "@/lib/touring/tour-context";
+import { getArtistBalanceSummary } from "@/lib/services/artist-balance.service";
+import { createClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
 
 export const metadata: Metadata = { title: "Artist dashboard" };
@@ -27,13 +30,16 @@ export default async function ArtistDashboardPage() {
   const artist = await getArtistForUser(user.id);
   if (!artist) redirect("/artist/settings");
 
-  const [analytics, tours, momentumPayload, upcomingEvents, features, activeTour] = await Promise.all([
+  const supabase = await createClient();
+  const [analytics, tours, momentumPayload, upcomingEvents, features, activeTour, balance] =
+    await Promise.all([
     getArtistDashboardAnalytics(artist.id, artist.slug),
     listArtistTours(artist.id),
     getArtistMomentumForUser(user.id),
     listArtistUpcomingEvents(artist.id),
     getViewerFeatureAccess(),
     getArtistActiveTourSnapshot(artist.id),
+    getArtistBalanceSummary(supabase, artist.id),
   ]);
 
   return (
@@ -53,6 +59,9 @@ export default async function ArtistDashboardPage() {
           <Button variant="outline" href="/artist/merch">
             Tour merch
           </Button>
+          <Button variant="outline" href={ROUTES.artistEarnings}>
+            Earnings
+          </Button>
           <Button variant="outline" href="/artist/settings">
             Edit profile
           </Button>
@@ -69,6 +78,10 @@ export default async function ArtistDashboardPage() {
           ) : null}
         </div>
       </div>
+
+      <section className="mt-10">
+        <ArtistBalanceSummaryCard balance={balance} compact />
+      </section>
 
       {activeTour ? (
         <section className="mt-10">

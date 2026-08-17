@@ -1,0 +1,104 @@
+{
+  "phase": "5G.1",
+  "readOnly": true,
+  "startedAt": "2026-08-17T02:51:29.505Z",
+  "step1_stripeConnectBalance": {
+    "account": "acct_1U3xwlEJwfCXyXc7",
+    "availableUsdCents": 0,
+    "pendingUsdCents": 5400,
+    "instantAvailableUsdCents": 5400,
+    "livemode": false
+  },
+  "step2_liveCircuitBalance": {
+    "artist_id": "91b8850b-c145-4fa1-9167-0ba83cd329e8",
+    "pending_cents": 7200,
+    "available_cents": 1800,
+    "lifetime_paid_out_cents": 0,
+    "lifeOrder": {
+      "id": "2d9d1586-10f9-4255-a47b-d962962d343b",
+      "artist_payout_status": "available",
+      "remaining_artist_earnings_cents": 1800,
+      "available_at": "2026-08-17T01:17:36.855+00:00"
+    },
+    "availableOrderAllocations": [
+      {
+        "id": "2d9d1586-10f9-4255-a47b-d962962d343b",
+        "remaining_artist_earnings_cents": 1800,
+        "artist_earnings_cents": 1800
+      }
+    ],
+    "allocTotalCents": 1800
+  },
+  "step3_payoutThreshold": {
+    "payout_delay_days": 7,
+    "min_payout_cents": 2500,
+    "reserve_percent": 0,
+    "stripe_connect_ready": false
+  },
+  "step4_classification": {
+    "result": "BOTH_BLOCKED",
+    "requiredPayoutAmountCents": 1800,
+    "minPayoutCents": 2500,
+    "stripeAvailableCents": 0,
+    "lcAvailableCents": 1800,
+    "checks": {
+      "stripeAvailableGteRequired": false,
+      "stripeAvailableGteMin": false,
+      "lcAvailableGteMin": false,
+      "requiredGteMin": false
+    }
+  },
+  "step5_safety": {
+    "golden": {
+      "pass": true,
+      "actual": {
+        "id": "78581ea3-0b38-47b7-b981-6cc94fc7d057",
+        "status": "paid",
+        "artist_payout_status": "pending",
+        "refund_cents": 0
+      }
+    },
+    "historicalDisp": {
+      "pass": true,
+      "reversalPass": true,
+      "actual": {
+        "order": {
+          "id": "56d3952c-43bc-4457-9a4d-e7a50deaec50",
+          "artist_payout_status": "held",
+          "refund_cents": 0
+        },
+        "dispute": {
+          "stripe_transfer_reversal_id": "trr_1U5GOJEJwfqaexCoTES54ooP",
+          "metadata": {
+            "reason": "fraudulent",
+            "stripe_event_id": "evt_1U5FPuEJwfqaexCozPs7f3R1",
+            "reversal_amount_cents": 1800
+          }
+        }
+      }
+    },
+    "freshDisp": {
+      "pass": true,
+      "reversalPass": true,
+      "actual": {
+        "order": {
+          "id": "0d4e711f-970f-494d-bd54-56f18c3dbda5",
+          "artist_payout_status": "held",
+          "refund_cents": 0
+        },
+        "dispute": {
+          "stripe_transfer_reversal_id": "trr_1U5GTrEJwfqaexCoacfxFNK5",
+          "metadata": {
+            "reason": "fraudulent",
+            "stripe_event_id": "evt_1U5GTnEJwfqaexConlGSlJfO",
+            "reversal_amount_cents": 1800
+          }
+        }
+      }
+    },
+    "noLcPayoutRows": true,
+    "noStripePayouts": true,
+    "allPass": true
+  },
+  "finishedAt": "2026-08-17T02:51:29.506Z"
+}

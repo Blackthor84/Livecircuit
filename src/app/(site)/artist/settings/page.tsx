@@ -14,6 +14,8 @@ import {
   listArtistTicketTransactions,
 } from "@/lib/services/artist-balance.service";
 import { listArtistPayoutHistory } from "@/lib/services/artist-payout.service";
+import { buildArtistEarningsDisplayConfig } from "@/lib/monetization/artist-earnings-display";
+import { getMonetizationSnapshot } from "@/lib/monetization/pricing-resolver.server";
 import { createClient } from "@/lib/supabase/server";
 import { artistProfileUrl } from "@/lib/username";
 
@@ -35,10 +37,14 @@ export default async function ArtistSettingsPage() {
   const donation = (bundle.artist.donation_links ?? {}) as Record<string, string>;
 
   const supabase = await createClient();
-  const { status: connectStatus } = await getArtistConnectStatus(supabase, bundle.artist.id);
-  const balance = await getArtistBalanceSummary(supabase, bundle.artist.id);
-  const transactions = await listArtistTicketTransactions(supabase, bundle.artist.id);
-  const payouts = await listArtistPayoutHistory(supabase, bundle.artist.id);
+  const [snapshot, connect, balance, transactions, payouts] = await Promise.all([
+    getMonetizationSnapshot(),
+    getArtistConnectStatus(supabase, bundle.artist.id),
+    getArtistBalanceSummary(supabase, bundle.artist.id),
+    listArtistTicketTransactions(supabase, bundle.artist.id),
+    listArtistPayoutHistory(supabase, bundle.artist.id),
+  ]);
+  const displayConfig = buildArtistEarningsDisplayConfig(snapshot);
 
   const publicUrl = artistProfileUrl(profile.username ?? bundle.artist.slug);
 
@@ -57,11 +63,12 @@ export default async function ArtistSettingsPage() {
       </div>
       <div className="mt-8 space-y-8">
         <ArtistPaymentsPanel
-          initialStatus={connectStatus}
+          initialStatus={connect.status}
           stripeConfigured={isStripeConfigured()}
           balance={balance}
           transactions={transactions}
           payouts={payouts}
+          displayConfig={displayConfig}
         />
         <ArtistProfileForm
           initial={{

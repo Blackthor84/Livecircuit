@@ -1,0 +1,96 @@
+{
+  "phase": "5G.3",
+  "startedAt": "2026-08-17T02:55:59.544Z",
+  "step0": {
+    "health": {
+      "status": 200,
+      "body": {
+        "status": "ok",
+        "service": "livecircuit",
+        "version": "0.1.0",
+        "timestamp": "2026-08-17T02:56:10.833Z",
+        "checks": {
+          "supabase": true,
+          "stripe": true,
+          "livekit": true,
+          "streamingProvider": "livekit",
+          "goLiveReady": true,
+          "redisRateLimit": false,
+          "cronWorker": true
+        }
+      }
+    },
+    "stripeLivemode": false,
+    "connectAccount": "acct_1U3xwlEJwfCXyXc7",
+    "payoutConfig": {
+      "id": "default",
+      "payout_delay_days": 7,
+      "min_payout_cents": 2500,
+      "max_payout_cents": null,
+      "reserve_percent": 0,
+      "manual_review_threshold_cents": 100000,
+      "stripe_connect_ready": false,
+      "updated_at": "2026-08-17T01:24:54.994317+00:00",
+      "updated_by": null
+    },
+    "lifeOrder": {
+      "id": "2d9d1586-10f9-4255-a47b-d962962d343b",
+      "status": "paid",
+      "artist_payout_status": "available",
+      "remaining_artist_earnings_cents": 1800
+    },
+    "lcAvailable": 1800,
+    "existingPayoutCount": 0,
+    "stripeAvailableCents": 0,
+    "stripePendingCents": 5400,
+    "payoutReady": true,
+    "protectedBefore": {
+      "goldenOk": true,
+      "histOk": true,
+      "freshOk": true,
+      "golden": {
+        "status": "paid",
+        "artist_payout_status": "pending",
+        "refund_cents": 0
+      },
+      "hist": {
+        "artist_payout_status": "held"
+      },
+      "fresh": {
+        "artist_payout_status": "held"
+      }
+    }
+  },
+  "step1": {
+    "expectedAllocation": {
+      "wouldSkip": true,
+      "reason": "below_min_payout",
+      "availableCents": 1800,
+      "minPayoutCents": 2500,
+      "payoutAmount": 0,
+      "selectedOrders": [],
+      "idempotencyKey": null
+    }
+  },
+  "result": "BLOCKED",
+  "blockedReasons": [
+    "allocation_logic_would_skip:below_min_payout"
+  ],
+  "protectedAfter": {
+    "goldenOk": true,
+    "histOk": true,
+    "freshOk": true,
+    "golden": {
+      "status": "paid",
+      "artist_payout_status": "pending",
+      "refund_cents": 0
+    },
+    "hist": {
+      "artist_payout_status": "held"
+    },
+    "fresh": {
+      "artist_payout_status": "held"
+    }
+  },
+  "finishedAt": "2026-08-17T02:56:13.803Z"
+}

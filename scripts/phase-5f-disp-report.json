@@ -1,0 +1,936 @@
+{
+  "phase": "5F",
+  "startedAt": "2026-08-17T02:16:15.628Z",
+  "phase5eExpectedSha": "ca156e7e12f6868a349c8a61547a22097691dbcf",
+  "health": {
+    "status": 200,
+    "body": {
+      "status": "ok",
+      "service": "livecircuit",
+      "version": "0.1.0",
+      "timestamp": "2026-08-17T02:16:14.891Z",
+      "checks": {
+        "supabase": true,
+        "stripe": true,
+        "livekit": true,
+        "streamingProvider": "livekit",
+        "goLiveReady": true,
+        "redisRateLimit": false,
+        "cronWorker": true
+      }
+    }
+  },
+  "stripeBefore": {
+    "account": {
+      "id": "acct_1TyiEHEJwfqaexCo",
+      "object": "account",
+      "business_profile": {
+        "annual_revenue": null,
+        "estimated_worker_count": null,
+        "mcc": null,
+        "minority_owned_business_designation": null,
+        "name": "LiveCircuit sandbox",
+        "specified_commercial_transactions_act_url": null,
+        "support_address": null,
+        "support_email": null,
+        "support_phone": null,
+        "support_url": null,
+        "url": "watchlivecircuit.com"
+      },
+      "business_type": null,
+      "capabilities": {},
+      "charges_enabled": false,
+      "controller": {
+        "type": "account"
+      },
+      "country": "US",
+      "default_currency": "usd",
+      "details_submitted": false,
+      "email": "ajayeaglin@gmail.com",
+      "payouts_enabled": false,
+      "settings": {
+        "bacs_debit_payments": {
+          "display_name": null,
+          "service_user_number": null
+        },
+        "branding": {
+          "icon": "",
+          "logo": null,
+          "primary_color": null,
+          "secondary_color": null
+        },
+        "card_issuing": {
+          "tos_acceptance": {
+            "date": null,
+            "ip": null
+          }
+        },
+        "card_payments": {
+          "statement_descriptor_prefix": null,
+          "statement_descriptor_prefix_kana": null,
+          "statement_descriptor_prefix_kanji": null
+        },
+        "dashboard": {
+          "display_name": "LiveCircuit sandbox",
+          "timezone": "Etc/UTC"
+        },
+        "invoices": {
+          "default_account_tax_ids": null,
+          "hosted_payment_method_save": "offer"
+        },
+        "payments": {
+          "statement_descriptor": "WATCHLIVECIRCUIT.COM",
+          "statement_descriptor_kana": null,
+          "statement_descriptor_kanji": null
+        },
+        "payouts": {
+          "debit_negative_balances": true,
+          "schedule": {
+            "delay_days": 2,
+            "interval": "daily"
+          },
+          "statement_descriptor": null
+        },
+        "sepa_debit_payments": {}
+      },
+      "type": "standard"
+    },
+    "dispute": {
+      "id": "du_1U5FPtEJwfqaexCo2K4kMbhl",
+      "object": "dispute",
+      "amount": 2000,
+      "balance_transaction": "txn_1U5FPuEJwfqaexCoosiiegkO",
+      "balance_transactions": [
+        {
+          "id": "txn_1U5FPuEJwfqaexCoosiiegkO",
+          "object": "balance_transaction",
+          "amount": -2000,
+          "available_on": 1786930365,
+          "balance_type": "payments",
+          "created": 1786930365,
+          "currency": "usd",
+          "description": "Chargeback withdrawal for ch_3U5FPsEJwfqaexCo18LZoz29",
+          "exchange_rate": null,
+          "fee": 1500,
+          "fee_details": [
+            {
+              "amount": 1500,
+              "application": null,
+              "currency": "usd",
+              "description": "Dispute fee",
+              "type": "stripe_fee"
+            }
+          ],
+          "net": -3500,
+          "reporting_category": "dispute",
+          "source": "du_1U5FPtEJwfqaexCo2K4kMbhl",
+          "status": "available",
+          "type": "adjustment"
+        }
+      ],
+      "charge": "ch_3U5FPsEJwfqaexCo18LZoz29",
+      "created": 1786930365,
+      "currency": "usd",
+      "enhanced_eligibility_types": [],
+      "evidence": {
+        "access_activity_log": null,
+        "billing_address": "12345, US",
+        "cancellation_policy": null,
+        "cancellation_policy_disclosure": null,
+        "cancellation_rebuttal": null,
+        "customer_communication": null,
+        "customer_email_address": "phase5d-disp-6930316850@test.watchlivecircuit.com",
+        "customer_name": "Phase 5D Test Fan",
+        "customer_purchase_ip": "70.43.126.98",
+        "customer_signature": null,
+        "duplicate_charge_documentation": null,
+        "duplicate_charge_explanation": null,
+        "duplicate_charge_id": null,
+        "enhanced_evidence": {},
+        "product_description": null,
+        "receipt": null,
+        "refund_policy": null,
+        "refund_policy_disclosure": null,
+        "refund_refusal_explanation": null,
+        "service_date": null,
+        "service_documentation": null,
+        "shipping_address": null,
+        "shipping_carrier": null,
+        "shipping_date": null,
+        "shipping_documentation": null,
+        "shipping_tracking_number": null,
+        "uncategorized_file": null,
+        "uncategorized_text": null
+      },
+      "evidence_details": {
+        "due_by": 1787702399,
+        "enhanced_eligibility": {},
+        "has_evidence": false,
+        "past_due": false,
+        "submission_count": 0
+      },
+      "is_charge_refundable": false,
+      "livemode": false,
+      "metadata": {},
+      "payment_intent": "pi_3U5FPsEJwfqaexCo1y68LFDQ",
+      "payment_method_details": {
+        "card": {
+          "brand": "visa",
+          "case_type": "chargeback",
+          "network": "visa",
+          "network_reason_code": "10.4"
+        },
+        "type": "card"
+      },
+      "reason": "fraudulent",
+      "status": "needs_response"
+    },
+    "charge": {
+      "id": "ch_3U5FPsEJwfqaexCo18LZoz29",
+      "object": "charge",
+      "amount": 2000,
+      "amount_captured": 2000,
+      "amount_refunded": 0,
+      "application": null,
+      "application_fee": "fee_1U5FPxEJwfCXyXc7nLKpIah6",
+      "application_fee_amount": 200,
+      "balance_transaction": "txn_3U5FPsEJwfqaexCo129wdD4O",
+      "billing_details": {
+        "address": {
+          "city": null,
+          "country": "US",
+          "line1": null,
+          "line2": null,
+          "postal_code": "12345",
+          "state": null
+        },
+        "email": "phase5d-disp-6930316850@test.watchlivecircuit.com",
+        "name": "Phase 5D Test Fan",
+        "phone": null,
+        "tax_id": null
+      },
+      "calculated_statement_descriptor": "Stripe",
+      "captured": true,
+      "created": 1786930365,
+      "currency": "usd",
+      "customer": null,
+      "description": null,
+      "destination": "acct_1U3xwlEJwfCXyXc7",
+      "dispute": "du_1U5FPtEJwfqaexCo2K4kMbhl",
+      "disputed": true,
+      "failure_balance_transaction": null,
+      "failure_code": null,
+      "failure_message": null,
+      "fraud_details": {},
+      "livemode": false,
+      "metadata": {
+        "artist_id": "91b8850b-c145-4fa1-9167-0ba83cd329e8",
+        "order_id": "56d3952c-43bc-4457-9a4d-e7a50deaec50"
+      },
+      "on_behalf_of": null,
+      "order": null,
+      "outcome": {
+        "advice_code": null,
+        "network_advice_code": null,
+        "network_decline_code": null,
+        "network_status": "approved_by_network",
+        "reason": null,
+        "risk_level": "normal",
+        "risk_score": 26,
+        "seller_message": "Payment complete.",
+        "type": "authorized"
+      },
+      "paid": true,
+      "payment_intent": "pi_3U5FPsEJwfqaexCo1y68LFDQ",
+      "payment_method": "pm_1U5FPsEJwfqaexCoG19N0OR6",
+      "payment_method_details": {
+        "card": {
+          "amount_authorized": 2000,
+          "authorization_code": "240006",
+          "brand": "visa",
+          "checks": {
+            "address_line1_check": null,
+            "address_postal_code_check": "pass",
+            "cvc_check": "pass"
+          },
+          "country": "US",
+          "exp_month": 12,
+          "exp_year": 2034,
+          "extended_authorization": {
+            "status": "disabled"
+          },
+          "fingerprint": "v8MngK8a0G061qfm",
+          "funding": "credit",
+          "incremental_authorization": {
+            "status": "unavailable"
+          },
+          "installments": null,
+          "last4": "0259",
+          "mandate": null,
+          "multicapture": {
+            "status": "unavailable"
+          },
+          "network": "visa",
+          "network_token": {
+            "used": false
+          },
+          "network_transaction_id": "118567711010375",
+          "overcapture": {
+            "maximum_amount_capturable": 2000,
+            "status": "unavailable"
+          },
+          "regulated_status": "unregulated",
+          "three_d_secure": null,
+          "transaction_link_id": null,
+          "wallet": null
+        },
+        "type": "card"
+      },
+      "radar_options": {},
+      "receipt_email": null,
+      "receipt_number": null,
+      "receipt_url": "https://pay.stripe.com/receipts/payment/CAcaFwoVYWNjdF8xVHlpRUhFSndmcWFleENvKPjdidQGMgZWAkVU51w6LBZGHIE_WsTquL6Oqp8XvgHudmh33cmkKfurQIpmoOy_Ckdi7E-a0VaXcLmX",
+      "refunded": false,
+      "review": null,
+      "shipping": null,
+      "source": null,
+      "source_transfer": null,
+      "statement_descriptor": null,
+      "statement_descriptor_suffix": null,
+      "status": "succeeded",
+      "transfer": {
+        "id": "tr_3U5FPsEJwfqaexCo1b9ucrn1",
+        "object": "transfer",
+        "amount": 2000,
+        "amount_reversed": 0,
+        "balance_transaction": "txn_3U5FPsEJwfqaexCo17L95h8D",
+        "created": 1786930368,
+        "currency": "usd",
+        "description": null,
+        "destination": "acct_1U3xwlEJwfCXyXc7",
+        "destination_payment": "py_1U5FPwEJwfCXyXc7x1Hni6Kj",
+        "livemode": false,
+        "metadata": {},
+        "reversals": {
+          "object": "list",
+          "data": [],
+          "has_more": false,
+          "total_count": 0,
+          "url": "/v1/transfers/tr_3U5FPsEJwfqaexCo1b9ucrn1/reversals"
+        },
+        "reversed": false,
+        "source_transaction": "ch_3U5FPsEJwfqaexCo18LZoz29",
+        "source_type": "card",
+        "transfer_group": "group_pi_3U5FPsEJwfqaexCo1y68LFDQ"
+      },
+      "transfer_data": {
+        "amount": null,
+        "destination": "acct_1U3xwlEJwfCXyXc7"
+      },
+      "transfer_group": "group_pi_3U5FPsEJwfqaexCo1y68LFDQ"
+    },
+    "event": {
+      "id": "evt_1U5FPuEJwfqaexCozPs7f3R1",
+      "object": "event",
+      "api_version": "2026-06-24.dahlia",
+      "created": 1786930366,
+      "data": {
+        "object": {
+          "id": "du_1U5FPtEJwfqaexCo2K4kMbhl",
+          "object": "dispute",
+          "amount": 2000,
+          "balance_transaction": "txn_1U5FPuEJwfqaexCoosiiegkO",
+          "balance_transactions": [
+            {
+              "id": "txn_1U5FPuEJwfqaexCoosiiegkO",
+              "object": "balance_transaction",
+              "amount": -2000,
+              "available_on": 1786930365,
+              "balance_type": "payments",
+              "created": 1786930365,
+              "currency": "usd",
+              "description": "Chargeback withdrawal for ch_3U5FPsEJwfqaexCo18LZoz29",
+              "exchange_rate": null,
+              "fee": 1500,
+              "fee_details": [
+                {
+                  "amount": 1500,
+                  "application": null,
+                  "currency": "usd",
+                  "description": "Dispute fee",
+                  "type": "stripe_fee"
+                }
+              ],
+              "net": -3500,
+              "reporting_category": "dispute",
+              "source": "du_1U5FPtEJwfqaexCo2K4kMbhl",
+              "status": "available",
+              "type": "adjustment"
+            }
+          ],
+          "charge": "ch_3U5FPsEJwfqaexCo18LZoz29",
+          "created": 1786930365,
+          "currency": "usd",
+          "enhanced_eligibility_types": [],
+          "evidence": {
+            "access_activity_log": null,
+            "billing_address": null,
+            "cancellation_policy": null,
+            "cancellation_policy_disclosure": null,
+            "cancellation_rebuttal": null,
+            "customer_communication": null,
+            "customer_email_address": null,
+            "customer_name": null,
+            "customer_purchase_ip": null,
+            "customer_signature": null,
+            "duplicate_charge_documentation": null,
+            "duplicate_charge_explanation": null,
+            "duplicate_charge_id": null,
+            "enhanced_evidence": {},
+            "product_description": null,
+            "receipt": null,
+            "refund_policy": null,
+            "refund_policy_disclosure": null,
+            "refund_refusal_explanation": null,
+            "service_date": null,
+            "service_documentation": null,
+            "shipping_address": null,
+            "shipping_carrier": null,
+            "shipping_date": null,
+            "shipping_documentation": null,
+            "shipping_tracking_number": null,
+            "uncategorized_file": null,
+            "uncategorized_text": null
+          },
+          "evidence_details": {
+            "due_by": 1787702399,
+            "enhanced_eligibility": {},
+            "has_evidence": false,
+            "past_due": false,
+            "submission_count": 0
+          },
+          "is_charge_refundable": false,
+          "livemode": false,
+          "metadata": {},
+          "payment_intent": "pi_3U5FPsEJwfqaexCo1y68LFDQ",
+          "payment_method_details": {
+            "card": {
+              "brand": "visa",
+              "case_type": "chargeback",
+              "network": "visa",
+              "network_reason_code": "10.4"
+            },
+            "type": "card"
+          },
+          "reason": "fraudulent",
+          "status": "needs_response"
+        }
+      },
+      "livemode": false,
+      "pending_webhooks": 0,
+      "request": {
+        "id": null,
+        "idempotency_key": "544bd48c-bdd2-4294-8c20-809e2571cc40"
+      },
+      "type": "charge.dispute.created"
+    },
+    "transfer": {
+      "id": "tr_3U5FPsEJwfqaexCo1b9ucrn1",
+      "object": "transfer",
+      "amount": 2000,
+      "amount_reversed": 0,
+      "balance_transaction": "txn_3U5FPsEJwfqaexCo17L95h8D",
+      "created": 1786930368,
+      "currency": "usd",
+      "description": null,
+      "destination": "acct_1U3xwlEJwfCXyXc7",
+      "destination_payment": "py_1U5FPwEJwfCXyXc7x1Hni6Kj",
+      "livemode": false,
+      "metadata": {},
+      "reversals": {
+        "object": "list",
+        "data": [],
+        "has_more": false,
+        "total_count": 0,
+        "url": "/v1/transfers/tr_3U5FPsEJwfqaexCo1b9ucrn1/reversals"
+      },
+      "reversed": false,
+      "source_transaction": "ch_3U5FPsEJwfqaexCo18LZoz29",
+      "source_type": "card",
+      "transfer_group": "group_pi_3U5FPsEJwfqaexCo1y68LFDQ"
+    },
+    "reversals": [],
+    "paymentIntent": {
+      "id": "pi_3U5FPsEJwfqaexCo1y68LFDQ",
+      "object": "payment_intent",
+      "allowed_payment_method_types": null,
+      "amount": 2000,
+      "amount_capturable": 0,
+      "amount_details": {
+        "shipping": {
+          "amount": 0,
+          "from_postal_code": null,
+          "to_postal_code": null
+        },
+        "tax": {
+          "total_tax_amount": 0
+        },
+        "tip": {}
+      },
+      "amount_received": 2000,
+      "application": null,
+      "application_fee_amount": 200,
+      "automatic_payment_methods": null,
+      "canceled_at": null,
+      "cancellation_reason": null,
+      "capture_method": "automatic_async",
+      "client_secret": "pi_3U5FPsEJwfqaexCo1y68LFDQ_secret_2Ad33aD4BfsEJ86Fds2iNReXr",
+      "confirmation_method": "automatic",
+      "created": 1786930364,
+      "currency": "usd",
+      "customer": null,
+      "customer_account": null,
+      "description": null,
+      "excluded_payment_method_types": null,
+      "last_payment_error": null,
+      "latest_charge": {
+        "id": "ch_3U5FPsEJwfqaexCo18LZoz29",
+        "object": "charge",
+        "amount": 2000,
+        "amount_captured": 2000,
+        "amount_refunded": 0,
+        "application": null,
+        "application_fee": "fee_1U5FPxEJwfCXyXc7nLKpIah6",
+        "application_fee_amount": 200,
+        "balance_transaction": {
+          "id": "txn_3U5FPsEJwfqaexCo129wdD4O",
+          "object": "balance_transaction",
+          "amount": 2000,
+          "available_on": 1787529600,
+          "balance_type": "payments",
+          "created": 1786930365,
+          "currency": "usd",
+          "description": null,
+          "exchange_rate": null,
+          "fee": 88,
+          "fee_details": [
+            {
+              "amount": 88,
+              "application": null,
+              "currency": "usd",
+              "description": "Stripe processing fees",
+              "type": "stripe_fee"
+            }
+          ],
+          "net": 1912,
+          "reporting_category": "charge",
+          "source": "ch_3U5FPsEJwfqaexCo18LZoz29",
+          "status": "pending",
+          "type": "charge"
+        },
+        "billing_details": {
+          "address": {
+            "city": null,
+            "country": "US",
+            "line1": null,
+            "line2": null,
+            "postal_code": "12345",
+            "state": null
+          },
+          "email": "phase5d-disp-6930316850@test.watchlivecircuit.com",
+          "name": "Phase 5D Test Fan",
+          "phone": null,
+          "tax_id": null
+        },
+        "calculated_statement_descriptor": "Stripe",
+        "captured": true,
+        "created": 1786930365,
+        "currency": "usd",
+        "customer": null,
+        "description": null,
+        "destination": "acct_1U3xwlEJwfCXyXc7",
+        "dispute": "du_1U5FPtEJwfqaexCo2K4kMbhl",
+        "disputed": true,
+        "failure_balance_transaction": null,
+        "failure_code": null,
+        "failure_message": null,
+        "fraud_details": {},
+        "livemode": false,
+        "metadata": {
+          "artist_id": "91b8850b-c145-4fa1-9167-0ba83cd329e8",
+          "order_id": "56d3952c-43bc-4457-9a4d-e7a50deaec50"
+        },
+        "on_behalf_of": null,
+        "order": null,
+        "outcome": {
+          "advice_code": null,
+          "network_advice_code": null,
+          "network_decline_code": null,
+          "network_status": "approved_by_network",
+          "reason": null,
+          "risk_level": "normal",
+          "risk_score": 26,
+          "seller_message": "Payment complete.",
+          "type": "authorized"
+        },
+        "paid": true,
+        "payment_intent": "pi_3U5FPsEJwfqaexCo1y68LFDQ",
+        "payment_method": "pm_1U5FPsEJwfqaexCoG19N0OR6",
+        "payment_method_details": {
+          "card": {
+            "amount_authorized": 2000,
+            "authorization_code": "240006",
+            "brand": "visa",
+            "checks": {
+              "address_line1_check": null,
+              "address_postal_code_check": "pass",
+              "cvc_check": "pass"
+            },
+            "country": "US",
+            "exp_month": 12,
+            "exp_year": 2034,
+            "extended_authorization": {
+              "status": "disabled"
+            },
+            "fingerprint": "v8MngK8a0G061qfm",
+            "funding": "credit",
+            "incremental_authorization": {
+              "status": "unavailable"
+            },
+            "installments": null,
+            "last4": "0259",
+            "mandate": null,
+            "multicapture": {
+              "status": "unavailable"
+            },
+            "network": "visa",
+            "network_token": {
+              "used": false
+            },
+            "network_transaction_id": "118567711010375",
+            "overcapture": {
+              "maximum_amount_capturable": 2000,
+              "status": "unavailable"
+            },
+            "regulated_status": "unregulated",
+            "three_d_secure": null,
+            "transaction_link_id": null,
+            "wallet": null
+          },
+          "type": "card"
+        },
+        "radar_options": {},
+        "receipt_email": null,
+        "receipt_number": null,
+        "receipt_url": "https://pay.stripe.com/receipts/payment/CAcaFwoVYWNjdF8xVHlpRUhFSndmcWFleENvKPndidQGMgZBegQMxsw6LBYVU6lC5ONZiO54o3jmT2mx8xFC-xz69kjThCwLNx60vgYXILjn-rRodYRh",
+        "refunded": false,
+        "review": null,
+        "shipping": null,
+        "source": null,
+        "source_transfer": null,
+        "statement_descriptor": null,
+        "statement_descriptor_suffix": null,
+        "status": "succeeded",
+        "transfer": "tr_3U5FPsEJwfqaexCo1b9ucrn1",
+        "transfer_data": {
+          "amount": null,
+          "destination": "acct_1U3xwlEJwfCXyXc7"
+        },
+        "transfer_group": "group_pi_3U5FPsEJwfqaexCo1y68LFDQ"
+      },
+      "livemode": false,
+      "managed_payments": {
+        "enabled": false
+      },
+      "metadata": {
+        "artist_id": "91b8850b-c145-4fa1-9167-0ba83cd329e8",
+        "order_id": "56d3952c-43bc-4457-9a4d-e7a50deaec50"
+      },
+      "next_action": null,
+      "on_behalf_of": null,
+      "payment_details": {
+        "customer_reference": null,
+        "order_reference": "cs_test_a1jMN4H86h0iZRE547MrDArnmRb16UWnjF21yOUb8qYqlG8hr4I8qT5wCO"
+      },
+      "payment_method": "pm_1U5FPsEJwfqaexCoG19N0OR6",
+      "payment_method_configuration_details": null,
+      "payment_method_options": {
+        "card": {
+          "installments": null,
+          "mandate_options": null,
+          "network": null,
+          "request_three_d_secure": "automatic"
+        }
+      },
+      "payment_method_types": [
+        "card"
+      ],
+      "processing": null,
+      "receipt_email": null,
+      "review": null,
+      "setup_future_usage": null,
+      "shared_payment_granted_token": null,
+      "shipping": null,
+      "source": null,
+      "statement_descriptor": null,
+      "statement_descriptor_suffix": null,
+      "status": "succeeded",
+      "transfer_data": {
+        "destination": "acct_1U3xwlEJwfCXyXc7"
+      },
+      "transfer_group": "group_pi_3U5FPsEJwfqaexCo1y68LFDQ"
+    }
+  },
+  "dispDisputeRowBefore": {
+    "id": "931f46ce-01f1-441a-b1dd-c50ef96ac3f5",
+    "order_id": null,
+    "artist_id": null,
+    "stripe_dispute_id": "du_1U5FPtEJwfqaexCo2K4kMbhl",
+    "stripe_charge_id": "ch_3U5FPsEJwfqaexCo18LZoz29",
+    "stripe_payment_intent_id": "pi_3U5FPsEJwfqaexCo1y68LFDQ",
+    "stripe_transfer_id": null,
+    "stripe_transfer_reversal_id": null,
+    "amount_cents": 2000,
+    "stripe_dispute_status": "needs_response",
+    "livecircuit_status": "open",
+    "failure_reason": null,
+    "metadata": {
+      "reason": "fraudulent",
+      "stripe_event_id": "evt_1U5FPuEJwfqaexCozPs7f3R1"
+    },
+    "created_at": "2026-08-17T01:32:47.498869+00:00",
+    "updated_at": "2026-08-17T01:32:47.498869+00:00"
+  },
+  "dispEventRowBefore": {
+    "id": "ec91cba8-4c1e-41d9-ad78-55191423d9c1",
+    "stripe_event_id": "evt_1U5FPuEJwfqaexCozPs7f3R1",
+    "event_type": "charge.dispute.created",
+    "status": "processed",
+    "payload": {
+      "type": "charge.dispute.created",
+      "livemode": false
+    },
+    "error_message": null,
+    "order_id": null,
+    "processed_at": "2026-08-17T01:32:47.554355+00:00"
+  },
+  "dispOrderBefore": {
+    "order": {
+      "id": "56d3952c-43bc-4457-9a4d-e7a50deaec50",
+      "user_id": "21fc4d16-e0e7-4448-aa86-6a00a16d85e9",
+      "artist_id": "91b8850b-c145-4fa1-9167-0ba83cd329e8",
+      "order_type": "ticket",
+      "status": "paid",
+      "subtotal_cents": 2000,
+      "tax_cents": 0,
+      "total_cents": 2000,
+      "currency": "USD",
+      "stripe_payment_intent_id": "pi_3U5FPsEJwfqaexCo1y68LFDQ",
+      "stripe_checkout_session_id": "cs_test_a1jMN4H86h0iZRE547MrDArnmRb16UWnjF21yOUb8qYqlG8hr4I8qT5wCO",
+      "metadata": {
+        "tier": "general",
+        "tour_id": "95aae89d-ea9b-4042-8690-e1b02f033b6d",
+        "event_id": "b52cabb9-8f58-4512-b05c-8d2ad2f5e904",
+        "coupon_id": null,
+        "fulfilled": true,
+        "product_id": null,
+        "coupon_code": null,
+        "festival_id": null,
+        "gross_cents": 2000,
+        "tip_message": null,
+        "fulfilled_at": "2026-08-17T01:32:48.203Z",
+        "tour_stop_id": "9fc4eebc-5502-4f16-88dc-ebe1c412a53e",
+        "discount_cents": 0,
+        "festival_tier_id": null,
+        "platform_fee_cents": 200,
+        "ticket_revenue_split": true,
+        "artist_earnings_cents": 1800,
+        "locked_platform_fee_percent": 10
+      },
+      "created_at": "2026-08-17T01:32:02.549201+00:00",
+      "updated_at": "2026-08-17T01:32:48.593706+00:00",
+      "gross_cents": 2000,
+      "platform_fee_cents": 200,
+      "artist_earnings_cents": 1800,
+      "stripe_fee_cents": null,
+      "refund_cents": 0,
+      "artist_payout_status": "pending",
+      "payment_success_at": "2026-08-17T01:32:47.415+00:00",
+      "available_at": "2026-08-24T01:32:48.109+00:00",
+      "remaining_artist_earnings_cents": 1800,
+      "stripe_balance_transaction_id": null,
+      "stripe_transfer_id": null,
+      "stripe_application_fee_id": null,
+      "artist_receivable_cents": 0,
+      "recovery_status": "none"
+    },
+    "txns": [
+      {
+        "id": "60520cca-b410-48f9-a184-19f2612ab262",
+        "artist_id": "91b8850b-c145-4fa1-9167-0ba83cd329e8",
+        "order_id": "56d3952c-43bc-4457-9a4d-e7a50deaec50",
+        "transaction_type": "ticket_sale",
+        "pending_delta_cents": 1800,
+        "available_delta_cents": 0,
+        "gross_cents": 2000,
+        "platform_fee_cents": 200,
+        "artist_earnings_cents": 1800,
+        "metadata": {},
+        "created_at": "2026-08-17T01:32:48.184916+00:00",
+        "reference_id": "ticket_sale:56d3952c-43bc-4457-9a4d-e7a50deaec50"
+      }
+    ],
+    "webhooks": [
+      {
+        "id": "01748ef7-485a-4cc2-89d7-65aee46992cb",
+        "stripe_event_id": "evt_3U5FPsEJwfqaexCo12Ut6dlo",
+        "event_type": "charge.succeeded",
+        "status": "processed",
+        "payload": {
+          "type": "charge.succeeded",
+          "livemode": false
+        },
+        "error_message": null,
+        "order_id": "56d3952c-43bc-4457-9a4d-e7a50deaec50",
+        "processed_at": "2026-08-17T01:32:47.512142+00:00"
+      },
+      {
+        "id": "1467b5da-5b18-4564-bbcd-34f9975e1a63",
+        "stripe_event_id": "evt_1U5FPuEJwfqaexColCnUXJh0",
+        "event_type": "checkout.session.completed",
+        "status": "processed",
+        "payload": {
+          "type": "checkout.session.completed",
+          "livemode": false
+        },
+        "error_message": null,
+        "order_id": "56d3952c-43bc-4457-9a4d-e7a50deaec50",
+        "processed_at": "2026-08-17T01:32:48.632998+00:00"
+      }
+    ],
+    "disputes": [],
+    "balance": {
+      "id": "4d3a88ab-130f-4d45-9b01-130952d93235",
+      "artist_id": "91b8850b-c145-4fa1-9167-0ba83cd329e8",
+      "pending_cents": 5400,
+      "available_cents": 1800,
+      "lifetime_gross_cents": 8000,
+      "lifetime_platform_fee_cents": 750,
+      "lifetime_artist_earnings_cents": 7200,
+      "created_at": "2026-08-16T23:57:23.220947+00:00",
+      "updated_at": "2026-08-17T01:37:44.831739+00:00",
+      "receivable_cents": 0,
+      "lifetime_paid_out_cents": 0
+    }
+  },
+  "goldenBefore": {
+    "id": "78581ea3-0b38-47b7-b981-6cc94fc7d057",
+    "user_id": "78df036b-c597-4567-8f9a-76d85fbff9e5",
+    "artist_id": "91b8850b-c145-4fa1-9167-0ba83cd329e8",
+    "order_type": "ticket",
+    "status": "paid",
+    "subtotal_cents": 2000,
+    "tax_cents": 0,
+    "total_cents": 2000,
+    "currency": "USD",
+    "stripe_payment_intent_id": "pi_3U5DvTEJwfqaexCo0kYCpswq",
+    "stripe_checkout_session_id": "cs_test_a1w7mcCNjoqndcapOk5UGQ3GkSuldHv3t2Eunq0K2i38mdrM26zY9kglcd",
+    "metadata": {
+      "tier": "general",
+      "tour_id": "95aae89d-ea9b-4042-8690-e1b02f033b6d",
+      "event_id": "b52cabb9-8f58-4512-b05c-8d2ad2f5e904",
+      "coupon_id": null,
+      "fulfilled": true,
+      "product_id": null,
+      "coupon_code": null,
+      "festival_id": null,
+      "gross_cents": 2000,
+      "tip_message": null,
+      "fulfilled_at": "2026-08-16T23:57:23.250Z",
+      "tour_stop_id": "9fc4eebc-5502-4f16-88dc-ebe1c412a53e",
+      "discount_cents": 0,
+      "festival_tier_id": null,
+      "platform_fee_cents": 200,
+      "ticket_revenue_split": true,
+      "artist_earnings_cents": 1800,
+      "locked_platform_fee_percent": 10
+    },
+    "created_at": "2026-08-16T23:41:36.271864+00:00",
+    "updated_at": "2026-08-17T00:18:35.182956+00:00",
+    "gross_cents": 2000,
+    "platform_fee_cents": 200,
+    "artist_earnings_cents": 1800,
+    "stripe_fee_cents": 88,
+    "refund_cents": 0,
+    "artist_payout_status": "pending",
+    "payment_success_at": "2026-08-16T23:57:22.021+00:00",
+    "available_at": "2026-08-23T23:57:23.104+00:00",
+    "remaining_artist_earnings_cents": 1800,
+    "stripe_balance_transaction_id": "txn_3U5DvTEJwfqaexCo0cMaaDTQ",
+    "stripe_transfer_id": null,
+    "stripe_application_fee_id": null,
+    "artist_receivable_cents": 0,
+    "recovery_status": "none"
+  },
+  "replaySafetyAnalysis": {
+    "webhookEventStatus": "processed",
+    "webhookEventError": null,
+    "artistDisputeOrderId": null,
+    "artistDisputeStatus": "open",
+    "phase5eIdempotencyAllowsRetryOnlyWhen": "monetization_stripe_webhook_events.status=failed AND error_message starts with deferred:",
+    "currentEventBlocksReplay": true,
+    "ifReplayRanWouldResolveOrderViaPiMetadata": true,
+    "ifReplayRanWouldCapReversalAt1800": true,
+    "duplicateGuardWouldSkipHandler": true
+  },
+  "goldenAfter": {
+    "id": "78581ea3-0b38-47b7-b981-6cc94fc7d057",
+    "user_id": "78df036b-c597-4567-8f9a-76d85fbff9e5",
+    "artist_id": "91b8850b-c145-4fa1-9167-0ba83cd329e8",
+    "order_type": "ticket",
+    "status": "paid",
+    "subtotal_cents": 2000,
+    "tax_cents": 0,
+    "total_cents": 2000,
+    "currency": "USD",
+    "stripe_payment_intent_id": "pi_3U5DvTEJwfqaexCo0kYCpswq",
+    "stripe_checkout_session_id": "cs_test_a1w7mcCNjoqndcapOk5UGQ3GkSuldHv3t2Eunq0K2i38mdrM26zY9kglcd",
+    "metadata": {
+      "tier": "general",
+      "tour_id": "95aae89d-ea9b-4042-8690-e1b02f033b6d",
+      "event_id": "b52cabb9-8f58-4512-b05c-8d2ad2f5e904",
+      "coupon_id": null,
+      "fulfilled": true,
+      "product_id": null,
+      "coupon_code": null,
+      "festival_id": null,
+      "gross_cents": 2000,
+      "tip_message": null,
+      "fulfilled_at": "2026-08-16T23:57:23.250Z",
+      "tour_stop_id": "9fc4eebc-5502-4f16-88dc-ebe1c412a53e",
+      "discount_cents": 0,
+      "festival_tier_id": null,
+      "platform_fee_cents": 200,
+      "ticket_revenue_split": true,
+      "artist_earnings_cents": 1800,
+      "locked_platform_fee_percent": 10
+    },
+    "created_at": "2026-08-16T23:41:36.271864+00:00",
+    "updated_at": "2026-08-17T00:18:35.182956+00:00",
+    "gross_cents": 2000,
+    "platform_fee_cents": 200,
+    "artist_earnings_cents": 1800,
+    "stripe_fee_cents": 88,
+    "refund_cents": 0,
+    "artist_payout_status": "pending",
+    "payment_success_at": "2026-08-16T23:57:22.021+00:00",
+    "available_at": "2026-08-23T23:57:23.104+00:00",
+    "remaining_artist_earnings_cents": 1800,
+    "stripe_balance_transaction_id": "txn_3U5DvTEJwfqaexCo0cMaaDTQ",
+    "stripe_transfer_id": null,
+    "stripe_application_fee_id": null,
+    "artist_receivable_cents": 0,
+    "recovery_status": "none"
+  },
+  "finishedAt": "2026-08-17T02:16:26.483Z"
+}

@@ -1,0 +1,71 @@
+{
+  "phase": "5G.4",
+  "readOnly": true,
+  "checkedAt": "2026-08-17T03:04:04.953Z",
+  "step1_stripeConnectBalance": {
+    "livemode": false,
+    "available_usd_cents": 0,
+    "pending_usd_cents": 5400,
+    "instant_available_usd_cents": 5400,
+    "existingPayoutCount": 0
+  },
+  "step2_liveCircuitBalance": {
+    "pending_cents": 7200,
+    "available_cents": 1800,
+    "lifetime_paid_out_cents": 0,
+    "lifeOrder": {
+      "status": "paid",
+      "artist_payout_status": "available",
+      "remaining_artist_earnings_cents": 1800,
+      "available_at": "2026-08-17T01:17:36.855+00:00"
+    }
+  },
+  "step3_payoutConfig": {
+    "payout_delay_days": 7,
+    "min_payout_cents": 2500,
+    "reserve_percent": 0,
+    "stripe_connect_ready": false,
+    "expectedProduction": {
+      "payout_delay_days": 7,
+      "min_payout_cents": 2500,
+      "reserve_percent": 0,
+      "stripe_connect_ready": false
+    },
+    "configMatchesExpected": true
+  },
+  "step4_readinessClassification": {
+    "classification": "BOTH_BLOCKED",
+    "gates": {
+      "lifeRequiredStripeAvailableCents": 1800,
+      "stripeAvailableCents": 0,
+      "stripeSettled": false,
+      "productionMinPayoutCents": 2500,
+      "lcAvailableCents": 1800,
+      "lifeRemainingCents": 1800,
+      "effectivePayoutAmountCents": 1800,
+      "minimumPass": false
+    },
+    "settlementStatus": "SETTLEMENT_BLOCKED"
+  },
+  "step5_safetyCheck": {
+    "golden": {
+      "pass": true,
+      "status": "paid",
+      "artist_payout_status": "pending",
+      "refund_cents": 0
+    },
+    "historicalDisp": {
+      "pass": true,
+      "artist_payout_status": "held",
+      "reversal_amount_cents": 1800
+    },
+    "freshDisp": {
+      "pass": true,
+      "artist_payout_status": "held",
+      "reversal_amount_cents": 1800
+    },
+    "artist_payouts_count": 0,
+    "stripe_payout_count": 0,
+    "allSafetyChecksPass": true
+  }
+}

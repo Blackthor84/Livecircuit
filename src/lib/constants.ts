@@ -48,6 +48,7 @@ export const ROUTES = {
   seasons: "/seasons",
   festivals: "/festivals",
   artistDashboard: "/artist/dashboard",
+  artistEarnings: "/artist/earnings",
   artistProfile: (username: string) => `/${username}`,
   demo: "/demo",
   demoArtist: "/demo/interactive/artist",

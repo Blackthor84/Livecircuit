@@ -1,0 +1,61 @@
+{
+  "phase": "5G.6",
+  "readOnly": true,
+  "checkedAt": "2026-08-17T03:08:39.908Z",
+  "step1_stripeConnect": {
+    "livemode": false,
+    "balance_available_usd_cents": 0,
+    "balance_pending_usd_cents": 5400,
+    "balance_instant_available_usd_cents": 5400,
+    "stripePayoutCount": 0
+  },
+  "step2_liveCircuit": {
+    "artist": {
+      "available_cents": 1800,
+      "pending_cents": 7200,
+      "lifetime_paid_out_cents": 0
+    },
+    "lifeOrder": {
+      "status": "paid",
+      "artist_payout_status": "available",
+      "remaining_artist_earnings_cents": 1800,
+      "available_at": "2026-08-17T01:17:36.855+00:00"
+    }
+  },
+  "step3_config": {
+    "payout_delay_days": 7,
+    "min_payout_cents": 2500,
+    "reserve_percent": 0,
+    "stripe_connect_ready": false,
+    "expectedProduction": {
+      "payout_delay_days": 7,
+      "min_payout_cents": 2500,
+      "reserve_percent": 0,
+      "stripe_connect_ready": false
+    },
+    "matchesExpected": true
+  },
+  "step4_classification": "SETTLEMENT_BLOCKED",
+  "step5_safetyCheck": {
+    "golden": {
+      "pass": true,
+      "status": "paid",
+      "artist_payout_status": "pending",
+      "refund_cents": 0
+    },
+    "historicalDisp": {
+      "pass": true,
+      "artist_payout_status": "held",
+      "reversal_amount_cents": 1800
+    },
+    "freshDisp": {
+      "pass": true,
+      "artist_payout_status": "held",
+      "reversal_amount_cents": 1800
+    },
+    "artist_payouts_count": 0,
+    "stripe_payout_count": 0,
+    "allSafetyChecksPass": true
+  },
+  "nextStep": "Wait for Stripe Connect balance.available >= 1800 before running Phase 5G.5"
+}

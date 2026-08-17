@@ -1,16 +1,19 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import type { ArtistConnectStatus } from "@/lib/stripe/connect-status";
 import { artistConnectStatusLabel } from "@/lib/stripe/connect-status";
 import type { ArtistBalanceSummary, ArtistTicketTransaction } from "@/lib/services/artist-balance.service";
-
-function formatUsd(cents: number) {
-  return new Intl.NumberFormat("en-US", { style: "currency", currency: "USD" }).format(cents / 100);
-}
+import {
+  formatPayoutDelayDays,
+  formatUsdFromCents,
+  type ArtistEarningsDisplayConfig,
+} from "@/lib/monetization/artist-earnings-display";
+import { ROUTES } from "@/lib/constants";
 
 function formatDate(value: string | null) {
   if (!value) return "—";
@@ -34,6 +37,7 @@ type Props = {
   balance: ArtistBalanceSummary;
   transactions: ArtistTicketTransaction[];
   payouts: PayoutRow[];
+  displayConfig: ArtistEarningsDisplayConfig;
 };
 
 export function ArtistPaymentsPanel({
@@ -42,6 +46,7 @@ export function ArtistPaymentsPanel({
   balance,
   transactions,
   payouts,
+  displayConfig,
 }: Props) {
   const [status, setStatus] = useState(initialStatus);
   const [loading, setLoading] = useState(false);
@@ -86,7 +91,7 @@ export function ArtistPaymentsPanel({
     status === "not_connected"
       ? "Connect a Stripe account before you can receive ticket revenue from LiveCircuit."
       : status === "ready"
-        ? "Ticket earnings stay pending for 7 days, then become available for bank payout through Stripe."
+        ? `Ticket earnings stay pending for ${formatPayoutDelayDays(displayConfig.payoutDelayDays)}, then become available for bank payout through Stripe once eligibility and settlement requirements are met.`
         : status === "verification_pending"
           ? "Stripe is verifying your details. LiveCircuit will enable payouts only after Stripe confirms your account can receive funds."
           : status === "restricted"
@@ -110,7 +115,8 @@ export function ArtistPaymentsPanel({
         <CardHeader>
           <CardTitle>Payments / Artist Payouts</CardTitle>
           <CardDescription>
-            Stripe Connect Express — ticket revenue is split 90% artist / 10% LiveCircuit at checkout.
+            Stripe Connect Express — ticket revenue uses a {displayConfig.platformFeePercent}% LiveCircuit platform
+            fee at checkout.
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
@@ -143,34 +149,40 @@ export function ArtistPaymentsPanel({
         <Card>
           <CardHeader className="pb-2">
             <CardDescription>Total earned</CardDescription>
-            <CardTitle className="text-2xl">{formatUsd(balance.lifetimeArtistEarningsCents)}</CardTitle>
+            <CardTitle className="text-2xl">{formatUsdFromCents(balance.lifetimeArtistEarningsCents)}</CardTitle>
           </CardHeader>
         </Card>
         <Card>
           <CardHeader className="pb-2">
             <CardDescription>Pending</CardDescription>
-            <CardTitle className="text-2xl">{formatUsd(balance.pendingCents)}</CardTitle>
+            <CardTitle className="text-2xl">{formatUsdFromCents(balance.pendingCents)}</CardTitle>
           </CardHeader>
         </Card>
         <Card>
           <CardHeader className="pb-2">
             <CardDescription>Available</CardDescription>
-            <CardTitle className="text-2xl">{formatUsd(balance.availableCents)}</CardTitle>
+            <CardTitle className="text-2xl">{formatUsdFromCents(balance.availableCents)}</CardTitle>
           </CardHeader>
         </Card>
         <Card>
           <CardHeader className="pb-2">
             <CardDescription>Paid out</CardDescription>
-            <CardTitle className="text-2xl">{formatUsd(balance.paidOutCents)}</CardTitle>
+            <CardTitle className="text-2xl">{formatUsdFromCents(balance.paidOutCents)}</CardTitle>
           </CardHeader>
         </Card>
       </div>
+
+      <p className="text-sm">
+        <Link href={ROUTES.artistEarnings} className="font-medium text-primary hover:underline">
+          See how payouts work →
+        </Link>
+      </p>
 
       {balance.receivableCents > 0 ? (
         <Card className="border-amber-500/30">
           <CardHeader className="pb-2">
             <CardDescription>Recovery due</CardDescription>
-            <CardTitle className="text-lg text-amber-600">{formatUsd(balance.receivableCents)}</CardTitle>
+            <CardTitle className="text-lg text-amber-600">{formatUsdFromCents(balance.receivableCents)}</CardTitle>
           </CardHeader>
           <CardContent>
             <p className="text-sm text-muted-foreground">
@@ -203,7 +215,7 @@ export function ArtistPaymentsPanel({
                 <tbody>
                   {payouts.map((p) => (
                     <tr key={p.id} className="border-b border-border/60">
-                      <td className="py-3 pr-4 tabular-nums">{formatUsd(Number(p.amount_cents ?? 0))}</td>
+                      <td className="py-3 pr-4 tabular-nums">{formatUsdFromCents(Number(p.amount_cents ?? 0))}</td>
                       <td className="py-3 pr-4 uppercase text-xs">{p.status}</td>
                       <td className="py-3 pr-4">{formatDate(p.initiated_at)}</td>
                       <td className="py-3 pr-4">{formatDate(p.completed_at)}</td>
@@ -242,9 +254,9 @@ export function ArtistPaymentsPanel({
                   {transactions.map((tx) => (
                     <tr key={tx.orderId} className="border-b border-border/60">
                       <td className="py-3 pr-4">{tx.eventTitle ?? "Ticket sale"}</td>
-                      <td className="py-3 pr-4 tabular-nums">{formatUsd(tx.grossCents)}</td>
-                      <td className="py-3 pr-4 tabular-nums">{formatUsd(tx.platformFeeCents)}</td>
-                      <td className="py-3 pr-4 tabular-nums">{formatUsd(tx.artistEarningsCents)}</td>
+                      <td className="py-3 pr-4 tabular-nums">{formatUsdFromCents(tx.grossCents)}</td>
+                      <td className="py-3 pr-4 tabular-nums">{formatUsdFromCents(tx.platformFeeCents)}</td>
+                      <td className="py-3 pr-4 tabular-nums">{formatUsdFromCents(tx.artistEarningsCents)}</td>
                       <td className="py-3 pr-4 uppercase text-xs tracking-wide text-muted-foreground">
                         {tx.payoutStatus}
                       </td>

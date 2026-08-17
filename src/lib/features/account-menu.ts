@@ -1,5 +1,5 @@
 import type { LucideIcon } from "lucide-react";
-import { Bell, Briefcase, Mic2, Rocket, Settings, Shield, User } from "lucide-react";
+import { Bell, Briefcase, DollarSign, Mic2, Rocket, Settings, Shield, User } from "lucide-react";
 import { AGENCY_MEMBER_ROLE_LABELS } from "@/lib/agency/permissions";
 import { agencyDashboardPath, agencyPortalPath } from "@/lib/agency/sections";
 import type { AgencyMemberRole } from "@/lib/agency/types";
@@ -46,7 +46,10 @@ export function getAccountMenuSections(user: {
     /* agency-specific nav handled above */
   } else if (user.role === "artist") {
     sections.push({
-      items: [{ label: "Artist Dashboard", href: ROUTES.artistDashboard, icon: Mic2 }],
+      items: [
+        { label: "Artist Dashboard", href: ROUTES.artistDashboard, icon: Mic2 },
+        { label: "Earnings & Payouts", href: ROUTES.artistEarnings, icon: DollarSign },
+      ],
     });
   } else if (user.role === "admin") {
     sections.push({
