@@ -19,8 +19,10 @@ import {
 } from "@/lib/monetization/financial-ledger.service";
 import { processRefundByPaymentIntent } from "@/lib/services/refund.service";
 import {
+  DisputeDeferredError,
   handleDestinationChargeDisputeClosed,
   handleDestinationChargeDisputeCreated,
+  resolvePendingDisputesForOrder,
 } from "@/lib/services/dispute.service";
 import {
   handleStripePayoutEvent,
@@ -53,9 +55,27 @@ async function resolveOrderIdForWebhookEvent(
       return (data?.id as string | undefined) ?? null;
     }
     case "charge.succeeded":
-    case "charge.refunded": {
-      const charge = event.data.object as Stripe.Charge;
-      return resolveOrderIdForStripeCharge(supabase, stripe, charge);
+    case "charge.refunded":
+    case "charge.dispute.created":
+    case "charge.dispute.closed": {
+      const charge = event.data.object as Stripe.Charge | Stripe.Dispute;
+      if (event.type.startsWith("charge.dispute")) {
+        const dispute = charge as Stripe.Dispute;
+        const piId =
+          typeof dispute.payment_intent === "string"
+            ? dispute.payment_intent
+            : dispute.payment_intent?.id;
+        if (piId) {
+          const { data } = await supabase
+            .from("orders")
+            .select("id")
+            .eq("stripe_payment_intent_id", piId)
+            .maybeSingle();
+          if (data?.id) return data.id as string;
+        }
+        return null;
+      }
+      return resolveOrderIdForStripeCharge(supabase, stripe, charge as Stripe.Charge);
     }
     default:
       return null;
@@ -69,18 +89,29 @@ export async function processStripeWebhookEvent(
 ): Promise<{ duplicate: boolean; handled: boolean }> {
   const { data: existing } = await supabase
     .from("monetization_stripe_webhook_events")
-    .select("id")
+    .select("id, status, error_message")
     .eq("stripe_event_id", event.id)
     .maybeSingle();
 
-  if (existing) return { duplicate: true, handled: true };
+  if (existing) {
+    const retryDeferred =
+      existing.status === "failed" &&
+      typeof existing.error_message === "string" &&
+      existing.error_message.startsWith("deferred:");
+    if (!retryDeferred) return { duplicate: true, handled: true };
+    await supabase.from("monetization_stripe_webhook_events").delete().eq("id", existing.id);
+  }
 
   try {
     let result: { duplicate: boolean; handled: boolean };
 
     switch (event.type) {
       case "checkout.session.completed":
-        result = await handleCheckoutCompleted(supabase, event.data.object as Stripe.Checkout.Session);
+        result = await handleCheckoutCompleted(
+          supabase,
+          event.data.object as Stripe.Checkout.Session,
+          stripe,
+        );
         break;
 
       case "checkout.session.expired":
@@ -164,6 +195,17 @@ export async function processStripeWebhookEvent(
 
     return result;
   } catch (err) {
+    if (err instanceof DisputeDeferredError) {
+      await recordStripeWebhookEvent(supabase, {
+        stripeEventId: event.id,
+        eventType: event.type,
+        status: "failed",
+        errorMessage: err.message,
+        payload: { type: event.type, livemode: event.livemode, deferred: true },
+      });
+      return { duplicate: false, handled: false };
+    }
+
     await recordStripeWebhookEvent(supabase, {
       stripeEventId: event.id,
       eventType: event.type,
@@ -176,7 +218,8 @@ export async function processStripeWebhookEvent(
 
 async function handleCheckoutCompleted(
   supabase: SupabaseClient,
-  session: Stripe.Checkout.Session
+  session: Stripe.Checkout.Session,
+  stripe: Stripe,
 ): Promise<{ duplicate: boolean; handled: boolean }> {
   const backstage = await handleBackstageCheckoutSession(supabase, session);
   if (backstage) return { duplicate: false, handled: true };
@@ -188,7 +231,33 @@ async function handleCheckoutCompleted(
   if (localBiz) return { duplicate: false, handled: true };
 
   const { duplicate } = await fulfillPaidOrder(supabase, session);
+  await resolveDisputesAfterOrderLink(supabase, stripe, session);
   return { duplicate, handled: true };
+}
+
+async function resolveDisputesAfterOrderLink(
+  supabase: SupabaseClient,
+  stripe: Stripe,
+  session: Stripe.Checkout.Session,
+) {
+  const orderId = session.metadata?.order_id;
+  if (orderId) {
+    await resolvePendingDisputesForOrder(supabase, stripe, orderId).catch((err) =>
+      console.error("[stripe-webhook] resolve pending disputes", orderId, err),
+    );
+    return;
+  }
+
+  const { data: order } = await supabase
+    .from("orders")
+    .select("id")
+    .eq("stripe_checkout_session_id", session.id)
+    .maybeSingle();
+  if (order?.id) {
+    await resolvePendingDisputesForOrder(supabase, stripe, order.id as string).catch((err) =>
+      console.error("[stripe-webhook] resolve pending disputes", order.id, err),
+    );
+  }
 }
 
 async function handlePaymentFailed(supabase: SupabaseClient, paymentIntent: Stripe.PaymentIntent) {
@@ -234,8 +303,15 @@ async function handleChargeSucceeded(
   stripe: Stripe,
   charge: Stripe.Charge,
 ) {
-  const orderId = charge.metadata?.order_id ?? null;
+  const orderId =
+    (await resolveOrderIdForStripeCharge(supabase, stripe, charge, charge.metadata?.order_id ?? null)) ??
+    null;
   await reconcileOrderStripeFeesFromCharge(supabase, charge, orderId, stripe);
+  if (orderId) {
+    await resolvePendingDisputesForOrder(supabase, stripe, orderId).catch((err) =>
+      console.error("[stripe-webhook] resolve pending disputes after charge.succeeded", orderId, err),
+    );
+  }
 }
 
 async function handleDisputeCreated(
@@ -244,17 +320,16 @@ async function handleDisputeCreated(
   dispute: Stripe.Dispute,
   stripeEventId: string,
 ) {
-  const piId =
-    typeof dispute.payment_intent === "string" ? dispute.payment_intent : dispute.payment_intent?.id;
+  const result = await handleDestinationChargeDisputeCreated(
+    supabase,
+    stripe,
+    dispute,
+    stripeEventId,
+  );
 
-  await recordDispute(supabase, {
-    amountCents: dispute.amount,
-    stripePaymentIntentId: piId ?? null,
-    stripeEventId: dispute.id,
-    reason: dispute.reason ?? "Payment dispute opened",
-  });
-
-  await handleDestinationChargeDisputeCreated(supabase, stripe, dispute, stripeEventId);
+  if (result.deferred) {
+    throw new DisputeDeferredError();
+  }
 }
 
 async function handleDisputeClosed(

@@ -21,6 +21,21 @@ export type ProcessPayoutsResult = {
   payoutsCreated: number;
   payoutsSkipped: number;
   errors: string[];
+  skipReasons: Array<{
+    artistId: string;
+    reason:
+      | "below_min_payout"
+      | "connect_not_ready"
+      | "processing_payout_exists"
+      | "allocation_below_min"
+      | "stripe_balance_not_available"
+      | "reservation_failed"
+      | "duplicate_idempotency_key"
+      | "balance_check_failed";
+    availableCents?: number;
+    stripeAvailableCents?: number;
+    minPayoutCents?: number;
+  }>;
 };
 
 export async function releaseEligibleArtistFunds(
@@ -95,6 +110,7 @@ export async function processEligibleArtistPayouts(
   const config = await getPayoutConfig(supabase);
   const stripe = getStripe();
   const errors: string[] = [];
+  const skipReasons: ProcessPayoutsResult["skipReasons"] = [];
   let artistsProcessed = 0;
   let payoutsCreated = 0;
   let payoutsSkipped = 0;
@@ -111,12 +127,19 @@ export async function processEligibleArtistPayouts(
 
     if (availableCents < config.minPayoutCents) {
       payoutsSkipped += 1;
+      skipReasons.push({
+        artistId,
+        reason: "below_min_payout",
+        availableCents,
+        minPayoutCents: config.minPayoutCents,
+      });
       continue;
     }
 
     const { status, record } = await getArtistConnectStatus(supabase, artistId);
     if (!isArtistPayoutReady(status, record)) {
       payoutsSkipped += 1;
+      skipReasons.push({ artistId, reason: "connect_not_ready", availableCents });
       continue;
     }
 
@@ -139,6 +162,7 @@ export async function processEligibleArtistPayouts(
 
     if (processing) {
       payoutsSkipped += 1;
+      skipReasons.push({ artistId, reason: "processing_payout_exists", availableCents });
       continue;
     }
 
@@ -148,6 +172,12 @@ export async function processEligibleArtistPayouts(
 
     if (payoutAmount < config.minPayoutCents) {
       payoutsSkipped += 1;
+      skipReasons.push({
+        artistId,
+        reason: "allocation_below_min",
+        availableCents,
+        minPayoutCents: config.minPayoutCents,
+      });
       continue;
     }
 
@@ -171,6 +201,7 @@ export async function processEligibleArtistPayouts(
 
     if (existingPayout) {
       payoutsSkipped += 1;
+      skipReasons.push({ artistId, reason: "duplicate_idempotency_key", availableCents: payoutAmount });
       continue;
     }
 
@@ -182,11 +213,18 @@ export async function processEligibleArtistPayouts(
     } catch (e) {
       errors.push(`Balance check failed for ${artistId}: ${e instanceof Error ? e.message : "unknown"}`);
       payoutsSkipped += 1;
+      skipReasons.push({ artistId, reason: "balance_check_failed", availableCents: payoutAmount });
       continue;
     }
 
     if (stripeBalanceAvailable < payoutAmount) {
       payoutsSkipped += 1;
+      skipReasons.push({
+        artistId,
+        reason: "stripe_balance_not_available",
+        availableCents: payoutAmount,
+        stripeAvailableCents: stripeBalanceAvailable,
+      });
       continue;
     }
 
@@ -198,6 +236,7 @@ export async function processEligibleArtistPayouts(
 
     if (reserveError || !payoutId) {
       payoutsSkipped += 1;
+      skipReasons.push({ artistId, reason: "reservation_failed", availableCents: payoutAmount });
       continue;
     }
 
@@ -246,7 +285,7 @@ export async function processEligibleArtistPayouts(
     }
   }
 
-  return { artistsProcessed, payoutsCreated, payoutsSkipped, errors };
+  return { artistsProcessed, payoutsCreated, payoutsSkipped, errors, skipReasons };
 }
 
 export async function handleStripePayoutEvent(

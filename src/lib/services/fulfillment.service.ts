@@ -94,6 +94,15 @@ export async function fulfillPaidOrder(
     })
     .eq("id", order.id);
 
+  const paymentIntentId =
+    typeof session.payment_intent === "string" ? session.payment_intent : null;
+  if (paymentIntentId && order.order_type === "ticket" && order.artist_id) {
+    await reconcileOrderStripeFees(supabase, {
+      orderId: order.id,
+      paymentIntentId,
+    }).catch((err) => console.error("[fulfillment] early stripe fee reconciliation", err));
+  }
+
   const platformFeeCents = Number(
     order.platform_fee_cents ?? meta.platform_fee_cents ?? session.metadata?.platform_fee_cents ?? 0,
   );
@@ -176,12 +185,12 @@ export async function fulfillPaidOrder(
     })
     .eq("id", order.id);
 
-  const paymentIntentId =
+  const paymentIntentIdFinal =
     typeof session.payment_intent === "string" ? session.payment_intent : null;
-  if (paymentIntentId && order.order_type === "ticket" && order.artist_id) {
+  if (paymentIntentIdFinal && order.order_type === "ticket" && order.artist_id) {
     await reconcileOrderStripeFees(supabase, {
       orderId: order.id,
-      paymentIntentId,
+      paymentIntentId: paymentIntentIdFinal,
     }).catch((err) => console.error("[fulfillment] stripe fee reconciliation", err));
   }
 

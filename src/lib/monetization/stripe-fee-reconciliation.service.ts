@@ -66,23 +66,41 @@ export async function reconcileOrderStripeFees(
       : charge.application_fee?.id ?? null;
   const balanceTransactionId = balanceTxn?.id ?? null;
 
-  const { error } = await supabase
+  const { data: current } = await supabase
     .from("orders")
-    .update({
-      stripe_fee_cents: stripeFeeCents,
-      stripe_balance_transaction_id: balanceTransactionId,
-      stripe_transfer_id: transferId,
-      stripe_application_fee_id: applicationFeeId,
-    })
+    .select(
+      "stripe_fee_cents, stripe_balance_transaction_id, stripe_transfer_id, stripe_application_fee_id",
+    )
     .eq("id", input.orderId)
-    .is("stripe_fee_cents", null);
+    .maybeSingle();
+
+  const patch: Record<string, unknown> = {};
+
+  if (current?.stripe_fee_cents == null && stripeFeeCents != null) {
+    patch.stripe_fee_cents = stripeFeeCents;
+  }
+  if (!current?.stripe_balance_transaction_id && balanceTransactionId) {
+    patch.stripe_balance_transaction_id = balanceTransactionId;
+  }
+  if (!current?.stripe_transfer_id && transferId) {
+    patch.stripe_transfer_id = transferId;
+  }
+  if (!current?.stripe_application_fee_id && applicationFeeId) {
+    patch.stripe_application_fee_id = applicationFeeId;
+  }
+
+  if (Object.keys(patch).length === 0) {
+    return { ok: true, stripeFeeCents: current?.stripe_fee_cents ?? stripeFeeCents };
+  }
+
+  const { error } = await supabase.from("orders").update(patch).eq("id", input.orderId);
 
   if (error) {
     console.error("[stripe-fee-reconciliation]", error.message);
     return { ok: false, stripeFeeCents };
   }
 
-  return { ok: true, stripeFeeCents };
+  return { ok: true, stripeFeeCents: (patch.stripe_fee_cents as number | null) ?? stripeFeeCents };
 }
 
 export async function reconcileOrderStripeFeesFromCharge(

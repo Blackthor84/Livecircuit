@@ -18,6 +18,14 @@ describe("Phase 5 financial hardening", () => {
       expect(source).not.toMatch(/transfers\.create\([\s\S]*dispute\.created/);
     });
 
+    it("1b. dispute reversal uses artist earnings cap helper", () => {
+      const source = readSource("src/lib/services/dispute.service.ts");
+      expect(source).toMatch(/calculateDisputeTransferReversalAmount/);
+      const helper = readSource("src/lib/monetization/dispute-reversal.ts");
+      expect(helper).toMatch(/remainingArtistExposure/);
+      expect(helper).toMatch(/disputeArtistShare/);
+    });
+
     it("2. duplicate dispute webhook checks artist_disputes by stripe_dispute_id", () => {
       const source = readSource("src/lib/services/dispute.service.ts");
       expect(source).toMatch(/eq\("stripe_dispute_id", dispute\.id\)/);
@@ -346,9 +354,45 @@ describe("Phase 5 financial hardening", () => {
   describe("dispute service duplicate webhook behavior", () => {
     it("duplicate dispute webhook short-circuits before createReversal", () => {
       const source = readSource("src/lib/services/dispute.service.ts");
-      expect(source).toMatch(/if \(existing\)/);
+      expect(source).toMatch(/if \(existingRow && isDisputeFinanciallyComplete\(existingRow\)\)/);
       expect(source).toMatch(/duplicate: true/);
-      expect(source).toMatch(/return;/);
+    });
+  });
+
+  describe("5E dispute + reconciliation hardening", () => {
+    it("27. deferred disputes use pending_order_resolution status", () => {
+      const source = readSource("src/lib/services/dispute.service.ts");
+      expect(source).toMatch(/pending_order_resolution/);
+      expect(source).toMatch(/resolvePendingDisputesForOrder/);
+    });
+
+    it("28. dispute order resolution reads Stripe PI metadata", () => {
+      const source = readSource("src/lib/services/dispute-order-resolution.ts");
+      expect(source).toMatch(/paymentIntent\.metadata\?\.order_id/);
+      expect(source).toMatch(/charge\.metadata\?\.order_id/);
+    });
+
+    it("29. webhook resolves pending disputes after checkout and charge.succeeded", () => {
+      const source = readSource("src/lib/monetization/stripe-webhook.service.ts");
+      expect(source).toMatch(/resolvePendingDisputesForOrder/);
+      expect(source).toMatch(/DisputeDeferredError/);
+    });
+
+    it("30. fulfillment reconciles Stripe IDs before ticket credit", () => {
+      const source = readSource("src/lib/services/fulfillment.service.ts");
+      expect(source).toMatch(/early stripe fee reconciliation/);
+    });
+
+    it("31. fee reconciliation persists transfer id even when fee already set", () => {
+      const source = readSource("src/lib/monetization/stripe-fee-reconciliation.service.ts");
+      expect(source).toMatch(/!current\?\.stripe_transfer_id && transferId/);
+      expect(source).not.toMatch(/\.is\("stripe_fee_cents", null\)/);
+    });
+
+    it("32. payout pipeline reports stripe_balance_not_available skip reason", () => {
+      const source = readSource("src/lib/services/artist-payout.service.ts");
+      expect(source).toMatch(/stripe_balance_not_available/);
+      expect(source).toMatch(/skipReasons/);
     });
   });
 });
