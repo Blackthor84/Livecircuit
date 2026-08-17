@@ -20,6 +20,30 @@ export type DisputeHandleResult = {
   orderId: string | null;
 };
 
+export type OrphanDisputeRemediationResult = {
+  ok: boolean;
+  alreadyResolved: boolean;
+  deferred: boolean;
+  orderId: string | null;
+  transferReversalId: string | null;
+  reversalAmountCents: number | null;
+  error?: string;
+  code?: string;
+};
+
+/** Protected production order — never remediate, refund, dispute, or payout. */
+export const GOLDEN_ORDER_ID = "78581ea3-0b38-47b7-b981-6cc94fc7d057";
+
+export class OrphanDisputeRemediationError extends Error {
+  code: string;
+
+  constructor(message: string, code: string) {
+    super(message);
+    this.name = "OrphanDisputeRemediationError";
+    this.code = code;
+  }
+}
+
 export class DisputeDeferredError extends Error {
   constructor(message = "deferred:pending_order_resolution") {
     super(message);
@@ -30,6 +54,8 @@ export class DisputeDeferredError extends Error {
 type ArtistDisputeRow = {
   id: string;
   order_id: string | null;
+  artist_id?: string | null;
+  stripe_dispute_id?: string | null;
   stripe_transfer_reversal_id: string | null;
   livecircuit_status: string;
   metadata: Record<string, unknown> | null;
@@ -53,6 +79,76 @@ async function loadPriorDisputeReversals(
     .neq("stripe_dispute_id", excludeDisputeId);
 
   return sumPriorDisputeReversalCents(data ?? []);
+}
+
+async function findExistingStripeDisputeReversal(
+  stripe: Stripe,
+  transferId: string,
+  disputeId: string,
+): Promise<{ id: string; amount: number } | null> {
+  try {
+    const reversals = await stripe.transfers.listReversals(transferId, { limit: 100 });
+    for (const reversal of reversals.data) {
+      if (reversal.metadata?.dispute_id === disputeId) {
+        return { id: reversal.id, amount: reversal.amount };
+      }
+    }
+  } catch (e) {
+    console.warn("[dispute] list reversals failed", transferId, e);
+  }
+  return null;
+}
+
+async function recordDisputeOnce(
+  supabase: SupabaseClient,
+  input: {
+    orderId: string;
+    amountCents: number;
+    stripeEventId: string;
+    stripePaymentIntentId?: string | null;
+    reason?: string;
+  },
+): Promise<void> {
+  const { data: existing } = await supabase
+    .from("monetization_financial_ledger")
+    .select("id")
+    .eq("stripe_event_id", input.stripeEventId)
+    .eq("entry_type", "dispute")
+    .maybeSingle();
+
+  if (existing?.id) return;
+
+  await recordDispute(supabase, input);
+}
+
+function isOrphanDisputeCandidate(row: ArtistDisputeRow): boolean {
+  if (!row.stripe_dispute_id) return false;
+  if (row.stripe_transfer_reversal_id) return false;
+  return row.order_id === null;
+}
+
+async function loadArtistDisputeRow(
+  supabase: SupabaseClient,
+  disputeId: string,
+): Promise<ArtistDisputeRow | null> {
+  const select =
+    "id, order_id, artist_id, stripe_dispute_id, stripe_transfer_reversal_id, livecircuit_status, metadata";
+
+  if (disputeId.startsWith("du_")) {
+    const { data } = await supabase
+      .from("artist_disputes")
+      .select(select)
+      .eq("stripe_dispute_id", disputeId)
+      .maybeSingle();
+    return (data as ArtistDisputeRow | null) ?? null;
+  }
+
+  const { data } = await supabase
+    .from("artist_disputes")
+    .select(select)
+    .eq("id", disputeId)
+    .maybeSingle();
+  return (data as ArtistDisputeRow | null) ?? null;
 }
 
 async function applyDisputeHoldAndReversal(
@@ -350,6 +446,203 @@ export async function resolvePendingDisputesForOrder(
   }
 
   return resolved;
+}
+
+/**
+ * Remediate an orphaned artist_disputes row whose Stripe webhook was processed
+ * before order linkage was available. Does not replay Stripe webhooks.
+ */
+export async function resolveOrphanedDispute(
+  supabase: SupabaseClient,
+  stripe: Stripe,
+  input: { disputeId: string },
+): Promise<OrphanDisputeRemediationResult> {
+  const existingRow = await loadArtistDisputeRow(supabase, input.disputeId);
+  if (!existingRow) {
+    return {
+      ok: false,
+      alreadyResolved: false,
+      deferred: false,
+      orderId: null,
+      transferReversalId: null,
+      reversalAmountCents: null,
+      error: "Dispute record not found",
+      code: "not_found",
+    };
+  }
+
+  if (existingRow.stripe_transfer_reversal_id) {
+    const priorCents =
+      typeof existingRow.metadata?.reversal_amount_cents === "number"
+        ? existingRow.metadata.reversal_amount_cents
+        : null;
+    return {
+      ok: true,
+      alreadyResolved: true,
+      deferred: false,
+      orderId: existingRow.order_id,
+      transferReversalId: existingRow.stripe_transfer_reversal_id,
+      reversalAmountCents: priorCents,
+    };
+  }
+
+  if (!isOrphanDisputeCandidate(existingRow)) {
+    return {
+      ok: false,
+      alreadyResolved: false,
+      deferred: false,
+      orderId: existingRow.order_id,
+      transferReversalId: null,
+      reversalAmountCents: null,
+      error: "Dispute is not an unresolved orphan candidate",
+      code: "not_orphan",
+    };
+  }
+
+  const stripeDisputeId = existingRow.stripe_dispute_id as string;
+  let dispute: Stripe.Dispute;
+  try {
+    dispute = await stripe.disputes.retrieve(stripeDisputeId);
+  } catch (e) {
+    return {
+      ok: false,
+      alreadyResolved: false,
+      deferred: false,
+      orderId: null,
+      transferReversalId: null,
+      reversalAmountCents: null,
+      error: e instanceof Error ? e.message : "Failed to retrieve Stripe dispute",
+      code: "stripe_dispute_unavailable",
+    };
+  }
+
+  if (dispute.livemode) {
+    return {
+      ok: false,
+      alreadyResolved: false,
+      deferred: false,
+      orderId: null,
+      transferReversalId: null,
+      reversalAmountCents: null,
+      error: "Only test/sandbox disputes can be remediated through this path",
+      code: "live_mode_rejected",
+    };
+  }
+
+  const order = await resolveOrderForDispute(supabase, stripe, dispute);
+  const stripeEventId =
+    (existingRow.metadata?.stripe_event_id as string | undefined) ??
+    `orphan-remediation:${dispute.id}`;
+
+  if (!order) {
+    await upsertArtistDispute(supabase, {
+      dispute,
+      stripeEventId,
+      order: null,
+      transferReversalId: null,
+      stripeTransferId: null,
+      failureReason: null,
+      livecircuitStatus: "pending_order_resolution",
+    });
+
+    return {
+      ok: true,
+      alreadyResolved: false,
+      deferred: true,
+      orderId: null,
+      transferReversalId: null,
+      reversalAmountCents: null,
+    };
+  }
+
+  if (order.id === GOLDEN_ORDER_ID) {
+    return {
+      ok: false,
+      alreadyResolved: false,
+      deferred: false,
+      orderId: order.id,
+      transferReversalId: null,
+      reversalAmountCents: null,
+      error: "Golden order is protected from dispute remediation",
+      code: "golden_order_protected",
+    };
+  }
+
+  let workingRow: ArtistDisputeRow = existingRow;
+  const chargeId = typeof dispute.charge === "string" ? dispute.charge : dispute.charge?.id;
+  if (chargeId && !workingRow.stripe_transfer_reversal_id) {
+    try {
+      const charge = await stripe.charges.retrieve(chargeId, { expand: ["transfer"] });
+      const transfer = charge.transfer;
+      const transferId =
+        (order.stripe_transfer_id as string | null) ??
+        (typeof transfer === "string" ? transfer : transfer?.id ?? null);
+      if (transferId) {
+        const existingReversal = await findExistingStripeDisputeReversal(
+          stripe,
+          transferId,
+          dispute.id,
+        );
+        if (existingReversal) {
+          await supabase.rpc("hold_artist_order_earnings", {
+            p_order_id: order.id,
+            p_reason: "dispute",
+          });
+          workingRow = {
+            ...workingRow,
+            stripe_transfer_reversal_id: existingReversal.id,
+            metadata: {
+              ...(workingRow.metadata ?? {}),
+              reversal_amount_cents: existingReversal.amount,
+            },
+          };
+        }
+      }
+    } catch (e) {
+      console.warn("[dispute] orphan reversal lookup failed", dispute.id, e);
+    }
+  }
+
+  const { transferReversalId, failureReason, stripeTransferId, reversalAmountCents } =
+    await applyDisputeHoldAndReversal(
+      supabase,
+      stripe,
+      dispute,
+      stripeEventId,
+      order,
+      workingRow,
+    );
+
+  await upsertArtistDispute(supabase, {
+    dispute,
+    stripeEventId,
+    order,
+    transferReversalId,
+    stripeTransferId,
+    failureReason,
+    livecircuitStatus: "open",
+    reversalAmountCents: transferReversalId ? reversalAmountCents : null,
+  });
+
+  const piId =
+    typeof dispute.payment_intent === "string" ? dispute.payment_intent : dispute.payment_intent?.id;
+  await recordDisputeOnce(supabase, {
+    orderId: order.id,
+    amountCents: dispute.amount,
+    stripePaymentIntentId: piId ?? null,
+    stripeEventId: dispute.id,
+    reason: dispute.reason ?? "Payment dispute opened",
+  });
+
+  return {
+    ok: !failureReason,
+    alreadyResolved: false,
+    deferred: false,
+    orderId: order.id,
+    transferReversalId,
+    reversalAmountCents: transferReversalId ? reversalAmountCents : null,
+    ...(failureReason ? { error: failureReason, code: "reversal_failed" } : {}),
+  };
 }
 
 export async function handleDestinationChargeDisputeClosed(

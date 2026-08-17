@@ -317,3 +317,52 @@ export async function deleteTestAgencyOrganizationAction(input: unknown): Promis
     return { ok: false, error: e instanceof Error ? e.message : "Delete agency failed" };
   }
 }
+
+const orphanDisputeSchema = z.object({
+  disputeId: z.string().min(1),
+});
+
+export type OrphanDisputeRemediationActionResult =
+  | ({
+      ok: true;
+      message?: string;
+    } & import("@/lib/services/dispute.service").OrphanDisputeRemediationResult)
+  | TestingActionResult;
+
+/** Super-admin only: remediate orphaned test/sandbox artist_disputes rows. */
+export async function resolveOrphanedDisputeAction(
+  input: unknown,
+): Promise<OrphanDisputeRemediationActionResult> {
+  const ctx = await requireSuperAdminTesting();
+  if (!ctx.ok) return ctx;
+  if (!isSupabaseConfigured()) return { ok: false, error: "Supabase required" };
+
+  const parsed = orphanDisputeSchema.safeParse(input);
+  if (!parsed.success) return { ok: false, error: "Invalid dispute id" };
+
+  try {
+    const { getSupabaseAdmin } = await import("@/lib/supabase/admin");
+    const { getStripe } = await import("@/lib/stripe/server");
+    const { resolveOrphanedDispute } = await import("@/lib/services/dispute.service");
+
+    const result = await resolveOrphanedDispute(getSupabaseAdmin(), getStripe(), {
+      disputeId: parsed.data.disputeId,
+    });
+
+    if (!result.ok && !result.deferred && !result.alreadyResolved) {
+      return { ok: false, error: result.error ?? "Orphan dispute remediation failed" };
+    }
+
+    return {
+      ...result,
+      ok: true,
+      message: result.alreadyResolved
+        ? "Dispute already resolved"
+        : result.deferred
+          ? "Order still unresolved; dispute marked pending_order_resolution"
+          : "Orphan dispute remediated",
+    };
+  } catch (e) {
+    return { ok: false, error: e instanceof Error ? e.message : "Orphan dispute remediation failed" };
+  }
+}

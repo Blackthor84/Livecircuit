@@ -378,6 +378,15 @@ describe("Phase 5 financial hardening", () => {
       expect(source).toMatch(/DisputeDeferredError/);
     });
 
+    it("30. orphan dispute remediation is explicit and test-only", () => {
+      const source = readSource("src/lib/services/dispute.service.ts");
+      expect(source).toMatch(/resolveOrphanedDispute/);
+      expect(source).toMatch(/live_mode_rejected/);
+      expect(source).toMatch(/GOLDEN_ORDER_ID/);
+      expect(source).toMatch(/recordDisputeOnce/);
+      expect(source).not.toMatch(/existing\.status === "processed"/);
+    });
+
     it("30. fulfillment reconciles Stripe IDs before ticket credit", () => {
       const source = readSource("src/lib/services/fulfillment.service.ts");
       expect(source).toMatch(/early stripe fee reconciliation/);

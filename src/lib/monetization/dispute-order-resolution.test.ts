@@ -54,6 +54,61 @@ describe("resolveOrderForDispute (D5)", () => {
     expect(order?.id).toBe("order-from-pi");
   });
 
+  it("resolves order from charge metadata", async () => {
+    const orderRow = {
+      id: "order-from-charge",
+      artist_id: "artist-1",
+      stripe_transfer_id: null,
+      gross_cents: 2000,
+      platform_fee_cents: 200,
+      artist_earnings_cents: 1800,
+      order_type: "ticket",
+      metadata: {},
+      refund_cents: 0,
+      total_cents: 2000,
+      status: "paid",
+      stripe_payment_intent_id: null,
+      stripe_checkout_session_id: null,
+    };
+
+    const supabase = {
+      from: vi.fn((table: string) => {
+        if (table !== "orders") throw new Error(`unexpected table ${table}`);
+        return {
+          select: vi.fn(() => ({
+            eq: vi.fn((_col: string, val: string) => ({
+              maybeSingle: vi.fn(async () => {
+                if (val === "order-from-charge") return { data: orderRow };
+                return { data: null };
+              }),
+            })),
+          })),
+        };
+      }),
+    };
+
+    const stripe = {
+      charges: {
+        retrieve: vi.fn(async () => ({ metadata: { order_id: "order-from-charge" } })),
+      },
+      paymentIntents: { retrieve: vi.fn() },
+      checkout: { sessions: { list: vi.fn() } },
+    };
+
+    const order = await resolveOrderForDispute(
+      supabase as never,
+      stripe as never,
+      {
+        id: "du_charge",
+        payment_intent: "pi_1",
+        charge: "ch_1",
+      } as Stripe.Dispute,
+    );
+
+    expect(order?.id).toBe("order-from-charge");
+    expect(stripe.charges.retrieve).toHaveBeenCalledWith("ch_1");
+  });
+
   it("returns null when no order can be resolved yet", async () => {
     const supabase = {
       from: vi.fn(() => ({
