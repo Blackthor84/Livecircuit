@@ -49,13 +49,12 @@ export function ArtistEarningsCalculator({
     [venueId, ticketPrice, expectedAttendance, snapshot, artistPricing]
   );
 
-  const platformFeeLabel = artistPricing?.platformFeeLabel ?? "Digital Ticketing Fee";
+  const platformFeeLabel = artistPricing?.platformFeeLabel ?? "LiveCircuit commission";
 
   const outputs = [
     { label: "Gross Revenue", value: result.grossRevenue, highlight: false },
-    { label: "Booking Fee", value: result.bookingFee, muted: true },
     { label: platformFeeLabel, value: result.platformFee, muted: true },
-    { label: "Payment Processing", value: result.paymentProcessing, muted: true },
+    { label: "Payment Processing (est.)", value: result.paymentProcessing, muted: true },
     { label: "Estimated Taxes", value: result.taxes, muted: true },
     { label: "Estimated Net Earnings", value: result.estimatedNetEarnings, highlight: true },
     { label: "Break-even Ticket Count", value: result.breakEvenTicketCount, suffix: " tickets" },

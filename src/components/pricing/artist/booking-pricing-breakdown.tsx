@@ -1,19 +1,13 @@
 "use client";
 
 import { motion } from "framer-motion";
-import {
-  ARENA_TIER_META,
-  STADIUM_BOOKING,
-  type ArenaTierId,
-} from "@/lib/pricing/livecircuit-pricing";
+import { ARENA_TIER_META, type ArenaTierId } from "@/lib/pricing/livecircuit-pricing";
 import {
   calculateArtistEarnings,
   formatPricingCurrency,
 } from "@/lib/pricing/artist-booking-utils";
 import { AnimatedCounter } from "@/components/demo/naming-rights/animated-counter";
 import { useOptionalSuccessCenter } from "@/components/artists/success-center/success-center-context";
-import { formatBookingFeeFromSnapshot } from "@/lib/monetization/pricing-utils";
-import { resolveVenuePriceSync } from "@/lib/business-rules/pricing-client";
 import type { MonetizationSnapshot } from "@/lib/monetization/types";
 import { cn } from "@/lib/utils";
 
@@ -54,25 +48,16 @@ export function BookingPricingBreakdown({
   });
   const resetKey = `${venueId}-${ticketPrice}-${attendance}`;
 
-  const venuePriceResolved = rulesSnapshot
-    ? resolveVenuePriceSync(snapshot, rulesSnapshot, {
-        userType: "artist",
-        venueType: venueId,
-        eventCount: 0,
-      })
-    : null;
-
   const rows = [
-    { label: "Booking Fee", value: breakdown.bookingFee, fixed: true },
     {
-      label: artistPricing?.platformFeeLabel ?? "Digital Ticketing Fee",
+      label: artistPricing?.platformFeeLabel ?? "LiveCircuit commission",
       value: breakdown.platformFee,
-      note: `${snapshot.tickets.platformFeePercent}% of digital ticket sales only`,
+      note: `${snapshot.tickets.platformFeePercent}% of ticket sales only`,
     },
     {
       label: artistPricing?.paymentProcessingLabel ?? "Payment Processing",
       value: breakdown.paymentProcessing,
-      note: artistPricing?.paymentProcessingDescription,
+      note: "Paid by LiveCircuit on ticket sales (informational estimate)",
     },
     {
       label: artistPricing?.taxesLabel ?? "Taxes",
@@ -89,17 +74,9 @@ export function BookingPricingBreakdown({
           <h4 className="mt-1 text-lg font-bold">{venue.name}</h4>
         </div>
         <div className="text-right">
-          <p className="text-[10px] uppercase tracking-widest text-muted-foreground">Booking Fee</p>
-          <p className="text-xl font-bold text-emerald-400">
-            {venueId === "stadium"
-              ? STADIUM_BOOKING.headline
-              : venuePriceResolved
-                ? venuePriceResolved.isFree
-                  ? "FREE"
-                  : `$${(venuePriceResolved.feeCents / 100).toLocaleString("en-US", { maximumFractionDigits: 0 })}`
-                : formatBookingFeeFromSnapshot(snapshot, venueId)}
-          </p>
-          <p className="text-[10px] text-muted-foreground">per event</p>
+          <p className="text-[10px] uppercase tracking-widest text-muted-foreground">Artist cost to publish</p>
+          <p className="text-xl font-bold text-emerald-400">FREE</p>
+          <p className="text-[10px] text-muted-foreground">No mandatory booking fee</p>
         </div>
       </div>
 
@@ -113,7 +90,7 @@ export function BookingPricingBreakdown({
               {row.note ? <span className="mt-0.5 block text-[10px]">{row.note}</span> : null}
             </dt>
             <dd className="shrink-0 font-semibold tabular-nums">
-              {row.fixed ? formatPricingCurrency(row.value) : formatPricingCurrency(Math.round(row.value))}
+              {formatPricingCurrency(Math.round(row.value))}
             </dd>
           </div>
         ))}

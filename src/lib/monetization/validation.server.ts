@@ -79,6 +79,20 @@ export function validatePricingSnapshot(
     });
   }
 
+  if (
+    snapshot.commissions.ticketCommissionPercent < 0 ||
+    snapshot.commissions.ticketCommissionPercent > 100 ||
+    snapshot.commissions.privateBookingCommissionPercent < 0 ||
+    snapshot.commissions.privateBookingCommissionPercent > 100
+  ) {
+    issues.push({
+      severity: "error",
+      code: "invalid_commission",
+      message: "Commission percents must be between 0 and 100",
+      entityKey: "commission_config",
+    });
+  }
+
   if (!snapshot.agencyPlans.length) {
     issues.push({
       severity: "warning",

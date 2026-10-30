@@ -9,6 +9,7 @@ import {
   isArtistPayoutReady,
 } from "@/lib/stripe/connect";
 import { getPayoutConfig } from "@/lib/monetization/payout-config.server";
+import { computeArtistPayoutSpendableCents } from "@/lib/monetization/payout-limits";
 
 export type ReleaseEligibleResult = {
   artistsProcessed: number;
@@ -123,14 +124,15 @@ export async function processEligibleArtistPayouts(
   for (const row of balances ?? []) {
     const artistId = row.artist_id as string;
     const availableCents = Number(row.available_cents ?? 0);
+    const spendableCents = computeArtistPayoutSpendableCents(availableCents, config);
     artistsProcessed += 1;
 
-    if (availableCents < config.minPayoutCents) {
+    if (spendableCents < config.minPayoutCents) {
       payoutsSkipped += 1;
       skipReasons.push({
         artistId,
         reason: "below_min_payout",
-        availableCents,
+        availableCents: spendableCents,
         minPayoutCents: config.minPayoutCents,
       });
       continue;
@@ -139,7 +141,7 @@ export async function processEligibleArtistPayouts(
     const { status, record } = await getArtistConnectStatus(supabase, artistId);
     if (!isArtistPayoutReady(status, record)) {
       payoutsSkipped += 1;
-      skipReasons.push({ artistId, reason: "connect_not_ready", availableCents });
+      skipReasons.push({ artistId, reason: "connect_not_ready", availableCents: spendableCents });
       continue;
     }
 
@@ -162,20 +164,20 @@ export async function processEligibleArtistPayouts(
 
     if (processing) {
       payoutsSkipped += 1;
-      skipReasons.push({ artistId, reason: "processing_payout_exists", availableCents });
+      skipReasons.push({ artistId, reason: "processing_payout_exists", availableCents: spendableCents });
       continue;
     }
 
     const orderAllocations = await getOrdersForPayout(supabase, artistId);
     const allocTotal = orderAllocations.reduce((s, o) => s + o.amountCents, 0);
-    const payoutAmount = Math.min(availableCents, allocTotal);
+    const payoutAmount = Math.min(spendableCents, allocTotal);
 
     if (payoutAmount < config.minPayoutCents) {
       payoutsSkipped += 1;
       skipReasons.push({
         artistId,
         reason: "allocation_below_min",
-        availableCents,
+        availableCents: spendableCents,
         minPayoutCents: config.minPayoutCents,
       });
       continue;

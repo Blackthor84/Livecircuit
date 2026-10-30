@@ -15,11 +15,13 @@ import {
   updatePayoutConfigAction,
   updatePromotionProductAction,
   updateTaxConfigAction,
+  updateCommissionConfigAction,
   updateTicketPricingAction,
 } from "@/lib/actions/monetization-admin";
 import type {
   MonetizationAgencyPlan,
   MonetizationAnalytics,
+  MonetizationCommissionConfig,
   MonetizationCoupon,
   MonetizationMarketingCredits,
   MonetizationPayoutConfig,
@@ -33,10 +35,73 @@ import type {
 import { formatCents } from "@/lib/format";
 import { rollbackPricingHistoryAction } from "@/lib/actions/monetization-admin";
 
+export function AdminCommissionPanel({ config }: { config: MonetizationCommissionConfig }) {
+  const [pending, startTransition] = useTransition();
+  return (
+    <Card className="glass-panel border-white/10">
+      <CardHeader>
+        <CardTitle>Artist commissions</CardTitle>
+        <p className="text-sm text-muted-foreground">
+          Central ticket and private-booking commission rates. Ticket checkout uses the ticket rate locked on each order at
+          purchase time. Private booking commission applies when that payment rail is enabled.
+        </p>
+      </CardHeader>
+      <CardContent>
+        <form
+          className="grid gap-4 sm:grid-cols-2"
+          onSubmit={(e) => {
+            e.preventDefault();
+            const fd = new FormData(e.currentTarget);
+            startTransition(async () => {
+              const r = await updateCommissionConfigAction({
+                ticketCommissionPercent: Number(fd.get("ticketCommissionPercent")),
+                privateBookingCommissionPercent: Number(fd.get("privateBookingCommissionPercent")),
+                reason: String(fd.get("reason") || "") || undefined,
+              });
+              if (!r.ok) toast.error(r.error);
+              else toast.success("Commission config saved");
+            });
+          }}
+        >
+          <div>
+            <Label htmlFor="ticketCommissionPercent">Ticket sales commission (%)</Label>
+            <Input
+              id="ticketCommissionPercent"
+              name="ticketCommissionPercent"
+              type="number"
+              step="0.01"
+              min={0}
+              max={100}
+              defaultValue={config.ticketCommissionPercent}
+              className="mt-1"
+            />
+          </div>
+          <div>
+            <Label htmlFor="privateBookingCommissionPercent">Private booking commission (%)</Label>
+            <Input
+              id="privateBookingCommissionPercent"
+              name="privateBookingCommissionPercent"
+              type="number"
+              step="0.01"
+              min={0}
+              max={100}
+              defaultValue={config.privateBookingCommissionPercent}
+              className="mt-1"
+            />
+          </div>
+          <Input name="reason" placeholder="Change reason" className="sm:col-span-2" />
+          <Button type="submit" disabled={pending} className="sm:col-span-2 w-fit">
+            Save commissions
+          </Button>
+        </form>
+      </CardContent>
+    </Card>
+  );
+}
+
 export function AdminTicketingPanel({ config }: { config: MonetizationTicketConfig }) {
   const [pending, startTransition] = useTransition();
   const fields = [
-    ["platformFeePercent", "Platform ticket %", config.platformFeePercent],
     ["flatTicketFeeDollars", "Flat ticket fee ($)", config.flatTicketFeeCents / 100],
     ["minPlatformFeeDollars", "Min platform fee ($)", config.minPlatformFeeCents / 100],
     ["maxPlatformFeeDollars", "Max platform fee ($)", config.maxPlatformFeeCents != null ? config.maxPlatformFeeCents / 100 : ""],

@@ -236,16 +236,17 @@ export const FEE_GUIDE_ITEMS = [
   { item: "Following artists", cost: "FREE", note: "Build your network" },
   { item: "Merchandise sales", cost: "100% to artist", note: "LiveCircuit does not take merch revenue" },
   { item: "Tips & donations", cost: "100% to artist", note: "Direct fan support stays with you" },
-  { item: "Booking a digital show", cost: "Per-event booking fee", note: "Only charged when you book — see tier rates below" },
+  { item: "Applying for performance opportunities", cost: "FREE", note: "Browse and apply at no cost" },
+  { item: "Hosting a digital show", cost: "FREE to publish", note: "No mandatory booking fee on LiveCircuit" },
   {
     item: ARTIST_BOOKING_PRICING.platformFeeLabel,
     cost: `${ARTIST_BOOKING_PRICING.platformFeePercentage}% on ticket sales`,
-    note: "Transparent digital ticketing only — disclosed before you publish. Does not apply to merch, tips, or donations.",
+    note: "Commission on successful ticket sales — disclosed before you publish.",
   },
   {
     item: ARTIST_BOOKING_PRICING.paymentProcessingLabel,
-    cost: ARTIST_BOOKING_PRICING.paymentProcessingDescription,
-    note: "Actual payment processor rates",
+    cost: "Paid by LiveCircuit on ticket sales",
+    note: ARTIST_BOOKING_PRICING.paymentProcessingDescription,
   },
 ] as const;
 
@@ -272,22 +273,22 @@ export const REVENUE_TIMELINE = [
   { step: 2, title: "Promote Event", description: "Share across social, email, and partner channels. Sales accelerate in the final 2 weeks.", icon: "📣" },
   { step: 3, title: "Sell Tickets", description: "Fans purchase directly on LiveCircuit. Track sales and fill rate in real time.", icon: "🎫" },
   { step: 4, title: "Perform Show", description: "Go live from your venue. Engage fans, collect reviews, capture clips.", icon: "🔴" },
-  { step: 5, title: "Payout Processing", description: "LiveCircuit calculates ticket earnings minus transparent digital ticketing and processing fees. Merch, tips, and donations are paid separately—100% to you.", icon: "🧾" },
+  { step: 5, title: "Payout Processing", description: "LiveCircuit calculates ticket earnings minus the transparent LiveCircuit commission. Merch, tips, and donations are paid separately—100% to you.", icon: "🧾" },
   { step: 6, title: "Funds Deposited", description: "Ticket payouts within 3–5 business days after your digital event ends.", icon: "💰" },
 ] as const;
 
 export const SUCCESS_CENTER_FAQ = [
   {
     q: "Why don't artists pay monthly?",
-    a: "LiveCircuit is Artist First. There are no monthly artist fees, Pro plans, or Premium subscriptions. Join free and only pay when you host a digital event.",
+    a: "LiveCircuit is Artist First. Artist accounts, profiles, and applications are free—no monthly artist fees or Premium subscriptions.",
   },
   {
-    q: "Why is there a venue booking fee?",
-    a: "Booking fees reserve digital venue inventory and reduce abandoned bookings. They are intentionally affordable—not a major revenue source.",
+    q: "Do artists pay a booking fee?",
+    a: "No mandatory booking fee. You can join, build a profile, apply for opportunities, and publish events without paying LiveCircuit a booking fee.",
   },
   {
     q: "How much does it cost to host an event?",
-    a: "Community venues from $25, Club $75, Theater $200, Arena $500 per event, plus transparent ticketing fees on ticket sales. Stadium requires approval.",
+    a: "Publishing is free. LiveCircuit earns a transparent commission on ticket sales only (10% by default). Stadium and partner tiers may have separate agency arrangements.",
   },
   {
     q: "Do you take a cut of my merch, tips, or donations?",

@@ -20,13 +20,16 @@ export type ArtistEarningsBreakdown = {
   ticketPrice: number;
   expectedAttendance: number;
   grossRevenue: number;
-  bookingFee: number;
+  /** Informational partner-tier reference — not subtracted from artist net (not charged on LiveCircuit today). */
+  referenceVenueFee: number;
   platformFee: number;
   paymentProcessing: number;
   taxes: number;
   estimatedNetEarnings: number;
   breakEvenTicketCount: number;
   venueFillPercent: number;
+  /** @deprecated Use referenceVenueFee — kept for legacy UI keys */
+  bookingFee: number;
 };
 
 export function calculateArtistEarnings({
@@ -77,15 +80,11 @@ export function calculateArtistEarnings({
     grossRevenue * (processingRate / 100) +
     expectedAttendance * (processingFixed / 100);
   const taxes = grossRevenue * (taxRate / 100);
-  const estimatedNetEarnings = grossRevenue - bookingFee - platformFee - paymentProcessing - taxes;
+  const estimatedNetEarnings = grossRevenue - platformFee - taxes;
   const venueFillPercent = Math.round((expectedAttendance / venue.maxCapacity) * 100);
 
-  const netPerTicket =
-    ticketPrice * (1 - platformFeePct / 100) -
-    processingFixed / 100 -
-    ticketPrice * (processingRate / 100);
-  const breakEvenTicketCount =
-    netPerTicket > 0 ? Math.ceil((bookingFee + taxes) / netPerTicket) : 999;
+  const netPerTicket = ticketPrice * (1 - platformFeePct / 100);
+  const breakEvenTicketCount = netPerTicket > 0 ? Math.ceil(taxes / netPerTicket) : 999;
 
   return {
     venueId,
@@ -93,6 +92,7 @@ export function calculateArtistEarnings({
     ticketPrice,
     expectedAttendance,
     grossRevenue,
+    referenceVenueFee: bookingFee,
     bookingFee,
     platformFee,
     paymentProcessing,

@@ -544,6 +544,7 @@ export async function createPendingOrder(
       total_cents: totals.totalCents,
       currency: input.resolved.pricing.currency,
       stripe_checkout_session_id: input.stripeCheckoutSessionId ?? null,
+      event_id: input.resolved.eventId,
       artist_payout_status: totals.ticketRevenueSplit ? "pending" : "pending",
       metadata: {
         event_id: input.resolved.eventId,

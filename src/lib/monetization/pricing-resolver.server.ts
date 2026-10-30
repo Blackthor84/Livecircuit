@@ -2,6 +2,16 @@ import "server-only";
 
 import { unstable_cache } from "next/cache";
 import { createClient } from "@/lib/supabase/server";
+import {
+  DEFAULT_MANUAL_REVIEW_THRESHOLD_CENTS,
+  DEFAULT_MIN_PAYOUT_CENTS,
+  DEFAULT_PAYOUT_DELAY_DAYS,
+} from "@/lib/monetization/payout-config.server";
+import {
+  emptyCommissionConfig,
+  mapCommissionRow,
+  ticketPlatformFeePercentFromCommission,
+} from "@/lib/monetization/commission-config.server";
 import type {
   MonetizationAgencyPlan,
   MonetizationSnapshot,
@@ -106,11 +116,12 @@ async function loadMonetizationSnapshotUncached(): Promise<MonetizationSnapshot>
 
     const supabase = await createClient();
     const [
-      venuesRes, ticketRes, plansRes, creditsRes, promosRes, taxRes, payoutRes,
+      venuesRes, ticketRes, commissionRes, plansRes, creditsRes, promosRes, taxRes, payoutRes,
       flagsRes, sponsorTiersRes, sponsorAddonsRes, contractsRes, founderPricingRes, founderProgramRes,
     ] = await Promise.all([
       supabase.from("monetization_venue_tiers").select("*").order("sort_order"),
       supabase.from("monetization_ticket_config").select("*").eq("id", "default").maybeSingle(),
+      supabase.from("monetization_commission_config").select("*").eq("id", "default").maybeSingle(),
       supabase.from("monetization_agency_plans").select("*").order("sort_order"),
       supabase.from("monetization_marketing_credits").select("*"),
       supabase.from("monetization_promotion_products").select("*").order("sort_order"),
@@ -127,10 +138,17 @@ async function loadMonetizationSnapshotUncached(): Promise<MonetizationSnapshot>
     const taxRow = taxRes.data as Record<string, unknown> | null;
     const payoutRow = payoutRes.data as Record<string, unknown> | null;
     const founderRow = founderProgramRes.data as Record<string, unknown> | null;
+    const commissions = mapCommissionRow(commissionRes.data as Record<string, unknown> | null);
+    const tickets = mapTicket(ticketRes.data as Record<string, unknown> | null);
+    tickets.platformFeePercent = ticketPlatformFeePercentFromCommission(
+      commissions,
+      tickets.platformFeePercent,
+    );
 
     return {
       venues: (venuesRes.data ?? []).map((r) => mapVenue(r as Record<string, unknown>)),
-      tickets: mapTicket(ticketRes.data as Record<string, unknown> | null),
+      commissions,
+      tickets,
       agencyPlans: (plansRes.data ?? []).map((r) => mapAgencyPlan(r as Record<string, unknown>)),
       marketingCredits: (creditsRes.data ?? []).map((r) => ({
         planId: r.plan_id as string,
@@ -156,11 +174,13 @@ async function loadMonetizationSnapshotUncached(): Promise<MonetizationSnapshot>
         regionalRules: Array.isArray(taxRow?.regional_rules) ? (taxRow!.regional_rules as MonetizationTaxConfig["regionalRules"]) : [],
       },
       payouts: {
-        payoutDelayDays: Number(payoutRow?.payout_delay_days ?? 3),
-        minPayoutCents: Number(payoutRow?.min_payout_cents ?? 1000),
+        payoutDelayDays: Number(payoutRow?.payout_delay_days ?? DEFAULT_PAYOUT_DELAY_DAYS),
+        minPayoutCents: Number(payoutRow?.min_payout_cents ?? DEFAULT_MIN_PAYOUT_CENTS),
         maxPayoutCents: payoutRow?.max_payout_cents != null ? Number(payoutRow.max_payout_cents) : null,
         reservePercent: Number(payoutRow?.reserve_percent ?? 0),
-        manualReviewThresholdCents: Number(payoutRow?.manual_review_threshold_cents ?? 100000),
+        manualReviewThresholdCents: Number(
+          payoutRow?.manual_review_threshold_cents ?? DEFAULT_MANUAL_REVIEW_THRESHOLD_CENTS,
+        ),
         stripeConnectReady: Boolean(payoutRow?.stripe_connect_ready),
       },
       featureFlags: (flagsRes.data ?? []).map((r) => ({
@@ -237,14 +257,25 @@ async function loadMonetizationSnapshotUncached(): Promise<MonetizationSnapshot>
 }
 
 function emptySnapshot(): MonetizationSnapshot {
+  const commissions = emptyCommissionConfig();
+  const tickets = mapTicket(null);
+  tickets.platformFeePercent = commissions.ticketCommissionPercent;
   return {
     venues: [],
-    tickets: mapTicket(null),
+    commissions,
+    tickets,
     agencyPlans: [],
     marketingCredits: [],
     promotions: [],
     taxes: { salesTaxPercent: 0, vatPercent: 0, gstPercent: 0, processingFeeDisplay: "separate", platformFeeDisplay: "itemized", regionalRules: [] },
-    payouts: { payoutDelayDays: 3, minPayoutCents: 1000, maxPayoutCents: null, reservePercent: 0, manualReviewThresholdCents: 100000, stripeConnectReady: false },
+    payouts: {
+      payoutDelayDays: DEFAULT_PAYOUT_DELAY_DAYS,
+      minPayoutCents: DEFAULT_MIN_PAYOUT_CENTS,
+      maxPayoutCents: null,
+      reservePercent: 0,
+      manualReviewThresholdCents: DEFAULT_MANUAL_REVIEW_THRESHOLD_CENTS,
+      stripeConnectReady: false,
+    },
     featureFlags: [],
     sponsorTiers: [],
     sponsorAddons: [],

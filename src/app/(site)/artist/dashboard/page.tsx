@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import { ArtistActiveTourPanel } from "@/components/artist/artist-active-tour-panel";
-import { ArtistBalanceSummaryCard } from "@/components/artist/artist-balance-summary-card";
 import { ArtistDashboardCharts } from "@/components/dashboard/artist-dashboard-charts";
 import { Button } from "@/components/ui/button";
 import { requireRoles } from "@/lib/auth/guards";
@@ -15,7 +14,8 @@ import { getViewerFeatureAccess } from "@/lib/features/guard";
 import { listArtistUpcomingEvents } from "@/lib/data/artist-events";
 import { ROUTES } from "@/lib/constants";
 import { getArtistActiveTourSnapshot } from "@/lib/touring/tour-context";
-import { getArtistBalanceSummary } from "@/lib/services/artist-balance.service";
+import { getArtistFastPayDashboard } from "@/lib/services/artist-fastpay-dashboard.service";
+import { ArtistFastPayPanel } from "@/components/artist/artist-fastpay-panel";
 import { createClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
 
@@ -31,7 +31,7 @@ export default async function ArtistDashboardPage() {
   if (!artist) redirect("/artist/settings");
 
   const supabase = await createClient();
-  const [analytics, tours, momentumPayload, upcomingEvents, features, activeTour, balance] =
+  const [analytics, tours, momentumPayload, upcomingEvents, features, activeTour, fastPayDashboard] =
     await Promise.all([
     getArtistDashboardAnalytics(artist.id, artist.slug),
     listArtistTours(artist.id),
@@ -39,7 +39,7 @@ export default async function ArtistDashboardPage() {
     listArtistUpcomingEvents(artist.id),
     getViewerFeatureAccess(),
     getArtistActiveTourSnapshot(artist.id),
-    getArtistBalanceSummary(supabase, artist.id),
+    getArtistFastPayDashboard(supabase, artist.id),
   ]);
 
   return (
@@ -80,7 +80,7 @@ export default async function ArtistDashboardPage() {
       </div>
 
       <section className="mt-10">
-        <ArtistBalanceSummaryCard balance={balance} compact />
+        <ArtistFastPayPanel data={fastPayDashboard} />
       </section>
 
       {activeTour ? (

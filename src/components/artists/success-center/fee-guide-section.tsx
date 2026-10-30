@@ -47,12 +47,16 @@ export function FeeGuideSection() {
 
         <FadeUp>
           <div className="glass-panel rounded-2xl p-6">
-            <p className="mb-4 text-sm font-semibold">Booking Fees by Venue</p>
+            <p className="mb-2 text-sm font-semibold">Partner venue tier reference (optional)</p>
+            <p className="mb-4 text-xs text-muted-foreground">
+              LiveCircuit does not charge artists a mandatory per-event booking fee. Some agency partner programs may
+              reference venue tiers—this is not required to join or publish on LiveCircuit.
+            </p>
             <dl className="space-y-2">
               {bookingFeeByVenue.map((row) => (
                 <div key={row.venueId} className="flex justify-between border-b border-white/5 pb-2 text-sm">
                   <dt className="text-muted-foreground">{row.label}</dt>
-                  <dd className="font-bold text-primary">{row.fee} / event</dd>
+                  <dd className="font-bold text-muted-foreground">{row.fee} ref.</dd>
                 </div>
               ))}
             </dl>

@@ -30,6 +30,7 @@ export async function creditArtistTicketSale(
   orderId: string,
   paymentSuccessAt?: string,
   holdDays?: number,
+  payoutPolicy: "standard_hold" | "fastpay" = "standard_hold",
 ): Promise<{ duplicate: boolean }> {
   const { data: existing } = await supabase
     .from("artist_balance_transactions")
@@ -44,6 +45,7 @@ export async function creditArtistTicketSale(
     p_order_id: orderId,
     p_payment_success_at: paymentSuccessAt ?? new Date().toISOString(),
     p_hold_days: holdDays ?? 7,
+    p_payout_policy: payoutPolicy,
   });
   if (error) {
     if (error.message.includes("duplicate") || error.code === "23505") {

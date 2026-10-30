@@ -120,7 +120,7 @@ export const ARTIST_FIRST_KEEPS = [
 export const ARTIST_BOOKING_PRICING = {
   bookingFees: DEFAULT_BOOKING_FEES,
   platformFeePercentage: 10,
-  platformFeeLabel: "Digital Ticketing Fee",
+  platformFeeLabel: "LiveCircuit commission",
   paymentProcessingLabel: "Payment Processing",
   paymentProcessingDescription: "Standard card processing rates (typically 2.9% + $0.30 per transaction)",
   paymentProcessingRatePercent: 2.9,
@@ -135,47 +135,48 @@ export const ARTIST_BOOKING_PRICING = {
     "Content Ownership",
     "No Exclusivity",
     "Transparent Ticketing",
-    "Affordable Venue Booking",
+    "No Mandatory Booking Fees",
     "No Monthly Artist Fees",
   ],
   payWhenYouPerformMessage: {
-    headline: "Free to Join. Pay Only When You Perform.",
+    headline: "Free to Join. Commission on Ticket Sales.",
     subheadline:
-      "Join LiveCircuit at no cost. Build your audience, sell tickets, receive tips, accept donations, and sell merchandise. You only pay when you book a digital venue and sell tickets.",
+      "Join LiveCircuit at no cost. Build your audience, apply for opportunities, sell tickets, receive tips, accept donations, and sell merchandise. LiveCircuit earns a transparent commission on successful ticket sales—not a monthly fee or mandatory booking fee.",
   },
   noSubscriptionMessage: {
     headline: "No monthly artist fees. Ever.",
     lines: [
       "Create your artist profile for free.",
+      "Apply for performance opportunities at no cost.",
       "Build your audience, sell merch, and receive tips at no cost.",
       "Keep 100% of merch, tips, and donations.",
-      "Pay only when you host a digital event — an affordable venue booking fee plus transparent ticketing fees on ticket sales.",
+      "Pay a transparent LiveCircuit commission only when fans buy tickets to your shows.",
     ],
   },
   bookingFeePurpose:
-    "Venue booking fees reserve digital venue inventory and reduce abandoned bookings. They are intentionally affordable — not a major revenue source.",
+    "LiveCircuit does not charge artists a mandatory booking fee to join, publish events, or apply for opportunities. Optional partner venue tiers may exist for agency programs—they are not required for every artist.",
   transparencyMessage:
-    "LiveCircuit is Artist First. Join free, keep 100% of merchandise, tips, and donations, and only pay when you choose to host a digital event.",
+    "LiveCircuit is Artist First. Join free, keep 100% of merchandise, tips, and donations, and see commission on ticket sales before you publish.",
   bookingFeeExplainer: {
-    title: "What does the venue booking fee cover?",
+    title: "What the LiveCircuit commission covers",
     items: [
-      "Digital venue reservation",
+      "Digital venue hosting & discovery",
       "Streaming infrastructure",
-      "Event hosting & discovery",
       "Secure checkout & ticketing",
       "Customer support",
       "Analytics & reporting",
       "Moderation & security",
+      "Stripe Connect payouts",
     ],
   },
   ticketFeeExplainer: {
-    title: "How ticketing fees work",
+    title: "How ticket commission works",
     items: [
       "Ticket pricing is set by you",
-      "Platform ticketing fee applies to ticket sales only",
-      "Fees are disclosed before you publish",
+      "LiveCircuit commission applies to ticket sales only",
+      "Commission is disclosed before you publish",
       "Merch, tips, and donations are never taxed by LiveCircuit",
-      "Stripe Connect payout support planned",
+      "Stripe Connect Express payouts for eligible ticket earnings",
     ],
   },
 } as const;

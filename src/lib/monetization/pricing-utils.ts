@@ -6,7 +6,7 @@ export function ticketPricingFromSnapshot(snapshot: MonetizationSnapshot) {
   const t = snapshot.tickets;
   return {
     platformFeePercentage: t.platformFeePercent,
-    platformFeeLabel: "Digital Ticketing Fee",
+    platformFeeLabel: "LiveCircuit commission",
     paymentProcessingRatePercent: t.paymentProcessingRatePercent,
     paymentProcessingFixedCents: t.paymentProcessingFixedCents,
     paymentProcessingLabel: "Payment Processing",
@@ -59,16 +59,22 @@ export function buildFeeGuideItems(snapshot: MonetizationSnapshot) {
     { item: "Following artists", cost: "FREE", note: "Build your network" },
     { item: "Merchandise sales", cost: "100% to artist", note: "LiveCircuit does not take merch revenue" },
     { item: "Tips & donations", cost: "100% to artist", note: "Direct fan support stays with you" },
-    { item: "Booking a digital show", cost: "Per-event booking fee", note: "Only charged when you book — see tier rates below" },
+    { item: "Applying for performance opportunities", cost: "FREE", note: "Browse and apply at no cost" },
+    { item: "Hosting a digital show", cost: "FREE to publish", note: "No mandatory booking fee to create events on LiveCircuit" },
     {
       item: ticket.platformFeeLabel,
       cost: `${ticket.platformFeePercentage}% on ticket sales`,
-      note: "Transparent digital ticketing only — disclosed before you publish. Does not apply to merch, tips, or donations.",
+      note: "Commission on successful ticket sales only — disclosed before you publish. Does not apply to merch, tips, or donations.",
+    },
+    {
+      item: "Private bookings",
+      cost: `${snapshot.commissions.privateBookingCommissionPercent}% when enabled`,
+      note: "Proposed commission on paid private bookings when that checkout is available. Not charged today.",
     },
     {
       item: ticket.paymentProcessingLabel,
-      cost: ticket.paymentProcessingDescription,
-      note: "Actual payment processor rates",
+      cost: "Paid by LiveCircuit on ticket sales",
+      note: ticket.paymentProcessingDescription,
     },
   ];
 }
@@ -94,15 +100,15 @@ export function buildCreatorPromiseFaq(snapshot: MonetizationSnapshot) {
   return [
     {
       q: "Why don't artists pay monthly?",
-      a: "LiveCircuit is Artist First. There are no monthly artist fees, Pro plans, or Premium subscriptions. Join free and only pay when you host a digital event.",
+      a: "LiveCircuit is Artist First. Artist accounts, profiles, and booking applications are free. There are no monthly artist fees or Premium subscriptions.",
     },
     {
-      q: "Why is there a venue booking fee?",
-      a: "The booking fee reserves digital venue inventory and reduces abandoned bookings. It is intentionally affordable—not a major revenue source.",
+      q: "Do artists pay a booking fee to join or publish?",
+      a: "No. LiveCircuit does not require artists to pay a booking fee to create an account, build a profile, apply for opportunities, or publish a digital event.",
     },
     {
       q: "How much does it cost to host an event?",
-      a: `Venue booking: ${feeLine}. Stadium requires approval and custom pricing. Plus transparent ticketing fees on ticket sales only.`,
+      a: `Creating and publishing events is free. LiveCircuit earns a ${ticketPct}% commission on ticket sales (and a proposed ${snapshot.commissions.privateBookingCommissionPercent}% on private bookings when that payment option is enabled). Partner venue tier reference pricing (${feeLine}) is not a mandatory artist charge on LiveCircuit today.`,
     },
     {
       q: "What do I keep?",
@@ -110,15 +116,11 @@ export function buildCreatorPromiseFaq(snapshot: MonetizationSnapshot) {
     },
     {
       q: "How do ticket fees work?",
-      a: `A ${ticketPct}% digital ticketing fee applies to ticket sales only, plus standard payment processing. Fees are disclosed before you publish. Merch, tips, and donations are never taxed by LiveCircuit.`,
-    },
-    {
-      q: "Why are booking fees so affordable?",
-      a: "We believe the barrier to performing digitally should be almost zero. Booking fees cover venue reservation and hosting—they are not designed to be a profit center.",
+      a: `A ${ticketPct}% LiveCircuit commission applies to ticket sales only. Payment processing on those sales is handled by LiveCircuit. Fees are disclosed before you publish. Merch, tips, and donations are never taxed by LiveCircuit.`,
     },
     {
       q: "How does LiveCircuit make money?",
-      a: "Digital ticketing, talent agency subscriptions, sponsorships, advertising, and fan purchases—not by charging artists a monthly fee or taxing merch, tips, and donations.",
+      a: "Ticket commissions, talent agency subscriptions, sponsorships, advertising, and fan purchases—not by charging artists monthly fees, mandatory booking fees, or taxing merch, tips, and donations.",
     },
     {
       q: "Can I leave whenever I want?",

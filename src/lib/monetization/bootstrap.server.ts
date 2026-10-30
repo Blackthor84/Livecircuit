@@ -43,6 +43,15 @@ async function runBootstrap(): Promise<boolean> {
     { onConflict: "id" }
   );
 
+  await admin.from("monetization_commission_config").upsert(
+    {
+      id: "default",
+      ticket_commission_percent: 10,
+      private_booking_commission_percent: 10,
+    },
+    { onConflict: "id" },
+  );
+
   const agencyPlans = AGENCY_PARTNERSHIP_PLANS.map((plan, i) => ({
     plan_id: plan.id,
     name: plan.name,

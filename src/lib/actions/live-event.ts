@@ -361,13 +361,40 @@ export async function endLiveAction(input: unknown): Promise<LiveActionResult> {
   const ctx = await requireAccess(parsed.data.eventId, true);
   if (!ctx.ok) return { ok: false, error: ctx.error };
 
-  const now = new Date().toISOString();
-  const { error: eventError } = await ctx.supabase
+  const { data: eventRow } = await ctx.supabase
     .from("events")
-    .update({ status: "ended", ended_at: now })
-    .eq("id", parsed.data.eventId);
+    .select("status, started_at, ended_at")
+    .eq("id", parsed.data.eventId)
+    .maybeSingle();
 
-  if (eventError) return { ok: false, error: eventError.message };
+  if (!eventRow) return { ok: false, error: "Event not found" };
+
+  const { validateEndLiveTransition } = await import("@/lib/monetization/live-event-fastpay");
+  const validation = validateEndLiveTransition({
+    status: eventRow.status as string,
+    started_at: (eventRow.started_at as string | null) ?? null,
+    ended_at: (eventRow.ended_at as string | null) ?? null,
+  });
+
+  if (!validation.ok) return { ok: false, error: validation.error };
+
+  const now = new Date().toISOString();
+  if (!validation.alreadyEnded) {
+    const { error: eventError } = await ctx.supabase
+      .from("events")
+      .update({ status: "ended", ended_at: now })
+      .eq("id", parsed.data.eventId)
+      .eq("status", "live");
+
+    if (eventError) return { ok: false, error: eventError.message };
+  }
+
+  try {
+    const { applyFastPayOnEventEnded } = await import("@/lib/monetization/fastpay.server");
+    await applyFastPayOnEventEnded(ctx.supabase, parsed.data.eventId);
+  } catch (e) {
+    console.error("[fastpay] event ended hook", parsed.data.eventId, e);
+  }
 
   const { data: streamRow } = await ctx.supabase
     .from("streams")
@@ -397,6 +424,54 @@ export async function endLiveAction(input: unknown): Promise<LiveActionResult> {
     .eq("event_id", parsed.data.eventId);
 
   revalidatePath("/");
+  revalidatePath("/artist/dashboard");
+  return { ok: true };
+}
+
+export async function cancelLiveEventAction(input: unknown): Promise<LiveActionResult> {
+  const parsed = eventControlSchema.safeParse(input);
+  if (!parsed.success) return { ok: false, error: "Invalid event" };
+
+  const ctx = await requireAccess(parsed.data.eventId, true);
+  if (!ctx.ok) return { ok: false, error: ctx.error };
+
+  const { data: eventRow } = await ctx.supabase
+    .from("events")
+    .select("status, started_at, ended_at")
+    .eq("id", parsed.data.eventId)
+    .maybeSingle();
+
+  if (!eventRow) return { ok: false, error: "Event not found" };
+
+  const { validateCancelLiveEvent } = await import("@/lib/monetization/live-event-fastpay");
+  const validation = validateCancelLiveEvent({
+    status: eventRow.status as string,
+    started_at: (eventRow.started_at as string | null) ?? null,
+    ended_at: (eventRow.ended_at as string | null) ?? null,
+  });
+  if (!validation.ok) return { ok: false, error: validation.error };
+
+  if (eventRow.status !== "cancelled") {
+    const { error } = await ctx.supabase
+      .from("events")
+      .update({ status: "cancelled" })
+      .eq("id", parsed.data.eventId)
+      .in("status", ["draft", "scheduled", "live"]);
+
+    if (error) return { ok: false, error: error.message };
+  }
+
+  try {
+    const { applyFastPayOnEventCancelled } = await import("@/lib/monetization/fastpay.server");
+    await applyFastPayOnEventCancelled(ctx.supabase, parsed.data.eventId, {
+      started_at: (eventRow.started_at as string | null) ?? null,
+    });
+  } catch (e) {
+    console.error("[fastpay] event cancelled hook", parsed.data.eventId, e);
+  }
+
+  revalidatePath("/");
+  revalidatePath("/artist/dashboard");
   return { ok: true };
 }
 

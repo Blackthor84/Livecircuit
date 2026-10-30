@@ -102,15 +102,15 @@ export const ARTIST_FIRST_COMPARISON = [
 export const CREATOR_PROMISE_FAQ = [
   {
     q: "Why don't artists pay monthly?",
-    a: "LiveCircuit is Artist First. We want zero financial risk to joining. Create your profile, build your audience, sell merch, and receive tips for free. You only pay when you choose to host a digital event.",
+    a: "LiveCircuit is Artist First. Artist accounts, profiles, and booking applications are free. Build your audience, sell merch, and receive tips at no cost.",
   },
   {
-    q: "Why is there a venue booking fee?",
-    a: "The booking fee reserves digital venue inventory and reduces abandoned bookings. It is intentionally affordable—not a major revenue source. Community venues start at $25 per event.",
+    q: "Do artists pay a booking fee?",
+    a: "No mandatory booking fee. LiveCircuit does not charge artists to join, create a profile, apply for opportunities, or publish a digital event.",
   },
   {
     q: "How much does it cost to host an event?",
-    a: `Venue booking: Community $${DEFAULT_BOOKING_FEES.community}, Club $${DEFAULT_BOOKING_FEES.club}, Theater $${DEFAULT_BOOKING_FEES.theater}, Arena $${DEFAULT_BOOKING_FEES.arena}. Stadium requires approval and custom pricing. Plus transparent ticketing fees on ticket sales only.`,
+    a: `Publishing events is free. LiveCircuit earns a ${ARTIST_BOOKING_PRICING.platformFeePercentage}% commission on ticket sales. Optional partner venue tiers (Community $${DEFAULT_BOOKING_FEES.community}, Club $${DEFAULT_BOOKING_FEES.club}, etc.) may apply to agency programs—not as a required artist charge on LiveCircuit.`,
   },
   {
     q: "What do I keep?",
@@ -118,11 +118,7 @@ export const CREATOR_PROMISE_FAQ = [
   },
   {
     q: "How do ticket fees work?",
-    a: `A ${ARTIST_BOOKING_PRICING.platformFeePercentage}% digital ticketing fee applies to ticket sales only, plus standard payment processing. Fees are disclosed before you publish. Merch, tips, and donations are never taxed by LiveCircuit.`,
-  },
-  {
-    q: "Why are booking fees so affordable?",
-    a: "We believe the barrier to performing digitally should be almost zero. Booking fees cover venue reservation and hosting—they are not designed to be a profit center. Our primary revenue comes from ticketing, agency subscriptions, and sponsorships.",
+    a: `A ${ARTIST_BOOKING_PRICING.platformFeePercentage}% LiveCircuit commission applies to ticket sales only. Payment processing on those sales is handled by LiveCircuit. Fees are disclosed before you publish. Merch, tips, and donations are never taxed by LiveCircuit.`,
   },
   {
     q: "Why don't you take merch revenue?",

@@ -8,6 +8,8 @@ import { getNotificationStats } from "@/lib/monetization/admin-notifications.ser
 import { validatePricingSnapshot } from "@/lib/monetization/validation.server";
 import { getMonetizationSnapshot } from "@/lib/monetization/pricing-resolver.server";
 import { getSupabaseAdmin } from "@/lib/supabase/admin";
+import { listFastPayAdminExceptions } from "@/lib/monetization/fastpay.server";
+import { AdminFastPayExceptionsPanel } from "@/components/admin/monetization/admin-fastpay-exceptions-panel";
 
 export const metadata: Metadata = { title: "Monetization Monitoring — Admin" };
 
@@ -34,6 +36,8 @@ export default async function AdminMonitoringPage() {
       .eq("status", "failed"),
   ]);
 
+  const fastPayExceptions = await listFastPayAdminExceptions(admin, 25);
+
   const { count: couponFailures } = await admin
     .from("monetization_admin_notifications")
     .select("id", { count: "exact", head: true })
@@ -56,6 +60,9 @@ export default async function AdminMonitoringPage() {
           ruleConflicts,
         }}
       />
+      <div className="mt-8">
+        <AdminFastPayExceptionsPanel rows={fastPayExceptions} />
+      </div>
     </MonetizationAdminShell>
   );
 }

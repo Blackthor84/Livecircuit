@@ -7,6 +7,7 @@ import {
 } from "@/lib/monetization/financial-ledger.service";
 import { creditArtistTicketSale } from "@/lib/services/artist-balance.service";
 import { getPayoutConfig } from "@/lib/monetization/payout-config.server";
+import { resolveTicketPayoutPolicyAtFulfillment } from "@/lib/monetization/fastpay.server";
 import { reconcileOrderStripeFees } from "@/lib/monetization/stripe-fee-reconciliation.service";
 import { generateTicketQrPayload } from "@/lib/tickets/qr";
 import { resolveEventIdForTourStop } from "@/lib/services/orders.service";
@@ -157,11 +158,13 @@ export async function fulfillPaidOrder(
     await fulfillTicketOrder(supabase, order, session);
     if (artistEarningsCents > 0 && order.artist_id) {
       const payoutConfig = await getPayoutConfig(supabase);
+      const payoutPolicy = await resolveTicketPayoutPolicyAtFulfillment();
       await creditArtistTicketSale(
         supabase,
         order.id,
         new Date().toISOString(),
-        payoutConfig.payoutDelayDays,
+        payoutPolicy === "fastpay" ? 0 : payoutConfig.payoutDelayDays,
+        payoutPolicy,
       );
     }
   } else if (orderType === "tip") {

@@ -16,13 +16,20 @@ import { ADMIN_SECTIONS } from "@/lib/admin/sections";
 
 describe("navigation", () => {
   it("shows public nav when logged out", () => {
-    expect(getPublicNav().map((i) => i.label)).toEqual([
+    const nav = getPublicNav();
+    expect(nav.map((i) => i.label)).toEqual([
       "Home",
+      "Interactive Demo",
+      "Tours",
       "Discover",
       "Artists",
+      "Passport",
       "Venues",
       "About",
+      "Creator Promise",
     ]);
+    expect(nav.find((i) => i.label === "Interactive Demo")?.featured).toBe(true);
+    expect(nav.find((i) => i.label === "Creator Promise")?.href).toBe("/creator-promise");
   });
 
   it("shows guest auth CTAs", () => {
@@ -34,13 +41,16 @@ describe("navigation", () => {
   });
 
   it("shows authenticated main nav", () => {
-    expect(getAuthenticatedNav({ role: "fan" }).map((i) => i.label)).toEqual([
+    const nav = getAuthenticatedNav({ role: "fan" });
+    expect(nav.map((i) => i.label)).toEqual([
       "Home",
+      "Interactive Demo",
       "Discover",
       "Events",
       "Following",
       "Notifications",
     ]);
+    expect(nav.find((i) => i.label === "Events")?.href).toBe("/dashboard");
   });
 
   it("shows artist nav with success center", () => {
@@ -89,22 +99,33 @@ describe("account menu phase 1", () => {
 });
 
 describe("command center sidebar", () => {
-  it("includes phase 1 sections", () => {
-    expect(ADMIN_SECTIONS.map((s) => s.label)).toEqual([
+  it("includes command center sections with monetization and testing", () => {
+    const labels = ADMIN_SECTIONS.map((s) => s.label);
+    expect(labels).toEqual([
       "Overview",
       "Live Now",
       "Users",
       "Artists",
+      "Agencies",
       "Events",
-      "Venues",
+      "Venue Management",
+      "Global Regions",
+      "Sponsorships",
+      "Founding Partners",
+      "Revenue",
+      "Monetization Center",
+      "Business Rules",
+      "Feature Flags",
       "Tours",
       "Genres",
       "Analytics",
       "Moderation",
       "Observer Accounts",
-      "Feature Flags",
+      "Testing Center",
       "Platform Settings",
       "System Health",
     ]);
+    expect(ADMIN_SECTIONS.some((s) => s.href === "/admin/monetization")).toBe(true);
+    expect(ADMIN_SECTIONS.some((s) => s.href === "/admin/testing")).toBe(true);
   });
 });

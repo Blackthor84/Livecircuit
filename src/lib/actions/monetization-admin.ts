@@ -109,6 +109,61 @@ export async function updateVenuePricingAction(input: unknown): Promise<Monetiza
   return { ok: true };
 }
 
+export async function updateCommissionConfigAction(input: unknown): Promise<MonetizationActionResult> {
+  await requireAdmin("/admin/monetization/ticketing");
+  const parsed = z
+    .object({
+      ticketCommissionPercent: z.number().min(0).max(100),
+      privateBookingCommissionPercent: z.number().min(0).max(100),
+      reason: z.string().optional(),
+    })
+    .safeParse(input);
+  if (!parsed.success) return { ok: false, error: "Invalid commission config" };
+
+  const supabase = await createClient();
+  const { data: userData } = await supabase.auth.getUser();
+  const { data: existing } = await supabase
+    .from("monetization_commission_config")
+    .select("ticket_commission_percent, private_booking_commission_percent")
+    .eq("id", "default")
+    .maybeSingle();
+
+  const patch = {
+    ticket_commission_percent: parsed.data.ticketCommissionPercent,
+    private_booking_commission_percent: parsed.data.privateBookingCommissionPercent,
+    updated_at: new Date().toISOString(),
+    updated_by: userData.user?.id ?? null,
+  };
+
+  const { error } = await supabase.from("monetization_commission_config").upsert(
+    { id: "default", ...patch },
+    { onConflict: "id" },
+  );
+  if (error) return { ok: false, error: error.message };
+
+  await supabase
+    .from("monetization_ticket_config")
+    .update({
+      platform_fee_percent: parsed.data.ticketCommissionPercent,
+      updated_at: new Date().toISOString(),
+      updated_by: userData.user?.id ?? null,
+    })
+    .eq("id", "default");
+
+  await logHistory(supabase, {
+    category: "commission",
+    entityKey: "default",
+    fieldName: "config",
+    oldValue: existing ?? null,
+    newValue: patch,
+    reason: parsed.data.reason,
+    userId: userData.user?.id,
+  });
+
+  revalidateAll();
+  return { ok: true };
+}
+
 export async function updateTicketPricingAction(input: unknown): Promise<MonetizationActionResult> {
   await requireAdmin("/admin/monetization/ticketing");
   const parsed = z.record(z.string(), z.union([z.string(), z.number(), z.boolean()])).safeParse(input);
@@ -117,9 +172,11 @@ export async function updateTicketPricingAction(input: unknown): Promise<Monetiz
   const supabase = await createClient();
   const { data: userData } = await supabase.auth.getUser();
   const d = parsed.data as Record<string, unknown>;
+  const platformFeePercent =
+    d.platformFeePercent != null ? Number(d.platformFeePercent) : undefined;
 
   const patch: Record<string, unknown> = {
-    platform_fee_percent: Number(d.platformFeePercent ?? 10),
+    platform_fee_percent: Number(platformFeePercent ?? 10),
     flat_ticket_fee_cents: Math.round(Number(d.flatTicketFeeDollars ?? 0) * 100),
     min_platform_fee_cents: Math.round(Number(d.minPlatformFeeDollars ?? 0) * 100),
     max_platform_fee_cents: d.maxPlatformFeeDollars != null ? Math.round(Number(d.maxPlatformFeeDollars) * 100) : null,
@@ -140,6 +197,18 @@ export async function updateTicketPricingAction(input: unknown): Promise<Monetiz
 
   const { error } = await supabase.from("monetization_ticket_config").update(patch).eq("id", "default");
   if (error) return { ok: false, error: error.message };
+
+  if (platformFeePercent != null) {
+    await supabase.from("monetization_commission_config").upsert(
+      {
+        id: "default",
+        ticket_commission_percent: platformFeePercent,
+        updated_at: new Date().toISOString(),
+        updated_by: userData.user?.id ?? null,
+      },
+      { onConflict: "id" },
+    );
+  }
 
   await logHistory(supabase, { category: "ticket", entityKey: "default", fieldName: "config", oldValue: null, newValue: patch, reason: String(d.reason ?? ""), userId: userData.user?.id });
   revalidateAll();

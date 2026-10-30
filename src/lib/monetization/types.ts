@@ -33,6 +33,12 @@ export type MonetizationVenueTier = {
   sortOrder: number;
 };
 
+export type MonetizationCommissionConfig = {
+  ticketCommissionPercent: number;
+  privateBookingCommissionPercent: number;
+  updatedAt: string | null;
+};
+
 export type MonetizationTicketConfig = {
   platformFeePercent: number;
   flatTicketFeeCents: number;
@@ -179,6 +185,7 @@ export type MonetizationAnalytics = {
 /** Full resolved pricing snapshot for the application. */
 export type MonetizationSnapshot = {
   venues: MonetizationVenueTier[];
+  commissions: MonetizationCommissionConfig;
   tickets: MonetizationTicketConfig;
   agencyPlans: MonetizationAgencyPlan[];
   marketingCredits: MonetizationMarketingCredits[];
